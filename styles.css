@@ -966,3 +966,118 @@ input.sheet-text-input:disabled {
   font-weight: 700;
   color: var(--text-main);
 }
+
+/* ==========================================================================
+   5. CLEAN INITIAL HOME HUB (VISUALLY SQUARE & FIXED)
+   ========================================================================== */
+.home-container {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  overflow-y: auto;
+  flex-grow: 1;
+}
+
+.home-header {
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+@media (max-width: 640px) {
+  .home-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+.home-title-area h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-main);
+}
+
+.home-title-area p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+}
+
+.home-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sections-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+@media (max-width: 640px) {
+  .sections-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.section-square-card {
+  background-color: var(--bg-card);
+  border: 2px solid var(--border-color);
+  border-radius: 0 !important; /* Visual square */
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 220px;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.section-square-card:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+.section-card-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  border: 1px solid var(--border-color);
+  padding: 0.25rem 0.5rem;
+  background-color: var(--bg-main);
+}
+
+.section-card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.section-card-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+  line-height: 1.4;
+}
+
+.btn-square {
+  border-radius: 0 !important; /* Visual square */
+}
+
+.btn-full {
+  width: 100%;
+  justify-content: center;
+}

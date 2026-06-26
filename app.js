@@ -1,6 +1,6 @@
 // STATE MANAGEMENT
 const STATE = {
-  currentView: "dashboard", // "dashboard" | "sheet"
+  currentView: "home", // "home" | "dashboard" | "sheet"
   activeSection: null, // "useOfEnglish" | "reading" | "listening" | "writing"
   answers: {}, // Q-num -> string
   gradedStates: {}, // Q-num -> "correct" | "incorrect" | score (0|1|2)
@@ -16,7 +16,7 @@ const STATE = {
 window.addEventListener("DOMContentLoaded", () => {
   loadProfiles();
   loadLocalStorage();
-  renderDashboard();
+  renderHome();
 });
 
 // LOAD AND SAVE LOCAL STORAGE
@@ -301,8 +301,45 @@ function getCambridgeGrade(scaleScore) {
 }
 
 // ==========================================================================
-// 1. DASHBOARD CONTROLLER
+// 1. HOME HUB CONTROLLER (CLEAN INITIAL STATE, VISUALLY SQUARE)
 // ==========================================================================
+function renderHome() {
+  STATE.currentView = "home";
+  const appContainer = document.getElementById("app-container");
+  
+  appContainer.innerHTML = `
+    <div class="home-container">
+      <div class="home-header">
+        <div class="home-title-area">
+          <h1>🎓 C2 Answer Sheet Companion</h1>
+          <p>Interactive answer sheet templates for official Cambridge C2 Proficiency (CPE) practice papers.</p>
+        </div>
+        
+        <div class="home-header-actions">
+          <button class="btn btn-square" onclick="renderDashboard()">📊 View History & Analytics</button>
+          
+          <!-- PROFILE SWITCHER -->
+          <div class="profile-box" onclick="openProfileModal()" title="Switch User Profile">
+            <div class="profile-avatar">${STATE.activeProfile.charAt(0).toUpperCase()}</div>
+            <div class="profile-name">${STATE.activeProfile}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sections-grid">
+        ${Object.entries(C2_EXAM_METADATA).map(([key, data]) => `
+          <div class="section-square-card">
+            <span class="section-card-badge">${data.maxMarks} Marks</span>
+            <h3 class="section-card-title">${data.name}</h3>
+            <p class="section-card-desc">${data.description}</p>
+            <button class="btn btn-primary btn-square btn-full" onclick="openAnswerSheet('${key}')">Open Answer Sheet</button>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
 function renderDashboard() {
   STATE.currentView = "dashboard";
   const appContainer = document.getElementById("app-container");
@@ -317,11 +354,13 @@ function renderDashboard() {
     <div class="dash-container">
       <div class="dash-header">
         <div class="dash-title">
-          <h1>🎓 C2 Answer Sheet Companion</h1>
-          <p>Input your answers for your official exam papers and self-correct to track your progress.</p>
+          <h1>📊 Practice History & Analytics</h1>
+          <p>Review your historical attempts, evolution graph, and log of mistakes.</p>
         </div>
         
         <div style="display:flex; align-items:center; gap:0.75rem;">
+          <button class="btn btn-square" onclick="renderHome()">🏠 Back to Hub</button>
+          
           <!-- PROFILE SWITCHER -->
           <div class="profile-box" onclick="openProfileModal()" title="Switch User Profile">
             <div class="profile-avatar">${STATE.activeProfile.charAt(0).toUpperCase()}</div>
@@ -350,19 +389,8 @@ function renderDashboard() {
       </div>
 
       <div class="dash-content-grid">
-        <!-- LEFT PANEL: SECTIONS & PROGRESS CHART -->
+        <!-- LEFT PANEL: PROGRESS CHART & SECTION ANALYTICS -->
         <div style="display:flex; flex-direction:column; gap:1.5rem;">
-          <div class="dash-panel">
-            <h2 class="panel-title">📋 Section-Based Answer Sheets</h2>
-            <div style="overflow-x:auto;">
-              <table class="exam-parts-table">
-                <tbody>
-                  ${renderSectionRows()}
-                </tbody>
-              </table>
-            </div>
-          </div>
-          
           <!-- PROGRESS CHART -->
           ${renderProgressChartHTML()}
 
@@ -402,29 +430,6 @@ function calculateOverallAccuracy() {
   const correctSum = STATE.history.reduce((acc, curr) => acc + curr.correct, 0);
   const totalSum = STATE.history.reduce((acc, curr) => acc + curr.total, 0);
   return Math.round((correctSum / totalSum) * 100);
-}
-
-function renderSectionRows() {
-  let rows = [];
-  
-  for (const [secKey, secData] of Object.entries(C2_EXAM_METADATA)) {
-    rows.push(`
-      <tr>
-        <td class="part-name-cell" style="width: 35%; padding-left: 0.5rem;">
-          ${secData.name}
-        </td>
-        <td class="part-desc-cell" style="width: 45%;">
-          ${secData.description} (Max: ${secData.maxMarks} marks)
-        </td>
-        <td style="width: 20%; text-align: right; padding-right: 0.5rem;">
-          <button class="btn btn-primary" style="font-size:0.75rem; padding: 0.35rem 0.75rem;" onclick="openAnswerSheet('${secKey}')">
-            Open Sheet
-          </button>
-        </td>
-      </tr>
-    `);
-  }
-  return rows.join('');
 }
 
 function renderHistoryListHTML() {
@@ -563,7 +568,7 @@ function switchUserProfile(name) {
   saveLocalStorage();
   loadLocalStorage();
   closeModal();
-  renderDashboard();
+  refreshCurrentView();
 }
 
 function createUserProfile() {
@@ -581,7 +586,7 @@ function createUserProfile() {
   saveLocalStorage();
   loadLocalStorage();
   closeModal();
-  renderDashboard();
+  refreshCurrentView();
 }
 
 // ==========================================================================
@@ -760,7 +765,7 @@ function renderAnswerSheetHTML() {
             <h2>Answer Sheet: ${sectionMeta.name}</h2>
             <p>${sectionMeta.description}</p>
           </div>
-          <button class="btn" onclick="renderDashboard()">⬅ Back to Hub</button>
+          <button class="btn btn-square" onclick="renderHome()">⬅ Back to Hub</button>
         </div>
 
         ${sheetContent}
@@ -1297,7 +1302,7 @@ function deleteHistoryItem(id) {
   if (confirm("Delete this history record?")) {
     STATE.history = STATE.history.filter(h => h.id !== id);
     saveLocalStorage();
-    renderDashboard();
+    refreshCurrentView();
   }
 }
 
@@ -1305,7 +1310,7 @@ function deleteMistakeItem(id) {
   if (confirm("Remove this mistake from journal?")) {
     STATE.mistakes = STATE.mistakes.filter(m => m.id !== id);
     saveLocalStorage();
-    renderDashboard();
+    refreshCurrentView();
   }
 }
 
@@ -1313,7 +1318,7 @@ function clearHistory() {
   if (confirm("Are you sure you want to clear your entire practice history? This cannot be undone.")) {
     STATE.history = [];
     saveLocalStorage();
-    renderDashboard();
+    refreshCurrentView();
   }
 }
 
@@ -1321,10 +1326,20 @@ function clearMistakes() {
   if (confirm("Are you sure you want to clear your entire mistakes journal? This cannot be undone.")) {
     STATE.mistakes = [];
     saveLocalStorage();
-    renderDashboard();
+    refreshCurrentView();
   }
 }
 
 function storeInputAnswer(qNum, value) {
   STATE.answers[qNum] = typeof value === "string" ? value.trim() : value;
+}
+
+function refreshCurrentView() {
+  if (STATE.currentView === "dashboard") {
+    renderDashboard();
+  } else if (STATE.currentView === "sheet") {
+    renderAnswerSheetHTML();
+  } else {
+    renderHome();
+  }
 }
