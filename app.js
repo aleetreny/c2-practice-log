@@ -9,13 +9,20 @@ const STATE = {
   profiles: ["Aleetreny"],
   history: [],
   isAuthenticated: false,
-  syncBackendAvailable: true,
+  supabaseSession: null,
+  supabaseUserEmail: "",
   syncStatus: "local",
   syncMessage: "Local backup"
 };
 
 const OWNER_PROFILE = "Aleetreny";
 const LOCAL_HISTORY_KEY = "c2_owner_history";
+const SUPABASE_SESSION_KEY = "c2_supabase_session";
+const SUPABASE_CONFIG = {
+  restUrl: "https://irsugdtdqnvlrcbotvfe.supabase.co/rest/v1",
+  authUrl: "https://irsugdtdqnvlrcbotvfe.supabase.co/auth/v1",
+  anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlyc3VnZHRkcW52bHJjYm90dmZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0Nzk4MjgsImV4cCI6MjA5ODA1NTgyOH0.MMJwed40u5tszDUYeS_Tx0BMo0PLWdY-eEp6Qs4XC9o"
+};
 
 // INITIALIZE APP
 window.addEventListener("DOMContentLoaded", async () => {
@@ -93,42 +100,172 @@ function mergeHistoryCollections(...collections) {
   return [...byId.values()].sort((a, b) => (a.date || 0) - (b.date || 0));
 }
 
-async function apiRequest(path, options = {}) {
-  const headers = {
-    ...(options.body ? { "Content-Type": "application/json" } : {}),
-    ...(options.headers || {})
+function normalizeSupabaseUrl(value) {
+  return value.replace(/\/$/, "");
+}
+
+function loadSupabaseSession() {
+  try {
+    const raw = localStorage.getItem(SUPABASE_SESSION_KEY);
+    const session = raw ? JSON.parse(raw) : null;
+    if (!session || !session.access_token || !session.user) return null;
+
+    STATE.supabaseSession = session;
+    STATE.isAuthenticated = true;
+    STATE.supabaseUserEmail = session.user.email || "";
+    return session;
+  } catch (error) {
+    console.error("Failed to load Supabase session", error);
+    return null;
+  }
+}
+
+function saveSupabaseSession(session) {
+  const normalized = {
+    ...session,
+    expires_at: session.expires_at || Math.floor(Date.now() / 1000) + (session.expires_in || 3600)
   };
 
-  const response = await fetch(path, {
-    credentials: "include",
-    ...options,
-    headers
+  STATE.supabaseSession = normalized;
+  STATE.isAuthenticated = true;
+  STATE.supabaseUserEmail = normalized.user?.email || "";
+  localStorage.setItem(SUPABASE_SESSION_KEY, JSON.stringify(normalized));
+}
+
+function clearSupabaseSession() {
+  STATE.supabaseSession = null;
+  STATE.isAuthenticated = false;
+  STATE.supabaseUserEmail = "";
+  localStorage.removeItem(SUPABASE_SESSION_KEY);
+}
+
+async function supabaseAuthRequest(path, body) {
+  const response = await fetch(`${normalizeSupabaseUrl(SUPABASE_CONFIG.authUrl)}${path}`, {
+    method: "POST",
+    headers: {
+      apikey: SUPABASE_CONFIG.anonKey,
+      Authorization: `Bearer ${SUPABASE_CONFIG.anonKey}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(body)
   });
 
-  const contentType = response.headers.get("Content-Type") || "";
-  const text = await response.text();
-  if (!contentType.includes("application/json")) {
-    const offlineError = new Error("API unavailable");
-    offlineError.isExpectedOffline = true;
-    throw offlineError;
-  }
-
-  const payload = text ? JSON.parse(text) : {};
-
+  const payload = await response.json().catch(() => ({}));
   if (!response.ok) {
-    throw new Error(payload.error || `Request failed (${response.status})`);
+    throw new Error(payload.error_description || payload.msg || payload.message || "Supabase auth failed");
   }
 
   return payload;
 }
 
+async function signInWithSupabase(email, password) {
+  const session = await supabaseAuthRequest("/token?grant_type=password", { email, password });
+  saveSupabaseSession(session);
+  return session;
+}
+
+async function signUpWithSupabase(email, password) {
+  const session = await supabaseAuthRequest("/signup", { email, password });
+  if (session.access_token) saveSupabaseSession(session);
+  return session;
+}
+
+async function refreshSupabaseSession() {
+  const session = STATE.supabaseSession || loadSupabaseSession();
+  if (!session?.refresh_token) return false;
+
+  try {
+    const refreshed = await supabaseAuthRequest("/token?grant_type=refresh_token", {
+      refresh_token: session.refresh_token
+    });
+    saveSupabaseSession(refreshed);
+    return true;
+  } catch (error) {
+    clearSupabaseSession();
+    return false;
+  }
+}
+
+async function ensureSupabaseSession() {
+  const session = STATE.supabaseSession || loadSupabaseSession();
+  if (!session) return false;
+
+  const expiresAt = Number(session.expires_at || 0);
+  const shouldRefresh = expiresAt > 0 && expiresAt < Math.floor(Date.now() / 1000) + 120;
+  if (!shouldRefresh) return true;
+
+  return refreshSupabaseSession();
+}
+
+async function supabaseRequest(path, options = {}, retry = true) {
+  const hasSession = await ensureSupabaseSession();
+  if (!hasSession) throw new Error("Sign in to sync your progress.");
+
+  const response = await fetch(`${normalizeSupabaseUrl(SUPABASE_CONFIG.restUrl)}${path}`, {
+    ...options,
+    headers: {
+      apikey: SUPABASE_CONFIG.anonKey,
+      Authorization: `Bearer ${STATE.supabaseSession.access_token}`,
+      ...(options.body ? { "Content-Type": "application/json" } : {}),
+      ...(options.headers || {})
+    }
+  });
+
+  if (response.status === 401 && retry && await refreshSupabaseSession()) {
+    return supabaseRequest(path, options, false);
+  }
+
+  const text = await response.text();
+  const payload = text ? JSON.parse(text) : null;
+
+  if (!response.ok) {
+    throw new Error(payload?.message || payload?.details || `Supabase request failed (${response.status})`);
+  }
+
+  return payload;
+}
+
+function historyItemToSupabaseRow(item) {
+  return {
+    id: item.id,
+    user_id: STATE.supabaseSession.user.id,
+    section: item.section,
+    correct: Number(item.correct) || 0,
+    total: Number(item.total) || 0,
+    percentage: Number(item.percentage) || 0,
+    scale_score: Number(item.scaleScore) || 0,
+    answers: item.answers || {},
+    graded_states: item.gradedStates || {},
+    attempted_at: new Date(Number(item.date) || Date.now()).toISOString()
+  };
+}
+
+function supabaseRowToHistoryItem(row) {
+  return {
+    id: row.id,
+    section: row.section,
+    correct: Number(row.correct) || 0,
+    total: Number(row.total) || 0,
+    percentage: Number(row.percentage) || 0,
+    scaleScore: Number(row.scale_score) || 0,
+    answers: row.answers || {},
+    gradedStates: row.graded_states || {},
+    date: row.attempted_at ? new Date(row.attempted_at).getTime() : Date.now()
+  };
+}
+
+async function fetchSupabaseHistory() {
+  const rows = await supabaseRequest(
+    "/c2_attempts?select=id,section,correct,total,percentage,scale_score,answers,graded_states,attempted_at&order=attempted_at.asc"
+  );
+  return Array.isArray(rows) ? rows.map(supabaseRowToHistoryItem) : [];
+}
+
 async function hydrateRemoteHistory() {
   try {
-    const session = await apiRequest("/api/me");
-    STATE.syncBackendAvailable = true;
-    STATE.isAuthenticated = !!session.authenticated;
+    const hasSession = await ensureSupabaseSession();
 
-    if (!STATE.isAuthenticated) {
+    if (!hasSession) {
       STATE.syncStatus = "local";
       STATE.syncMessage = "Sign in to sync";
       return;
@@ -137,43 +274,45 @@ async function hydrateRemoteHistory() {
     STATE.syncStatus = "syncing";
     STATE.syncMessage = "Syncing";
 
-    const remote = await apiRequest("/api/history");
-    const mergedHistory = mergeHistoryCollections(remote.history || [], STATE.history);
+    const remoteHistory = await fetchSupabaseHistory();
+    const mergedHistory = mergeHistoryCollections(remoteHistory, STATE.history);
     STATE.history = mergedHistory;
     saveLocalStorage();
 
-    if (mergedHistory.length !== (remote.history || []).length) {
+    if (mergedHistory.length !== remoteHistory.length) {
       await saveRemoteHistory("merge");
     }
 
     STATE.syncStatus = "synced";
     STATE.syncMessage = "Synced online";
   } catch (error) {
-    STATE.syncBackendAvailable = !error.isExpectedOffline;
-    STATE.isAuthenticated = false;
-    STATE.syncStatus = error.isExpectedOffline ? "static" : "local";
+    STATE.syncStatus = "local";
     STATE.syncMessage = "Local backup";
-    if (!error.isExpectedOffline) {
-      console.warn("Online sync unavailable", error);
-    }
+    console.warn("Supabase sync unavailable", error);
   }
 }
 
 async function saveRemoteHistory(mode = "merge") {
-  const result = await apiRequest("/api/history", {
-    method: "PUT",
-    body: JSON.stringify({
-      mode,
-      history: STATE.history
-    })
-  });
-
-  if (Array.isArray(result.history)) {
-    STATE.history = mergeHistoryCollections(result.history);
-    saveLocalStorage();
+  if (mode === "replace") {
+    await supabaseRequest(`/c2_attempts?user_id=eq.${encodeURIComponent(STATE.supabaseSession.user.id)}`, {
+      method: "DELETE"
+    });
   }
 
-  return result;
+  if (STATE.history.length > 0) {
+    await supabaseRequest("/c2_attempts?on_conflict=id", {
+      method: "POST",
+      headers: {
+        Prefer: "resolution=merge-duplicates,return=minimal"
+      },
+      body: JSON.stringify(STATE.history.map(historyItemToSupabaseRow))
+    });
+  }
+
+  const history = await fetchSupabaseHistory();
+  STATE.history = mergeHistoryCollections(history);
+  saveLocalStorage();
+  return { history };
 }
 
 async function persistHistory(options = {}) {
@@ -915,17 +1054,12 @@ function openProfileModal() {
 function openProfileModalView() {
   const modal = document.createElement("div");
   modal.className = "modal-overlay";
-  const isStaticBuild = !STATE.syncBackendAvailable;
   const accountState = STATE.isAuthenticated
-    ? "Online sync active"
-    : isStaticBuild
-      ? "Static backup only"
-      : "Local backup only";
+    ? "Supabase sync active"
+    : "Local backup only";
   const accountDetail = STATE.isAuthenticated
-    ? "Your progress is being saved to the private GitHub-backed store."
-    : isStaticBuild
-      ? "This GitHub Pages build saves progress in this browser. Private online sync needs a backend because static hosting cannot keep secrets."
-    : "Sign in to sync this browser history to the online store.";
+    ? `Signed in as ${escapeHTML(STATE.supabaseUserEmail || "owner")}. New attempts are saved online.`
+    : "Sign in with your Supabase account. Local attempts will be uploaded after sign in.";
 
   modal.innerHTML = `
     <div class="modal-content profile-modal">
@@ -950,14 +1084,14 @@ function openProfileModalView() {
             <div class="new-profile-row">
               <button class="btn btn-secondary btn-full" onclick="logoutOwnerFromModal()">Sign out</button>
             </div>
-          ` : isStaticBuild ? `
-            <div class="new-profile-row">
-              <button class="btn btn-secondary btn-full" onclick="closeModal()">Close</button>
-            </div>
           ` : `
-            <div class="new-profile-row">
-              <input type="password" id="owner-password-input" placeholder="Owner password" onkeydown="handleAccountPasswordKeydown(event)" autocomplete="current-password">
-              <button class="btn btn-primary" id="owner-login-btn" onclick="loginOwnerFromModal()">Sign in</button>
+            <div class="account-form">
+              <input type="email" id="owner-email-input" placeholder="Email" autocomplete="email">
+              <input type="password" id="owner-password-input" placeholder="Password" onkeydown="handleAccountPasswordKeydown(event)" autocomplete="current-password">
+              <div class="new-profile-row">
+                <button class="btn btn-primary" id="owner-login-btn" onclick="loginOwnerFromModal()">Sign in</button>
+                <button class="btn btn-secondary" id="owner-signup-btn" onclick="signUpOwnerFromModal()">Create account</button>
+              </div>
             </div>
           `}
         </div>
@@ -966,8 +1100,8 @@ function openProfileModalView() {
   `;
 
   document.body.appendChild(modal);
-  const passwordInput = document.getElementById("owner-password-input");
-  if (passwordInput) passwordInput.focus();
+  const emailInput = document.getElementById("owner-email-input");
+  if (emailInput) emailInput.focus();
 }
 
 function handleAccountPasswordKeydown(event) {
@@ -977,10 +1111,12 @@ function handleAccountPasswordKeydown(event) {
 }
 
 async function loginOwnerFromModal() {
-  const input = document.getElementById("owner-password-input");
+  const emailInput = document.getElementById("owner-email-input");
+  const passwordInput = document.getElementById("owner-password-input");
   const button = document.getElementById("owner-login-btn");
-  const password = input ? input.value : "";
-  if (!password) return;
+  const email = emailInput ? emailInput.value.trim() : "";
+  const password = passwordInput ? passwordInput.value : "";
+  if (!email || !password) return;
 
   if (button) {
     button.disabled = true;
@@ -988,11 +1124,7 @@ async function loginOwnerFromModal() {
   }
 
   try {
-    await apiRequest("/api/login", {
-      method: "POST",
-      body: JSON.stringify({ password })
-    });
-    STATE.isAuthenticated = true;
+    await signInWithSupabase(email, password);
     await hydrateRemoteHistory();
     closeModal();
     refreshCurrentView();
@@ -1005,14 +1137,43 @@ async function loginOwnerFromModal() {
   }
 }
 
-async function logoutOwnerFromModal() {
-  try {
-    await apiRequest("/api/logout", { method: "POST" });
-  } catch (error) {
-    console.warn("Logout request failed", error);
+async function signUpOwnerFromModal() {
+  const emailInput = document.getElementById("owner-email-input");
+  const passwordInput = document.getElementById("owner-password-input");
+  const button = document.getElementById("owner-signup-btn");
+  const email = emailInput ? emailInput.value.trim() : "";
+  const password = passwordInput ? passwordInput.value : "";
+  if (!email || !password) return;
+
+  if (button) {
+    button.disabled = true;
+    button.textContent = "Creating";
   }
 
-  STATE.isAuthenticated = false;
+  try {
+    const session = await signUpWithSupabase(email, password);
+    if (session.access_token) {
+      await hydrateRemoteHistory();
+      closeModal();
+      refreshCurrentView();
+    } else {
+      alert("Account created. Check your email to confirm it, then sign in.");
+      if (button) {
+        button.disabled = false;
+        button.textContent = "Create account";
+      }
+    }
+  } catch (error) {
+    alert(error.message || "Could not create account.");
+    if (button) {
+      button.disabled = false;
+      button.textContent = "Create account";
+    }
+  }
+}
+
+async function logoutOwnerFromModal() {
+  clearSupabaseSession();
   STATE.syncStatus = "local";
   STATE.syncMessage = "Local backup";
   closeModal();

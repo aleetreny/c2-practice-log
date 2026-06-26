@@ -1683,6 +1683,13 @@ input.sheet-text-input:disabled,
   gap: 8px;
 }
 
+.account-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.account-form input,
 .new-profile-row input {
   flex: 1;
   min-width: 0;
@@ -1693,6 +1700,7 @@ input.sheet-text-input:disabled,
   outline: none;
 }
 
+.account-form input:focus,
 .new-profile-row input:focus {
   border-color: var(--accent-color);
   box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.12);
