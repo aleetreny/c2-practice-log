@@ -313,12 +313,12 @@ function renderHome() {
     <div class="home-container">
       <div class="home-header">
         <div class="home-title-area">
-          <h1>🎓 C2 Answer Sheet Companion</h1>
+          <h1>C2 Answer Sheet Companion</h1>
           <p>Interactive answer sheet templates for official Cambridge C2 Proficiency (CPE) practice papers.</p>
         </div>
         
         <div class="home-header-actions">
-          <button class="btn btn-square" onclick="renderDashboard()">📊 View History & Analytics</button>
+          <button class="btn btn-square" onclick="renderDashboard()">History and Analytics</button>
           
           <!-- PROFILE SWITCHER -->
           <div class="profile-box" onclick="openProfileModal()" title="Switch User Profile">
@@ -332,8 +332,10 @@ function renderHome() {
         ${Object.entries(C2_EXAM_METADATA).map(([key, data]) => `
           <div class="section-square-card">
             <span class="section-card-badge">${data.maxMarks} Marks</span>
-            <h3 class="section-card-title">${data.name}</h3>
-            <p class="section-card-desc">${data.description}</p>
+            <div style="display:flex; flex-direction:column; flex-grow:1;">
+              <h3 class="section-card-title">${data.name}</h3>
+              <p class="section-card-desc">${data.description}</p>
+            </div>
             <button class="btn btn-primary btn-square btn-full" onclick="openAnswerSheet('${key}')">Open Answer Sheet</button>
           </div>
         `).join('')}
@@ -356,12 +358,12 @@ function renderDashboard() {
     <div class="dash-container">
       <div class="dash-header">
         <div class="dash-title">
-          <h1>📊 Practice History & Analytics</h1>
+          <h1>History and Analytics</h1>
           <p>Review your historical attempts, evolution graph, and log of mistakes.</p>
         </div>
         
         <div style="display:flex; align-items:center; gap:0.75rem;">
-          <button class="btn btn-square" onclick="renderHome()">🏠 Back to Hub</button>
+          <button class="btn btn-square" onclick="renderHome()">Back to Hub</button>
           
           <!-- PROFILE SWITCHER -->
           <div class="profile-box" onclick="openProfileModal()" title="Switch User Profile">
@@ -391,35 +393,31 @@ function renderDashboard() {
       </div>
 
       <div class="dash-content-grid">
-        <!-- LEFT PANEL: PROGRESS CHART & SECTION ANALYTICS -->
-        <div style="display:flex; flex-direction:column; gap:1.5rem;">
-          <!-- PROGRESS CHART -->
-          ${renderProgressChartHTML()}
+        <!-- SCORE EVOLUTION -->
+        ${renderProgressChartHTML()}
 
-          <!-- SECTION ANALYTICS -->
-          ${renderSectionAnalyticsHTML()}
+        <!-- PRACTICE HISTORY -->
+        <div class="dash-panel panel-fixed">
+          <h2 class="panel-title">
+            <span>Practice History</span>
+            ${STATE.history.length > 0 ? `<button class="btn-danger-link" onclick="clearHistory()">Clear all</button>` : ''}
+          </h2>
+          <div class="panel-body-scroll">
+            ${renderHistoryListHTML()}
+          </div>
         </div>
 
-        <!-- RIGHT PANEL: HISTORY & MISTAKES JOURNAL -->
-        <div style="display:flex; flex-direction:column; gap:1.5rem;">
-          <div class="dash-panel">
-            <h2 class="panel-title">
-              <span>Practice History</span>
-              ${STATE.history.length > 0 ? `<button class="btn-danger-link" onclick="clearHistory()">Clear all</button>` : ''}
-            </h2>
-            <div class="history-list" style="max-height: 480px;">
-              ${renderHistoryListHTML()}
-            </div>
-          </div>
+        <!-- SECTION ANALYTICS -->
+        ${renderSectionAnalyticsHTML()}
 
-          <div class="dash-panel">
-            <h2 class="panel-title">
-              <span>Mistakes Journal</span>
-              ${STATE.mistakes.length > 0 ? `<button class="btn-danger-link" onclick="clearMistakes()">Clear all</button>` : ''}
-            </h2>
-            <div class="history-list" style="max-height: 350px;">
-              ${renderMistakesJournalHTML()}
-            </div>
+        <!-- MISTAKES JOURNAL -->
+        <div class="dash-panel panel-fixed">
+          <h2 class="panel-title">
+            <span>Mistakes Journal</span>
+            ${STATE.mistakes.length > 0 ? `<button class="btn-danger-link" onclick="clearMistakes()">Clear all</button>` : ''}
+          </h2>
+          <div class="panel-body-scroll">
+            ${renderMistakesJournalHTML()}
           </div>
         </div>
       </div>
@@ -490,8 +488,6 @@ function renderMistakesJournalHTML() {
 }
 
 function renderSectionAnalyticsHTML() {
-  if (STATE.history.length === 0) return "";
-  
   const analytics = {};
   for (const key of Object.keys(C2_EXAM_METADATA)) {
     const logs = STATE.history.filter(h => h.section === key);
@@ -505,13 +501,13 @@ function renderSectionAnalyticsHTML() {
   }
 
   return `
-    <div class="dash-panel">
-      <h2 class="panel-title">📊 Section-Specific Analytics</h2>
-      <div class="analytics-grid">
+    <div class="dash-panel panel-fixed">
+      <h2 class="panel-title">Section-Specific Analytics</h2>
+      <div class="analytics-grid" style="flex-grow:1; display:grid; align-content:center; gap:0.75rem;">
         ${Object.entries(C2_EXAM_METADATA).map(([key, data]) => {
           const stats = analytics[key];
           return `
-            <div class="analytics-card">
+            <div class="analytics-card" style="margin:0;">
               <span class="analytics-card-title">${data.name}</span>
               <span class="analytics-card-value">
                 ${stats ? `${stats.avgScale} pts <span style="font-size:0.75rem; font-weight:normal; color:var(--text-muted);">(${stats.avgAccuracy}% acc)</span>` : '—'}
@@ -545,8 +541,8 @@ function openProfileModal() {
             const isActive = name === STATE.activeProfile;
             return `
               <button class="user-item-btn ${isActive ? 'active' : ''}" onclick="switchUserProfile('${escapeJS(name)}')">
-                <span>👤 ${name}</span>
-                ${isActive ? '<span>Active ✓</span>' : '<span>Load ➔</span>'}
+                <span>Profile: ${name}</span>
+                ${isActive ? '<span>Active</span>' : '<span>Load ➔</span>'}
               </button>
             `;
           }).join('')}
@@ -648,8 +644,8 @@ function openHistoryDetailModal(sessionId) {
           gradeLabel = `<span style="font-weight:700; ${ptClass}; font-size:0.85rem;">[${gradeState}/2 pts]</span>`;
         } else {
           gradeLabel = gradeState === "correct" ? 
-            `<span style="color:var(--color-success); font-weight:bold;">Correct ✅</span>` : 
-            `<span style="color:var(--color-error); font-weight:bold;">Incorrect ❌</span>`;
+            `<span style="color:var(--color-success); font-weight:bold;">Correct</span>` : 
+            `<span style="color:var(--color-error); font-weight:bold;">Incorrect</span>`;
         }
 
         const noteText = item.errorNotes[q] ? `<div class="mistake-note" style="margin-top:0.25rem;">Note: "${item.errorNotes[q]}"</div>` : "";
@@ -892,8 +888,8 @@ function lockAnswersAndStartCorrection() {
       } else {
         controls.innerHTML = `
           <div class="correction-controls-box">
-            <button class="correct-btn" id="correct-btn-${q}" onclick="markBinaryGrade(${q}, 'correct')">✅ Correct</button>
-            <button class="incorrect-btn" id="incorrect-btn-${q}" onclick="markBinaryGrade(${q}, 'incorrect')">❌ Incorrect</button>
+            <button class="correct-btn" id="correct-btn-${q}" onclick="markBinaryGrade(${q}, 'correct')">Correct</button>
+            <button class="incorrect-btn" id="incorrect-btn-${q}" onclick="markBinaryGrade(${q}, 'incorrect')">Incorrect</button>
           </div>
         `;
       }
@@ -1081,7 +1077,7 @@ function setupWritingGradingArea() {
   gradingArea.innerHTML = `
     <!-- PART 1 RUBRIC -->
     <div class="writing-criteria-checklist" style="margin-bottom:1.5rem;">
-      <h3 style="font-size:1.05rem; font-weight:700; color:var(--accent-color); border-bottom:1px solid var(--border-color); padding-bottom:0.5rem; margin-bottom:1rem;">📋 Essay Assessment Rubric: Part 1</h3>
+      <h3 style="font-size:1.05rem; font-weight:700; color:var(--accent-color); border-bottom:1px solid var(--border-color); padding-bottom:0.5rem; margin-bottom:1rem;">Essay Assessment Rubric: Part 1</h3>
       
       <div>
         <div class="criteria-title">Content</div>
@@ -1116,7 +1112,7 @@ function setupWritingGradingArea() {
 
     <!-- PART 2 RUBRIC -->
     <div class="writing-criteria-checklist">
-      <h3 style="font-size:1.05rem; font-weight:700; color:var(--accent-color); border-bottom:1px solid var(--border-color); padding-bottom:0.5rem; margin-bottom:1rem;">📋 Writing Assessment Rubric: Part 2</h3>
+      <h3 style="font-size:1.05rem; font-weight:700; color:var(--accent-color); border-bottom:1px solid var(--border-color); padding-bottom:0.5rem; margin-bottom:1rem;">Writing Assessment Rubric: Part 2</h3>
       
       <div>
         <div class="criteria-title">Content</div>
@@ -1251,9 +1247,9 @@ function calculateAverageScaleScore() {
 function renderProgressChartHTML() {
   if (STATE.history.length === 0) {
     return `
-      <div class="progress-graph-container">
-        <h2 class="panel-title">📈 Score Evolution</h2>
-        <div style="height: 120px; display:flex; justify-content:center; align-items:center; color:var(--text-muted); font-size:0.85rem;">
+      <div class="dash-panel panel-fixed">
+        <h2 class="panel-title">Score Evolution</h2>
+        <div style="height: 100%; display:flex; justify-content:center; align-items:center; color:var(--text-muted); font-size:0.85rem;">
           No attempts recorded yet.
         </div>
       </div>
@@ -1288,13 +1284,15 @@ function renderProgressChartHTML() {
   }).join('');
 
   return `
-    <div class="progress-graph-container">
-      <h2 class="panel-title">📈 Score Evolution (Last 10 Attempts)</h2>
-      <div class="graph-bars">
-        ${barsHTML}
-      </div>
-      <div style="font-size:0.7rem; color:var(--text-muted); text-align:center; margin-top:0.25rem;">
-        Hover over the bars to see details. (U = Use of English, R = Reading, L = Listening, W = Writing)
+    <div class="dash-panel panel-fixed">
+      <h2 class="panel-title">Score Evolution (Last 10 Attempts)</h2>
+      <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+        <div class="graph-bars" style="flex-grow:1; margin-top: 1rem; margin-bottom: 1rem;">
+          ${barsHTML}
+        </div>
+        <div style="font-size:0.7rem; color:var(--text-muted); text-align:center;">
+          Hover over the bars to see details. (U = Use of English, R = Reading, L = Listening, W = Writing)
+        </div>
       </div>
     </div>
   `;
