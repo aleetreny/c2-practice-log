@@ -286,13 +286,18 @@ function historyItemToSupabaseRow(item) {
     total: Number(item.total) || 0,
     percentage: Number(item.percentage) || 0,
     scale_score: Number(item.scaleScore) || 0,
-    answers: item.answers || {},
+    answers: getHistoryAnswersForStorage(item),
     graded_states: item.gradedStates || {},
     attempted_at: new Date(Number(item.date) || Date.now()).toISOString()
   };
 }
 
 function supabaseRowToHistoryItem(row) {
+  const answers = row.answers || {};
+  const historyItem = {
+    answers
+  };
+
   return {
     id: row.id,
     section: row.section,
@@ -300,9 +305,10 @@ function supabaseRowToHistoryItem(row) {
     total: Number(row.total) || 0,
     percentage: Number(row.percentage) || 0,
     scaleScore: Number(row.scale_score) || 0,
-    answers: row.answers || {},
+    answers,
     gradedStates: row.graded_states || {},
-    date: row.attempted_at ? new Date(row.attempted_at).getTime() : Date.now()
+    date: row.attempted_at ? new Date(row.attempted_at).getTime() : Date.now(),
+    durationSeconds: getAttemptDurationSeconds(historyItem)
   };
 }
 
@@ -433,6 +439,50 @@ function formatPracticeTimer(totalSeconds) {
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
   return [hours, minutes, seconds].map(value => String(value).padStart(2, "0")).join(":");
+}
+
+function getCurrentPracticeDurationSeconds() {
+  if (STATE.activeSection === "listening") return 0;
+  return getPracticeTimerSeconds();
+}
+
+function getPlainObject(value) {
+  return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
+function getAttemptDurationSeconds(item = {}) {
+  const answers = getPlainObject(item.answers);
+  const meta = getPlainObject(answers.meta);
+  const candidates = [
+    item.durationSeconds,
+    item.elapsedSeconds,
+    meta.durationSeconds,
+    answers.durationSeconds
+  ];
+  const seconds = candidates
+    .map(value => Number(value))
+    .find(value => Number.isFinite(value) && value > 0);
+
+  return seconds ? Math.round(seconds) : 0;
+}
+
+function getHistoryAnswersForStorage(item = {}) {
+  const answers = { ...getPlainObject(item.answers) };
+  const durationSeconds = getAttemptDurationSeconds(item);
+
+  if (durationSeconds > 0) {
+    answers.meta = {
+      ...getPlainObject(answers.meta),
+      durationSeconds
+    };
+  }
+
+  return answers;
+}
+
+function formatAttemptDuration(totalSeconds) {
+  const seconds = Number(totalSeconds) || 0;
+  return seconds > 0 ? formatPracticeTimer(seconds) : "";
 }
 
 function updatePracticeTimerDisplay() {
@@ -599,14 +649,14 @@ function getAllSectionStats() {
 
 function getPartScoreForSession(session, partKey, partData) {
   if (!session || !session.gradedStates) {
-    return { raw: 0, max: partData.weight || 0 };
+    return { raw: 0, max: 0 };
   }
 
   if (partData.type === "writing") {
     const criteria = session.gradedStates[partKey];
-    const raw = criteria
-      ? (criteria.content || 0) + (criteria.comm || 0) + (criteria.org || 0) + (criteria.lang || 0)
-      : 0;
+    if (!criteria) return { raw: 0, max: 0 };
+
+    const raw = (criteria.content || 0) + (criteria.comm || 0) + (criteria.org || 0) + (criteria.lang || 0);
     return { raw, max: partData.weight };
   }
 
@@ -636,16 +686,17 @@ function getSectionPartStats(section) {
     const scores = logs.map(session => getPartScoreForSession(session, partKey, partData));
     const rawSum = scores.reduce((acc, item) => acc + item.raw, 0);
     const maxSum = scores.reduce((acc, item) => acc + item.max, 0);
+    const attemptedScores = scores.filter(item => item.max > 0);
     const averagePct = maxSum > 0 ? Math.round((rawSum / maxSum) * 100) : 0;
-    const latestScore = scores.length > 0 ? scores[scores.length - 1] : null;
+    const latestScore = attemptedScores.length > 0 ? attemptedScores[attemptedScores.length - 1] : null;
 
     return {
       section,
       partKey,
       name: partData.name,
-      attempts: logs.length,
+      attempts: attemptedScores.length,
       averagePct,
-      averageRaw: logs.length > 0 ? rawSum / logs.length : 0,
+      averageRaw: attemptedScores.length > 0 ? rawSum / attemptedScores.length : 0,
       maxRaw: partData.weight,
       latestPct: latestScore && latestScore.max > 0 ? Math.round((latestScore.raw / latestScore.max) * 100) : 0
     };
@@ -1010,6 +1061,7 @@ function renderHistoryListV2HTML(limit = 4) {
         const scoreClass = isStrong ? "excellent" : isPass ? "pass" : "risk";
         const sectionName = C2_EXAM_METADATA[item.section].name;
         const dateFormatted = formatCompactDateTime(item.date);
+        const durationText = formatAttemptDuration(getAttemptDurationSeconds(item));
 
         return `
           <div class="attempt-item" role="button" tabindex="0"
@@ -1020,7 +1072,7 @@ function renderHistoryListV2HTML(limit = 4) {
               <span class="section-code">${getSectionIconSVG(item.section)}</span>
               <div class="attempt-copy">
                 <strong>${sectionName}</strong>
-                <span>${dateFormatted}</span>
+                <span>${dateFormatted}${durationText ? ` - ${durationText}` : ""}</span>
               </div>
             </div>
             <div class="attempt-score">
@@ -1342,6 +1394,80 @@ function createUserProfile() {
 // ==========================================================================
 // 3. DETAILED HISTORY DETAIL DIALOG
 // ==========================================================================
+function getWritingPartCriteria(item, partKey) {
+  const criteria = getPlainObject(getPlainObject(item.gradedStates)[partKey]);
+  return Object.keys(criteria).length > 0 ? criteria : null;
+}
+
+function getWritingPartScore(criteria) {
+  if (!criteria) return null;
+  return WRITING_CRITERIA.reduce((sum, criterion) => sum + (Number(criteria[criterion.key]) || 0), 0);
+}
+
+function getWritingAttemptMeta(item) {
+  const answers = getPlainObject(item.answers);
+  const meta = getPlainObject(answers.meta);
+  const fallbackParts = ["part1", "part2"].filter(partKey => {
+    const hasScore = !!getWritingPartCriteria(item, partKey);
+    const hasText = typeof answers[partKey] === "string" && answers[partKey].trim().length > 0;
+    return hasScore || hasText;
+  });
+  const assessedParts = Array.isArray(meta.assessedParts) && meta.assessedParts.length > 0
+    ? meta.assessedParts
+    : fallbackParts;
+  const fallbackActualRaw = assessedParts.reduce((sum, partKey) => {
+    const score = getWritingPartScore(getWritingPartCriteria(item, partKey));
+    return sum + (score || 0);
+  }, 0);
+  const fallbackActualMax = assessedParts.filter(partKey => getWritingPartCriteria(item, partKey)).length * 20;
+
+  return {
+    assessedParts,
+    actualRaw: Number(meta.actualRaw) || fallbackActualRaw,
+    actualMax: Number(meta.actualMax) || fallbackActualMax || Number(item.total) || 40,
+    equivalentRaw: Number(meta.equivalentRaw) || Number(item.correct) || 0
+  };
+}
+
+function getHistoryRawSummaryText(item) {
+  if (item.section !== "writing") {
+    return `${item.correct} / ${item.total} pts (${item.percentage}%)`;
+  }
+
+  const meta = getWritingAttemptMeta(item);
+  const assessedSummary = `${meta.actualRaw} / ${meta.actualMax} assessed`;
+  const equivalentSummary = `${meta.equivalentRaw} / 40 equivalent`;
+
+  return meta.actualMax === 40
+    ? `${equivalentSummary} (${item.percentage}%)`
+    : `${assessedSummary} - ${equivalentSummary} (${item.percentage}%)`;
+}
+
+function renderWritingHistoryPartHTML(item, partKey) {
+  const answers = getPlainObject(item.answers);
+  const criteria = getWritingPartCriteria(item, partKey);
+  const score = getWritingPartScore(criteria);
+  const responseText = typeof answers[partKey] === "string" ? answers[partKey].trim() : "";
+
+  if (!criteria && !responseText) return "";
+
+  const title = partKey === "part1"
+    ? "Part 1 - Compulsory Essay"
+    : `Part 2 - ${getWritingPart2TypeLabel(answers.part2Type)}`;
+  const criteriaLine = criteria
+    ? WRITING_CRITERIA.map(criterion => `${criterion.label}: ${Number(criteria[criterion.key]) || 0}/5`).join(" | ")
+    : "Not scored";
+  const scoreLabel = score === null ? "Not scored" : `${score}/20 pts`;
+
+  return `
+    <div class="history-writing-part">
+      <h4>${title} <span>${scoreLabel}</span></h4>
+      <div class="history-writing-criteria">${criteriaLine}</div>
+      <div class="history-writing-response">${responseText ? escapeHTML(responseText) : "No text saved"}</div>
+    </div>
+  `;
+}
+
 function openHistoryDetailModal(sessionId) {
   const item = STATE.history.find(h => h.id === sessionId);
   if (!item) return;
@@ -1351,32 +1477,13 @@ function openHistoryDetailModal(sessionId) {
   
   const dateFormatted = new Date(item.date).toLocaleString();
   const sectionMeta = C2_EXAM_METADATA[item.section];
+  const durationText = formatAttemptDuration(getAttemptDurationSeconds(item));
   
   let sheetHTML = "";
   if (item.section === "writing") {
-    const w1Score = item.gradedStates.part1.content + item.gradedStates.part1.comm + item.gradedStates.part1.org + item.gradedStates.part1.lang;
-    const w2Score = item.gradedStates.part2.content + item.gradedStates.part2.comm + item.gradedStates.part2.org + item.gradedStates.part2.lang;
-    
     sheetHTML = `
       <div style="display:flex; flex-direction:column; gap:1rem;">
-        <div style="background-color:#fafafa; border:1px solid var(--border-color); border-radius:6px; padding:1rem;">
-          <h4 style="font-weight:700; color:var(--accent-color); margin-bottom:0.5rem;">Part 1 - Compulsory Essay (${w1Score}/20 pts)</h4>
-          <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.5rem;">
-            Content: ${item.gradedStates.part1.content}/5 | Comm: ${item.gradedStates.part1.comm}/5 | Org: ${item.gradedStates.part1.org}/5 | Lang: ${item.gradedStates.part1.lang}/5
-          </div>
-          <div style="background:#fff; border:1px solid var(--border-color); border-radius:4px; padding:0.75rem; max-height:120px; overflow-y:auto; font-family:monospace; white-space:pre-wrap; font-size:0.8rem;">
-            ${item.answers.part1 || "No text saved"}
-          </div>
-        </div>
-        <div style="background-color:#fafafa; border:1px solid var(--border-color); border-radius:6px; padding:1rem;">
-          <h4 style="font-weight:700; color:var(--accent-color); margin-bottom:0.5rem;">Part 2 - ${getWritingPart2TypeLabel(item.answers.part2Type)} (${w2Score}/20 pts)</h4>
-          <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.5rem;">
-            Content: ${item.gradedStates.part2.content}/5 | Comm: ${item.gradedStates.part2.comm}/5 | Org: ${item.gradedStates.part2.org}/5 | Lang: ${item.gradedStates.part2.lang}/5
-          </div>
-          <div style="background:#fff; border:1px solid var(--border-color); border-radius:4px; padding:0.75rem; max-height:120px; overflow-y:auto; font-family:monospace; white-space:pre-wrap; font-size:0.8rem;">
-            ${item.answers.part2 || "No text saved"}
-          </div>
-        </div>
+        ${["part1", "part2"].map(partKey => renderWritingHistoryPartHTML(item, partKey)).join("")}
       </div>
     `;
   } else {
@@ -1387,7 +1494,7 @@ function openHistoryDetailModal(sessionId) {
       let rowsHTML = "";
       
       for (let q = partData.startQ; q <= partData.endQ; q++) {
-        const uAns = item.answers[q] || "--";
+        const uAns = escapeHTML(getPlainObject(item.answers)[q] || "--");
         const gradeState = item.gradedStates[q];
         
         let gradeLabel = "";
@@ -1434,11 +1541,13 @@ function openHistoryDetailModal(sessionId) {
           </div>
           <div style="text-align:right;">
             <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase;">Raw marks</div>
-            <div style="font-size:1.1rem; font-weight:700; color:var(--text-main);">${item.correct} / ${item.total} pts (${item.percentage}%)</div>
+            <div style="font-size:1.1rem; font-weight:700; color:var(--text-main);">${getHistoryRawSummaryText(item)}</div>
           </div>
         </div>
 
-        <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.75rem;">Saved: <b>${dateFormatted}</b></div>
+        <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.75rem;">
+          Saved: <b>${dateFormatted}</b>${durationText ? ` - Time: <b>${durationText}</b>` : ""}
+        </div>
         
         ${sheetHTML}
       </div>
@@ -1791,6 +1900,15 @@ async function saveGradedSheetResult() {
   const maxPossibleMarks = sectionMeta.maxMarks;
   const accuracyPct = Math.round((rawScoreTotal / maxPossibleMarks) * 100);
   const scaleScore = calculateScaleScore(STATE.activeSection, rawScoreTotal);
+  const durationSeconds = getCurrentPracticeDurationSeconds();
+  const answers = { ...STATE.answers };
+
+  if (durationSeconds > 0) {
+    answers.meta = {
+      ...getPlainObject(answers.meta),
+      durationSeconds
+    };
+  }
   
   STATE.history.push({
     id: `session_${STATE.activeSection}_${Date.now()}`,
@@ -1799,9 +1917,10 @@ async function saveGradedSheetResult() {
     total: maxPossibleMarks,
     percentage: accuracyPct,
     scaleScore: scaleScore,
-    answers: { ...STATE.answers },
+    answers,
     gradedStates: { ...STATE.gradedStates },
-    date: Date.now()
+    date: Date.now(),
+    durationSeconds
   });
 
   await persistHistory({ mode: "merge" });
@@ -1816,6 +1935,13 @@ const WRITING_PART2_TYPES = [
   { value: "email-letter", label: "Email / letter" },
   { value: "report", label: "Report" },
   { value: "review", label: "Review" }
+];
+
+const WRITING_CRITERIA = [
+  { key: "content", label: "Content" },
+  { key: "comm", label: "Communicative Achievement" },
+  { key: "org", label: "Organisation" },
+  { key: "lang", label: "Language" }
 ];
 
 function getWritingPart2Type() {
@@ -1967,88 +2093,135 @@ function trackSectionWritingWordCount(partKey, text) {
   }
 }
 
+function getWritingTextValue(partKey) {
+  const elementId = partKey === "part1" ? "writing-textarea-part1" : "writing-textarea-part2";
+  return document.getElementById(elementId)?.value.trim() || "";
+}
+
+function getWritingPartPrefix(partKey) {
+  return partKey === "part1" ? "w1" : "w2";
+}
+
+function getWritingPartDisplayName(partKey) {
+  if (partKey === "part1") return "Part 1 - Compulsory Essay";
+  const activeType = document.getElementById("writing-part2-type")?.value || getWritingPart2Type();
+  return `Part 2 - ${getWritingPart2TypeLabel(activeType)}`;
+}
+
+function getActiveWritingPartKeysFromText() {
+  return ["part1", "part2"].filter(partKey => getWritingTextValue(partKey).length > 0);
+}
+
+function renderWritingCriterionControlHTML(partKey, criterion) {
+  const prefix = getWritingPartPrefix(partKey);
+
+  return `
+    <div>
+      <div class="criteria-title">${criterion.label}</div>
+      <div class="criteria-slider-row">
+        <input type="range" class="criteria-slider" id="${prefix}-score-${criterion.key}" min="0" max="5" value="3" oninput="updateWritingRawTotal()">
+        <span class="criteria-value" id="${prefix}-val-${criterion.key}">3 / 5</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderWritingRubricHTML(partKey) {
+  const prefix = getWritingPartPrefix(partKey);
+
+  return `
+    <div class="writing-criteria-checklist" data-writing-part="${partKey}">
+      <h3>${getWritingPartDisplayName(partKey)}</h3>
+      ${WRITING_CRITERIA.map(criterion => renderWritingCriterionControlHTML(partKey, criterion)).join("")}
+      <div class="writing-part-total" id="${prefix}-part-total">Subtotal: 12 / 20 pts</div>
+    </div>
+  `;
+}
+
+function getRenderedWritingPartKeys() {
+  return [...document.querySelectorAll("[data-writing-part]")]
+    .map(element => element.dataset.writingPart)
+    .filter(Boolean);
+}
+
+function getWritingCriterionValue(partKey, criterionKey) {
+  const element = document.getElementById(`${getWritingPartPrefix(partKey)}-score-${criterionKey}`);
+  return element ? parseInt(element.value, 10) || 0 : null;
+}
+
+function getWritingPartScoreFromControls(partKey) {
+  const score = {};
+
+  for (const criterion of WRITING_CRITERIA) {
+    const value = getWritingCriterionValue(partKey, criterion.key);
+    if (value === null) return null;
+    score[criterion.key] = value;
+  }
+
+  score.total = WRITING_CRITERIA.reduce((sum, criterion) => sum + score[criterion.key], 0);
+  return score;
+}
+
+function getWritingEquivalentRawScore(actualRaw, actualMax) {
+  return actualMax > 0 ? Math.round((actualRaw / actualMax) * 40) : 0;
+}
+
+function getWritingScoringSnapshot() {
+  const partKeys = getRenderedWritingPartKeys();
+  const partScores = {};
+
+  partKeys.forEach(partKey => {
+    const score = getWritingPartScoreFromControls(partKey);
+    if (score) partScores[partKey] = score;
+  });
+
+  const actualRaw = Object.values(partScores).reduce((sum, score) => sum + score.total, 0);
+  const actualMax = Object.keys(partScores).length * 20;
+  const equivalentRaw = getWritingEquivalentRawScore(actualRaw, actualMax);
+
+  return {
+    partKeys: Object.keys(partScores),
+    partScores,
+    actualRaw,
+    actualMax,
+    equivalentRaw,
+    percentage: Math.round((equivalentRaw / 40) * 100),
+    scaleScore: calculateScaleScore("writing", equivalentRaw)
+  };
+}
+
 function setupWritingGradingArea() {
+  const activePartKeys = getActiveWritingPartKeysFromText();
+
+  if (activePartKeys.length === 0) {
+    alert("Write or paste at least one Writing part before grading.");
+    return;
+  }
+
   document.getElementById("writing-textarea-part1").disabled = true;
   document.getElementById("writing-textarea-part2").disabled = true;
-  
+  const part2TypeSelect = document.getElementById("writing-part2-type");
+  if (part2TypeSelect) part2TypeSelect.disabled = true;
+
   const gradingArea = document.getElementById("writing-grading-area");
-  
+
   gradingArea.innerHTML = `
-    <!-- PART 1 RUBRIC -->
-    <div class="writing-criteria-checklist" style="margin-bottom:1.5rem;">
-      <h3 style="font-size:1.05rem; font-weight:700; color:var(--accent-color); border-bottom:1px solid var(--border-color); padding-bottom:0.5rem; margin-bottom:1rem;">Essay Assessment Rubric: Part 1</h3>
-      
-      <div>
-        <div class="criteria-title">Content</div>
-        <div class="criteria-slider-row">
-          <input type="range" class="criteria-slider" id="w1-score-content" min="0" max="5" value="3" oninput="updateWritingRawTotal()">
-          <span class="criteria-value" id="w1-val-content">3 / 5</span>
-        </div>
-      </div>
-      <div>
-        <div class="criteria-title">Communicative Achievement</div>
-        <div class="criteria-slider-row">
-          <input type="range" class="criteria-slider" id="w1-score-comm" min="0" max="5" value="3" oninput="updateWritingRawTotal()">
-          <span class="criteria-value" id="w1-val-comm">3 / 5</span>
-        </div>
-      </div>
-      <div>
-        <div class="criteria-title">Organisation</div>
-        <div class="criteria-slider-row">
-          <input type="range" class="criteria-slider" id="w1-score-org" min="0" max="5" value="3" oninput="updateWritingRawTotal()">
-          <span class="criteria-value" id="w1-val-org">3 / 5</span>
-        </div>
-      </div>
-      <div>
-        <div class="criteria-title">Language (Grammar & Lexicon)</div>
-        <div class="criteria-slider-row">
-          <input type="range" class="criteria-slider" id="w1-score-lang" min="0" max="5" value="3" oninput="updateWritingRawTotal()">
-          <span class="criteria-value" id="w1-val-lang">3 / 5</span>
-        </div>
-      </div>
-      <div style="font-size:0.85rem; font-weight:700; text-align:right; margin-top:0.5rem;" id="w1-part-total">Part 1 Subtotal: 12 / 20 pts</div>
+    <div class="writing-grading-note">
+      Score only the submitted ${activePartKeys.length === 1 ? "task" : "tasks"}. The scale estimate is normalised to a 40-mark Writing paper.
     </div>
-
-    <!-- PART 2 RUBRIC -->
-    <div class="writing-criteria-checklist">
-      <h3 style="font-size:1.05rem; font-weight:700; color:var(--accent-color); border-bottom:1px solid var(--border-color); padding-bottom:0.5rem; margin-bottom:1rem;">Writing Assessment Rubric: Part 2</h3>
-      
+    ${activePartKeys.map(renderWritingRubricHTML).join("")}
+    <div class="writing-score-summary">
       <div>
-        <div class="criteria-title">Content</div>
-        <div class="criteria-slider-row">
-          <input type="range" class="criteria-slider" id="w2-score-content" min="0" max="5" value="3" oninput="updateWritingRawTotal()">
-          <span class="criteria-value" id="w2-val-content">3 / 5</span>
-        </div>
+        <span>Assessed raw</span>
+        <strong id="writing-assessed-score">0 / 0</strong>
       </div>
       <div>
-        <div class="criteria-title">Communicative Achievement</div>
-        <div class="criteria-slider-row">
-          <input type="range" class="criteria-slider" id="w2-score-comm" min="0" max="5" value="3" oninput="updateWritingRawTotal()">
-          <span class="criteria-value" id="w2-val-comm">3 / 5</span>
-        </div>
+        <span>Equivalent raw</span>
+        <strong id="writing-overall-score">0 / 40</strong>
       </div>
       <div>
-        <div class="criteria-title">Organisation</div>
-        <div class="criteria-slider-row">
-          <input type="range" class="criteria-slider" id="w2-score-org" min="0" max="5" value="3" oninput="updateWritingRawTotal()">
-          <span class="criteria-value" id="w2-val-org">3 / 5</span>
-        </div>
-      </div>
-      <div>
-        <div class="criteria-title">Language (Grammar & Lexicon)</div>
-        <div class="criteria-slider-row">
-          <input type="range" class="criteria-slider" id="w2-score-lang" min="0" max="5" value="3" oninput="updateWritingRawTotal()">
-          <span class="criteria-value" id="w2-val-lang">3 / 5</span>
-        </div>
-      </div>
-      <div style="font-size:0.85rem; font-weight:700; text-align:right; margin-top:0.5rem;" id="w2-part-total">Part 2 Subtotal: 12 / 20 pts</div>
-    </div>
-
-    <!-- SUMMATION CARD -->
-    <div class="writing-criteria-checklist" style="margin-top:1.5rem; border-color:var(--accent-color); background-color:#f3f4f6;">
-      <div style="display:flex; justify-content:space-between; align-items:center; font-weight:800; font-size:1.1rem; color:var(--text-main);">
-        <span>Total Summed Score:</span>
-        <span style="color:var(--accent-hover);" id="writing-overall-score">24 / 40 points</span>
+        <span>Scale estimate</span>
+        <strong id="writing-scale-preview">--</strong>
       </div>
     </div>
   `;
@@ -2056,72 +2229,86 @@ function setupWritingGradingArea() {
   const mainBtn = document.getElementById("sheet-submit-btn");
   mainBtn.textContent = "Save writing";
   mainBtn.setAttribute("onclick", "saveWritingSheetResult()");
-  
+
   updateWritingRawTotal();
 }
 
 function updateWritingRawTotal() {
-  const w1Content = parseInt(document.getElementById("w1-score-content").value);
-  const w1Comm = parseInt(document.getElementById("w1-score-comm").value);
-  const w1Org = parseInt(document.getElementById("w1-score-org").value);
-  const w1Lang = parseInt(document.getElementById("w1-score-lang").value);
-  
-  const w2Content = parseInt(document.getElementById("w2-score-content").value);
-  const w2Comm = parseInt(document.getElementById("w2-score-comm").value);
-  const w2Org = parseInt(document.getElementById("w2-score-org").value);
-  const w2Lang = parseInt(document.getElementById("w2-score-lang").value);
-  
-  document.getElementById("w1-val-content").textContent = `${w1Content} / 5`;
-  document.getElementById("w1-val-comm").textContent = `${w1Comm} / 5`;
-  document.getElementById("w1-val-org").textContent = `${w1Org} / 5`;
-  document.getElementById("w1-val-lang").textContent = `${w1Lang} / 5`;
-  
-  document.getElementById("w2-val-content").textContent = `${w2Content} / 5`;
-  document.getElementById("w2-val-comm").textContent = `${w2Comm} / 5`;
-  document.getElementById("w2-val-org").textContent = `${w2Org} / 5`;
-  document.getElementById("w2-val-lang").textContent = `${w2Lang} / 5`;
-  
-  const totalW1 = w1Content + w1Comm + w1Org + w1Lang;
-  const totalW2 = w2Content + w2Comm + w2Org + w2Lang;
-  const totalOverall = totalW1 + totalW2;
-  
-  document.getElementById("w1-part-total").textContent = `Part 1 Subtotal: ${totalW1} / 20 pts`;
-  document.getElementById("w2-part-total").textContent = `Part 2 Subtotal: ${totalW2} / 20 pts`;
-  document.getElementById("writing-overall-score").textContent = `${totalOverall} / 40 points`;
+  const snapshot = getWritingScoringSnapshot();
+
+  snapshot.partKeys.forEach(partKey => {
+    const prefix = getWritingPartPrefix(partKey);
+    const partScore = snapshot.partScores[partKey];
+
+    WRITING_CRITERIA.forEach(criterion => {
+      const valueElement = document.getElementById(`${prefix}-val-${criterion.key}`);
+      if (valueElement) valueElement.textContent = `${partScore[criterion.key]} / 5`;
+    });
+
+    const totalElement = document.getElementById(`${prefix}-part-total`);
+    if (totalElement) totalElement.textContent = `Subtotal: ${partScore.total} / 20 pts`;
+  });
+
+  const assessedElement = document.getElementById("writing-assessed-score");
+  const equivalentElement = document.getElementById("writing-overall-score");
+  const scaleElement = document.getElementById("writing-scale-preview");
+
+  if (assessedElement) assessedElement.textContent = `${snapshot.actualRaw} / ${snapshot.actualMax} pts`;
+  if (equivalentElement) equivalentElement.textContent = `${snapshot.equivalentRaw} / 40 pts`;
+  if (scaleElement) scaleElement.textContent = `${snapshot.scaleScore} (${getCambridgeGrade(snapshot.scaleScore)})`;
 }
 
 async function saveWritingSheetResult() {
   const text1 = document.getElementById("writing-textarea-part1").value;
   const text2 = document.getElementById("writing-textarea-part2").value;
   const part2Type = document.getElementById("writing-part2-type")?.value || getWritingPart2Type();
-  
-  const w1Content = parseInt(document.getElementById("w1-score-content").value);
-  const w1Comm = parseInt(document.getElementById("w1-score-comm").value);
-  const w1Org = parseInt(document.getElementById("w1-score-org").value);
-  const w1Lang = parseInt(document.getElementById("w1-score-lang").value);
-  
-  const w2Content = parseInt(document.getElementById("w2-score-content").value);
-  const w2Comm = parseInt(document.getElementById("w2-score-comm").value);
-  const w2Org = parseInt(document.getElementById("w2-score-org").value);
-  const w2Lang = parseInt(document.getElementById("w2-score-lang").value);
-  
-  const total = w1Content + w1Comm + w1Org + w1Lang + w2Content + w2Comm + w2Org + w2Lang;
-  const accuracyPct = Math.round((total / 40) * 100);
-  const scaleScore = calculateScaleScore("writing", total);
-  
+  const snapshot = getWritingScoringSnapshot();
+
+  if (snapshot.partKeys.length === 0) {
+    alert("No Writing task has been scored yet.");
+    return;
+  }
+
+  const gradedStates = {};
+  snapshot.partKeys.forEach(partKey => {
+    const score = snapshot.partScores[partKey];
+    gradedStates[partKey] = {
+      content: score.content,
+      comm: score.comm,
+      org: score.org,
+      lang: score.lang
+    };
+  });
+
+  const durationSeconds = getCurrentPracticeDurationSeconds();
+  const answers = {
+    part1: text1,
+    part2: text2,
+    part2Type,
+    meta: {
+      assessedParts: snapshot.partKeys,
+      actualRaw: snapshot.actualRaw,
+      actualMax: snapshot.actualMax,
+      equivalentRaw: snapshot.equivalentRaw,
+      scaleBasis: "normalised-to-40"
+    }
+  };
+
+  if (durationSeconds > 0) {
+    answers.meta.durationSeconds = durationSeconds;
+  }
+
   STATE.history.push({
     id: `session_writing_${Date.now()}`,
     section: "writing",
-    correct: total,
+    correct: snapshot.equivalentRaw,
     total: 40,
-    percentage: accuracyPct,
-    scaleScore: scaleScore,
-    answers: { part1: text1, part2: text2, part2Type },
-    gradedStates: { 
-      part1: { content: w1Content, comm: w1Comm, org: w1Org, lang: w1Lang },
-      part2: { content: w2Content, comm: w2Comm, org: w2Org, lang: w2Lang }
-    },
-    date: Date.now()
+    percentage: snapshot.percentage,
+    scaleScore: snapshot.scaleScore,
+    answers,
+    gradedStates,
+    date: Date.now(),
+    durationSeconds
   });
 
   await persistHistory({ mode: "merge" });
