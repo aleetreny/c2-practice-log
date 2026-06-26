@@ -17,8 +17,8 @@
   --color-success-bg: #e9f7f0;
   --color-error: #c83f49;
   --color-error-bg: #fff0f1;
-  --color-warning: #c83f49;
-  --color-warning-bg: #fff0f1;
+  --color-warning: #b86b00;
+  --color-warning-bg: #fff7e6;
   --color-info: #315fbd;
   --shadow-soft: 0 12px 30px rgba(23, 32, 42, 0.08);
   --shadow-line: 0 1px 2px rgba(23, 32, 42, 0.06);
@@ -587,6 +587,8 @@ button {
 }
 
 .summary-card-value.positive,
+.summary-card-value.pass,
+.summary-card-value.excellent,
 .attempt-score .pass,
 .attempt-score .excellent,
 .section-performance-head .pass,
@@ -594,24 +596,33 @@ button {
   color: var(--color-success);
 }
 
-.summary-card-value.warning {
+.summary-card-value.warning,
+.accuracy-value.warning {
   color: var(--color-warning);
 }
 
 .summary-card-value.negative,
 .summary-card-value.risk,
+.accuracy-value.risk,
 .attempt-score .risk,
 .section-performance-head .risk {
   color: var(--color-error);
 }
 
-.summary-card-value.good {
+.summary-card-value.good,
+.accuracy-value.pass,
+.accuracy-value.excellent {
   color: var(--color-success);
 }
 
 .summary-card-value.neutral,
+.accuracy-value.neutral,
 .section-performance-head .neutral {
   color: var(--text-main);
+}
+
+.accuracy-value {
+  font-weight: 850;
 }
 
 .dashboard-grid {
@@ -1307,6 +1318,44 @@ button {
   margin-bottom: 18px;
 }
 
+.sheet-header-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.practice-timer {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 6px 5px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #fbfcfd;
+}
+
+.practice-timer span {
+  min-width: 74px;
+  color: var(--text-main);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.94rem;
+  font-weight: 900;
+}
+
+.practice-timer-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.timer-btn {
+  min-height: 30px;
+  padding: 0 10px;
+  font-size: 0.78rem;
+}
+
 .sheet-title {
   min-width: 0;
 }
@@ -1569,6 +1618,89 @@ input.sheet-text-input:disabled,
   background: #fbfcfd;
   color: var(--text-main);
   line-height: 1.6;
+}
+
+.writing-part2-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 0.75rem;
+}
+
+.writing-type-control {
+  min-width: min(220px, 100%);
+  display: grid;
+  gap: 5px;
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.writing-type-control select {
+  min-height: 38px;
+  padding: 0 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--text-main);
+  font-size: 0.88rem;
+  font-weight: 800;
+  text-transform: none;
+  outline: none;
+}
+
+.writing-prompt-panel {
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.writing-prompt-panel summary {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 14px;
+  cursor: pointer;
+  color: var(--text-main);
+  font-weight: 900;
+}
+
+.writing-prompt-panel summary small {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.writing-prompt-body {
+  display: grid;
+  gap: 10px;
+  padding: 0 14px 14px;
+  border-top: 1px solid var(--border-color);
+}
+
+.writing-prompt-textarea {
+  width: 100%;
+  min-height: 260px;
+  margin-top: 14px;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #fbfcfd;
+  color: var(--text-main);
+  font-family: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.writing-prompt-actions {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .writing-word-badge {
@@ -1942,6 +2074,20 @@ input.sheet-text-input:disabled,
     flex-direction: column;
   }
 
+  .sheet-header-actions,
+  .practice-timer,
+  .practice-timer-actions {
+    width: 100%;
+  }
+
+  .practice-timer {
+    justify-content: space-between;
+  }
+
+  .practice-timer-actions .btn {
+    flex: 1;
+  }
+
   .sheet-row-main {
     grid-template-columns: 1fr;
     align-items: stretch;
@@ -1970,6 +2116,20 @@ input.sheet-text-input:disabled,
   .correction-controls-box,
   .points-btn-group {
     justify-content: flex-start;
+  }
+
+  .writing-part2-head {
+    flex-direction: column;
+  }
+
+  .writing-type-control {
+    width: 100%;
+  }
+
+  .writing-prompt-panel summary {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 10px 14px;
   }
 
   .new-profile-row {

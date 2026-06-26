@@ -12,7 +12,13 @@ const STATE = {
   supabaseSession: null,
   supabaseUserEmail: "",
   syncStatus: "local",
-  syncMessage: "Local backup"
+  syncMessage: "Local backup",
+  timer: {
+    elapsedSeconds: 0,
+    isRunning: false,
+    startedAt: null,
+    intervalId: null
+  }
 };
 
 const OWNER_PROFILE = "Aleetreny";
@@ -393,6 +399,88 @@ function getSyncLabel() {
   return "Local backup";
 }
 
+function resetPracticeTimer(options = {}) {
+  const keepRunning = options.keepRunning === true;
+  clearPracticeTimerInterval();
+  STATE.timer.elapsedSeconds = 0;
+  STATE.timer.startedAt = keepRunning ? Date.now() : null;
+  STATE.timer.isRunning = keepRunning;
+
+  if (keepRunning) {
+    STATE.timer.intervalId = setInterval(updatePracticeTimerDisplay, 1000);
+  }
+
+  updatePracticeTimerDisplay();
+}
+
+function clearPracticeTimerInterval() {
+  if (STATE.timer.intervalId) {
+    clearInterval(STATE.timer.intervalId);
+    STATE.timer.intervalId = null;
+  }
+}
+
+function getPracticeTimerSeconds() {
+  if (!STATE.timer.isRunning || !STATE.timer.startedAt) {
+    return STATE.timer.elapsedSeconds;
+  }
+
+  return Math.floor((Date.now() - STATE.timer.startedAt) / 1000);
+}
+
+function formatPracticeTimer(totalSeconds) {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  return [hours, minutes, seconds].map(value => String(value).padStart(2, "0")).join(":");
+}
+
+function updatePracticeTimerDisplay() {
+  const display = document.getElementById("practice-timer-display");
+  const toggleButton = document.getElementById("practice-timer-toggle");
+  if (!display || !toggleButton) return;
+
+  display.textContent = formatPracticeTimer(getPracticeTimerSeconds());
+  toggleButton.textContent = STATE.timer.isRunning ? "Pause" : "Start";
+}
+
+function togglePracticeTimer() {
+  if (STATE.activeSection === "listening") return;
+
+  if (STATE.timer.isRunning) {
+    STATE.timer.elapsedSeconds = getPracticeTimerSeconds();
+    STATE.timer.isRunning = false;
+    STATE.timer.startedAt = null;
+    clearPracticeTimerInterval();
+  } else {
+    STATE.timer.isRunning = true;
+    STATE.timer.startedAt = Date.now() - STATE.timer.elapsedSeconds * 1000;
+    clearPracticeTimerInterval();
+    STATE.timer.intervalId = setInterval(updatePracticeTimerDisplay, 1000);
+  }
+
+  updatePracticeTimerDisplay();
+}
+
+function restartPracticeTimer() {
+  if (STATE.activeSection === "listening") return;
+  resetPracticeTimer({ keepRunning: STATE.timer.isRunning });
+}
+
+function renderPracticeTimerHTML() {
+  if (STATE.activeSection === "listening") return "";
+
+  return `
+    <div class="practice-timer" aria-label="Practice timer">
+      <span id="practice-timer-display">${formatPracticeTimer(getPracticeTimerSeconds())}</span>
+      <div class="practice-timer-actions">
+        <button class="btn btn-secondary timer-btn" id="practice-timer-toggle" onclick="togglePracticeTimer()">Start</button>
+        <button class="btn btn-secondary timer-btn" onclick="restartPracticeTimer()">Reset</button>
+      </div>
+    </div>
+  `;
+}
+
 // CAMBRIDGE SCALE SCORE PIECEWISE CONVERTERS PER SECTION
 function interpolate(x, x0, x1, y0, y1) {
   return Math.round(y0 + ((x - x0) / (x1 - x0)) * (y1 - y0));
@@ -669,6 +757,10 @@ function getNextFocusInsight(sectionStats = getAllSectionStats()) {
 // 1. HOME HUB CONTROLLER (CLEAN INITIAL STATE, VISUALLY SQUARE)
 // ==========================================================================
 function renderHome() {
+  if (STATE.currentView === "sheet") {
+    clearPracticeTimerInterval();
+  }
+
   STATE.currentView = "home";
   const appContainer = document.getElementById("app-container");
   const totalCompleted = STATE.history.length;
@@ -774,6 +866,10 @@ function renderDashboard() {
 }
 
 function renderDashboardView() {
+  if (STATE.currentView === "sheet") {
+    clearPracticeTimerInterval();
+  }
+
   STATE.currentView = "dashboard";
   const appContainer = document.getElementById("app-container");
 
@@ -842,7 +938,7 @@ function renderDashboardView() {
           </div>
           <div class="summary-card">
             <div class="summary-card-title">Average accuracy</div>
-            <div class="summary-card-value ${overallAccuracy >= 80 ? "positive" : "negative"}">${overallAccuracy ? `${overallAccuracy}%` : "--"}</div>
+            <div class="summary-card-value ${getAccuracyTone(overallAccuracy)}">${overallAccuracy ? `${overallAccuracy}%` : "--"}</div>
             <div class="summary-card-note">weighted raw marks</div>
           </div>
           <div class="summary-card">
@@ -886,6 +982,15 @@ function calculateOverallAccuracy() {
   return Math.round((correctSum / totalSum) * 100);
 }
 
+function getAccuracyTone(value) {
+  const pct = Number(value) || 0;
+  if (pct >= 85) return "excellent";
+  if (pct >= 75) return "pass";
+  if (pct >= 60) return "warning";
+  if (pct > 0) return "risk";
+  return "neutral";
+}
+
 function renderHistoryListV2HTML(limit = 4) {
   if (STATE.history.length === 0) {
     return `
@@ -920,7 +1025,7 @@ function renderHistoryListV2HTML(limit = 4) {
             </div>
             <div class="attempt-score">
               <strong class="${scoreClass}">${item.scaleScore}</strong>
-              <span>${item.correct}/${item.total} - ${item.percentage}%</span>
+              <span class="accuracy-value ${getAccuracyTone(item.percentage)}">${item.correct}/${item.total} - ${item.percentage}%</span>
             </div>
             <button class="delete-hist-btn" onclick="event.stopPropagation(); deleteHistoryItem('${escapeJS(item.id)}')" title="Delete attempt">x</button>
           </div>
@@ -961,7 +1066,7 @@ function renderSectionAnalyticsV2HTML(sectionStats = getAllSectionStats()) {
               </div>
               <div class="section-performance-meta">
                 <span>${stats.attempts} attempts</span>
-                <span>${stats.avgAccuracy || "--"}% raw</span>
+                <span class="accuracy-value ${getAccuracyTone(stats.avgAccuracy)}">${stats.avgAccuracy || "--"}% raw</span>
                 <span>Best ${stats.bestScale || "--"}</span>
                 <span>${weakestPart ? `Weakest: ${weakestPart.name}` : "No part data"}</span>
               </div>
@@ -1073,7 +1178,7 @@ function renderPartBreakdownHTML() {
                     <div class="part-bar ${isWeakest ? "weakest" : ""}">
                       <div class="part-bar-label">
                         <span>${part.name}</span>
-                        <strong>${part.attempts ? `${part.averagePct}%` : "--"}</strong>
+                        <strong class="accuracy-value ${getAccuracyTone(part.averagePct)}">${part.attempts ? `${part.averagePct}%` : "--"}</strong>
                       </div>
                       <div class="meter">
                         <span style="width:${width}%"></span>
@@ -1264,7 +1369,7 @@ function openHistoryDetailModal(sessionId) {
           </div>
         </div>
         <div style="background-color:#fafafa; border:1px solid var(--border-color); border-radius:6px; padding:1rem;">
-          <h4 style="font-weight:700; color:var(--accent-color); margin-bottom:0.5rem;">Part 2 - Optional Writing (${w2Score}/20 pts)</h4>
+          <h4 style="font-weight:700; color:var(--accent-color); margin-bottom:0.5rem;">Part 2 - ${getWritingPart2TypeLabel(item.answers.part2Type)} (${w2Score}/20 pts)</h4>
           <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.5rem;">
             Content: ${item.gradedStates.part2.content}/5 | Comm: ${item.gradedStates.part2.comm}/5 | Org: ${item.gradedStates.part2.org}/5 | Lang: ${item.gradedStates.part2.lang}/5
           </div>
@@ -1354,6 +1459,7 @@ function openAnswerSheet(section) {
   STATE.answers = {};
   STATE.gradedStates = {};
   STATE.isCorrecting = false;
+  resetPracticeTimer();
   
   renderAnswerSheetHTML();
 }
@@ -1373,16 +1479,26 @@ function renderAnswerSheetHTML() {
       <!-- PART 1 WRITING -->
       <div style="background-color:#fafafa; border:1px solid var(--border-color); border-radius:8px; padding:1.25rem; margin-bottom:1.5rem;">
         <h3 style="font-size:1rem; font-weight:700; margin-bottom:0.75rem; color:var(--accent-color);">Writing Part 1: Compulsory Essay (240 - 280 words)</h3>
-        <textarea class="writing-sheet-textarea" id="writing-textarea-part1" placeholder="Write your essay here..." oninput="trackSectionWritingWordCount('part1', this.value)" style="height:180px;"></textarea>
+        <textarea class="writing-sheet-textarea" id="writing-textarea-part1" placeholder="Write your essay here..." oninput="trackSectionWritingWordCount('part1', this.value); updateWritingAssessmentPrompt()" style="height:180px;"></textarea>
         <div class="writing-word-badge under" id="writing-count-part1" style="margin-top:0.5rem;">0 words</div>
       </div>
 
       <!-- PART 2 WRITING -->
       <div style="background-color:#fafafa; border:1px solid var(--border-color); border-radius:8px; padding:1.25rem; margin-bottom:1.5rem;">
-        <h3 style="font-size:1rem; font-weight:700; margin-bottom:0.75rem; color:var(--accent-color);">Writing Part 2: Optional Writing (280 - 320 words)</h3>
-        <textarea class="writing-sheet-textarea" id="writing-textarea-part2" placeholder="Write your article/report/review here..." oninput="trackSectionWritingWordCount('part2', this.value)" style="height:180px;"></textarea>
+        <div class="writing-part2-head">
+          <h3 style="font-size:1rem; font-weight:700; color:var(--accent-color);">Writing Part 2: Optional Writing (280 - 320 words)</h3>
+          <label class="writing-type-control">
+            <span>Text type</span>
+            <select id="writing-part2-type" onchange="storeWritingPart2Type(this.value); updateWritingAssessmentPrompt()">
+              ${getWritingPart2TypeOptionsHTML()}
+            </select>
+          </label>
+        </div>
+        <textarea class="writing-sheet-textarea" id="writing-textarea-part2" placeholder="Write your article/report/review/email here..." oninput="trackSectionWritingWordCount('part2', this.value); updateWritingAssessmentPrompt()" style="height:180px;"></textarea>
         <div class="writing-word-badge under" id="writing-count-part2" style="margin-top:0.5rem;">0 words</div>
       </div>
+
+      ${renderWritingPromptPanelHTML()}
       
       <div id="writing-grading-area"></div>
     `;
@@ -1406,7 +1522,10 @@ function renderAnswerSheetHTML() {
             <h2>Mock: ${sectionMeta.name}</h2>
             <p>${sectionMeta.description}</p>
           </div>
-          <button class="btn btn-secondary" onclick="renderHome()">Back</button>
+          <div class="sheet-header-actions">
+            ${renderPracticeTimerHTML()}
+            <button class="btn btn-secondary" onclick="renderHome()">Back</button>
+          </div>
         </div>
 
         ${sheetContent}
@@ -1420,6 +1539,11 @@ function renderAnswerSheetHTML() {
       </div>
     </div>
   `;
+
+  updatePracticeTimerDisplay();
+  if (STATE.activeSection === "writing") {
+    updateWritingAssessmentPrompt();
+  }
 }
 
 function renderSectionPartsHTML(sectionMeta) {
@@ -1687,6 +1811,137 @@ async function saveGradedSheetResult() {
 // ==========================================================================
 // 5. WRITING GRADING FLOW (CRITERIA CHIPS)
 // ==========================================================================
+const WRITING_PART2_TYPES = [
+  { value: "article", label: "Article" },
+  { value: "email-letter", label: "Email / letter" },
+  { value: "report", label: "Report" },
+  { value: "review", label: "Review" }
+];
+
+function getWritingPart2Type() {
+  return STATE.answers.part2Type || "article";
+}
+
+function getWritingPart2TypeLabel(type = getWritingPart2Type()) {
+  return WRITING_PART2_TYPES.find(item => item.value === type)?.label || "Article";
+}
+
+function getWritingPart2TypeOptionsHTML() {
+  const activeType = getWritingPart2Type();
+  return WRITING_PART2_TYPES.map(type => `
+    <option value="${type.value}" ${activeType === type.value ? "selected" : ""}>${type.label}</option>
+  `).join("");
+}
+
+function storeWritingPart2Type(value) {
+  STATE.answers.part2Type = value;
+}
+
+function renderWritingPromptPanelHTML() {
+  return `
+    <details class="writing-prompt-panel">
+      <summary>
+        <span>GPT assessment prompt</span>
+        <small>Cambridge C2 writing criteria</small>
+      </summary>
+      <div class="writing-prompt-body">
+        <textarea id="writing-gpt-prompt" class="writing-prompt-textarea" readonly></textarea>
+        <div class="writing-prompt-actions">
+          <button class="btn btn-secondary" type="button" onclick="copyWritingAssessmentPrompt()">Copy prompt</button>
+        </div>
+      </div>
+    </details>
+  `;
+}
+
+function getPart2GenreGuidance(type = getWritingPart2Type()) {
+  const guidance = {
+    article: "For the Part 2 article, check whether it engages the target reader, has a clear angle/title or opening, develops ideas with a lively but controlled style, and ends with a satisfying conclusion.",
+    "email-letter": "For the Part 2 email/letter, check whether the register is appropriate, the purpose is clear, the opening and closing fit the relationship with the reader, and all required points are handled naturally.",
+    report: "For the Part 2 report, check whether it uses clear headings, concise factual organisation, relevant observations, and practical recommendations or conclusions.",
+    review: "For the Part 2 review, check whether it describes and evaluates the subject, gives supported opinions, uses an engaging critical voice, and includes a clear recommendation where appropriate."
+  };
+
+  return guidance[type] || guidance.article;
+}
+
+function buildWritingAssessmentPrompt() {
+  const part1Text = document.getElementById("writing-textarea-part1")?.value.trim() || "";
+  const part2Text = document.getElementById("writing-textarea-part2")?.value.trim() || "";
+  const part2Type = document.getElementById("writing-part2-type")?.value || getWritingPart2Type();
+  const part2TypeLabel = getWritingPart2TypeLabel(part2Type);
+  const tasks = [];
+
+  if (part1Text) {
+    tasks.push(`PART 1 - COMPULSORY ESSAY
+Task type: essay
+Text:
+"""${part1Text}"""`);
+  }
+
+  if (part2Text) {
+    tasks.push(`PART 2 - OPTIONAL WRITING
+Task type: ${part2TypeLabel}
+Genre-specific focus: ${getPart2GenreGuidance(part2Type)}
+Text:
+"""${part2Text}"""`);
+  }
+
+  const taskBlock = tasks.length > 0
+    ? tasks.join("\n\n---\n\n")
+    : "[Paste the candidate text here. If Part 1 is present, assess it as an essay. If Part 2 is present, assess it using the selected Part 2 text type.]";
+
+  return `You are assessing Cambridge C2 Proficiency Writing practice.
+
+Use the C2 Proficiency Writing scoring structure described below. Be strict but constructive.
+
+Assessment rules:
+- Writing has 2 tasks.
+- Each task is marked out of 20.
+- Each task has four criteria: Content, Communicative Achievement, Organisation, and Language.
+- Award an integer score from 0 to 5 for each criterion. Do not use half marks.
+- Part 1 must be assessed as a compulsory essay.
+- Part 2 must be assessed according to its selected text type.
+- Total raw Writing mark is out of 40.
+- Cambridge practice-test thresholds for Writing are: 10 raw marks = 162, 16 = 180, 24 = 200, 34 = 220.
+- Do not claim an official exact Cambridge Scale score. Give a likely band only: below 162, 162-179, 180-199, 200-219, or 220+.
+
+For each submitted task, return:
+1. A table with Content, Communicative Achievement, Organisation, and Language, each scored 0-5.
+2. One short justification per criterion.
+3. The task total out of 20.
+4. The 3 most important fixes to improve the mark.
+5. A short list of high-value rewrites or phrase upgrades.
+
+If both tasks are included, also return:
+- Combined raw mark out of 40.
+- Likely Cambridge Scale band using the thresholds above.
+- Whether the performance is closer to C1, C2 Grade C, C2 Grade B, or C2 Grade A.
+
+Candidate text:
+
+${taskBlock}`;
+}
+
+function updateWritingAssessmentPrompt() {
+  const promptBox = document.getElementById("writing-gpt-prompt");
+  if (!promptBox) return;
+  promptBox.value = buildWritingAssessmentPrompt();
+}
+
+async function copyWritingAssessmentPrompt() {
+  updateWritingAssessmentPrompt();
+  const promptBox = document.getElementById("writing-gpt-prompt");
+  if (!promptBox) return;
+
+  try {
+    await navigator.clipboard.writeText(promptBox.value);
+  } catch (error) {
+    promptBox.select();
+    document.execCommand("copy");
+  }
+}
+
 function trackSectionWritingWordCount(partKey, text) {
   const badgeId = partKey === "part1" ? "writing-count-part1" : "writing-count-part2";
   const badge = document.getElementById(badgeId);
@@ -1838,6 +2093,7 @@ function updateWritingRawTotal() {
 async function saveWritingSheetResult() {
   const text1 = document.getElementById("writing-textarea-part1").value;
   const text2 = document.getElementById("writing-textarea-part2").value;
+  const part2Type = document.getElementById("writing-part2-type")?.value || getWritingPart2Type();
   
   const w1Content = parseInt(document.getElementById("w1-score-content").value);
   const w1Comm = parseInt(document.getElementById("w1-score-comm").value);
@@ -1860,7 +2116,7 @@ async function saveWritingSheetResult() {
     total: 40,
     percentage: accuracyPct,
     scaleScore: scaleScore,
-    answers: { part1: text1, part2: text2 },
+    answers: { part1: text1, part2: text2, part2Type },
     gradedStates: { 
       part1: { content: w1Content, comm: w1Comm, org: w1Org, lang: w1Lang },
       part2: { content: w2Content, comm: w2Comm, org: w2Org, lang: w2Lang }
