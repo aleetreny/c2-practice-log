@@ -88,54 +88,54 @@ function injectMockData() {
     {
       id: "mock_session_1",
       section: "useOfEnglish",
-      correct: 20, // raw score out of 28+8=36 marks
-      total: 36,
-      percentage: 56,
-      scaleScore: 175,
+      correct: 17, // raw score out of 28 marks
+      total: 28,
+      percentage: 61,
+      scaleScore: 200,
       answers: {
-        1: "A", 2: "B", 3: "A", 4: "C", 5: "D", 6: "A", 7: "B", 8: "C",
         9: "THAT", 10: "FOR", 11: "THANKS", 12: "IF", 13: "NOT", 14: "ONE", 15: "ABOUT", 16: "DOWN",
         17: "REGENERATION", 18: "DEPRIVATION", 19: "REPLACEABLE", 20: "DISPOSED", 21: "SEQUENTIAL", 22: "WHETHER", 23: "VALUED", 24: "BENEFICIAL",
         25: "UNTIL THE OFFICE CLOSED DID", 26: "SHYING AWAY", 27: "PULL SOCKS", 28: "IT NOT BEEN FOR", 29: "TO CALL OFF", 30: "LEFT HER AT A LOSS"
       },
       gradedStates: {
-        1: "correct", 2: "correct", 3: "correct", 4: "incorrect", 5: "correct", 6: "incorrect", 7: "correct", 8: "incorrect",
         9: "correct", 10: "incorrect", 11: "correct", 12: "incorrect", 13: "correct", 14: "correct", 15: "correct", 16: "incorrect",
         17: "correct", 18: "correct", 19: "incorrect", 20: "incorrect", 21: "correct", 22: "incorrect", 23: "incorrect", 24: "correct",
         25: 2, 26: 0, 27: 1, 28: 2, 29: 2, 30: 1
       },
       errorNotes: {
-        4: "Wrong vocabulary word choice", 6: "Missed collocated verb", 8: "Did not fit context",
         10: "Used 'for' instead of 'to'", 12: "Used 'if' instead of 'whether'", 16: "Phrasal verb error",
         19: "Forgot negative prefix 'ir-'", 20: "Missed prefix 'predisposed'", 22: "Wrong conjunction", 23: "Forgot prefix 'undervalued'",
         26: "Used active shying instead of shied", 27: "Missed pronoun 'your'"
       },
-      incorrectQuestions: [4, 6, 8, 10, 12, 16, 19, 20, 22, 23, 26, 27],
+      incorrectQuestions: [10, 12, 16, 19, 20, 22, 23, 26, 27, 30],
       date: days(6)
     },
     {
       id: "mock_session_2",
       section: "reading",
-      correct: 25, // raw score out of 12(P5)+14(P6)+10(P7) = 36 marks
-      total: 36,
-      percentage: 69,
-      scaleScore: 187,
+      correct: 33, // 6 (Part 1) + 27 (Parts 5-7) = 33 marks out of 44
+      total: 44,
+      percentage: 75,
+      scaleScore: 213,
       answers: {
+        1: "A", 2: "B", 3: "A", 4: "C", 5: "D", 6: "A", 7: "B", 8: "C",
         31: "B", 32: "A", 33: "C", 34: "B", 35: "C", 36: "D",
         37: "A", 38: "C", 39: "F", 40: "G", 41: "D", 42: "B", 43: "H",
         44: "A", 45: "B", 46: "C", 47: "D", 48: "A", 49: "C", 50: "B", 51: "D", 52: "A", 53: "B"
       },
       gradedStates: {
+        1: "correct", 2: "correct", 3: "correct", 4: "incorrect", 5: "correct", 6: "correct", 7: "correct", 8: "incorrect",
         31: "correct", 32: "incorrect", 33: "correct", 34: "incorrect", 35: "correct", 36: "correct",
         37: "incorrect", 38: "correct", 39: "correct", 40: "correct", 41: "incorrect", 42: "correct", 43: "correct",
         44: "correct", 45: "correct", 46: "correct", 47: "correct", 48: "incorrect", 49: "correct", 50: "correct", 51: "correct", 52: "correct", 53: "correct"
       },
       errorNotes: {
+        4: "Misunderstood collocation", 8: "Confused word meaning",
         32: "Misunderstood 'organic automata' context", 34: "Confused mass property aggregates",
         37: "Wrong paragraph link, missed transition", 41: "Misread pressure cellular rupture details",
         48: "Missed Marcus Vance frustration details"
       },
-      incorrectQuestions: [32, 34, 37, 41, 48],
+      incorrectQuestions: [4, 8, 32, 34, 37, 41, 48],
       date: days(4)
     },
     {
@@ -144,7 +144,7 @@ function injectMockData() {
       correct: 23, // raw score out of 30 marks
       total: 30,
       percentage: 77,
-      scaleScore: 197,
+      scaleScore: 217,
       answers: {
         54: "A", 55: "B", 56: "B", 57: "A", 58: "A", 59: "B",
         60: "COLD LIGHT", 61: "LUCIFEREEN", 62: "LANTERNFISH", 63: "SILHOUETTES", 64: "FISHING ROD", 65: "MILKY SEAS", 66: "SATELLITES", 67: "BURGLAR ALARM", 68: "POLLUTION SENSORS",
@@ -169,18 +169,16 @@ function injectMockData() {
     {
       id: "mock_session_4",
       section: "useOfEnglish",
-      correct: 30, // raw score out of 36 marks
-      total: 36,
-      percentage: 83,
-      scaleScore: 198,
+      correct: 26, // raw score out of 28 marks
+      total: 28,
+      percentage: 93,
+      scaleScore: 227,
       answers: {
-        1: "A", 2: "A", 3: "A", 4: "A", 5: "A", 6: "A", 7: "A", 8: "A",
         9: "THAT", 10: "TO", 11: "THANKS", 12: "WHETHER", 13: "NOT", 14: "ONE", 15: "ABOUT", 16: "UP",
         17: "REGENERATION", 18: "DEPRIVATION", 19: "IRREPLACEABLE", 20: "PREDISPOSED", 21: "SEQUENTIAL", 22: "WHEREAS", 23: "UNDERVALUED", 24: "BENEFICIAL",
         25: "UNTIL THE OFFICE CLOSED DID", 26: "SHIED AWAY FROM", 27: "PULL SOCKS UP", 28: "IT NOT BEEN FOR", 29: "TO CALL OFF", 30: "LEFT HER AT A LOSS"
       },
       gradedStates: {
-        1: "correct", 2: "correct", 3: "correct", 4: "correct", 5: "correct", 6: "correct", 7: "correct", 8: "correct",
         9: "correct", 10: "correct", 11: "correct", 12: "correct", 13: "correct", 14: "correct", 15: "correct", 16: "correct",
         17: "correct", 18: "correct", 19: "correct", 20: "correct", 21: "correct", 22: "correct", 23: "correct", 24: "correct",
         25: 2, 26: 2, 27: 1, 28: 2, 29: 2, 30: 1
@@ -198,7 +196,7 @@ function injectMockData() {
       correct: 34, // raw score out of 40 marks
       total: 40,
       percentage: 85,
-      scaleScore: 200,
+      scaleScore: 220,
       answers: {
         part1: "The relation of technology in classrooms...",
         part2: "A report on modernized community spaces..."
@@ -256,31 +254,35 @@ function interpolate(x, x0, x1, y0, y1) {
 }
 
 function getUseOfEnglishScale(raw) {
-  if (raw >= 30) return interpolate(raw, 30, 36, 200, 230); // C2 Pass
-  if (raw >= 21) return interpolate(raw, 21, 30, 180, 200); // C1 Level
-  if (raw >= 15) return interpolate(raw, 15, 21, 160, 180); // B2 Level
-  return interpolate(raw, 0, 15, 120, 160); // Fail
+  if (raw >= 22) return interpolate(raw, 22, 28, 220, 230);
+  if (raw >= 17) return interpolate(raw, 17, 22, 200, 220);
+  if (raw >= 13) return interpolate(raw, 13, 17, 180, 200);
+  if (raw >= 9) return interpolate(raw, 9, 13, 162, 180);
+  return interpolate(raw, 0, 9, 120, 162);
 }
 
 function getReadingScale(raw) {
-  if (raw >= 26) return interpolate(raw, 26, 36, 200, 230); // C2 Pass
-  if (raw >= 18) return interpolate(raw, 18, 26, 180, 200); // C1 Level
-  if (raw >= 11) return interpolate(raw, 11, 18, 160, 180); // B2 Level
-  return interpolate(raw, 0, 11, 120, 160); // Fail
+  if (raw >= 36) return interpolate(raw, 36, 44, 220, 230);
+  if (raw >= 28) return interpolate(raw, 28, 36, 200, 220);
+  if (raw >= 22) return interpolate(raw, 22, 28, 180, 200);
+  if (raw >= 14) return interpolate(raw, 14, 22, 162, 180);
+  return interpolate(raw, 0, 14, 120, 162);
 }
 
 function getListeningScale(raw) {
-  if (raw >= 24) return interpolate(raw, 24, 30, 200, 230); // C2 Pass
-  if (raw >= 18) return interpolate(raw, 18, 24, 180, 200); // C1 Level
-  if (raw >= 13) return interpolate(raw, 13, 18, 160, 180); // B2 Level
-  return interpolate(raw, 0, 13, 120, 160); // Fail
+  if (raw >= 24) return interpolate(raw, 24, 30, 220, 230);
+  if (raw >= 18) return interpolate(raw, 18, 24, 200, 220);
+  if (raw >= 14) return interpolate(raw, 14, 18, 180, 200);
+  if (raw >= 10) return interpolate(raw, 10, 14, 162, 180);
+  return interpolate(raw, 0, 10, 120, 162);
 }
 
 function getWritingScale(raw) {
-  if (raw >= 34) return interpolate(raw, 34, 40, 200, 230); // C2 Pass
-  if (raw >= 24) return interpolate(raw, 24, 34, 180, 200); // C1 Level
-  if (raw >= 16) return interpolate(raw, 16, 24, 160, 180); // B2 Level
-  return interpolate(raw, 0, 16, 120, 160); // Fail
+  if (raw >= 34) return interpolate(raw, 34, 40, 220, 230);
+  if (raw >= 24) return interpolate(raw, 24, 34, 200, 220);
+  if (raw >= 16) return interpolate(raw, 16, 24, 180, 200);
+  if (raw >= 10) return interpolate(raw, 10, 16, 162, 180);
+  return interpolate(raw, 0, 10, 120, 162);
 }
 
 function calculateScaleScore(section, rawScore) {
@@ -296,8 +298,8 @@ function getCambridgeGrade(scaleScore) {
   if (scaleScore >= 213) return "Grade B (C2)";
   if (scaleScore >= 200) return "Grade C (C2)";
   if (scaleScore >= 180) return "Level C1";
-  if (scaleScore >= 160) return "Level B2";
-  return "Fail";
+  if (scaleScore >= 162) return "Reported (No Certificate)";
+  return "Not Reported";
 }
 
 // ==========================================================================

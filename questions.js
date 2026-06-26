@@ -1,17 +1,9 @@
 const C2_EXAM_METADATA = {
   useOfEnglish: {
     name: "Use of English",
-    description: "Grammar & Vocabulary (Parts 1, 2, 3, 4)",
-    maxMarks: 36,
+    description: "Grammar & Vocabulary (Parts 2, 3, 4)",
+    maxMarks: 28,
     parts: {
-      part1: {
-        name: "Part 1 - Multiple-choice cloze",
-        startQ: 1,
-        endQ: 8,
-        type: "mcq",
-        options: ["A", "B", "C", "D"],
-        weight: 1
-      },
       part2: {
         name: "Part 2 - Open cloze",
         startQ: 9,
@@ -37,9 +29,17 @@ const C2_EXAM_METADATA = {
   },
   reading: {
     name: "Reading",
-    description: "Reading Comprehension (Parts 5, 6, 7)",
-    maxMarks: 36,
+    description: "Reading Comprehension (Parts 1, 5, 6, 7)",
+    maxMarks: 44,
     parts: {
+      part1: {
+        name: "Part 1 - Multiple-choice cloze",
+        startQ: 1,
+        endQ: 8,
+        type: "mcq",
+        options: ["A", "B", "C", "D"],
+        weight: 1
+      },
       part5: {
         name: "Part 5 - Multiple choice",
         startQ: 31,
