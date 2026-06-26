@@ -1293,6 +1293,10 @@ button {
   box-shadow: var(--shadow-soft);
 }
 
+.sheet-container-wide {
+  width: min(960px, 100%);
+}
+
 .sheet-header {
   display: flex;
   align-items: center;
@@ -1334,6 +1338,74 @@ button {
   flex-direction: column;
   gap: 16px;
   margin-bottom: 22px;
+}
+
+.sheet-part-card {
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.sheet-part-title {
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--accent-color);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.listening-part4-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.listening-task-column {
+  min-width: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #fbfcfd;
+  overflow: hidden;
+}
+
+.listening-task-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 42px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--accent-soft);
+  color: var(--accent-hover);
+}
+
+.listening-task-header span {
+  font-size: 0.9rem;
+  font-weight: 900;
+}
+
+.listening-task-header small {
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.listening-task-rows {
+  padding: 2px 8px;
+}
+
+.listening-part4-row .sheet-row-main {
+  grid-template-columns: minmax(52px, auto) minmax(120px, 1fr);
+}
+
+.listening-part4-row [id^="correction-controls-"] {
+  grid-column: 1 / -1;
+  justify-self: end;
 }
 
 .sheet-row {
@@ -1873,6 +1945,21 @@ input.sheet-text-input:disabled,
   .sheet-row-main {
     grid-template-columns: 1fr;
     align-items: stretch;
+  }
+
+  .listening-part4-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .listening-task-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2px;
+    padding: 10px 12px;
+  }
+
+  .listening-part4-row .sheet-row-main {
+    grid-template-columns: 1fr;
   }
 
   input.sheet-text-input,

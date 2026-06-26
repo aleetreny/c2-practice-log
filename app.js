@@ -1400,7 +1400,7 @@ function renderAnswerSheetHTML() {
 
   appContainer.innerHTML = `
     <div class="sheet-view">
-      <div class="sheet-container">
+      <div class="sheet-container ${STATE.activeSection === "listening" ? "sheet-container-wide" : ""}">
         <div class="sheet-header">
           <div class="sheet-title">
             <h2>Mock: ${sectionMeta.name}</h2>
@@ -1426,54 +1426,15 @@ function renderSectionPartsHTML(sectionMeta) {
   let sectionHTML = "";
   
   for (const [partKey, partData] of Object.entries(sectionMeta.parts)) {
+    if (STATE.activeSection === "listening" && partKey === "part4") {
+      sectionHTML += renderListeningPart4HTML(partData);
+      continue;
+    }
+
     let rowsHTML = "";
     
     for (let q = partData.startQ; q <= partData.endQ; q++) {
-      const answeredVal = STATE.answers[q] || "";
-      let inputField = "";
-      
-      const weightHint = partData.weight > 1 ? `<span style="font-size:0.7rem; color:var(--text-muted); font-weight:normal; margin-left:0.25rem;">(${partData.weight} marks)</span>` : "";
-
-      if (partData.type === "mcq") {
-        inputField = `
-          <div class="sheet-radio-group">
-            ${partData.options.map(opt => `
-              <label class="sheet-radio-label">
-                <input type="radio" name="sheet-q-${q}" class="sheet-radio-input" value="${opt}" 
-                       ${answeredVal === opt ? 'checked' : ''} onchange="storeInputAnswer(${q}, this.value)">
-                ${opt}
-              </label>
-            `).join('')}
-          </div>
-        `;
-      } else if (partData.type === "dropdown") {
-        inputField = `
-          <select class="sheet-select-input" onchange="storeInputAnswer(${q}, this.value)">
-            <option value="">Select...</option>
-            ${partData.options.map(opt => `
-              <option value="${opt}" ${answeredVal === opt ? 'selected' : ''}>Option ${opt}</option>
-            `).join('')}
-          </select>
-        `;
-      } else {
-        inputField = `
-          <input type="text" class="sheet-text-input" value="${answeredVal}" maxlength="80" 
-                 oninput="storeInputAnswer(${q}, this.value)" placeholder="Enter answer...">
-        `;
-      }
-
-      rowsHTML += `
-        <div class="sheet-row" id="sheet-row-${q}" style="border:none; border-bottom:1px solid #f3f4f6; border-radius:0; padding:0.6rem 0.5rem;">
-          <div class="sheet-row-main">
-            <div class="sheet-q-num">Q.${q} ${weightHint}</div>
-            <div style="flex-grow:1; display:flex; justify-content:flex-start;">
-              ${inputField}
-            </div>
-            <div id="correction-controls-${q}"></div>
-          </div>
-          <div id="error-note-area-${q}"></div>
-        </div>
-      `;
+      rowsHTML += renderSheetQuestionRowHTML(q, partData);
     }
 
     sectionHTML += `
@@ -1489,6 +1450,98 @@ function renderSectionPartsHTML(sectionMeta) {
   }
 
   return sectionHTML;
+}
+
+function renderSheetQuestionInputHTML(q, partData) {
+  const answeredVal = STATE.answers[q] || "";
+
+  if (partData.type === "mcq") {
+    return `
+      <div class="sheet-radio-group">
+        ${partData.options.map(opt => `
+          <label class="sheet-radio-label">
+            <input type="radio" name="sheet-q-${q}" class="sheet-radio-input" value="${opt}"
+                   ${answeredVal === opt ? 'checked' : ''} onchange="storeInputAnswer(${q}, this.value)">
+            ${opt}
+          </label>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  if (partData.type === "dropdown") {
+    return `
+      <select class="sheet-select-input" onchange="storeInputAnswer(${q}, this.value)">
+        <option value="">Select...</option>
+        ${partData.options.map(opt => `
+          <option value="${opt}" ${answeredVal === opt ? 'selected' : ''}>Option ${opt}</option>
+        `).join('')}
+      </select>
+    `;
+  }
+
+  return `
+    <input type="text" class="sheet-text-input" value="${answeredVal}" maxlength="80"
+           oninput="storeInputAnswer(${q}, this.value)" placeholder="Enter answer...">
+  `;
+}
+
+function renderSheetQuestionRowHTML(q, partData, extraClass = "") {
+  const weightHint = partData.weight > 1 ? `<span style="font-size:0.7rem; color:var(--text-muted); font-weight:normal; margin-left:0.25rem;">(${partData.weight} marks)</span>` : "";
+
+  return `
+    <div class="sheet-row ${extraClass}" id="sheet-row-${q}" style="border:none; border-bottom:1px solid #f3f4f6; border-radius:0; padding:0.6rem 0.5rem;">
+      <div class="sheet-row-main">
+        <div class="sheet-q-num">Q.${q} ${weightHint}</div>
+        <div style="flex-grow:1; display:flex; justify-content:flex-start;">
+          ${renderSheetQuestionInputHTML(q, partData)}
+        </div>
+        <div id="correction-controls-${q}"></div>
+      </div>
+      <div id="error-note-area-${q}"></div>
+    </div>
+  `;
+}
+
+function renderListeningPart4HTML(partData) {
+  const task1Rows = [];
+  const task2Rows = [];
+  const midpoint = partData.startQ + Math.floor((partData.endQ - partData.startQ + 1) / 2) - 1;
+
+  for (let q = partData.startQ; q <= partData.endQ; q++) {
+    const row = renderSheetQuestionRowHTML(q, partData, "listening-part4-row");
+    if (q <= midpoint) {
+      task1Rows.push(row);
+    } else {
+      task2Rows.push(row);
+    }
+  }
+
+  return `
+    <div class="sheet-part-card listening-part4-card">
+      <h3 class="sheet-part-title">${partData.name}</h3>
+      <div class="listening-part4-grid">
+        <section class="listening-task-column" aria-label="Listening Part 4 Task 1">
+          <div class="listening-task-header">
+            <span>Task 1</span>
+            <small>Questions ${partData.startQ}-${midpoint}</small>
+          </div>
+          <div class="listening-task-rows">
+            ${task1Rows.join("")}
+          </div>
+        </section>
+        <section class="listening-task-column" aria-label="Listening Part 4 Task 2">
+          <div class="listening-task-header">
+            <span>Task 2</span>
+            <small>Questions ${midpoint + 1}-${partData.endQ}</small>
+          </div>
+          <div class="listening-task-rows">
+            ${task2Rows.join("")}
+          </div>
+        </section>
+      </div>
+    </div>
+  `;
 }
 
 function clearSheetInputs() {
