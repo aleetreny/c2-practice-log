@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>C2 Answer Sheet Companion</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Plantilla de respuestas interactiva para tus prácticas oficiales de Cambridge C2 Proficiency (CPE). Calcula tu Cambridge Scale Score y registra tus fallos de forma organizada.">
+  <meta name="author" content="C2 Answer Sheet Companion">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
+  
+  <!-- Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Styling -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- SPA Target Container -->
+  <div id="app-container">
+    <div style="display:flex; justify-content:center; align-items:center; height:100vh; background-color:#f9fafb;">
+      <div style="text-align:center; font-family:'Inter', sans-serif; color:#1f2937;">
+        <h2 style="margin-bottom:1rem; font-weight: 700;">Iniciando C2 Companion...</h2>
+        <div class="loader" style="border: 4px solid rgba(0,0,0,0.05); border-radius: 50%; border-top: 4px solid #4b5563; width: 45px; height: 45px; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+
+  <!-- Scripts -->
+  <script src="questions.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>

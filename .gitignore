@@ -1,0 +1,17 @@
+# System files
+Thumbs.db
+db.json
+*.log
+.DS_Store
+
+# Editor directories
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Gemini configurations/logs (in case they reside in the workspace)
+.gemini/
+.agents/
