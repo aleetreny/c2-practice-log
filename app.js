@@ -9,6 +9,7 @@ const STATE = {
   profiles: ["Aleetreny"],
   history: [],
   isAuthenticated: false,
+  syncBackendAvailable: true,
   syncStatus: "local",
   syncMessage: "Local backup"
 };
@@ -124,6 +125,7 @@ async function apiRequest(path, options = {}) {
 async function hydrateRemoteHistory() {
   try {
     const session = await apiRequest("/api/me");
+    STATE.syncBackendAvailable = true;
     STATE.isAuthenticated = !!session.authenticated;
 
     if (!STATE.isAuthenticated) {
@@ -147,8 +149,9 @@ async function hydrateRemoteHistory() {
     STATE.syncStatus = "synced";
     STATE.syncMessage = "Synced online";
   } catch (error) {
+    STATE.syncBackendAvailable = !error.isExpectedOffline;
     STATE.isAuthenticated = false;
-    STATE.syncStatus = "local";
+    STATE.syncStatus = error.isExpectedOffline ? "static" : "local";
     STATE.syncMessage = "Local backup";
     if (!error.isExpectedOffline) {
       console.warn("Online sync unavailable", error);
@@ -912,9 +915,16 @@ function openProfileModal() {
 function openProfileModalView() {
   const modal = document.createElement("div");
   modal.className = "modal-overlay";
-  const accountState = STATE.isAuthenticated ? "Online sync active" : "Local backup only";
+  const isStaticBuild = !STATE.syncBackendAvailable;
+  const accountState = STATE.isAuthenticated
+    ? "Online sync active"
+    : isStaticBuild
+      ? "Static backup only"
+      : "Local backup only";
   const accountDetail = STATE.isAuthenticated
     ? "Your progress is being saved to the private GitHub-backed store."
+    : isStaticBuild
+      ? "This GitHub Pages build saves progress in this browser. Private online sync needs a backend because static hosting cannot keep secrets."
     : "Sign in to sync this browser history to the online store.";
 
   modal.innerHTML = `
@@ -939,6 +949,10 @@ function openProfileModalView() {
           ${STATE.isAuthenticated ? `
             <div class="new-profile-row">
               <button class="btn btn-secondary btn-full" onclick="logoutOwnerFromModal()">Sign out</button>
+            </div>
+          ` : isStaticBuild ? `
+            <div class="new-profile-row">
+              <button class="btn btn-secondary btn-full" onclick="closeModal()">Close</button>
             </div>
           ` : `
             <div class="new-profile-row">
