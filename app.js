@@ -21,6 +21,7 @@ const SUPABASE_SESSION_KEY = "c2_supabase_session";
 const SUPABASE_CONFIG = {
   restUrl: "https://irsugdtdqnvlrcbotvfe.supabase.co/rest/v1",
   authUrl: "https://irsugdtdqnvlrcbotvfe.supabase.co/auth/v1",
+  redirectUrl: "https://aleetreny.github.io/c2-practice-log/",
   anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlyc3VnZHRkcW52bHJjYm90dmZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0Nzk4MjgsImV4cCI6MjA5ODA1NTgyOH0.MMJwed40u5tszDUYeS_Tx0BMo0PLWdY-eEp6Qs4XC9o"
 };
 
@@ -32,6 +33,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 async function initializeApp() {
   loadProfiles();
   loadLocalStorage();
+  await consumeSupabaseRedirectSession();
   renderHome();
 
   await hydrateRemoteHistory();
@@ -139,6 +141,49 @@ function clearSupabaseSession() {
   localStorage.removeItem(SUPABASE_SESSION_KEY);
 }
 
+async function fetchSupabaseUser(accessToken) {
+  const response = await fetch(`${normalizeSupabaseUrl(SUPABASE_CONFIG.authUrl)}/user`, {
+    headers: {
+      apikey: SUPABASE_CONFIG.anonKey,
+      Authorization: `Bearer ${accessToken}`
+    }
+  });
+
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(payload.msg || payload.message || "Could not read Supabase user");
+  }
+
+  return payload;
+}
+
+async function consumeSupabaseRedirectSession() {
+  const hash = window.location.hash ? window.location.hash.slice(1) : "";
+  const params = new URLSearchParams(hash);
+  const accessToken = params.get("access_token");
+  const refreshToken = params.get("refresh_token");
+
+  if (!accessToken || !refreshToken) return false;
+
+  try {
+    const user = await fetchSupabaseUser(accessToken);
+    saveSupabaseSession({
+      access_token: accessToken,
+      refresh_token: refreshToken,
+      expires_in: Number(params.get("expires_in")) || 3600,
+      expires_at: Math.floor(Date.now() / 1000) + (Number(params.get("expires_in")) || 3600),
+      token_type: params.get("token_type") || "bearer",
+      user
+    });
+
+    window.history.replaceState(null, document.title, `${window.location.origin}${window.location.pathname}${window.location.search}`);
+    return true;
+  } catch (error) {
+    console.warn("Could not consume Supabase redirect session", error);
+    return false;
+  }
+}
+
 async function supabaseAuthRequest(path, body) {
   const response = await fetch(`${normalizeSupabaseUrl(SUPABASE_CONFIG.authUrl)}${path}`, {
     method: "POST",
@@ -165,7 +210,8 @@ async function signInWithSupabase(email, password) {
 }
 
 async function signUpWithSupabase(email, password) {
-  const session = await supabaseAuthRequest("/signup", { email, password });
+  const redirectTo = encodeURIComponent(SUPABASE_CONFIG.redirectUrl);
+  const session = await supabaseAuthRequest(`/signup?redirect_to=${redirectTo}`, { email, password });
   if (session.access_token) saveSupabaseSession(session);
   return session;
 }
