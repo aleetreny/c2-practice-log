@@ -1,7 +1,7 @@
 const C2_EXAM_METADATA = {
   useOfEnglish: {
     name: "Use of English",
-    description: "Grammar & Vocabulary (Parts 2, 3, 4)",
+    description: "Parts 2, 3, 4",
     maxMarks: 28,
     parts: {
       part2: {
@@ -29,7 +29,7 @@ const C2_EXAM_METADATA = {
   },
   reading: {
     name: "Reading",
-    description: "Reading Comprehension (Parts 1, 5, 6, 7)",
+    description: "Parts 1, 5, 6, 7",
     maxMarks: 44,
     parts: {
       part1: {
@@ -68,7 +68,7 @@ const C2_EXAM_METADATA = {
   },
   listening: {
     name: "Listening",
-    description: "Listening Comprehension (Parts 1, 2, 3, 4)",
+    description: "Parts 1, 2, 3, 4",
     maxMarks: 30,
     parts: {
       part1: {
@@ -106,7 +106,7 @@ const C2_EXAM_METADATA = {
   },
   writing: {
     name: "Writing",
-    description: "Writing Tasks (Parts 1, 2)",
+    description: "Parts 1, 2",
     maxMarks: 40,
     parts: {
       part1: {

@@ -4,248 +4,205 @@ const STATE = {
   activeSection: null, // "useOfEnglish" | "reading" | "listening" | "writing"
   answers: {}, // Q-num -> string
   gradedStates: {}, // Q-num -> "correct" | "incorrect" | score (0|1|2)
-  errorNotes: {}, // Q-num -> string
   isCorrecting: false,
-  activeProfile: "Candidate C2",
-  profiles: ["Candidate C2"],
-  history: [], 
-  mistakes: [] 
+  activeProfile: "Aleetreny",
+  profiles: ["Aleetreny"],
+  history: [],
+  isAuthenticated: false,
+  syncStatus: "local",
+  syncMessage: "Local backup"
 };
 
+const OWNER_PROFILE = "Aleetreny";
+const LOCAL_HISTORY_KEY = "c2_owner_history";
+
 // INITIALIZE APP
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
+  await initializeApp();
+});
+
+async function initializeApp() {
   loadProfiles();
   loadLocalStorage();
   renderHome();
-});
+
+  await hydrateRemoteHistory();
+  refreshCurrentView();
+}
 
 // LOAD AND SAVE LOCAL STORAGE
 function loadProfiles() {
-  try {
-    const rawActive = localStorage.getItem("c2_companion_active_profile");
-    const rawList = localStorage.getItem("c2_companion_profiles");
-    
-    if (rawActive) STATE.activeProfile = rawActive;
-    if (rawList) {
-      STATE.profiles = JSON.parse(rawList);
-    } else {
-      STATE.profiles = ["Candidate C2"];
-      localStorage.setItem("c2_companion_profiles", JSON.stringify(STATE.profiles));
-    }
-  } catch (e) {
-    console.error("Failed to load profiles", e);
-    STATE.activeProfile = "Candidate C2";
-    STATE.profiles = ["Candidate C2"];
-  }
+  STATE.activeProfile = OWNER_PROFILE;
+  STATE.profiles = [OWNER_PROFILE];
+  saveProfilesMeta();
 }
 
 function loadLocalStorage() {
-  const profileKey = STATE.activeProfile.replace(/\s+/g, "_");
   try {
-    const rawHistory = localStorage.getItem(`c2_history_${profileKey}`);
-    const rawMistakes = localStorage.getItem(`c2_mistakes_${profileKey}`);
-    
-    if (rawHistory) {
-      STATE.history = JSON.parse(rawHistory);
-    } else {
-      STATE.history = [];
-    }
+    const localHistories = [
+      parseStoredHistory(localStorage.getItem(LOCAL_HISTORY_KEY)),
+      parseStoredHistory(localStorage.getItem(`c2_history_${getProfileKey(OWNER_PROFILE)}`)),
+      parseStoredHistory(localStorage.getItem("c2_history_Candidate_C2"))
+    ];
 
-    if (rawMistakes) {
-      STATE.mistakes = JSON.parse(rawMistakes);
-    } else {
-      STATE.mistakes = [];
-    }
-
-    // Inyectar datos de demostración si está vacío
-    if (STATE.history.length === 0 && STATE.activeProfile === "Candidate C2") {
-      injectMockData();
-    }
+    STATE.history = mergeHistoryCollections(...localHistories);
   } catch (e) {
-    console.error("Failed to load local storage for user profile", e);
+    console.error("Failed to load local storage", e);
     STATE.history = [];
-    STATE.mistakes = [];
   }
 }
 
 function saveLocalStorage() {
-  const profileKey = STATE.activeProfile.replace(/\s+/g, "_");
   try {
-    localStorage.setItem(`c2_history_${profileKey}`, JSON.stringify(STATE.history));
-    localStorage.setItem(`c2_mistakes_${profileKey}`, JSON.stringify(STATE.mistakes));
-    localStorage.setItem("c2_companion_active_profile", STATE.activeProfile);
-    localStorage.setItem("c2_companion_profiles", JSON.stringify(STATE.profiles));
+    localStorage.setItem(LOCAL_HISTORY_KEY, JSON.stringify(STATE.history));
+    localStorage.setItem(`c2_history_${getProfileKey(OWNER_PROFILE)}`, JSON.stringify(STATE.history));
+    saveProfilesMeta();
   } catch (e) {
     console.error("Failed to save local storage", e);
   }
 }
 
-// INJECT FAKE HISTORICAL DEMO DATA
-function injectMockData() {
-  const days = (n) => Date.now() - n * 24 * 60 * 60 * 1000;
-  
-  STATE.history = [
-    {
-      id: "mock_session_1",
-      section: "useOfEnglish",
-      correct: 17, // raw score out of 28 marks
-      total: 28,
-      percentage: 61,
-      scaleScore: 200,
-      answers: {
-        9: "THAT", 10: "FOR", 11: "THANKS", 12: "IF", 13: "NOT", 14: "ONE", 15: "ABOUT", 16: "DOWN",
-        17: "REGENERATION", 18: "DEPRIVATION", 19: "REPLACEABLE", 20: "DISPOSED", 21: "SEQUENTIAL", 22: "WHETHER", 23: "VALUED", 24: "BENEFICIAL",
-        25: "UNTIL THE OFFICE CLOSED DID", 26: "SHYING AWAY", 27: "PULL SOCKS", 28: "IT NOT BEEN FOR", 29: "TO CALL OFF", 30: "LEFT HER AT A LOSS"
-      },
-      gradedStates: {
-        9: "correct", 10: "incorrect", 11: "correct", 12: "incorrect", 13: "correct", 14: "correct", 15: "correct", 16: "incorrect",
-        17: "correct", 18: "correct", 19: "incorrect", 20: "incorrect", 21: "correct", 22: "incorrect", 23: "incorrect", 24: "correct",
-        25: 2, 26: 0, 27: 1, 28: 2, 29: 2, 30: 1
-      },
-      errorNotes: {
-        10: "Used 'for' instead of 'to'", 12: "Used 'if' instead of 'whether'", 16: "Phrasal verb error",
-        19: "Forgot negative prefix 'ir-'", 20: "Missed prefix 'predisposed'", 22: "Wrong conjunction", 23: "Forgot prefix 'undervalued'",
-        26: "Used active shying instead of shied", 27: "Missed pronoun 'your'"
-      },
-      incorrectQuestions: [10, 12, 16, 19, 20, 22, 23, 26, 27, 30],
-      date: days(6)
-    },
-    {
-      id: "mock_session_2",
-      section: "reading",
-      correct: 33, // 6 (Part 1) + 27 (Parts 5-7) = 33 marks out of 44
-      total: 44,
-      percentage: 75,
-      scaleScore: 213,
-      answers: {
-        1: "A", 2: "B", 3: "A", 4: "C", 5: "D", 6: "A", 7: "B", 8: "C",
-        31: "B", 32: "A", 33: "C", 34: "B", 35: "C", 36: "D",
-        37: "A", 38: "C", 39: "F", 40: "G", 41: "D", 42: "B", 43: "H",
-        44: "A", 45: "B", 46: "C", 47: "D", 48: "A", 49: "C", 50: "B", 51: "D", 52: "A", 53: "B"
-      },
-      gradedStates: {
-        1: "correct", 2: "correct", 3: "correct", 4: "incorrect", 5: "correct", 6: "correct", 7: "correct", 8: "incorrect",
-        31: "correct", 32: "incorrect", 33: "correct", 34: "incorrect", 35: "correct", 36: "correct",
-        37: "incorrect", 38: "correct", 39: "correct", 40: "correct", 41: "incorrect", 42: "correct", 43: "correct",
-        44: "correct", 45: "correct", 46: "correct", 47: "correct", 48: "incorrect", 49: "correct", 50: "correct", 51: "correct", 52: "correct", 53: "correct"
-      },
-      errorNotes: {
-        4: "Misunderstood collocation", 8: "Confused word meaning",
-        32: "Misunderstood 'organic automata' context", 34: "Confused mass property aggregates",
-        37: "Wrong paragraph link, missed transition", 41: "Misread pressure cellular rupture details",
-        48: "Missed Marcus Vance frustration details"
-      },
-      incorrectQuestions: [4, 8, 32, 34, 37, 41, 48],
-      date: days(4)
-    },
-    {
-      id: "mock_session_3",
-      section: "listening",
-      correct: 23, // raw score out of 30 marks
-      total: 30,
-      percentage: 77,
-      scaleScore: 217,
-      answers: {
-        54: "A", 55: "B", 56: "B", 57: "A", 58: "A", 59: "B",
-        60: "COLD LIGHT", 61: "LUCIFEREEN", 62: "LANTERNFISH", 63: "SILHOUETTES", 64: "FISHING ROD", 65: "MILKY SEAS", 66: "SATELLITES", 67: "BURGLAR ALARM", 68: "POLLUTION SENSORS",
-        69: "B", 70: "B", 71: "C", 72: "B", 73: "C",
-        74: "C", 75: "F", 76: "A", 77: "D", 78: "H", 79: "E", 80: "B", 81: "G", 82: "A", 83: "D"
-      },
-      gradedStates: {
-        54: "correct", 55: "correct", 56: "correct", 57: "correct", 58: "correct", 59: "correct",
-        60: "correct", 61: "incorrect", 62: "correct", 63: "correct", 64: "correct", 65: "correct", 66: "correct", 67: "correct", 68: "incorrect",
-        69: "correct", 70: "correct", 71: "correct", 72: "correct", 73: "correct",
-        74: "incorrect", 75: "correct", 76: "correct", 77: "correct", 78: "correct", 79: "incorrect", 80: "correct", 81: "correct", 82: "correct", 83: "correct"
-      },
-      errorNotes: {
-        61: "Spelling mistake of chemical substance 'luciferin'",
-        68: "Heard 'pollution detectors', wrote 'sensors'",
-        74: "Missed Speaker 1 burnout reason",
-        79: "Missed financial constraints details"
-      },
-      incorrectQuestions: [61, 68, 74, 79],
-      date: days(3)
-    },
-    {
-      id: "mock_session_4",
-      section: "useOfEnglish",
-      correct: 26, // raw score out of 28 marks
-      total: 28,
-      percentage: 93,
-      scaleScore: 227,
-      answers: {
-        9: "THAT", 10: "TO", 11: "THANKS", 12: "WHETHER", 13: "NOT", 14: "ONE", 15: "ABOUT", 16: "UP",
-        17: "REGENERATION", 18: "DEPRIVATION", 19: "IRREPLACEABLE", 20: "PREDISPOSED", 21: "SEQUENTIAL", 22: "WHEREAS", 23: "UNDERVALUED", 24: "BENEFICIAL",
-        25: "UNTIL THE OFFICE CLOSED DID", 26: "SHIED AWAY FROM", 27: "PULL SOCKS UP", 28: "IT NOT BEEN FOR", 29: "TO CALL OFF", 30: "LEFT HER AT A LOSS"
-      },
-      gradedStates: {
-        9: "correct", 10: "correct", 11: "correct", 12: "correct", 13: "correct", 14: "correct", 15: "correct", 16: "correct",
-        17: "correct", 18: "correct", 19: "correct", 20: "correct", 21: "correct", 22: "correct", 23: "correct", 24: "correct",
-        25: 2, 26: 2, 27: 1, 28: 2, 29: 2, 30: 1
-      },
-      errorNotes: {
-        27: "Missed pronoun 'your' in pull your socks up",
-        30: "Missed 'for words' in left her at a loss for words"
-      },
-      incorrectQuestions: [27, 30],
-      date: days(1)
-    },
-    {
-      id: "mock_session_5",
-      section: "writing",
-      correct: 34, // raw score out of 40 marks
-      total: 40,
-      percentage: 85,
-      scaleScore: 220,
-      answers: {
-        part1: "The relation of technology in classrooms...",
-        part2: "A report on modernized community spaces..."
-      },
-      gradedStates: {
-        part1: { content: 5, comm: 4, org: 4, lang: 4 },
-        part2: { content: 5, comm: 4, org: 4, lang: 4 }
-      },
-      date: Date.now() - 3 * 60 * 60 * 1000 // 3 hours ago
-    }
-  ];
+function saveProfilesMeta() {
+  try {
+    localStorage.setItem("c2_companion_active_profile", OWNER_PROFILE);
+    localStorage.setItem("c2_companion_profiles", JSON.stringify([OWNER_PROFILE]));
+  } catch (e) {
+    console.error("Failed to save profile metadata", e);
+  }
+}
 
-  // Populate mistakes journal
-  STATE.mistakes = [
-    {
-      id: "mock_mistake_1",
-      section: "useOfEnglish",
-      qNum: 26,
-      userAnswer: "SHYING AWAY",
-      scoreValue: 0,
-      note: "Used active shying instead of shied",
-      date: days(6)
-    },
-    {
-      id: "mock_mistake_2",
-      section: "useOfEnglish",
-      qNum: 10,
-      userAnswer: "FOR",
-      note: "Used 'for' instead of 'to'",
-      date: days(6)
-    },
-    {
-      id: "mock_mistake_3",
-      section: "reading",
-      qNum: 32,
-      userAnswer: "A",
-      note: "Misunderstood 'organic automata' context",
-      date: days(4)
-    },
-    {
-      id: "mock_mistake_4",
-      section: "listening",
-      qNum: 61,
-      userAnswer: "LUCIFEREEN",
-      note: "Spelling mistake of chemical substance 'luciferin'",
-      date: days(3)
+function getProfileKey(name = STATE.activeProfile) {
+  return name.trim().replace(/\s+/g, "_");
+}
+
+function parseStoredHistory(raw) {
+  if (!raw) return [];
+  const parsed = JSON.parse(raw);
+  return Array.isArray(parsed) ? parsed : [];
+}
+
+function mergeHistoryCollections(...collections) {
+  const byId = new Map();
+
+  collections.flat().forEach(item => {
+    if (!item || !item.id) return;
+    byId.set(item.id, item);
+  });
+
+  return [...byId.values()].sort((a, b) => (a.date || 0) - (b.date || 0));
+}
+
+async function apiRequest(path, options = {}) {
+  const headers = {
+    ...(options.body ? { "Content-Type": "application/json" } : {}),
+    ...(options.headers || {})
+  };
+
+  const response = await fetch(path, {
+    credentials: "include",
+    ...options,
+    headers
+  });
+
+  const contentType = response.headers.get("Content-Type") || "";
+  const text = await response.text();
+  if (!contentType.includes("application/json")) {
+    const offlineError = new Error("API unavailable");
+    offlineError.isExpectedOffline = true;
+    throw offlineError;
+  }
+
+  const payload = text ? JSON.parse(text) : {};
+
+  if (!response.ok) {
+    throw new Error(payload.error || `Request failed (${response.status})`);
+  }
+
+  return payload;
+}
+
+async function hydrateRemoteHistory() {
+  try {
+    const session = await apiRequest("/api/me");
+    STATE.isAuthenticated = !!session.authenticated;
+
+    if (!STATE.isAuthenticated) {
+      STATE.syncStatus = "local";
+      STATE.syncMessage = "Sign in to sync";
+      return;
     }
-  ];
+
+    STATE.syncStatus = "syncing";
+    STATE.syncMessage = "Syncing";
+
+    const remote = await apiRequest("/api/history");
+    const mergedHistory = mergeHistoryCollections(remote.history || [], STATE.history);
+    STATE.history = mergedHistory;
+    saveLocalStorage();
+
+    if (mergedHistory.length !== (remote.history || []).length) {
+      await saveRemoteHistory("merge");
+    }
+
+    STATE.syncStatus = "synced";
+    STATE.syncMessage = "Synced online";
+  } catch (error) {
+    STATE.isAuthenticated = false;
+    STATE.syncStatus = "local";
+    STATE.syncMessage = "Local backup";
+    if (!error.isExpectedOffline) {
+      console.warn("Online sync unavailable", error);
+    }
+  }
+}
+
+async function saveRemoteHistory(mode = "merge") {
+  const result = await apiRequest("/api/history", {
+    method: "PUT",
+    body: JSON.stringify({
+      mode,
+      history: STATE.history
+    })
+  });
+
+  if (Array.isArray(result.history)) {
+    STATE.history = mergeHistoryCollections(result.history);
+    saveLocalStorage();
+  }
+
+  return result;
+}
+
+async function persistHistory(options = {}) {
+  const mode = options.mode || "merge";
   saveLocalStorage();
+
+  if (!STATE.isAuthenticated) {
+    STATE.syncStatus = "local";
+    STATE.syncMessage = "Saved locally";
+    return { online: false };
+  }
+
+  try {
+    STATE.syncStatus = "syncing";
+    STATE.syncMessage = "Saving";
+    await saveRemoteHistory(mode);
+    STATE.syncStatus = "synced";
+    STATE.syncMessage = "Synced online";
+    return { online: true };
+  } catch (error) {
+    STATE.syncStatus = "local";
+    STATE.syncMessage = "Local backup";
+    console.error("Online save failed", error);
+    alert("Saved locally, but online sync failed. Sign in again from Account before closing the browser.");
+    return { online: false, error };
+  }
+}
+
+function getSyncLabel() {
+  if (STATE.syncStatus === "syncing") return "Syncing";
+  if (STATE.isAuthenticated) return "Online";
+  return "Local backup";
 }
 
 // CAMBRIDGE SCALE SCORE PIECEWISE CONVERTERS PER SECTION
@@ -302,125 +259,434 @@ function getCambridgeGrade(scaleScore) {
   return "Not Reported";
 }
 
+const SECTION_ORDER = ["useOfEnglish", "reading", "listening", "writing"];
+
+function getSectionInitial(section) {
+  if (section === "useOfEnglish") return "UE";
+  if (section === "reading") return "R";
+  if (section === "listening") return "L";
+  if (section === "writing") return "W";
+  return "?";
+}
+
+function formatShortDate(timestamp) {
+  return new Date(timestamp).toLocaleDateString(undefined, { month: "short", day: "numeric" });
+}
+
+function formatCompactDateTime(timestamp) {
+  return new Date(timestamp).toLocaleDateString(undefined, {
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+}
+
+function getLatestAttempt() {
+  return STATE.history.length > 0 ? STATE.history[STATE.history.length - 1] : null;
+}
+
+function getSectionStats(section) {
+  const logs = STATE.history.filter(item => item.section === section);
+
+  if (logs.length === 0) {
+    return {
+      section,
+      attempts: 0,
+      avgScale: 0,
+      avgAccuracy: 0,
+      bestScale: 0,
+      lastScale: 0,
+      lastDate: null
+    };
+  }
+
+  const avgScale = Math.round(logs.reduce((acc, curr) => acc + curr.scaleScore, 0) / logs.length);
+  const avgAccuracy = Math.round(logs.reduce((acc, curr) => acc + curr.percentage, 0) / logs.length);
+  const bestScale = Math.max(...logs.map(item => item.scaleScore));
+  const last = logs[logs.length - 1];
+
+  return {
+    section,
+    attempts: logs.length,
+    avgScale,
+    avgAccuracy,
+    bestScale,
+    lastScale: last.scaleScore,
+    lastDate: last.date
+  };
+}
+
+function getAllSectionStats() {
+  return SECTION_ORDER.map(section => getSectionStats(section));
+}
+
+function getPartScoreForSession(session, partKey, partData) {
+  if (!session || !session.gradedStates) {
+    return { raw: 0, max: partData.weight || 0 };
+  }
+
+  if (partData.type === "writing") {
+    const criteria = session.gradedStates[partKey];
+    const raw = criteria
+      ? (criteria.content || 0) + (criteria.comm || 0) + (criteria.org || 0) + (criteria.lang || 0)
+      : 0;
+    return { raw, max: partData.weight };
+  }
+
+  let raw = 0;
+  let max = 0;
+
+  for (let q = partData.startQ; q <= partData.endQ; q++) {
+    const state = session.gradedStates[q];
+
+    if (partData.type === "partial") {
+      raw += typeof state === "number" ? state : 0;
+      max += partData.weight;
+    } else {
+      raw += state === "correct" ? partData.weight : 0;
+      max += partData.weight;
+    }
+  }
+
+  return { raw, max };
+}
+
+function getSectionPartStats(section) {
+  const sectionMeta = C2_EXAM_METADATA[section];
+  const logs = STATE.history.filter(item => item.section === section);
+
+  return Object.entries(sectionMeta.parts).map(([partKey, partData]) => {
+    const scores = logs.map(session => getPartScoreForSession(session, partKey, partData));
+    const rawSum = scores.reduce((acc, item) => acc + item.raw, 0);
+    const maxSum = scores.reduce((acc, item) => acc + item.max, 0);
+    const averagePct = maxSum > 0 ? Math.round((rawSum / maxSum) * 100) : 0;
+    const latestScore = scores.length > 0 ? scores[scores.length - 1] : null;
+
+    return {
+      section,
+      partKey,
+      name: partData.name,
+      attempts: logs.length,
+      averagePct,
+      averageRaw: logs.length > 0 ? rawSum / logs.length : 0,
+      maxRaw: partData.weight,
+      latestPct: latestScore && latestScore.max > 0 ? Math.round((latestScore.raw / latestScore.max) * 100) : 0
+    };
+  });
+}
+
+function getAllPartStats() {
+  return SECTION_ORDER.flatMap(section => getSectionPartStats(section));
+}
+
+function getWeakestPart(section) {
+  const attempted = getSectionPartStats(section).filter(part => part.attempts > 0);
+  if (attempted.length === 0) return null;
+  return attempted.slice().sort((a, b) => a.averagePct - b.averagePct)[0];
+}
+
+function getGlobalWeakestPart() {
+  const attempted = getAllPartStats().filter(part => part.attempts > 0);
+  if (attempted.length === 0) return null;
+  return attempted.slice().sort((a, b) => a.averagePct - b.averagePct)[0];
+}
+
+function calculateRecentTrend() {
+  if (STATE.history.length < 2) return 0;
+
+  const recent = STATE.history.slice(-3);
+  const previous = STATE.history.slice(Math.max(0, STATE.history.length - 6), STATE.history.length - 3);
+  const previousSet = previous.length > 0 ? previous : STATE.history.slice(0, -recent.length);
+
+  if (previousSet.length === 0) return 0;
+
+  const avgRecent = recent.reduce((acc, curr) => acc + curr.scaleScore, 0) / recent.length;
+  const avgPrevious = previousSet.reduce((acc, curr) => acc + curr.scaleScore, 0) / previousSet.length;
+  return Math.round(avgRecent - avgPrevious);
+}
+
+function calculatePassRate() {
+  if (STATE.history.length === 0) return 0;
+  const passed = STATE.history.filter(item => item.scaleScore >= 200).length;
+  return Math.round((passed / STATE.history.length) * 100);
+}
+
+function getScorePosition(scaleScore) {
+  if (!scaleScore) {
+    return {
+      label: "No baseline yet",
+      detail: "Save your first mock to start tracking progress.",
+      tone: "neutral"
+    };
+  }
+
+  if (scaleScore >= 220) {
+    return {
+      label: "Grade A zone",
+      detail: `${scaleScore - 220} points above 220.`,
+      tone: "strong"
+    };
+  }
+
+  if (scaleScore >= 200) {
+    return {
+      label: "C2 zone",
+      detail: `${220 - scaleScore} points to Grade A.`,
+      tone: "steady"
+    };
+  }
+
+  if (scaleScore >= 180) {
+    return {
+      label: "C1 zone",
+      detail: `${200 - scaleScore} points to secure C2.`,
+      tone: "watch"
+    };
+  }
+
+  return {
+    label: "Below C1",
+    detail: `${180 - scaleScore} points to reach C1.`,
+    tone: "risk"
+  };
+}
+
+function getNextFocusInsight(sectionStats = getAllSectionStats()) {
+  const practiced = sectionStats.filter(item => item.attempts > 0);
+
+  if (practiced.length === 0) {
+    return {
+      section: null,
+      title: "Start with any paper",
+      detail: "No saved attempts yet.",
+      value: "--"
+    };
+  }
+
+  const weakest = practiced.slice().sort((a, b) => a.avgScale - b.avgScale)[0];
+  const name = C2_EXAM_METADATA[weakest.section].name;
+  const weakestPart = getWeakestPart(weakest.section);
+  const partLabel = weakestPart ? ` Weakest part: ${weakestPart.name} (${weakestPart.averagePct}%).` : "";
+
+  return {
+    section: weakest.section,
+    title: `Next focus: ${name}`,
+    detail: `${weakest.avgScale} average scale.${partLabel}`,
+    value: weakest.avgScale
+  };
+}
+
 // ==========================================================================
 // 1. HOME HUB CONTROLLER (CLEAN INITIAL STATE, VISUALLY SQUARE)
 // ==========================================================================
 function renderHome() {
   STATE.currentView = "home";
   const appContainer = document.getElementById("app-container");
+  const totalCompleted = STATE.history.length;
+  const avgScaleScore = calculateAverageScaleScore();
+  const latest = getLatestAttempt();
+  const scorePosition = getScorePosition(avgScaleScore);
+  const focus = getNextFocusInsight();
+  const sectionStats = getAllSectionStats();
   
   appContainer.innerHTML = `
-    <div class="home-container">
-      <div class="home-header">
-        <div class="home-title-area">
-          <h1>C2 Answer Sheet Companion</h1>
-          <p>Interactive answer sheet templates for official Cambridge C2 Proficiency (CPE) practice papers.</p>
-        </div>
-        
-        <div class="home-header-actions">
-          <button class="btn btn-square" onclick="renderDashboard()">History and Analytics</button>
-          
-          <!-- PROFILE SWITCHER -->
-          <div class="profile-box" onclick="openProfileModal()" title="Switch User Profile">
-            <div class="profile-avatar">${STATE.activeProfile.charAt(0).toUpperCase()}</div>
-            <div class="profile-name">${STATE.activeProfile}</div>
-          </div>
-        </div>
-      </div>
+    <div class="home-container app-shell">
+      <header class="app-topbar">
+        <button class="brand-button" onclick="renderHome()" aria-label="Practice home" style="text-align: left;">
+          <span style="text-align: left; display: block;">
+            <span class="brand-title">Practice Log</span>
+            <span class="brand-subtitle">Cambridge C2</span>
+          </span>
+        </button>
 
-      <div class="sections-grid">
-        ${Object.entries(C2_EXAM_METADATA).map(([key, data]) => `
-          <div class="section-square-card">
-            <span class="section-card-badge">${data.maxMarks} Marks</span>
-            <div style="display:flex; flex-direction:column; flex-grow:1;">
-              <h3 class="section-card-title">${data.name}</h3>
-              <p class="section-card-desc">${data.description}</p>
-            </div>
-            <button class="btn btn-primary btn-square btn-full" onclick="openAnswerSheet('${key}')">Open Answer Sheet</button>
+        <nav class="topbar-actions" aria-label="Main navigation">
+          <button class="nav-pill active" onclick="renderHome()">Practice</button>
+          <button class="nav-pill" onclick="renderDashboard()">Progress</button>
+          <button class="candidate-switch" onclick="openProfileModal()" title="Account and sync">
+            <span class="profile-avatar">${STATE.activeProfile.charAt(0).toUpperCase()}</span>
+            <span class="candidate-copy">
+              <span class="candidate-label">${getSyncLabel()}</span>
+              <span class="candidate-name">${escapeHTML(STATE.activeProfile)}</span>
+            </span>
+          </button>
+        </nav>
+      </header>
+
+      <main class="home-main">
+        <section class="home-overview">
+          <div class="home-title-area">
+            <span class="eyebrow">Practice hub</span>
+            <h1>Fill, grade, track.</h1>
+            <p>${scorePosition.label} - ${scorePosition.detail}</p>
           </div>
-        `).join('')}
-      </div>
+
+          <div class="home-metrics" aria-label="Progress snapshot">
+            <div class="metric-tile">
+              <span class="metric-label">Average</span>
+              <strong>${avgScaleScore || "--"}</strong>
+              <span class="metric-note">${avgScaleScore ? getCambridgeGrade(avgScaleScore) : "No mocks yet"}</span>
+            </div>
+            <div class="metric-tile">
+              <span class="metric-label">Attempts</span>
+              <strong>${totalCompleted}</strong>
+              <span class="metric-note">${latest ? `Latest: ${C2_EXAM_METADATA[latest.section].name}` : "Baseline pending"}</span>
+            </div>
+            <div class="metric-tile focus">
+              <span class="metric-label">Focus</span>
+              <strong>${focus.value}</strong>
+              <span class="metric-note">${focus.section ? C2_EXAM_METADATA[focus.section].name : "First practice"}</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="sections-grid" aria-label="Exam parts">
+          ${SECTION_ORDER.map(key => {
+            const data = C2_EXAM_METADATA[key];
+            const stats = sectionStats.find(item => item.section === key);
+            const progressWidth = stats.avgScale ? Math.max(6, Math.min(100, Math.round((stats.avgScale / 230) * 100))) : 0;
+
+            return `
+              <article class="section-square-card">
+                <div class="section-card-topline">
+                  <span class="section-code">${getSectionIconSVG(key)}</span>
+                  <span class="section-card-badge">${data.maxMarks} marks</span>
+                </div>
+                <div>
+                  <h2 class="section-card-title">${data.name}</h2>
+                  <p class="section-card-desc">${data.description}</p>
+                </div>
+                <div class="section-card-stats">
+                  <div>
+                    <span>Average</span>
+                    <strong>${stats.avgScale || "--"}</strong>
+                  </div>
+                  <div>
+                    <span>Attempts</span>
+                    <strong>${stats.attempts}</strong>
+                  </div>
+                  <div>
+                    <span>Latest</span>
+                    <strong>${stats.lastScale || "--"}</strong>
+                  </div>
+                </div>
+                <div class="mini-meter" aria-hidden="true"><span style="width:${progressWidth}%"></span></div>
+                <button class="btn btn-primary btn-full" onclick="openAnswerSheet('${key}')">Open mock</button>
+              </article>
+            `;
+          }).join("")}
+        </section>
+      </main>
     </div>
   `;
 }
 
 function renderDashboard() {
+  renderDashboardView();
+}
+
+function renderDashboardView() {
   STATE.currentView = "dashboard";
   const appContainer = document.getElementById("app-container");
-  
-  // Calculate Stats
+
   const totalCompleted = STATE.history.length;
   const avgScaleScore = calculateAverageScaleScore();
   const avgGrade = getCambridgeGrade(avgScaleScore);
   const overallAccuracy = calculateOverallAccuracy();
-  
+  const sectionStats = getAllSectionStats();
+  const trend = calculateRecentTrend();
+  const passRate = calculatePassRate();
+  const focus = getNextFocusInsight(sectionStats);
+  const scorePosition = getScorePosition(avgScaleScore);
+  const trendClass = trend > 0 ? "good" : trend < 0 ? "risk" : "neutral";
+  const trendLabel = trend === 0 ? "0" : `${trend > 0 ? "+" : ""}${trend}`;
+
   appContainer.innerHTML = `
-    <div class="dash-container">
-      <div class="dash-header">
-        <div class="dash-title">
-          <h1>History and Analytics</h1>
-          <p>Review your historical attempts, evolution graph, and log of mistakes.</p>
-        </div>
-        
-        <div style="display:flex; align-items:center; gap:0.75rem;">
-          <button class="btn btn-square" onclick="renderHome()">Back to Hub</button>
-          
-          <!-- PROFILE SWITCHER -->
-          <div class="profile-box" onclick="openProfileModal()" title="Switch User Profile">
-            <div class="profile-avatar">${STATE.activeProfile.charAt(0).toUpperCase()}</div>
-            <div class="profile-name">${STATE.activeProfile}</div>
-          </div>
-        </div>
-      </div>
+    <div class="dash-container app-shell">
+      <header class="app-topbar">
+        <button class="brand-button" onclick="renderHome()" aria-label="Practice home" style="text-align: left;">
+          <span style="text-align: left; display: block;">
+            <span class="brand-title">Practice Log</span>
+            <span class="brand-subtitle">Cambridge C2</span>
+          </span>
+        </button>
 
-      <div class="summary-row">
-        <div class="summary-card">
-          <div class="summary-card-title">Completed Exams</div>
-          <div class="summary-card-value">${totalCompleted}</div>
-        </div>
-        <div class="summary-card">
-          <div class="summary-card-title">Average Scale Score</div>
-          <div class="summary-card-value" style="color: ${avgScaleScore >= 200 ? 'var(--color-success)' : 'var(--text-main)'}">
-            ${avgScaleScore > 0 ? `${avgScaleScore} pts (${avgGrade})` : '—'}
-          </div>
-        </div>
-        <div class="summary-card">
-          <div class="summary-card-title">Overall Accuracy</div>
-          <div class="summary-card-value" style="color: ${overallAccuracy >= 60 ? (overallAccuracy >= 80 ? 'var(--color-success)' : 'var(--color-warning)') : 'var(--color-error)'}">
-            ${overallAccuracy > 0 ? `${overallAccuracy}%` : '—'}
-          </div>
-        </div>
-      </div>
+        <nav class="topbar-actions" aria-label="Main navigation">
+          <button class="nav-pill" onclick="renderHome()">Practice</button>
+          <button class="nav-pill active" onclick="renderDashboard()">Progress</button>
+          <button class="candidate-switch" onclick="openProfileModal()" title="Account and sync">
+            <span class="profile-avatar">${STATE.activeProfile.charAt(0).toUpperCase()}</span>
+            <span class="candidate-copy">
+              <span class="candidate-label">${getSyncLabel()}</span>
+              <span class="candidate-name">${escapeHTML(STATE.activeProfile)}</span>
+            </span>
+          </button>
+        </nav>
+      </header>
 
-      <div class="dash-content-grid">
-        <!-- SCORE EVOLUTION -->
-        ${renderProgressChartHTML()}
-
-        <!-- PRACTICE HISTORY -->
-        <div class="dash-panel panel-fixed">
-          <h2 class="panel-title">
-            <span>Practice History</span>
-            ${STATE.history.length > 0 ? `<button class="btn-danger-link" onclick="clearHistory()">Clear all</button>` : ''}
-          </h2>
-          <div class="panel-body-scroll">
-            ${renderHistoryListHTML()}
+      <main class="dashboard-main">
+        <section class="insight-hero ${scorePosition.tone}">
+          <div class="insight-copy">
+            <span class="eyebrow">Progress</span>
+            <h1>You are at ${avgScaleScore || "--"}</h1>
+            <p>${scorePosition.label}. ${scorePosition.detail}</p>
           </div>
-        </div>
-
-        <!-- SECTION ANALYTICS -->
-        ${renderSectionAnalyticsHTML()}
-
-        <!-- MISTAKES JOURNAL -->
-        <div class="dash-panel panel-fixed">
-          <h2 class="panel-title">
-            <span>Mistakes Journal</span>
-            ${STATE.mistakes.length > 0 ? `<button class="btn-danger-link" onclick="clearMistakes()">Clear all</button>` : ''}
-          </h2>
-          <div class="panel-body-scroll">
-            ${renderMistakesJournalHTML()}
+          <div class="score-ring" aria-label="Average scale score">
+            <strong>${avgScaleScore || "--"}</strong>
+            <span>average</span>
           </div>
-        </div>
-      </div>
+          <div class="focus-strip">
+            <span>${focus.title}</span>
+            <strong>${focus.detail}</strong>
+          </div>
+        </section>
+
+        <section class="summary-row">
+          <div class="summary-card">
+            <div class="summary-card-title">Saved attempts</div>
+            <div class="summary-card-value">${totalCompleted}</div>
+            <div class="summary-card-note">${passRate || 0}% in C2 range</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-card-title">Average scale</div>
+            <div class="summary-card-value ${avgScaleScore >= 200 ? "positive" : "risk"}">${avgScaleScore || "--"}</div>
+            <div class="summary-card-note">${avgScaleScore ? avgGrade : "No average yet"}</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-card-title">Average accuracy</div>
+            <div class="summary-card-value ${overallAccuracy >= 80 ? "positive" : "negative"}">${overallAccuracy ? `${overallAccuracy}%` : "--"}</div>
+            <div class="summary-card-note">weighted raw marks</div>
+          </div>
+          <div class="summary-card">
+            <div class="summary-card-title">Recent trend</div>
+            <div class="summary-card-value ${trendClass}">${trendLabel}</div>
+            <div class="summary-card-note">last 3 vs previous</div>
+          </div>
+        </section>
+
+        <section class="dashboard-grid">
+          ${renderProgressMapHTML(sectionStats)}
+          ${renderSectionAnalyticsV2HTML(sectionStats)}
+          ${renderPartBreakdownHTML()}
+
+          <section class="dash-panel attempts-panel">
+            <div class="panel-title">
+              <span>Recent attempts</span>
+              ${STATE.history.length > 0 ? `<button class="btn-danger-link" onclick="clearHistory()">Clear all</button>` : ""}
+            </div>
+            <div class="panel-body-scroll">
+              ${renderHistoryListV2HTML(6)}
+            </div>
+            ${STATE.history.length > 6 ? `
+              <div style="margin-top: auto; padding-top: 12px; border-top: 1px dashed var(--border-color); display: flex; justify-content: center;">
+                <button class="btn btn-secondary btn-full" onclick="openAllAttemptsModal()" style="font-size: 0.8rem; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 800; width: 100%;">
+                  View all attempts
+                </button>
+              </div>
+            ` : ""}
+          </section>
+        </section>
+      </main>
     </div>
   `;
 }
@@ -432,159 +698,319 @@ function calculateOverallAccuracy() {
   return Math.round((correctSum / totalSum) * 100);
 }
 
-function renderHistoryListHTML() {
+function renderHistoryListV2HTML(limit = 4) {
   if (STATE.history.length === 0) {
-    return `<div class="empty-state">No recorded practices found. Start practicing!</div>`;
-  }
-  
-  return STATE.history.slice().reverse().map(item => {
-    const isPass = item.scaleScore >= 200;
-    const dateFormatted = new Date(item.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute:'2-digit' });
-    const sectionName = C2_EXAM_METADATA[item.section].name;
-
     return `
-      <div class="history-item" style="cursor:pointer;" onclick="openHistoryDetailModal('${item.id}')" title="Click to view detailed answer sheet">
-        <div class="history-details" style="width: 75%;">
-          <span class="history-header-line">${sectionName}</span>
-          <span class="history-meta-line">${dateFormatted} ➔ <span style="text-decoration:underline;">View Details</span></span>
-        </div>
-        <div style="display:flex; align-items:center; gap:0.25rem;">
-          <div class="history-score-badge">
-            <div class="history-scale-score ${isPass ? 'pass' : 'fail'}">${item.scaleScore} pts</div>
-            <div class="history-raw-fraction">${item.correct}/${item.total} marks (${item.percentage}%)</div>
+      <div class="empty-state" style="display:flex; flex-direction:column; align-items:center; gap:12px; padding:2rem 1rem; text-align:center;">
+        <span>Save a mock to start tracking progress.</span>
+      </div>
+    `;
+  }
+
+  const itemsToShow = limit ? STATE.history.slice(-limit) : STATE.history;
+
+  return `
+    <div class="attempt-list">
+      ${itemsToShow.slice().reverse().map(item => {
+        const isStrong = item.scaleScore >= 220;
+        const isPass = item.scaleScore >= 200;
+        const scoreClass = isStrong ? "excellent" : isPass ? "pass" : "risk";
+        const sectionName = C2_EXAM_METADATA[item.section].name;
+        const dateFormatted = formatCompactDateTime(item.date);
+
+        return `
+          <div class="attempt-item" role="button" tabindex="0"
+               onclick="openHistoryDetailModal('${escapeJS(item.id)}')"
+               onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openHistoryDetailModal('${escapeJS(item.id)}'); }"
+               title="Ver detalle del intento">
+            <div class="attempt-main">
+              <span class="section-code">${getSectionIconSVG(item.section)}</span>
+              <div class="attempt-copy">
+                <strong>${sectionName}</strong>
+                <span>${dateFormatted}</span>
+              </div>
+            </div>
+            <div class="attempt-score">
+              <strong class="${scoreClass}">${item.scaleScore}</strong>
+              <span>${item.correct}/${item.total} - ${item.percentage}%</span>
+            </div>
+            <button class="delete-hist-btn" onclick="event.stopPropagation(); deleteHistoryItem('${escapeJS(item.id)}')" title="Delete attempt">x</button>
           </div>
-          <button class="delete-hist-btn" onclick="event.stopPropagation(); deleteHistoryItem('${item.id}')" title="Delete log">✕</button>
-        </div>
-      </div>
-    `;
-  }).join('');
+        `;
+      }).join("")}
+    </div>
+  `;
 }
 
-function renderMistakesJournalHTML() {
-  if (STATE.mistakes.length === 0) {
-    return `<div class="empty-state">All clean! The mistake journal is empty.</div>`;
-  }
-  
-  return STATE.mistakes.slice().reverse().map(item => {
-    const dateFormatted = new Date(item.date).toLocaleDateString();
-    const sectionName = C2_EXAM_METADATA[item.section].name;
-    
-    let answerLabel = `Your Answer: <b class="mistake-badge-u">${item.userAnswer}</b>`;
-    if (item.scoreValue !== undefined) {
-      answerLabel += ` (Scored ${item.scoreValue} pts)`;
-    }
+function renderSectionAnalyticsV2HTML(sectionStats = getAllSectionStats()) {
+  const focus = getNextFocusInsight(sectionStats);
 
+  return `
+    <section class="dash-panel section-panel">
+      <div class="panel-title">
+        <span>Section overview</span>
+        <small>scale / accuracy / weakest part</small>
+      </div>
+      <div class="section-performance-list">
+        ${sectionStats.map(stats => {
+          const data = C2_EXAM_METADATA[stats.section];
+          const isFocus = focus.section === stats.section;
+          const meterWidth = stats.avgScale ? Math.max(4, Math.min(100, Math.round(((stats.avgScale - 120) / 110) * 100))) : 0;
+          const scoreClass = stats.avgScale >= 220 ? "excellent" : stats.avgScale >= 200 ? "pass" : stats.avgScale ? "risk" : "neutral";
+          const weakestPart = getWeakestPart(stats.section);
+
+          return `
+            <article class="section-performance-card ${isFocus ? "needs-focus" : ""}">
+              <div class="section-performance-head">
+                <div>
+                  <span class="section-code">${getSectionIconSVG(stats.section)}</span>
+                  <h3>${data.name}</h3>
+                </div>
+                <strong class="${scoreClass}">${stats.avgScale || "--"}</strong>
+              </div>
+              <div class="meter">
+                <span style="width:${meterWidth}%"></span>
+              </div>
+              <div class="section-performance-meta">
+                <span>${stats.attempts} attempts</span>
+                <span>${stats.avgAccuracy || "--"}% raw</span>
+                <span>Best ${stats.bestScale || "--"}</span>
+                <span>${weakestPart ? `Weakest: ${weakestPart.name}` : "No part data"}</span>
+              </div>
+            </article>
+          `;
+        }).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderProgressMapHTML(sectionStats = getAllSectionStats()) {
+  if (STATE.history.length === 0) {
     return `
-      <div class="history-item" style="border-left: 3px solid var(--color-error);">
-        <div class="history-details" style="width: 85%;">
-          <span class="history-header-line">${sectionName} - Question ${item.qNum}</span>
-          <span class="history-meta-line">Date: ${dateFormatted} | ${answerLabel}</span>
-          ${item.note ? `<div class="mistake-note">Note: "${item.note}"</div>` : ''}
+      <section class="dash-panel progress-panel">
+        <div class="panel-title">
+          <span>Progress map</span>
+          <small>by paper, not by date</small>
         </div>
-        <button class="delete-hist-btn" onclick="deleteMistakeItem('${item.id}')" title="Remove mistake">✕</button>
-      </div>
+        <div class="empty-chart">No attempts yet.</div>
+      </section>
     `;
-  }).join('');
-}
-
-function renderSectionAnalyticsHTML() {
-  const analytics = {};
-  for (const key of Object.keys(C2_EXAM_METADATA)) {
-    const logs = STATE.history.filter(h => h.section === key);
-    if (logs.length > 0) {
-      const avgScale = Math.round(logs.reduce((acc, curr) => acc + curr.scaleScore, 0) / logs.length);
-      const avgAccuracy = Math.round(logs.reduce((acc, curr) => acc + curr.percentage, 0) / logs.length);
-      analytics[key] = { avgScale, avgAccuracy };
-    } else {
-      analytics[key] = null;
-    }
   }
 
   return `
-    <div class="dash-panel panel-fixed">
-      <h2 class="panel-title">Section-Specific Analytics</h2>
-      <div class="analytics-grid" style="flex-grow:1; display:grid; align-content:center; gap:0.75rem;">
-        ${Object.entries(C2_EXAM_METADATA).map(([key, data]) => {
-          const stats = analytics[key];
-          return `
-            <div class="analytics-card" style="margin:0;">
-              <span class="analytics-card-title">${data.name}</span>
-              <span class="analytics-card-value">
-                ${stats ? `${stats.avgScale} pts <span style="font-size:0.75rem; font-weight:normal; color:var(--text-muted);">(${stats.avgAccuracy}% acc)</span>` : '—'}
-              </span>
-            </div>
-          `;
-        }).join('')}
+    <section class="dash-panel progress-panel">
+      <div class="panel-title">
+        <span>Progress map</span>
+        <small>by section, in chronological order</small>
       </div>
-    </div>
+      <div class="progress-map">
+        ${sectionStats.map(stats => {
+          const sectionLogs = STATE.history.filter(item => item.section === stats.section);
+          const latest = sectionLogs[sectionLogs.length - 1];
+          const weakestPart = getWeakestPart(stats.section);
+
+          const maxVisible = 5;
+          const offset = sectionLogs.length > maxVisible ? sectionLogs.length - maxVisible : 0;
+          const visibleLogs = sectionLogs.slice(offset);
+
+          return `
+            <article class="progress-row">
+              <div class="progress-row-head">
+                <div>
+                  <span class="section-code">${getSectionIconSVG(stats.section)}</span>
+                  <strong>${C2_EXAM_METADATA[stats.section].name}</strong>
+                </div>
+                <span>${stats.avgScale || "--"} avg</span>
+              </div>
+              <div class="attempt-sparkline">
+                ${sectionLogs.length === 0 ? `<span class="no-attempts">No attempts</span>` : visibleLogs.map((item, index) => {
+                  const pointWidth = Math.max(4, Math.min(100, Math.round(((item.scaleScore - 120) / 110) * 100)));
+                  const scoreClass = item.scaleScore >= 220 ? "excellent" : item.scaleScore >= 200 ? "pass" : "risk";
+                  const attemptNumber = offset + index + 1;
+
+                  return `
+                    <button class="attempt-chip ${scoreClass}"
+                            style="width:${pointWidth}%"
+                            onclick="openHistoryDetailModal('${escapeJS(item.id)}')"
+                            title="Attempt ${attemptNumber}: ${item.scaleScore}">
+                      <span>#${attemptNumber}</span>
+                      <strong>${item.scaleScore}</strong>
+                    </button>
+                  `;
+                }).join("")}
+              </div>
+              <div class="progress-row-foot">
+                <span>${stats.attempts} attempts</span>
+                <span>Latest ${latest ? latest.scaleScore : "--"}</span>
+                <span>${weakestPart ? `Weakest part: ${weakestPart.name}` : "Part data pending"}</span>
+              </div>
+            </article>
+          `;
+        }).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderPartBreakdownHTML() {
+  const partStats = getAllPartStats();
+
+  return `
+    <section class="dash-panel part-panel">
+      <div class="panel-title">
+        <span>Part breakdown</span>
+        <small>where each paper is costing marks</small>
+      </div>
+      <div class="part-grid">
+        ${SECTION_ORDER.map(section => {
+          const sectionParts = partStats.filter(part => part.section === section);
+          const weakestPart = getWeakestPart(section);
+
+          return `
+            <article class="part-section">
+              <div class="part-section-head">
+                <span class="section-code">${getSectionIconSVG(section)}</span>
+                <div>
+                  <strong>${C2_EXAM_METADATA[section].name}</strong>
+                  <span>${weakestPart ? `Weakest: ${weakestPart.name}` : "No attempts yet"}</span>
+                </div>
+              </div>
+              <div class="part-bars">
+                ${sectionParts.map(part => {
+                  const isWeakest = weakestPart && weakestPart.partKey === part.partKey;
+                  const width = part.attempts > 0 ? Math.max(4, part.averagePct) : 0;
+
+                  return `
+                    <div class="part-bar ${isWeakest ? "weakest" : ""}">
+                      <div class="part-bar-label">
+                        <span>${part.name}</span>
+                        <strong>${part.attempts ? `${part.averagePct}%` : "--"}</strong>
+                      </div>
+                      <div class="meter">
+                        <span style="width:${width}%"></span>
+                      </div>
+                    </div>
+                  `;
+                }).join("")}
+              </div>
+            </article>
+          `;
+        }).join("")}
+      </div>
+    </section>
   `;
 }
 
 // ==========================================================================
-// 2. USER PROFILE CONTROLLER
+// 2. OWNER ACCOUNT CONTROLLER
 // ==========================================================================
 function openProfileModal() {
+  openProfileModalView();
+}
+
+function openProfileModalView() {
   const modal = document.createElement("div");
   modal.className = "modal-overlay";
-  
+  const accountState = STATE.isAuthenticated ? "Online sync active" : "Local backup only";
+  const accountDetail = STATE.isAuthenticated
+    ? "Your progress is being saved to the private GitHub-backed store."
+    : "Sign in to sync this browser history to the online store.";
+
   modal.innerHTML = `
-    <div class="modal-content" style="max-width: 450px;">
+    <div class="modal-content profile-modal">
       <div class="modal-header">
-        <h3 class="modal-title">Sign In / Switch Profile</h3>
-        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <div>
+          <span class="eyebrow">Owner account</span>
+          <h3 class="modal-title">Aleetreny</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
       </div>
       <div class="modal-body">
-        <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1rem;">Select an existing user profile to load their specific logs, or create a new profile.</p>
-        
         <div class="user-list">
-          ${STATE.profiles.map(name => {
-            const isActive = name === STATE.activeProfile;
-            return `
-              <button class="user-item-btn ${isActive ? 'active' : ''}" onclick="switchUserProfile('${escapeJS(name)}')">
-                <span>Profile: ${name}</span>
-                ${isActive ? '<span>Active</span>' : '<span>Load ➔</span>'}
-              </button>
-            `;
-          }).join('')}
+          <div class="user-item-btn active">
+            <span>${accountState}</span>
+            <span>${STATE.history.length} attempts</span>
+          </div>
         </div>
 
-        <div style="border-top:1px solid var(--border-color); margin-top:1.5rem; padding-top:1rem;">
-          <h4 style="font-size:0.85rem; font-weight:700; margin-bottom:0.5rem;">Create New Profile</h4>
-          <div style="display:flex; gap:0.5rem;">
-            <input type="text" id="new-profile-input" style="flex-grow:1; padding:0.4rem 0.6rem; border:1px solid var(--border-color); border-radius:6px; font-size:0.85rem; outline:none;" placeholder="Enter username...">
-            <button class="btn btn-primary" onclick="createUserProfile()">Create</button>
-          </div>
+        <div class="new-profile-box">
+          <label>${accountDetail}</label>
+          ${STATE.isAuthenticated ? `
+            <div class="new-profile-row">
+              <button class="btn btn-secondary btn-full" onclick="logoutOwnerFromModal()">Sign out</button>
+            </div>
+          ` : `
+            <div class="new-profile-row">
+              <input type="password" id="owner-password-input" placeholder="Owner password" onkeydown="handleAccountPasswordKeydown(event)" autocomplete="current-password">
+              <button class="btn btn-primary" id="owner-login-btn" onclick="loginOwnerFromModal()">Sign in</button>
+            </div>
+          `}
         </div>
       </div>
     </div>
   `;
+
   document.body.appendChild(modal);
+  const passwordInput = document.getElementById("owner-password-input");
+  if (passwordInput) passwordInput.focus();
 }
 
-function switchUserProfile(name) {
-  STATE.activeProfile = name;
-  saveLocalStorage();
-  loadLocalStorage();
+function handleAccountPasswordKeydown(event) {
+  if (event.key === "Enter") {
+    loginOwnerFromModal();
+  }
+}
+
+async function loginOwnerFromModal() {
+  const input = document.getElementById("owner-password-input");
+  const button = document.getElementById("owner-login-btn");
+  const password = input ? input.value : "";
+  if (!password) return;
+
+  if (button) {
+    button.disabled = true;
+    button.textContent = "Signing in";
+  }
+
+  try {
+    await apiRequest("/api/login", {
+      method: "POST",
+      body: JSON.stringify({ password })
+    });
+    STATE.isAuthenticated = true;
+    await hydrateRemoteHistory();
+    closeModal();
+    refreshCurrentView();
+  } catch (error) {
+    alert(error.message || "Could not sign in.");
+    if (button) {
+      button.disabled = false;
+      button.textContent = "Sign in";
+    }
+  }
+}
+
+async function logoutOwnerFromModal() {
+  try {
+    await apiRequest("/api/logout", { method: "POST" });
+  } catch (error) {
+    console.warn("Logout request failed", error);
+  }
+
+  STATE.isAuthenticated = false;
+  STATE.syncStatus = "local";
+  STATE.syncMessage = "Local backup";
   closeModal();
   refreshCurrentView();
+}
+
+function switchUserProfile() {
+  closeModal();
 }
 
 function createUserProfile() {
-  const input = document.getElementById("new-profile-input");
-  const name = input.value.trim();
-  if (name === "") return;
-  
-  if (STATE.profiles.includes(name)) {
-    alert("Profile name already exists!");
-    return;
-  }
-  
-  STATE.profiles.push(name);
-  STATE.activeProfile = name;
-  saveLocalStorage();
-  loadLocalStorage();
-  closeModal();
-  refreshCurrentView();
+  alert("This app is configured for one owner account.");
 }
 
 // ==========================================================================
@@ -635,20 +1061,18 @@ function openHistoryDetailModal(sessionId) {
       let rowsHTML = "";
       
       for (let q = partData.startQ; q <= partData.endQ; q++) {
-        const uAns = item.answers[q] || "—";
+        const uAns = item.answers[q] || "--";
         const gradeState = item.gradedStates[q];
         
         let gradeLabel = "";
         if (partData.type === "partial") {
-          const ptClass = gradeState === 2 ? 'color:var(--color-success)' : (gradeState === 1 ? 'color:var(--color-warning)' : 'color:var(--color-error)');
+          const ptClass = gradeState === 2 ? 'color:var(--color-success)' : 'color:var(--color-error)';
           gradeLabel = `<span style="font-weight:700; ${ptClass}; font-size:0.85rem;">[${gradeState}/2 pts]</span>`;
         } else {
-          gradeLabel = gradeState === "correct" ? 
-            `<span style="color:var(--color-success); font-weight:bold;">Correct</span>` : 
-            `<span style="color:var(--color-error); font-weight:bold;">Incorrect</span>`;
+          gradeLabel = gradeState === "correct" ?
+            `<span style="color:var(--color-success); font-weight:bold;">Correct</span>` :
+            `<span style="color:var(--color-error); font-weight:bold;">Missed</span>`;
         }
-
-        const noteText = item.errorNotes[q] ? `<div class="mistake-note" style="margin-top:0.25rem;">Note: "${item.errorNotes[q]}"</div>` : "";
 
         rowsHTML += `
           <div style="border-bottom:1px solid #f3f4f6; padding:0.5rem 0.25rem; font-size:0.8rem;">
@@ -656,7 +1080,6 @@ function openHistoryDetailModal(sessionId) {
               <span><b>Q.${q}</b>: <span style="font-family:monospace; font-weight:700; text-transform:uppercase;">${uAns}</span></span>
               <span>${gradeLabel}</span>
             </div>
-            ${noteText}
           </div>
         `;
       }
@@ -674,27 +1097,27 @@ function openHistoryDetailModal(sessionId) {
   modal.innerHTML = `
     <div class="modal-content" style="max-width: 600px; max-height: 90vh;">
       <div class="modal-header">
-        <h3 class="modal-title">Answer Sheet Review: ${sectionMeta.name}</h3>
+        <h3 class="modal-title">Review: ${sectionMeta.name}</h3>
         <button class="modal-close" onclick="closeModal()">&times;</button>
       </div>
       <div class="modal-body">
         <div style="display:flex; justify-content:space-between; align-items:center; background-color:#f9fafb; border:1px solid var(--border-color); border-radius:6px; padding:0.75rem 1rem; margin-bottom:1.5rem;">
           <div>
-            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase;">Scale Score</div>
+            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase;">Scale score</div>
             <div style="font-size:1.4rem; font-weight:800; color:var(--accent-color);">${item.scaleScore} pts <span style="font-size:0.85rem; font-weight:normal;">(${getCambridgeGrade(item.scaleScore)})</span></div>
           </div>
           <div style="text-align:right;">
-            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase;">Raw Score</div>
+            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase;">Raw marks</div>
             <div style="font-size:1.1rem; font-weight:700; color:var(--text-main);">${item.correct} / ${item.total} pts (${item.percentage}%)</div>
           </div>
         </div>
 
-        <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.75rem;">Submitted on: <b>${dateFormatted}</b></div>
+        <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.75rem;">Saved: <b>${dateFormatted}</b></div>
         
         ${sheetHTML}
       </div>
       <div style="margin-top:1rem; text-align:right;">
-        <button class="btn btn-primary" onclick="closeModal()">Close Review</button>
+        <button class="btn btn-primary" onclick="closeModal()">Close</button>
       </div>
     </div>
   `;
@@ -709,7 +1132,6 @@ function openAnswerSheet(section) {
   STATE.activeSection = section;
   STATE.answers = {};
   STATE.gradedStates = {};
-  STATE.errorNotes = {};
   STATE.isCorrecting = false;
   
   renderAnswerSheetHTML();
@@ -724,7 +1146,7 @@ function renderAnswerSheetHTML() {
   if (STATE.activeSection === "writing") {
     sheetContent = `
       <div class="sheet-notice">
-        <b>Writing Paper:</b> Type or paste your two writing responses. The counter badge will alert you if your length matches the Cambridge C2 limits. When done, self-grade each part (out of 20 marks) using the sliders.
+        Paste both writing tasks, check the word count, then score each criterion.
       </div>
       
       <!-- PART 1 WRITING -->
@@ -746,7 +1168,7 @@ function renderAnswerSheetHTML() {
   } else {
     sheetContent = `
       <div class="sheet-notice">
-        Fill in your answers below as you work through your official paper or PDF. Once finished, click <b>"Finish & Correct"</b> to self-grade.
+        Enter your answers. When you finish, lock the sheet and grade each item.
       </div>
       
       <div class="sheet-questions-list">
@@ -760,18 +1182,18 @@ function renderAnswerSheetHTML() {
       <div class="sheet-container">
         <div class="sheet-header">
           <div class="sheet-title">
-            <h2>Answer Sheet: ${sectionMeta.name}</h2>
+            <h2>Mock: ${sectionMeta.name}</h2>
             <p>${sectionMeta.description}</p>
           </div>
-          <button class="btn btn-square" onclick="renderHome()">⬅ Back to Hub</button>
+          <button class="btn btn-secondary" onclick="renderHome()">Back</button>
         </div>
 
         ${sheetContent}
 
         <div style="border-top:1px solid var(--border-color); padding-top:1.5rem; display:flex; justify-content:space-between; align-items:center;">
-          <button class="btn btn-danger-link" onclick="clearSheetInputs()">Reset Sheet</button>
+          <button class="btn btn-danger-link" onclick="clearSheetInputs()">Clear</button>
           <button class="btn btn-primary" id="sheet-submit-btn" onclick="lockAnswersAndStartCorrection()">
-            Finish & Correct
+            Grade
           </button>
         </div>
       </div>
@@ -852,7 +1274,6 @@ function clearSheetInputs() {
   if (confirm("Reset all answers on the current sheet?")) {
     STATE.answers = {};
     STATE.gradedStates = {};
-    STATE.errorNotes = {};
     STATE.isCorrecting = false;
     renderAnswerSheetHTML();
   }
@@ -889,7 +1310,7 @@ function lockAnswersAndStartCorrection() {
         controls.innerHTML = `
           <div class="correction-controls-box">
             <button class="correct-btn" id="correct-btn-${q}" onclick="markBinaryGrade(${q}, 'correct')">Correct</button>
-            <button class="incorrect-btn" id="incorrect-btn-${q}" onclick="markBinaryGrade(${q}, 'incorrect')">Incorrect</button>
+            <button class="incorrect-btn" id="incorrect-btn-${q}" onclick="markBinaryGrade(${q}, 'incorrect')">Missed</button>
           </div>
         `;
       }
@@ -897,7 +1318,7 @@ function lockAnswersAndStartCorrection() {
   }
   
   const mainBtn = document.getElementById("sheet-submit-btn");
-  mainBtn.textContent = "Save & Calculate Score";
+  mainBtn.textContent = "Save result";
   mainBtn.setAttribute("onclick", "saveGradedSheetResult()");
 }
 
@@ -911,20 +1332,10 @@ function markBinaryGrade(qNum, state) {
     cBtn.classList.add("active");
     iBtn.classList.remove("active");
     document.getElementById(`error-note-area-${qNum}`).innerHTML = "";
-    delete STATE.errorNotes[qNum];
   } else {
     iBtn.classList.add("active");
     cBtn.classList.remove("active");
-    
-    const noteArea = document.getElementById(`error-note-area-${qNum}`);
-    noteArea.innerHTML = `
-      <div class="sheet-error-note-box">
-        <label for="note-input-${qNum}">Explain why you missed it (Error details):</label>
-        <input type="text" class="sheet-error-note-input" id="note-input-${qNum}" 
-               placeholder="e.g. spelling error, wrong preposition, vocabulary gap..." 
-               oninput="storeErrorNote(${qNum}, this.value)" value="${STATE.errorNotes[qNum] || ''}">
-      </div>
-    `;
+    document.getElementById(`error-note-area-${qNum}`).innerHTML = "";
   }
 }
 
@@ -943,26 +1354,10 @@ function markPartialGrade(qNum, pts) {
   activeBtn.classList.add(`active-${pts}`);
   
   const noteArea = document.getElementById(`error-note-area-${qNum}`);
-  if (pts === 2) {
-    noteArea.innerHTML = "";
-    delete STATE.errorNotes[qNum];
-  } else {
-    noteArea.innerHTML = `
-      <div class="sheet-error-note-box">
-        <label for="note-input-${qNum}">Partial score (${pts}/2 pts). Log details about your mistake:</label>
-        <input type="text" class="sheet-error-note-input" id="note-input-${qNum}" 
-               placeholder="e.g. missed the second half of the phrase, grammar structure flaw..." 
-               oninput="storeErrorNote(${qNum}, this.value)" value="${STATE.errorNotes[qNum] || ''}">
-      </div>
-    `;
-  }
+  noteArea.innerHTML = "";
 }
 
-function storeErrorNote(qNum, noteVal) {
-  STATE.errorNotes[qNum] = noteVal.trim();
-}
-
-function saveGradedSheetResult() {
+async function saveGradedSheetResult() {
   const sectionMeta = C2_EXAM_METADATA[STATE.activeSection];
   
   let missingGrades = [];
@@ -975,12 +1370,11 @@ function saveGradedSheetResult() {
   }
 
   if (missingGrades.length > 0) {
-    alert(`Please grade all questions before saving (Q.${missingGrades.join(', Q.')})`);
+    alert(`Grade every question before saving (Q.${missingGrades.join(', Q.')})`);
     return;
   }
 
   let rawScoreTotal = 0;
-  let incorrectQuestionsList = [];
   
   for (const [partKey, partData] of Object.entries(sectionMeta.parts)) {
     for (let q = partData.startQ; q <= partData.endQ; q++) {
@@ -988,31 +1382,9 @@ function saveGradedSheetResult() {
       
       if (partData.type === "partial") {
         rawScoreTotal += state;
-        if (state < 2) {
-          incorrectQuestionsList.push(q);
-          STATE.mistakes.push({
-            id: `${STATE.activeSection}_q${q}_${Date.now()}`,
-            section: STATE.activeSection,
-            qNum: q,
-            userAnswer: STATE.answers[q] || "Blank",
-            scoreValue: state,
-            note: STATE.errorNotes[q] || "",
-            date: Date.now()
-          });
-        }
       } else {
         if (state === "correct") {
           rawScoreTotal += partData.weight;
-        } else {
-          incorrectQuestionsList.push(q);
-          STATE.mistakes.push({
-            id: `${STATE.activeSection}_q${q}_${Date.now()}`,
-            section: STATE.activeSection,
-            qNum: q,
-            userAnswer: STATE.answers[q] || "Blank",
-            note: STATE.errorNotes[q] || "",
-            date: Date.now()
-          });
         }
       }
     }
@@ -1031,12 +1403,10 @@ function saveGradedSheetResult() {
     scaleScore: scaleScore,
     answers: { ...STATE.answers },
     gradedStates: { ...STATE.gradedStates },
-    errorNotes: { ...STATE.errorNotes },
-    incorrectQuestions: incorrectQuestionsList,
     date: Date.now()
   });
 
-  saveLocalStorage();
+  await persistHistory({ mode: "merge" });
   renderDashboard();
 }
 
@@ -1155,7 +1525,7 @@ function setupWritingGradingArea() {
   `;
 
   const mainBtn = document.getElementById("sheet-submit-btn");
-  mainBtn.textContent = "Save Writing Assessment";
+  mainBtn.textContent = "Save writing";
   mainBtn.setAttribute("onclick", "saveWritingSheetResult()");
   
   updateWritingRawTotal();
@@ -1191,7 +1561,7 @@ function updateWritingRawTotal() {
   document.getElementById("writing-overall-score").textContent = `${totalOverall} / 40 points`;
 }
 
-function saveWritingSheetResult() {
+async function saveWritingSheetResult() {
   const text1 = document.getElementById("writing-textarea-part1").value;
   const text2 = document.getElementById("writing-textarea-part2").value;
   
@@ -1224,7 +1594,7 @@ function saveWritingSheetResult() {
     date: Date.now()
   });
 
-  saveLocalStorage();
+  await persistHistory({ mode: "merge" });
   renderDashboard();
 }
 
@@ -1238,94 +1608,33 @@ function escapeJS(str) {
   return str.replace(/'/g, "\\'");
 }
 
+function escapeHTML(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 function calculateAverageScaleScore() {
   if (STATE.history.length === 0) return 0;
   const sum = STATE.history.reduce((acc, curr) => acc + curr.scaleScore, 0);
   return Math.round(sum / STATE.history.length);
 }
 
-function renderProgressChartHTML() {
-  if (STATE.history.length === 0) {
-    return `
-      <div class="dash-panel panel-fixed">
-        <h2 class="panel-title">Score Evolution</h2>
-        <div style="height: 100%; display:flex; justify-content:center; align-items:center; color:var(--text-muted); font-size:0.85rem;">
-          No attempts recorded yet.
-        </div>
-      </div>
-    `;
-  }
-
-  // Get last 10 attempts for the chart
-  const recentAttempts = STATE.history.slice(-10);
-
-  const barsHTML = recentAttempts.map(item => {
-    const isPass = item.scaleScore >= 200;
-    const heightPct = Math.max(5, Math.min(100, Math.round(((item.scaleScore - 120) / 110) * 100)));
-    const dateFormatted = new Date(item.date).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
-    
-    // Get section initial
-    let sectionInitial = "U";
-    if (item.section === "reading") sectionInitial = "R";
-    if (item.section === "listening") sectionInitial = "L";
-    if (item.section === "writing") sectionInitial = "W";
-    
-    const tooltipText = `${C2_EXAM_METADATA[item.section].name}: ${item.scaleScore} pts (${item.correct}/${item.total})`;
-
-    return `
-      <div class="graph-bar-wrapper">
-        <div class="graph-bar-fill ${isPass ? 'pass' : 'fail'}" 
-             style="height: ${heightPct}%;" 
-             data-score="${tooltipText}">
-        </div>
-        <div class="graph-bar-date">${dateFormatted} (${sectionInitial})</div>
-      </div>
-    `;
-  }).join('');
-
-  return `
-    <div class="dash-panel panel-fixed">
-      <h2 class="panel-title">Score Evolution (Last 10 Attempts)</h2>
-      <div style="flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
-        <div class="graph-bars" style="flex-grow:1; margin-top: 1rem; margin-bottom: 1rem;">
-          ${barsHTML}
-        </div>
-        <div style="font-size:0.7rem; color:var(--text-muted); text-align:center;">
-          Hover over the bars to see details. (U = Use of English, R = Reading, L = Listening, W = Writing)
-        </div>
-      </div>
-    </div>
-  `;
-}
-
-function deleteHistoryItem(id) {
+async function deleteHistoryItem(id) {
   if (confirm("Delete this history record?")) {
     STATE.history = STATE.history.filter(h => h.id !== id);
-    saveLocalStorage();
+    await persistHistory({ mode: "replace" });
     refreshCurrentView();
   }
 }
 
-function deleteMistakeItem(id) {
-  if (confirm("Remove this mistake from journal?")) {
-    STATE.mistakes = STATE.mistakes.filter(m => m.id !== id);
-    saveLocalStorage();
-    refreshCurrentView();
-  }
-}
-
-function clearHistory() {
-  if (confirm("Are you sure you want to clear your entire practice history? This cannot be undone.")) {
+async function clearHistory() {
+  if (confirm("Clear your practice history from this app? Online sync keeps a versioned backup when it is available.")) {
     STATE.history = [];
-    saveLocalStorage();
-    refreshCurrentView();
-  }
-}
-
-function clearMistakes() {
-  if (confirm("Are you sure you want to clear your entire mistakes journal? This cannot be undone.")) {
-    STATE.mistakes = [];
-    saveLocalStorage();
+    await persistHistory({ mode: "replace" });
     refreshCurrentView();
   }
 }
@@ -1342,4 +1651,40 @@ function refreshCurrentView() {
   } else {
     renderHome();
   }
+}
+
+function openAllAttemptsModal() {
+  const modal = document.createElement("div");
+  modal.className = "modal-overlay";
+  modal.innerHTML = `
+    <div class="modal-content" style="max-width: 600px; max-height: 85vh; display: flex; flex-direction: column;">
+      <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border-color);">
+        <h3 class="modal-title">All Attempts</h3>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close" style="background: transparent; border: 0; font-size: 1.5rem; cursor: pointer; color: var(--text-muted);">&times;</button>
+      </div>
+      <div class="modal-body" style="flex: 1; overflow-y: auto; padding: 16px 0; min-height: 0;">
+        ${renderHistoryListV2HTML(null)}
+      </div>
+      <div style="padding-top: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end;">
+        <button class="btn btn-primary" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+function getSectionIconSVG(section) {
+  if (section === "useOfEnglish") {
+    return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>`;
+  }
+  if (section === "reading") {
+    return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>`;
+  }
+  if (section === "listening") {
+    return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M3 18v-6a9 9 0 0 1 18 0v6"></path><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path></svg>`;
+  }
+  if (section === "writing") {
+    return `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:block;"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>`;
+  }
+  return "";
 }
