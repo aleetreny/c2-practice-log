@@ -4,6 +4,7 @@ const STATE = {
   activeSection: null, // "useOfEnglish" | "reading" | "listening" | "writing"
   answers: {}, // Q-num -> string
   gradedStates: {}, // Q-num -> "correct" | "incorrect" | score (0|1|2)
+  errorNotes: {}, // Use of English Q-num -> correction note
   isCorrecting: false,
   activeProfile: "Aleetreny",
   profiles: ["Aleetreny"],
@@ -478,6 +479,53 @@ function getHistoryAnswersForStorage(item = {}) {
   }
 
   return answers;
+}
+
+function getUseOfEnglishErrorNotes(item = {}) {
+  const answers = getPlainObject(item.answers);
+  const meta = getPlainObject(answers.meta);
+  return getPlainObject(meta.errorNotes);
+}
+
+function isUseOfEnglishError(partData, gradeState) {
+  if (!partData) return false;
+  if (partData.type === "partial") {
+    return typeof gradeState === "number" && gradeState < partData.weight;
+  }
+  return gradeState === "incorrect";
+}
+
+function getUseOfEnglishErrorEntries() {
+  const useOfEnglishParts = C2_EXAM_METADATA.useOfEnglish.parts;
+  const entries = [];
+
+  STATE.history
+    .filter(item => item.section === "useOfEnglish")
+    .forEach(item => {
+      const answers = getPlainObject(item.answers);
+      const gradedStates = getPlainObject(item.gradedStates);
+      const notes = getUseOfEnglishErrorNotes(item);
+
+      Object.entries(useOfEnglishParts).forEach(([partKey, partData]) => {
+        for (let q = partData.startQ; q <= partData.endQ; q++) {
+          const gradeState = gradedStates[q];
+          if (!isUseOfEnglishError(partData, gradeState)) continue;
+
+          entries.push({
+            attemptId: item.id,
+            date: Number(item.date) || 0,
+            partKey,
+            partName: partData.name,
+            question: q,
+            answer: answers[q] || "",
+            gradeState,
+            note: typeof notes[q] === "string" ? notes[q] : ""
+          });
+        }
+      });
+    });
+
+  return entries.sort((a, b) => b.date - a.date || a.question - b.question);
 }
 
 function formatAttemptDuration(totalSeconds) {
@@ -1021,8 +1069,84 @@ function renderDashboardView() {
             ` : ""}
           </section>
         </section>
+
+        ${renderUseOfEnglishErrorDashboardHTML()}
       </main>
     </div>
+  `;
+}
+
+function renderUseOfEnglishErrorItemHTML(error, compact = false) {
+  const partLabel = error.partKey.replace("part", "Part ");
+  const gradeLabel = typeof error.gradeState === "number"
+    ? `${error.gradeState}/2 pts`
+    : "Missed";
+  const answer = error.answer ? escapeHTML(error.answer) : "No answer";
+  const note = error.note.trim();
+
+  return `
+    <article class="ue-error-item ${compact ? "compact" : ""}">
+      <div class="ue-error-item-head">
+        <div>
+          <span class="ue-error-part">${partLabel}</span>
+          <strong>Q.${error.question}</strong>
+        </div>
+        <span>${gradeLabel}</span>
+      </div>
+      <div class="ue-error-answer">${answer}</div>
+      ${note ? `<p class="ue-error-note">${escapeHTML(note)}</p>` : `<p class="ue-error-note empty">No note added</p>`}
+      <button class="ue-error-review" onclick="openHistoryDetailModal('${escapeJS(error.attemptId)}')">${formatCompactDateTime(error.date)}</button>
+    </article>
+  `;
+}
+
+function renderUseOfEnglishErrorDashboardHTML() {
+  const errors = getUseOfEnglishErrorEntries();
+  const partEntries = Object.entries(C2_EXAM_METADATA.useOfEnglish.parts);
+
+  return `
+    <section class="dash-panel ue-errors-panel" aria-label="Use of English error log">
+      <div class="panel-title">
+        <span>Use of English error log</span>
+        <small>${errors.length} ${errors.length === 1 ? "error" : "errors"} saved</small>
+      </div>
+      ${errors.length === 0 ? `
+        <div class="empty-state ue-errors-empty">Your latest Use of English errors and notes will appear here.</div>
+      ` : `
+        <div class="ue-errors-layout">
+          <section class="ue-recent-errors">
+            <h3>Latest errors</h3>
+            <div class="ue-error-list">
+              ${errors.slice(0, 8).map(error => renderUseOfEnglishErrorItemHTML(error)).join("")}
+            </div>
+          </section>
+          <section class="ue-part-register">
+            <h3>Errors by part</h3>
+            <div class="ue-part-register-grid">
+              ${partEntries.map(([partKey, partData]) => {
+                const partErrors = errors.filter(error => error.partKey === partKey);
+                return `
+                  <article class="ue-part-card">
+                    <div class="ue-part-card-head">
+                      <div>
+                        <span>${partKey.replace("part", "Part ")}</span>
+                        <strong>${partData.name.replace(/^Part \d+ - /, "")}</strong>
+                      </div>
+                      <b>${partErrors.length}</b>
+                    </div>
+                    ${partErrors.length > 0 ? `
+                      <div class="ue-part-error-list">
+                        ${partErrors.map(error => renderUseOfEnglishErrorItemHTML(error, true)).join("")}
+                      </div>
+                    ` : `<p class="ue-part-empty">No errors recorded.</p>`}
+                  </article>
+                `;
+              }).join("")}
+            </div>
+          </section>
+        </div>
+      `}
+    </section>
   `;
 }
 
@@ -1496,6 +1620,8 @@ function openHistoryDetailModal(sessionId) {
       for (let q = partData.startQ; q <= partData.endQ; q++) {
         const uAns = escapeHTML(getPlainObject(item.answers)[q] || "--");
         const gradeState = item.gradedStates[q];
+        const isError = item.section === "useOfEnglish" && isUseOfEnglishError(partData, gradeState);
+        const errorNote = isError ? (getUseOfEnglishErrorNotes(item)[q] || "").trim() : "";
         
         let gradeLabel = "";
         if (partData.type === "partial") {
@@ -1513,6 +1639,7 @@ function openHistoryDetailModal(sessionId) {
               <span><b>Q.${q}</b>: <span style="font-family:monospace; font-weight:700; text-transform:uppercase;">${uAns}</span></span>
               <span>${gradeLabel}</span>
             </div>
+            ${errorNote ? `<div class="history-error-note"><strong>Error note</strong>${escapeHTML(errorNote)}</div>` : ""}
           </div>
         `;
       }
@@ -1567,6 +1694,7 @@ function openAnswerSheet(section) {
   STATE.activeSection = section;
   STATE.answers = {};
   STATE.gradedStates = {};
+  STATE.errorNotes = {};
   STATE.isCorrecting = false;
   resetPracticeTimer();
   
@@ -1713,9 +1841,11 @@ function renderSheetQuestionInputHTML(q, partData) {
     `;
   }
 
+  const isTransformation = STATE.activeSection === "useOfEnglish" && partData.type === "partial";
   return `
-    <input type="text" class="sheet-text-input" value="${answeredVal}" maxlength="80"
-           oninput="storeInputAnswer(${q}, this.value)" placeholder="Enter answer...">
+    <input type="text" class="sheet-text-input ${isTransformation ? "sheet-text-input-long" : ""}"
+           value="${escapeHTML(answeredVal)}" maxlength="${isTransformation ? 160 : 80}"
+           oninput="storeInputAnswer(${q}, this.value)" placeholder="${isTransformation ? "Enter the full phrase..." : "Enter answer..."}">
   `;
 }
 
@@ -1781,6 +1911,7 @@ function clearSheetInputs() {
   if (confirm("Reset all answers on the current sheet?")) {
     STATE.answers = {};
     STATE.gradedStates = {};
+    STATE.errorNotes = {};
     STATE.isCorrecting = false;
     renderAnswerSheetHTML();
   }
@@ -1838,12 +1969,13 @@ function markBinaryGrade(qNum, state) {
   if (state === "correct") {
     cBtn.classList.add("active");
     iBtn.classList.remove("active");
-    document.getElementById(`error-note-area-${qNum}`).innerHTML = "";
+    delete STATE.errorNotes[qNum];
   } else {
     iBtn.classList.add("active");
     cBtn.classList.remove("active");
-    document.getElementById(`error-note-area-${qNum}`).innerHTML = "";
   }
+
+  updateErrorNoteArea(qNum);
 }
 
 function markPartialGrade(qNum, pts) {
@@ -1859,9 +1991,38 @@ function markPartialGrade(qNum, pts) {
   
   const activeBtn = document.getElementById(`pts-btn-${qNum}-${pts}`);
   activeBtn.classList.add(`active-${pts}`);
-  
+
+  if (pts === 2) delete STATE.errorNotes[qNum];
+  updateErrorNoteArea(qNum);
+}
+
+function updateErrorNoteArea(qNum) {
   const noteArea = document.getElementById(`error-note-area-${qNum}`);
-  noteArea.innerHTML = "";
+  if (!noteArea) return;
+
+  const useOfEnglishParts = C2_EXAM_METADATA.useOfEnglish.parts;
+  const partData = Object.values(useOfEnglishParts).find(part => qNum >= part.startQ && qNum <= part.endQ);
+  const shouldShow = STATE.activeSection === "useOfEnglish"
+    && isUseOfEnglishError(partData, STATE.gradedStates[qNum]);
+
+  if (!shouldShow) {
+    noteArea.innerHTML = "";
+    return;
+  }
+
+  noteArea.innerHTML = `
+    <div class="sheet-error-note-box">
+      <label for="error-note-${qNum}">Error note (optional)</label>
+      <textarea class="sheet-error-note-input" id="error-note-${qNum}" rows="2"
+                oninput="storeErrorNote(${qNum}, this.value)"
+                placeholder="Why was this wrong? Add the rule, correction or reminder.">${escapeHTML(STATE.errorNotes[qNum] || "")}</textarea>
+    </div>
+  `;
+}
+
+function storeErrorNote(qNum, value) {
+  if (STATE.activeSection !== "useOfEnglish") return;
+  STATE.errorNotes[qNum] = value;
 }
 
 async function saveGradedSheetResult() {
@@ -1902,11 +2063,17 @@ async function saveGradedSheetResult() {
   const scaleScore = calculateScaleScore(STATE.activeSection, rawScoreTotal);
   const durationSeconds = getCurrentPracticeDurationSeconds();
   const answers = { ...STATE.answers };
+  const errorNotes = Object.fromEntries(
+    Object.entries(STATE.errorNotes)
+      .map(([q, note]) => [q, typeof note === "string" ? note.trim() : ""])
+      .filter(([, note]) => note.length > 0)
+  );
 
-  if (durationSeconds > 0) {
+  if (durationSeconds > 0 || (STATE.activeSection === "useOfEnglish" && Object.keys(errorNotes).length > 0)) {
     answers.meta = {
       ...getPlainObject(answers.meta),
-      durationSeconds
+      ...(durationSeconds > 0 ? { durationSeconds } : {}),
+      ...(STATE.activeSection === "useOfEnglish" && Object.keys(errorNotes).length > 0 ? { errorNotes } : {})
     };
   }
   
