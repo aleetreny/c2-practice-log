@@ -1567,7 +1567,13 @@ function getHistoryRawSummaryText(item) {
     : `${assessedSummary} - ${equivalentSummary} (${item.percentage}%)`;
 }
 
-function renderWritingHistoryPartHTML(item, partKey) {
+function renderHistoryWritingCriterionOptions(selectedValue) {
+  return Array.from({ length: 6 }, (_, value) => `
+    <option value="${value}" ${value === selectedValue ? "selected" : ""}>${value} / 5</option>
+  `).join("");
+}
+
+function renderWritingHistoryPartHTML(item, partKey, editMode = false) {
   const answers = getPlainObject(item.answers);
   const criteria = getWritingPartCriteria(item, partKey);
   const score = getWritingPartScore(criteria);
@@ -1582,17 +1588,250 @@ function renderWritingHistoryPartHTML(item, partKey) {
     ? WRITING_CRITERIA.map(criterion => `${criterion.label}: ${Number(criteria[criterion.key]) || 0}/5`).join(" | ")
     : "Not scored";
   const scoreLabel = score === null ? "Not scored" : `${score}/20 pts`;
+  const editorHTML = editMode ? `
+    <div class="history-writing-edit-grid" data-history-writing-part="${partKey}">
+      ${WRITING_CRITERIA.map(criterion => {
+        const selectedValue = Number(criteria?.[criterion.key]) || 0;
+        return `
+          <label>
+            <span>${criterion.label}</span>
+            <select data-history-writing-criterion="${criterion.key}" onchange="updateHistoryReviewPreview()">
+              ${renderHistoryWritingCriterionOptions(selectedValue)}
+            </select>
+          </label>
+        `;
+      }).join("")}
+    </div>
+  ` : `<div class="history-writing-criteria">${criteriaLine}</div>`;
 
   return `
     <div class="history-writing-part">
       <h4>${title} <span>${scoreLabel}</span></h4>
-      <div class="history-writing-criteria">${criteriaLine}</div>
+      ${editorHTML}
       <div class="history-writing-response">${responseText ? escapeHTML(responseText) : "No text saved"}</div>
     </div>
   `;
 }
 
-function openHistoryDetailModal(sessionId) {
+function renderHistoryGradeEditorHTML(q, partData, gradeState) {
+  if (partData.type === "partial") {
+    return `
+      <div class="history-grade-edit-controls" id="history-grade-control-${q}"
+           data-question="${q}" data-type="partial" data-weight="${partData.weight}" data-value="${gradeState}">
+        ${[0, 1, 2].map(points => `
+          <button type="button" class="points-btn ${gradeState === points ? `active-${points}` : ""}"
+                  id="history-grade-${q}-${points}" onclick="setHistoryReviewGrade(${q}, ${points})">
+            ${points} ${points === 1 ? "pt" : "pts"}
+          </button>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  return `
+    <div class="history-grade-edit-controls" id="history-grade-control-${q}"
+         data-question="${q}" data-type="binary" data-weight="${partData.weight}" data-value="${gradeState}">
+      <button type="button" class="correct-btn ${gradeState === "correct" ? "active" : ""}"
+              id="history-grade-${q}-correct" onclick="setHistoryReviewGrade(${q}, 'correct')">Correct</button>
+      <button type="button" class="incorrect-btn ${gradeState === "incorrect" ? "active" : ""}"
+              id="history-grade-${q}-incorrect" onclick="setHistoryReviewGrade(${q}, 'incorrect')">Missed</button>
+    </div>
+  `;
+}
+
+function renderHistoryErrorNoteEditorHTML(item, q, partData, gradeState) {
+  if (item.section !== "useOfEnglish") return "";
+
+  const note = getUseOfEnglishErrorNotes(item)[q] || "";
+  const isError = isUseOfEnglishError(partData, gradeState);
+
+  return `
+    <div class="history-error-note-editor" id="history-error-note-editor-${q}" ${isError ? "" : "hidden"}>
+      <label for="history-error-note-${q}">Error note</label>
+      <textarea id="history-error-note-${q}" rows="2"
+                placeholder="Add the rule, correction or reminder.">${escapeHTML(note)}</textarea>
+    </div>
+  `;
+}
+
+function setHistoryReviewGrade(qNum, value) {
+  const control = document.getElementById(`history-grade-control-${qNum}`);
+  if (!control) return;
+
+  const isPartial = control.dataset.type === "partial";
+  const normalizedValue = isPartial ? Number(value) : value;
+  control.dataset.value = String(normalizedValue);
+
+  control.querySelectorAll("button").forEach(button => {
+    button.classList.remove("active", "active-0", "active-1", "active-2");
+  });
+
+  const activeButton = document.getElementById(`history-grade-${qNum}-${normalizedValue}`);
+  if (activeButton) {
+    activeButton.classList.add(isPartial ? `active-${normalizedValue}` : "active");
+  }
+
+  const noteEditor = document.getElementById(`history-error-note-editor-${qNum}`);
+  if (noteEditor) {
+    const weight = Number(control.dataset.weight) || 1;
+    const isError = isPartial ? normalizedValue < weight : normalizedValue === "incorrect";
+    noteEditor.hidden = !isError;
+  }
+
+  updateHistoryReviewPreview();
+}
+
+function getHistoryObjectiveEditSnapshot(section) {
+  const sectionMeta = C2_EXAM_METADATA[section];
+  const gradedStates = {};
+  let rawScore = 0;
+
+  document.querySelectorAll("[data-question][data-type]").forEach(control => {
+    const q = Number(control.dataset.question);
+    const weight = Number(control.dataset.weight) || 1;
+    const value = control.dataset.type === "partial"
+      ? Number(control.dataset.value)
+      : control.dataset.value;
+    gradedStates[q] = value;
+    rawScore += control.dataset.type === "partial" ? value : value === "correct" ? weight : 0;
+  });
+
+  const total = sectionMeta.maxMarks;
+  return {
+    gradedStates,
+    rawScore,
+    total,
+    percentage: Math.round((rawScore / total) * 100),
+    scaleScore: calculateScaleScore(section, rawScore)
+  };
+}
+
+function getHistoryWritingEditSnapshot() {
+  const partScores = {};
+
+  document.querySelectorAll("[data-history-writing-part]").forEach(partElement => {
+    const partKey = partElement.dataset.historyWritingPart;
+    const criteria = {};
+    WRITING_CRITERIA.forEach(criterion => {
+      const select = partElement.querySelector(`[data-history-writing-criterion="${criterion.key}"]`);
+      criteria[criterion.key] = Math.max(0, Math.min(5, Number(select?.value) || 0));
+    });
+    partScores[partKey] = criteria;
+  });
+
+  const partKeys = Object.keys(partScores);
+  const actualRaw = partKeys.reduce((sum, partKey) => {
+    return sum + WRITING_CRITERIA.reduce((partSum, criterion) => partSum + partScores[partKey][criterion.key], 0);
+  }, 0);
+  const actualMax = partKeys.length * 20;
+  const equivalentRaw = getWritingEquivalentRawScore(actualRaw, actualMax);
+  const percentage = Math.round((equivalentRaw / 40) * 100);
+
+  return {
+    partKeys,
+    partScores,
+    actualRaw,
+    actualMax,
+    equivalentRaw,
+    percentage,
+    scaleScore: calculateScaleScore("writing", equivalentRaw)
+  };
+}
+
+function updateHistoryReviewPreview() {
+  const modal = document.querySelector(".history-review-modal");
+  const scaleElement = document.getElementById("history-review-scale");
+  const rawElement = document.getElementById("history-review-raw");
+  if (!modal || !scaleElement || !rawElement) return;
+
+  const section = modal.dataset.historySection;
+  if (section === "writing") {
+    const snapshot = getHistoryWritingEditSnapshot();
+    scaleElement.innerHTML = `${snapshot.scaleScore} pts <span>(${getCambridgeGrade(snapshot.scaleScore)})</span>`;
+    rawElement.textContent = snapshot.actualMax === 40
+      ? `${snapshot.equivalentRaw} / 40 equivalent (${snapshot.percentage}%)`
+      : `${snapshot.actualRaw} / ${snapshot.actualMax} assessed - ${snapshot.equivalentRaw} / 40 equivalent (${snapshot.percentage}%)`;
+    return;
+  }
+
+  const snapshot = getHistoryObjectiveEditSnapshot(section);
+  scaleElement.innerHTML = `${snapshot.scaleScore} pts <span>(${getCambridgeGrade(snapshot.scaleScore)})</span>`;
+  rawElement.textContent = `${snapshot.rawScore} / ${snapshot.total} pts (${snapshot.percentage}%)`;
+}
+
+function reopenHistoryDetailModal(sessionId, editMode) {
+  closeModal();
+  openHistoryDetailModal(sessionId, editMode);
+}
+
+async function saveHistoryReviewEdits(sessionId) {
+  const item = STATE.history.find(historyItem => historyItem.id === sessionId);
+  if (!item) return;
+
+  const saveButton = document.getElementById("history-review-save");
+  if (saveButton) {
+    saveButton.disabled = true;
+    saveButton.textContent = "Saving...";
+  }
+
+  if (item.section === "writing") {
+    const snapshot = getHistoryWritingEditSnapshot();
+    const answers = { ...getPlainObject(item.answers) };
+    answers.meta = {
+      ...getPlainObject(answers.meta),
+      assessedParts: snapshot.partKeys,
+      actualRaw: snapshot.actualRaw,
+      actualMax: snapshot.actualMax,
+      equivalentRaw: snapshot.equivalentRaw,
+      scaleBasis: "normalised-to-40"
+    };
+
+    item.gradedStates = snapshot.partScores;
+    item.answers = answers;
+    item.correct = snapshot.equivalentRaw;
+    item.total = 40;
+    item.percentage = snapshot.percentage;
+    item.scaleScore = snapshot.scaleScore;
+  } else {
+    const snapshot = getHistoryObjectiveEditSnapshot(item.section);
+    item.gradedStates = snapshot.gradedStates;
+    item.correct = snapshot.rawScore;
+    item.total = snapshot.total;
+    item.percentage = snapshot.percentage;
+    item.scaleScore = snapshot.scaleScore;
+
+    if (item.section === "useOfEnglish") {
+      const answers = { ...getPlainObject(item.answers) };
+      const meta = { ...getPlainObject(answers.meta) };
+      const errorNotes = {};
+      const sectionParts = C2_EXAM_METADATA.useOfEnglish.parts;
+
+      Object.values(sectionParts).forEach(partData => {
+        for (let q = partData.startQ; q <= partData.endQ; q++) {
+          if (!isUseOfEnglishError(partData, snapshot.gradedStates[q])) continue;
+          const note = document.getElementById(`history-error-note-${q}`)?.value.trim() || "";
+          if (note) errorNotes[q] = note;
+        }
+      });
+
+      if (Object.keys(errorNotes).length > 0) {
+        meta.errorNotes = errorNotes;
+      } else {
+        delete meta.errorNotes;
+      }
+
+      answers.meta = meta;
+      item.answers = answers;
+    }
+  }
+
+  await persistHistory({ mode: "merge" });
+  closeAllModals();
+  refreshCurrentView();
+  openHistoryDetailModal(sessionId);
+}
+
+function openHistoryDetailModal(sessionId, editMode = false) {
   const item = STATE.history.find(h => h.id === sessionId);
   if (!item) return;
 
@@ -1607,7 +1846,7 @@ function openHistoryDetailModal(sessionId) {
   if (item.section === "writing") {
     sheetHTML = `
       <div style="display:flex; flex-direction:column; gap:1rem;">
-        ${["part1", "part2"].map(partKey => renderWritingHistoryPartHTML(item, partKey)).join("")}
+        ${["part1", "part2"].map(partKey => renderWritingHistoryPartHTML(item, partKey, editMode)).join("")}
       </div>
     `;
   } else {
@@ -1624,7 +1863,9 @@ function openHistoryDetailModal(sessionId) {
         const errorNote = isError ? (getUseOfEnglishErrorNotes(item)[q] || "").trim() : "";
         
         let gradeLabel = "";
-        if (partData.type === "partial") {
+        if (editMode) {
+          gradeLabel = renderHistoryGradeEditorHTML(q, partData, gradeState);
+        } else if (partData.type === "partial") {
           const ptClass = gradeState === 2 ? 'color:var(--color-success)' : 'color:var(--color-error)';
           gradeLabel = `<span style="font-weight:700; ${ptClass}; font-size:0.85rem;">[${gradeState}/2 pts]</span>`;
         } else {
@@ -1634,12 +1875,14 @@ function openHistoryDetailModal(sessionId) {
         }
 
         rowsHTML += `
-          <div style="border-bottom:1px solid #f3f4f6; padding:0.5rem 0.25rem; font-size:0.8rem;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
+          <div class="history-question-row">
+            <div class="history-question-main">
               <span><b>Q.${q}</b>: <span style="font-family:monospace; font-weight:700; text-transform:uppercase;">${uAns}</span></span>
               <span>${gradeLabel}</span>
             </div>
-            ${errorNote ? `<div class="history-error-note"><strong>Error note</strong>${escapeHTML(errorNote)}</div>` : ""}
+            ${editMode
+              ? renderHistoryErrorNoteEditorHTML(item, q, partData, gradeState)
+              : errorNote ? `<div class="history-error-note"><strong>Error note</strong>${escapeHTML(errorNote)}</div>` : ""}
           </div>
         `;
       }
@@ -1655,31 +1898,43 @@ function openHistoryDetailModal(sessionId) {
   }
 
   modal.innerHTML = `
-    <div class="modal-content" style="max-width: 600px; max-height: 90vh;">
+    <div class="modal-content history-review-modal ${editMode ? "editing" : ""}"
+         data-history-section="${item.section}" style="max-width: ${editMode ? "760px" : "600px"}; max-height: 90vh;">
       <div class="modal-header">
-        <h3 class="modal-title">Review: ${sectionMeta.name}</h3>
+        <div>
+          <h3 class="modal-title">Review: ${sectionMeta.name}</h3>
+          ${editMode ? `<span class="history-review-mode">Editing corrections</span>` : ""}
+        </div>
         <button class="modal-close" onclick="closeModal()">&times;</button>
       </div>
       <div class="modal-body">
         <div style="display:flex; justify-content:space-between; align-items:center; background-color:#f9fafb; border:1px solid var(--border-color); border-radius:6px; padding:0.75rem 1rem; margin-bottom:1.5rem;">
           <div>
             <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase;">Scale score</div>
-            <div style="font-size:1.4rem; font-weight:800; color:var(--accent-color);">${item.scaleScore} pts <span style="font-size:0.85rem; font-weight:normal;">(${getCambridgeGrade(item.scaleScore)})</span></div>
+            <div id="history-review-scale" class="history-review-scale">${item.scaleScore} pts <span>(${getCambridgeGrade(item.scaleScore)})</span></div>
           </div>
           <div style="text-align:right;">
             <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase;">Raw marks</div>
-            <div style="font-size:1.1rem; font-weight:700; color:var(--text-main);">${getHistoryRawSummaryText(item)}</div>
+            <div id="history-review-raw" class="history-review-raw">${getHistoryRawSummaryText(item)}</div>
           </div>
         </div>
 
         <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.75rem;">
           Saved: <b>${dateFormatted}</b>${durationText ? ` - Time: <b>${durationText}</b>` : ""}
         </div>
+
+        ${editMode ? `<div class="history-review-edit-notice">Change the correction below. Scores and scale are recalculated automatically; original answers stay unchanged.</div>` : ""}
         
         ${sheetHTML}
       </div>
-      <div style="margin-top:1rem; text-align:right;">
-        <button class="btn btn-primary" onclick="closeModal()">Close</button>
+      <div class="history-review-actions">
+        ${editMode ? `
+          <button class="btn btn-secondary" onclick="reopenHistoryDetailModal('${escapeJS(item.id)}', false)">Cancel</button>
+          <button class="btn btn-primary" id="history-review-save" onclick="saveHistoryReviewEdits('${escapeJS(item.id)}')">Save changes</button>
+        ` : `
+          <button class="btn btn-secondary" onclick="reopenHistoryDetailModal('${escapeJS(item.id)}', true)">Edit corrections</button>
+          <button class="btn btn-primary" onclick="closeModal()">Close</button>
+        `}
       </div>
     </div>
   `;
@@ -2484,8 +2739,13 @@ async function saveWritingSheetResult() {
 
 // HELPERS
 function closeModal() {
-  const modal = document.querySelector(".modal-overlay");
+  const modals = document.querySelectorAll(".modal-overlay");
+  const modal = modals[modals.length - 1];
   if (modal) modal.remove();
+}
+
+function closeAllModals() {
+  document.querySelectorAll(".modal-overlay").forEach(modal => modal.remove());
 }
 
 function escapeJS(str) {
