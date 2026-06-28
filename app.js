@@ -1603,6 +1603,12 @@ function getWritingPartCriteria(item, partKey) {
   return Object.keys(criteria).length > 0 ? criteria : null;
 }
 
+function getWritingCorrectionNotes(item = {}) {
+  const answers = getPlainObject(item.answers);
+  const meta = getPlainObject(answers.meta);
+  return getPlainObject(meta.writingCorrectionNotes);
+}
+
 function getWritingPartScore(criteria) {
   if (!criteria) return null;
   return WRITING_CRITERIA.reduce((sum, criterion) => sum + (Number(criteria[criterion.key]) || 0), 0);
@@ -1658,8 +1664,12 @@ function renderWritingHistoryPartHTML(item, partKey, editMode = false) {
   const criteria = getWritingPartCriteria(item, partKey);
   const score = getWritingPartScore(criteria);
   const responseText = typeof answers[partKey] === "string" ? answers[partKey].trim() : "";
+  const correctionNotes = getWritingCorrectionNotes(item);
+  const correctionText = typeof correctionNotes[partKey] === "string"
+    ? correctionNotes[partKey].trim()
+    : "";
 
-  if (!criteria && !responseText) return "";
+  if (!criteria && !responseText && !correctionText) return "";
 
   const title = partKey === "part1"
     ? "Part 1 - Compulsory Essay"
@@ -1669,18 +1679,25 @@ function renderWritingHistoryPartHTML(item, partKey, editMode = false) {
     : "Not scored";
   const scoreLabel = score === null ? "Not scored" : `${score}/20 pts`;
   const editorHTML = editMode ? `
-    <div class="history-writing-edit-grid" data-history-writing-part="${partKey}">
-      ${WRITING_CRITERIA.map(criterion => {
-        const selectedValue = Number(criteria?.[criterion.key]) || 0;
-        return `
-          <label>
-            <span>${criterion.label}</span>
-            <select data-history-writing-criterion="${criterion.key}" onchange="updateHistoryReviewPreview()">
-              ${renderHistoryWritingCriterionOptions(selectedValue)}
-            </select>
-          </label>
-        `;
-      }).join("")}
+    <div data-history-writing-part="${partKey}">
+      <div class="history-writing-edit-grid">
+        ${WRITING_CRITERIA.map(criterion => {
+          const selectedValue = Number(criteria?.[criterion.key]) || 0;
+          return `
+            <label>
+              <span>${criterion.label}</span>
+              <select data-history-writing-criterion="${criterion.key}" onchange="updateHistoryReviewPreview()">
+                ${renderHistoryWritingCriterionOptions(selectedValue)}
+              </select>
+            </label>
+          `;
+        }).join("")}
+      </div>
+      <label class="history-writing-correction-editor">
+        <span>Correction feedback</span>
+        <textarea data-history-writing-correction="${partKey}" aria-label="${title} correction feedback"
+                  placeholder="Add corrections, recurring errors and advice for this task...">${escapeHTML(correctionText)}</textarea>
+      </label>
     </div>
   ` : `<div class="history-writing-criteria">${criteriaLine}</div>`;
 
@@ -1689,6 +1706,12 @@ function renderWritingHistoryPartHTML(item, partKey, editMode = false) {
       <h4>${title} <span>${scoreLabel}</span></h4>
       ${editorHTML}
       <div class="history-writing-response">${responseText ? escapeHTML(responseText) : "No text saved"}</div>
+      ${!editMode && correctionText ? `
+        <div class="history-writing-correction">
+          <strong>Correction feedback</strong>
+          <p>${escapeHTML(correctionText)}</p>
+        </div>
+      ` : ""}
     </div>
   `;
 }
@@ -1810,6 +1833,7 @@ function getHistoryObjectiveEditSnapshot(section) {
 
 function getHistoryWritingEditSnapshot() {
   const partScores = {};
+  const correctionNotes = {};
 
   document.querySelectorAll("[data-history-writing-part]").forEach(partElement => {
     const partKey = partElement.dataset.historyWritingPart;
@@ -1819,6 +1843,9 @@ function getHistoryWritingEditSnapshot() {
       criteria[criterion.key] = Math.max(0, Math.min(5, Number(select?.value) || 0));
     });
     partScores[partKey] = criteria;
+
+    const correctionText = partElement.querySelector(`[data-history-writing-correction="${partKey}"]`)?.value.trim() || "";
+    if (correctionText) correctionNotes[partKey] = correctionText;
   });
 
   const partKeys = Object.keys(partScores);
@@ -1832,6 +1859,7 @@ function getHistoryWritingEditSnapshot() {
   return {
     partKeys,
     partScores,
+    correctionNotes,
     actualRaw,
     actualMax,
     equivalentRaw,
@@ -1879,7 +1907,7 @@ async function saveHistoryReviewEdits(sessionId) {
   if (item.section === "writing") {
     const snapshot = getHistoryWritingEditSnapshot();
     const answers = { ...getPlainObject(item.answers) };
-    answers.meta = {
+    const meta = {
       ...getPlainObject(answers.meta),
       assessedParts: snapshot.partKeys,
       actualRaw: snapshot.actualRaw,
@@ -1887,6 +1915,14 @@ async function saveHistoryReviewEdits(sessionId) {
       equivalentRaw: snapshot.equivalentRaw,
       scaleBasis: "normalised-to-40"
     };
+
+    if (Object.keys(snapshot.correctionNotes).length > 0) {
+      meta.writingCorrectionNotes = snapshot.correctionNotes;
+    } else {
+      delete meta.writingCorrectionNotes;
+    }
+
+    answers.meta = meta;
 
     item.gradedStates = snapshot.partScores;
     item.answers = answers;
@@ -2719,6 +2755,12 @@ function renderWritingRubricHTML(partKey) {
     <div class="writing-criteria-checklist" data-writing-part="${partKey}">
       <h3>${getWritingPartDisplayName(partKey)}</h3>
       ${WRITING_CRITERIA.map(criterion => renderWritingCriterionControlHTML(partKey, criterion)).join("")}
+      <label class="writing-correction-field">
+        <span>Correction feedback</span>
+        <small>Save errors, corrected phrases and advice for the review.</small>
+        <textarea id="${prefix}-correction" aria-label="${getWritingPartDisplayName(partKey)} correction feedback"
+                  placeholder="Add corrections, recurring errors and advice for this task..."></textarea>
+      </label>
       <div class="writing-part-total" id="${prefix}-part-total">Subtotal: 12 / 20 pts</div>
     </div>
   `;
@@ -2866,6 +2908,15 @@ async function saveWritingSheetResult() {
     };
   });
 
+  const writingCorrectionNotes = Object.fromEntries(
+    snapshot.partKeys
+      .map(partKey => {
+        const correctionText = document.getElementById(`${getWritingPartPrefix(partKey)}-correction`)?.value.trim() || "";
+        return [partKey, correctionText];
+      })
+      .filter(([, correctionText]) => correctionText.length > 0)
+  );
+
   const durationSeconds = getCurrentPracticeDurationSeconds();
   const answers = {
     part1: text1,
@@ -2876,7 +2927,8 @@ async function saveWritingSheetResult() {
       actualRaw: snapshot.actualRaw,
       actualMax: snapshot.actualMax,
       equivalentRaw: snapshot.equivalentRaw,
-      scaleBasis: "normalised-to-40"
+      scaleBasis: "normalised-to-40",
+      ...(Object.keys(writingCorrectionNotes).length > 0 ? { writingCorrectionNotes } : {})
     }
   };
 
