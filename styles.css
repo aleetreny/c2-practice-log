@@ -661,6 +661,186 @@ button {
   grid-area: parts;
 }
 
+.ue-errors-panel {
+  margin-top: 0;
+}
+
+.ue-errors-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.25fr);
+  gap: 18px;
+  padding-top: 16px;
+}
+
+.ue-recent-errors h3,
+.ue-part-register h3 {
+  margin-bottom: 10px;
+  color: var(--text-main);
+  font-size: 0.88rem;
+  font-weight: 900;
+}
+
+.ue-error-list,
+.ue-part-error-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ue-error-list {
+  max-height: 590px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.ue-error-item {
+  padding: 11px;
+  border: 1px solid #efd2d5;
+  border-radius: 8px;
+  background: var(--color-error-bg);
+}
+
+.ue-error-item.compact {
+  padding: 9px;
+  background: #ffffff;
+}
+
+.ue-error-item-head,
+.ue-error-item-head > div,
+.ue-part-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ue-error-item-head > div {
+  justify-content: flex-start;
+}
+
+.ue-error-item-head strong {
+  font-size: 0.82rem;
+}
+
+.ue-error-item-head > span,
+.ue-error-part {
+  color: var(--color-error);
+  font-size: 0.7rem;
+  font-weight: 850;
+}
+
+.ue-error-part {
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: #ffffff;
+}
+
+.ue-error-answer {
+  margin-top: 7px;
+  overflow-wrap: anywhere;
+  font-family: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-size: 0.82rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.ue-error-note {
+  margin-top: 6px;
+  color: var(--text-main);
+  font-size: 0.78rem;
+  line-height: 1.4;
+  white-space: pre-wrap;
+}
+
+.ue-error-note.empty,
+.ue-part-empty {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.ue-error-review {
+  margin-top: 7px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 750;
+}
+
+.ue-error-review:hover {
+  color: var(--accent-color);
+}
+
+.ue-part-register-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.ue-part-card {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #fbfcfd;
+}
+
+.ue-part-card-head {
+  align-items: flex-start;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.ue-part-card-head span,
+.ue-part-card-head strong {
+  display: block;
+}
+
+.ue-part-card-head span {
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.ue-part-card-head strong {
+  margin-top: 2px;
+  font-size: 0.8rem;
+}
+
+.ue-part-card-head b {
+  min-width: 28px;
+  height: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-error-bg);
+  color: var(--color-error);
+  font-size: 0.78rem;
+}
+
+.ue-part-error-list,
+.ue-part-empty {
+  margin-top: 10px;
+}
+
+.ue-part-error-list {
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 3px;
+}
+
+.ue-part-empty {
+  font-size: 0.76rem;
+}
+
+.ue-errors-empty {
+  min-height: 120px;
+}
+
 .panel-title {
   display: flex;
   align-items: center;
@@ -1494,6 +1674,10 @@ input.sheet-text-input {
   text-transform: uppercase;
 }
 
+input.sheet-text-input-long {
+  max-width: 540px;
+}
+
 input.sheet-text-input:focus,
 .sheet-select-input:focus,
 .sheet-error-note-input:focus,
@@ -1600,11 +1784,197 @@ input.sheet-text-input:disabled,
 
 .sheet-error-note-input {
   width: 100%;
-  min-height: 38px;
-  padding: 0 10px;
+  min-height: 58px;
+  padding: 9px 10px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
   outline: none;
+  resize: vertical;
+  color: var(--text-main);
+  font-family: inherit;
+  line-height: 1.4;
+}
+
+.history-error-note {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--color-error);
+  border-radius: 0 6px 6px 0;
+  background: var(--color-error-bg);
+  color: var(--text-main);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.history-error-note strong {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--color-error);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.history-question-row {
+  padding: 0.65rem 0.25rem;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 0.8rem;
+}
+
+.history-question-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.history-question-main > span:first-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.history-grade-edit-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.history-error-note-editor {
+  margin-top: 9px;
+  padding: 9px 10px;
+  border-left: 3px solid var(--color-error);
+  border-radius: 0 6px 6px 0;
+  background: var(--color-error-bg);
+}
+
+.history-error-note-editor[hidden] {
+  display: none;
+}
+
+.history-error-note-editor label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--color-error);
+  font-size: 0.7rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.history-error-note-editor textarea {
+  width: 100%;
+  min-height: 58px;
+  padding: 8px 9px;
+  border: 1px solid #e5b9be;
+  border-radius: 7px;
+  background: #ffffff;
+  color: var(--text-main);
+  font: inherit;
+  line-height: 1.4;
+  resize: vertical;
+  outline: none;
+}
+
+.history-error-note-editor textarea:focus {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 3px rgba(200, 63, 73, 0.1);
+}
+
+.history-review-mode {
+  display: block;
+  margin-top: 3px;
+  color: var(--accent-color);
+  font-size: 0.72rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.history-review-scale {
+  color: var(--accent-color);
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+.history-review-scale span {
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+.history-review-raw {
+  color: var(--text-main);
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.history-review-edit-notice {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border: 1px dashed #a7d8ce;
+  border-radius: 7px;
+  background: var(--accent-soft);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.history-review-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+.history-review-delete {
+  margin-right: auto;
+  border-color: #e5b9be;
+  background: #ffffff;
+  color: var(--color-error);
+}
+
+.history-review-delete:hover {
+  border-color: var(--color-error);
+  background: var(--color-error-bg);
+}
+
+.history-writing-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.history-writing-edit-grid label {
+  min-width: 0;
+}
+
+.history-writing-edit-grid label span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.history-writing-edit-grid select {
+  width: 100%;
+  min-height: 36px;
+  padding: 0 7px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  background: #ffffff;
+  color: var(--text-main);
+  font-weight: 800;
+  outline: none;
+}
+
+.history-writing-edit-grid select:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
 }
 
 .writing-sheet-textarea {
@@ -2052,6 +2422,14 @@ input.sheet-text-input:disabled,
   .part-grid {
     grid-template-columns: 1fr;
   }
+
+  .ue-errors-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .ue-part-register-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 760px) {
@@ -2220,6 +2598,10 @@ input.sheet-text-input:disabled,
     flex-direction: column;
   }
 
+  .ue-part-register-grid {
+    grid-template-columns: 1fr;
+  }
+
   .writing-type-control {
     width: 100%;
   }
@@ -2236,6 +2618,28 @@ input.sheet-text-input:disabled,
 
   .history-writing-part h4 {
     flex-direction: column;
+  }
+
+  .history-question-main {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .history-grade-edit-controls {
+    justify-content: flex-start;
+  }
+
+  .history-writing-edit-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .history-review-actions .btn {
+    flex: 1;
+  }
+
+  .history-review-actions .history-review-delete {
+    flex-basis: 100%;
+    margin-right: 0;
   }
 
   .new-profile-row {
