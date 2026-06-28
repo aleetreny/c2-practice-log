@@ -5,6 +5,7 @@ const STATE = {
   answers: {}, // Q-num -> string
   gradedStates: {}, // Q-num -> "correct" | "incorrect" | score (0|1|2)
   errorNotes: {}, // Use of English Q-num -> correction note
+  useOfEnglishPartTexts: {}, // part2 | part3 | part4 -> reference text
   isCorrecting: false,
   activeProfile: "Aleetreny",
   profiles: ["Aleetreny"],
@@ -485,6 +486,16 @@ function getUseOfEnglishErrorNotes(item = {}) {
   const answers = getPlainObject(item.answers);
   const meta = getPlainObject(answers.meta);
   return getPlainObject(meta.errorNotes);
+}
+
+function getUseOfEnglishPartTexts(item = {}) {
+  const answers = getPlainObject(item.answers);
+  const meta = getPlainObject(answers.meta);
+  return getPlainObject(meta.useOfEnglishPartTexts);
+}
+
+function getUseOfEnglishPartShortLabel(partKey) {
+  return partKey.replace("part", "Part ");
 }
 
 function isUseOfEnglishError(partData, gradeState) {
@@ -1076,8 +1087,10 @@ function renderDashboardView() {
   `;
 }
 
-function renderUseOfEnglishErrorItemHTML(error, compact = false) {
-  const partLabel = error.partKey.replace("part", "Part ");
+const USE_OF_ENGLISH_VISIBLE_ERRORS_PER_PART = 3;
+
+function renderUseOfEnglishErrorItemHTML(error, compact = false, textPanelId = "ue-dashboard-part-text-panel") {
+  const partLabel = getUseOfEnglishPartShortLabel(error.partKey);
   const gradeLabel = typeof error.gradeState === "number"
     ? `${error.gradeState}/2 pts`
     : "Missed";
@@ -1095,9 +1108,74 @@ function renderUseOfEnglishErrorItemHTML(error, compact = false) {
       </div>
       <div class="ue-error-answer">${answer}</div>
       ${note ? `<p class="ue-error-note">${escapeHTML(note)}</p>` : `<p class="ue-error-note empty">No note added</p>`}
-      <button class="ue-error-review" onclick="openHistoryDetailModal('${escapeJS(error.attemptId)}')">${formatCompactDateTime(error.date)}</button>
+      <div class="ue-error-actions">
+        <button class="ue-error-text-button" onclick="showUseOfEnglishPartText('${escapeJS(error.attemptId)}', '${error.partKey}', '${textPanelId}')">View part text</button>
+        <button class="ue-error-review" onclick="openHistoryDetailModal('${escapeJS(error.attemptId)}')">${formatCompactDateTime(error.date)}</button>
+      </div>
     </article>
   `;
+}
+
+function showUseOfEnglishPartText(sessionId, partKey, panelId) {
+  const item = STATE.history.find(historyItem => historyItem.id === sessionId);
+  const panel = document.getElementById(panelId);
+  const partData = C2_EXAM_METADATA.useOfEnglish.parts[partKey];
+  if (!item || !panel || !partData) return;
+
+  const text = getUseOfEnglishPartTexts(item)[partKey]?.trim() || "";
+  panel.innerHTML = `
+    <div class="ue-part-text-panel-head">
+      <div>
+        <span>${getUseOfEnglishPartShortLabel(partKey)}</span>
+        <strong>${partData.name.replace(/^Part \d+ - /, "")}</strong>
+      </div>
+      <button type="button" onclick="hideUseOfEnglishPartText('${panelId}')" aria-label="Close part text">&times;</button>
+    </div>
+    <div class="ue-part-text-panel-meta">Saved with the attempt from ${formatCompactDateTime(item.date)}</div>
+    ${text
+      ? `<div class="ue-part-text-content">${escapeHTML(text)}</div>`
+      : `<div class="ue-part-text-missing">No text is attached to this part yet. Open the review and choose <strong>Edit corrections</strong> to add it.</div>`}
+    <button class="btn btn-secondary btn-full ue-part-text-open-review" onclick="openHistoryDetailModal('${escapeJS(item.id)}')">Open review</button>
+  `;
+  panel.hidden = false;
+  panel.closest(".ue-text-workspace")?.classList.add("text-open");
+}
+
+function hideUseOfEnglishPartText(panelId) {
+  const panel = document.getElementById(panelId);
+  if (!panel) return;
+  panel.hidden = true;
+  panel.closest(".ue-text-workspace")?.classList.remove("text-open");
+}
+
+function openUseOfEnglishPartErrorsModal(partKey) {
+  const partData = C2_EXAM_METADATA.useOfEnglish.parts[partKey];
+  if (!partData) return;
+
+  const errors = getUseOfEnglishErrorEntries().filter(error => error.partKey === partKey);
+  const modal = document.createElement("div");
+  modal.className = "modal-overlay";
+  modal.innerHTML = `
+    <div class="modal-content ue-all-errors-modal">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow">${getUseOfEnglishPartShortLabel(partKey)}</span>
+          <h3 class="modal-title">${partData.name.replace(/^Part \d+ - /, "")} errors</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body ue-text-workspace ue-all-errors-workspace">
+        <div class="ue-all-errors-list">
+          ${errors.map(error => renderUseOfEnglishErrorItemHTML(error, false, "ue-modal-part-text-panel")).join("")}
+        </div>
+        <aside class="ue-part-text-panel" id="ue-modal-part-text-panel" hidden aria-live="polite"></aside>
+      </div>
+      <div class="history-review-actions">
+        <button class="btn btn-primary" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
 }
 
 function renderUseOfEnglishErrorDashboardHTML() {
@@ -1113,37 +1191,37 @@ function renderUseOfEnglishErrorDashboardHTML() {
       ${errors.length === 0 ? `
         <div class="empty-state ue-errors-empty">Your latest Use of English errors and notes will appear here.</div>
       ` : `
-        <div class="ue-errors-layout">
-          <section class="ue-recent-errors">
-            <h3>Latest errors</h3>
-            <div class="ue-error-list">
-              ${errors.slice(0, 8).map(error => renderUseOfEnglishErrorItemHTML(error)).join("")}
-            </div>
-          </section>
+        <div class="ue-text-workspace ue-errors-workspace">
           <section class="ue-part-register">
-            <h3>Errors by part</h3>
             <div class="ue-part-register-grid">
               ${partEntries.map(([partKey, partData]) => {
                 const partErrors = errors.filter(error => error.partKey === partKey);
+                const visibleErrors = partErrors.slice(0, USE_OF_ENGLISH_VISIBLE_ERRORS_PER_PART);
                 return `
                   <article class="ue-part-card">
                     <div class="ue-part-card-head">
                       <div>
-                        <span>${partKey.replace("part", "Part ")}</span>
+                        <span>${getUseOfEnglishPartShortLabel(partKey)}</span>
                         <strong>${partData.name.replace(/^Part \d+ - /, "")}</strong>
                       </div>
                       <b>${partErrors.length}</b>
                     </div>
                     ${partErrors.length > 0 ? `
                       <div class="ue-part-error-list">
-                        ${partErrors.map(error => renderUseOfEnglishErrorItemHTML(error, true)).join("")}
+                        ${visibleErrors.map(error => renderUseOfEnglishErrorItemHTML(error, true)).join("")}
                       </div>
+                      ${partErrors.length > visibleErrors.length ? `
+                        <button class="btn btn-secondary btn-full ue-view-all-errors" onclick="openUseOfEnglishPartErrorsModal('${partKey}')">
+                          View all ${partErrors.length} errors
+                        </button>
+                      ` : ""}
                     ` : `<p class="ue-part-empty">No errors recorded.</p>`}
                   </article>
                 `;
               }).join("")}
             </div>
           </section>
+          <aside class="ue-part-text-panel" id="ue-dashboard-part-text-panel" hidden aria-live="polite"></aside>
         </div>
       `}
     </section>
@@ -1654,6 +1732,28 @@ function renderHistoryErrorNoteEditorHTML(item, q, partData, gradeState) {
   `;
 }
 
+function renderUseOfEnglishPartTextEditorHTML(partKey, value = "", context = "sheet") {
+  const partData = C2_EXAM_METADATA.useOfEnglish.parts[partKey];
+  if (!partData) return "";
+
+  const isSheetEditor = context === "sheet";
+  const inputId = isSheetEditor ? `use-part-text-${partKey}` : `history-part-text-${partKey}`;
+  const inputHandler = isSheetEditor
+    ? `oninput="storeUseOfEnglishPartText('${partKey}', this.value)"`
+    : "";
+
+  return `
+    <div class="ue-part-text-editor ${isSheetEditor ? "sheet-part-text-editor" : "history-part-text-editor"}">
+      <label for="${inputId}">
+        <span>${getUseOfEnglishPartShortLabel(partKey)} reference text</span>
+        <small>Optional - saved with this attempt for future review</small>
+      </label>
+      <textarea id="${inputId}" rows="6" ${inputHandler}
+                placeholder="Paste the full text, sentences or task for ${partData.name} here...">${escapeHTML(value)}</textarea>
+    </div>
+  `;
+}
+
 function setHistoryReviewGrade(qNum, value) {
   const control = document.getElementById(`history-grade-control-${qNum}`);
   if (!control) return;
@@ -1804,20 +1904,30 @@ async function saveHistoryReviewEdits(sessionId) {
       const answers = { ...getPlainObject(item.answers) };
       const meta = { ...getPlainObject(answers.meta) };
       const errorNotes = {};
+      const partTexts = {};
       const sectionParts = C2_EXAM_METADATA.useOfEnglish.parts;
 
-      Object.values(sectionParts).forEach(partData => {
+      Object.entries(sectionParts).forEach(([partKey, partData]) => {
         for (let q = partData.startQ; q <= partData.endQ; q++) {
           if (!isUseOfEnglishError(partData, snapshot.gradedStates[q])) continue;
           const note = document.getElementById(`history-error-note-${q}`)?.value.trim() || "";
           if (note) errorNotes[q] = note;
         }
+
+        const partText = document.getElementById(`history-part-text-${partKey}`)?.value.trim() || "";
+        if (partText) partTexts[partKey] = partText;
       });
 
       if (Object.keys(errorNotes).length > 0) {
         meta.errorNotes = errorNotes;
       } else {
         delete meta.errorNotes;
+      }
+
+      if (Object.keys(partTexts).length > 0) {
+        meta.useOfEnglishPartTexts = partTexts;
+      } else {
+        delete meta.useOfEnglishPartTexts;
       }
 
       answers.meta = meta;
@@ -1883,13 +1993,26 @@ function openHistoryDetailModal(sessionId, editMode = false) {
             ${editMode
               ? renderHistoryErrorNoteEditorHTML(item, q, partData, gradeState)
               : errorNote ? `<div class="history-error-note"><strong>Error note</strong>${escapeHTML(errorNote)}</div>` : ""}
+            ${!editMode && isError ? `
+              <button class="history-question-text-button" onclick="showUseOfEnglishPartText('${escapeJS(item.id)}', '${partKey}', 'history-review-part-text-panel')">
+                View ${getUseOfEnglishPartShortLabel(partKey)} text
+              </button>
+            ` : ""}
           </div>
         `;
       }
 
       questionsHTML += `
-        <div style="border:1px solid var(--border-color); border-radius:6px; padding:0.75rem 1rem; margin-bottom:1rem;">
-          <h4 style="font-size:0.85rem; font-weight:700; color:var(--accent-color); border-bottom:1px dashed var(--border-color); padding-bottom:0.25rem; margin-bottom:0.5rem;">${partData.name}</h4>
+        <div class="history-part-card">
+          <div class="history-part-card-headline">
+            <h4>${partData.name}</h4>
+            ${item.section === "useOfEnglish" && !editMode ? `
+              <button class="history-part-text-button" onclick="showUseOfEnglishPartText('${escapeJS(item.id)}', '${partKey}', 'history-review-part-text-panel')">View part text</button>
+            ` : ""}
+          </div>
+          ${item.section === "useOfEnglish" && editMode
+            ? renderUseOfEnglishPartTextEditorHTML(partKey, getUseOfEnglishPartTexts(item)[partKey] || "", "history")
+            : ""}
           ${rowsHTML}
         </div>
       `;
@@ -1897,9 +2020,18 @@ function openHistoryDetailModal(sessionId, editMode = false) {
     sheetHTML = questionsHTML;
   }
 
+  const reviewSheetHTML = item.section === "useOfEnglish" && !editMode ? `
+    <div class="ue-text-workspace history-review-workspace">
+      <div>${sheetHTML}</div>
+      <aside class="ue-part-text-panel history-review-part-text-panel" id="history-review-part-text-panel" hidden aria-live="polite"></aside>
+    </div>
+  ` : sheetHTML;
+
+  const reviewMaxWidth = item.section === "useOfEnglish" ? "1040px" : editMode ? "760px" : "600px";
+
   modal.innerHTML = `
     <div class="modal-content history-review-modal ${editMode ? "editing" : ""}"
-         data-history-section="${item.section}" style="max-width: ${editMode ? "760px" : "600px"}; max-height: 90vh;">
+         data-history-section="${item.section}" style="max-width: ${reviewMaxWidth}; max-height: 90vh;">
       <div class="modal-header">
         <div>
           <h3 class="modal-title">Review: ${sectionMeta.name}</h3>
@@ -1925,7 +2057,7 @@ function openHistoryDetailModal(sessionId, editMode = false) {
 
         ${editMode ? `<div class="history-review-edit-notice">Change the correction below. Scores and scale are recalculated automatically; original answers stay unchanged.</div>` : ""}
         
-        ${sheetHTML}
+        ${reviewSheetHTML}
       </div>
       <div class="history-review-actions">
         ${editMode ? `
@@ -1951,6 +2083,7 @@ function openAnswerSheet(section) {
   STATE.answers = {};
   STATE.gradedStates = {};
   STATE.errorNotes = {};
+  STATE.useOfEnglishPartTexts = {};
   STATE.isCorrecting = false;
   resetPracticeTimer();
   
@@ -2055,10 +2188,9 @@ function renderSectionPartsHTML(sectionMeta) {
     }
 
     sectionHTML += `
-      <div style="background-color:#ffffff; border:1px solid var(--border-color); border-radius:8px; padding:1.25rem; margin-bottom:1.5rem;">
-        <h3 style="font-size:1rem; font-weight:700; color:var(--accent-color); border-bottom:1px solid var(--border-color); padding-bottom:0.5rem; margin-bottom:0.75rem;">
-          ${partData.name}
-        </h3>
+      <div class="sheet-part-card" id="sheet-part-${partKey}">
+        <h3 class="sheet-part-title">${partData.name}</h3>
+        <div id="part-text-area-${partKey}"></div>
         <div style="display:flex; flex-direction:column;">
           ${rowsHTML}
         </div>
@@ -2168,6 +2300,7 @@ function clearSheetInputs() {
     STATE.answers = {};
     STATE.gradedStates = {};
     STATE.errorNotes = {};
+    STATE.useOfEnglishPartTexts = {};
     STATE.isCorrecting = false;
     renderAnswerSheetHTML();
   }
@@ -2187,6 +2320,19 @@ function lockAnswersAndStartCorrection() {
   document.querySelectorAll("select.sheet-select-input").forEach(i => i.disabled = true);
   
   STATE.isCorrecting = true;
+
+  if (STATE.activeSection === "useOfEnglish") {
+    Object.keys(sectionMeta.parts).forEach(partKey => {
+      const partTextArea = document.getElementById(`part-text-area-${partKey}`);
+      if (partTextArea) {
+        partTextArea.innerHTML = renderUseOfEnglishPartTextEditorHTML(
+          partKey,
+          STATE.useOfEnglishPartTexts[partKey] || "",
+          "sheet"
+        );
+      }
+    });
+  }
   
   for (const [partKey, partData] of Object.entries(sectionMeta.parts)) {
     for (let q = partData.startQ; q <= partData.endQ; q++) {
@@ -2281,6 +2427,11 @@ function storeErrorNote(qNum, value) {
   STATE.errorNotes[qNum] = value;
 }
 
+function storeUseOfEnglishPartText(partKey, value) {
+  if (STATE.activeSection !== "useOfEnglish") return;
+  STATE.useOfEnglishPartTexts[partKey] = value;
+}
+
 async function saveGradedSheetResult() {
   const sectionMeta = C2_EXAM_METADATA[STATE.activeSection];
   
@@ -2324,12 +2475,22 @@ async function saveGradedSheetResult() {
       .map(([q, note]) => [q, typeof note === "string" ? note.trim() : ""])
       .filter(([, note]) => note.length > 0)
   );
+  const partTexts = Object.fromEntries(
+    Object.entries(STATE.useOfEnglishPartTexts)
+      .map(([partKey, text]) => [partKey, typeof text === "string" ? text.trim() : ""])
+      .filter(([, text]) => text.length > 0)
+  );
 
-  if (durationSeconds > 0 || (STATE.activeSection === "useOfEnglish" && Object.keys(errorNotes).length > 0)) {
+  if (
+    durationSeconds > 0
+    || (STATE.activeSection === "useOfEnglish" && Object.keys(errorNotes).length > 0)
+    || (STATE.activeSection === "useOfEnglish" && Object.keys(partTexts).length > 0)
+  ) {
     answers.meta = {
       ...getPlainObject(answers.meta),
       ...(durationSeconds > 0 ? { durationSeconds } : {}),
-      ...(STATE.activeSection === "useOfEnglish" && Object.keys(errorNotes).length > 0 ? { errorNotes } : {})
+      ...(STATE.activeSection === "useOfEnglish" && Object.keys(errorNotes).length > 0 ? { errorNotes } : {}),
+      ...(STATE.activeSection === "useOfEnglish" && Object.keys(partTexts).length > 0 ? { useOfEnglishPartTexts: partTexts } : {})
     };
   }
   
