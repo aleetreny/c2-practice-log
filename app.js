@@ -7,6 +7,7 @@ const STATE = {
   errorNotes: {}, // Use of English Q-num -> correction note
   useOfEnglishPartTexts: {}, // part2 | part3 | part4 -> reference text
   isCorrecting: false,
+  isSavingAttempt: false,
   activeProfile: "Aleetreny",
   profiles: ["Aleetreny"],
   history: [],
@@ -1135,10 +1136,14 @@ function showUseOfEnglishPartText(sessionId, partKey, panelId) {
     ${text
       ? `<div class="ue-part-text-content" tabindex="0" aria-label="Full text for ${getUseOfEnglishPartShortLabel(partKey)}">${escapeHTML(text)}</div>`
       : `<div class="ue-part-text-missing">No text is attached to this part yet. Open the review and choose <strong>Edit corrections</strong> to add it.</div>`}
-    <button class="btn btn-secondary btn-full ue-part-text-open-review" onclick="openHistoryDetailModal('${escapeJS(item.id)}')">Open review</button>
+    ${panelId === "history-review-part-text-panel" ? "" : `
+      <button class="btn btn-secondary btn-full ue-part-text-open-review" onclick="openHistoryDetailModal('${escapeJS(item.id)}')">Open review</button>
+    `}
   `;
   panel.hidden = false;
-  panel.closest(".ue-text-workspace")?.classList.add("text-open");
+  const workspace = panel.closest(".ue-text-workspace");
+  workspace?.classList.add("text-open");
+  panel.closest(".history-review-modal")?.classList.add("text-open");
   const textContent = panel.querySelector(".ue-part-text-content");
   if (textContent) textContent.scrollTop = 0;
 }
@@ -1148,6 +1153,7 @@ function hideUseOfEnglishPartText(panelId) {
   if (!panel) return;
   panel.hidden = true;
   panel.closest(".ue-text-workspace")?.classList.remove("text-open");
+  panel.closest(".history-review-modal")?.classList.remove("text-open");
 }
 
 function openUseOfEnglishPartErrorsModal(partKey) {
@@ -1177,7 +1183,7 @@ function openUseOfEnglishPartErrorsModal(partKey) {
       </div>
     </div>
   `;
-  document.body.appendChild(modal);
+  mountModal(modal);
 }
 
 function renderUseOfEnglishErrorDashboardHTML() {
@@ -1506,7 +1512,7 @@ function openProfileModalView() {
     </div>
   `;
 
-  document.body.appendChild(modal);
+  mountModal(modal);
   const emailInput = document.getElementById("owner-email-input");
   if (emailInput) emailInput.focus();
 }
@@ -1766,12 +1772,15 @@ function renderUseOfEnglishPartTextEditorHTML(partKey, value = "", context = "sh
   const inputHandler = isSheetEditor
     ? `oninput="storeUseOfEnglishPartText('${partKey}', this.value)"`
     : "";
+  const helperText = isSheetEditor
+    ? "Optional - saved with this attempt for future review"
+    : "One text for this part and attempt - shared by every error in the part";
 
   return `
     <div class="ue-part-text-editor ${isSheetEditor ? "sheet-part-text-editor" : "history-part-text-editor"}">
       <label for="${inputId}">
         <span>${getUseOfEnglishPartShortLabel(partKey)} reference text</span>
-        <small>Optional - saved with this attempt for future review</small>
+        <small>${helperText}</small>
       </label>
       <textarea id="${inputId}" rows="6" ${inputHandler}
                 placeholder="Paste the full text, sentences or task for ${partData.name} here...">${escapeHTML(value)}</textarea>
@@ -1983,6 +1992,10 @@ function openHistoryDetailModal(sessionId, editMode = false) {
   const item = STATE.history.find(h => h.id === sessionId);
   if (!item) return;
 
+  document.querySelectorAll(".history-review-modal").forEach(existingModal => {
+    existingModal.closest(".modal-overlay")?.remove();
+  });
+
   const modal = document.createElement("div");
   modal.className = "modal-overlay";
   
@@ -2065,7 +2078,7 @@ function openHistoryDetailModal(sessionId, editMode = false) {
     </div>
   ` : sheetHTML;
 
-  const reviewMaxWidth = item.section === "useOfEnglish" ? "1180px" : editMode ? "760px" : "600px";
+  const reviewMaxWidth = editMode ? "760px" : "600px";
 
   modal.innerHTML = `
     <div class="modal-content history-review-modal ${editMode ? "editing" : ""}"
@@ -2109,7 +2122,7 @@ function openHistoryDetailModal(sessionId, editMode = false) {
       </div>
     </div>
   `;
-  document.body.appendChild(modal);
+  mountModal(modal);
 }
 
 // ==========================================================================
@@ -2123,6 +2136,7 @@ function openAnswerSheet(section) {
   STATE.errorNotes = {};
   STATE.useOfEnglishPartTexts = {};
   STATE.isCorrecting = false;
+  STATE.isSavingAttempt = false;
   resetPracticeTimer();
   
   renderAnswerSheetHTML();
@@ -2471,6 +2485,8 @@ function storeUseOfEnglishPartText(partKey, value) {
 }
 
 async function saveGradedSheetResult() {
+  if (STATE.isSavingAttempt) return;
+
   const sectionMeta = C2_EXAM_METADATA[STATE.activeSection];
   
   let missingGrades = [];
@@ -2532,8 +2548,16 @@ async function saveGradedSheetResult() {
     };
   }
   
+  const saveButton = document.getElementById("sheet-submit-btn");
+  STATE.isSavingAttempt = true;
+  if (saveButton) {
+    saveButton.disabled = true;
+    saveButton.textContent = "Saving...";
+  }
+
+  const savedAt = Date.now();
   STATE.history.push({
-    id: `session_${STATE.activeSection}_${Date.now()}`,
+    id: `session_${STATE.activeSection}_${savedAt}`,
     section: STATE.activeSection,
     correct: rawScoreTotal,
     total: maxPossibleMarks,
@@ -2541,11 +2565,12 @@ async function saveGradedSheetResult() {
     scaleScore: scaleScore,
     answers,
     gradedStates: { ...STATE.gradedStates },
-    date: Date.now(),
+    date: savedAt,
     durationSeconds
   });
 
   await persistHistory({ mode: "merge" });
+  STATE.isSavingAttempt = false;
   renderDashboard();
 }
 
@@ -2887,6 +2912,8 @@ function updateWritingRawTotal() {
 }
 
 async function saveWritingSheetResult() {
+  if (STATE.isSavingAttempt) return;
+
   const text1 = document.getElementById("writing-textarea-part1").value;
   const text2 = document.getElementById("writing-textarea-part2").value;
   const part2Type = document.getElementById("writing-part2-type")?.value || getWritingPart2Type();
@@ -2936,8 +2963,16 @@ async function saveWritingSheetResult() {
     answers.meta.durationSeconds = durationSeconds;
   }
 
+  const saveButton = document.getElementById("sheet-submit-btn");
+  STATE.isSavingAttempt = true;
+  if (saveButton) {
+    saveButton.disabled = true;
+    saveButton.textContent = "Saving...";
+  }
+
+  const savedAt = Date.now();
   STATE.history.push({
-    id: `session_writing_${Date.now()}`,
+    id: `session_writing_${savedAt}`,
     section: "writing",
     correct: snapshot.equivalentRaw,
     total: 40,
@@ -2945,23 +2980,37 @@ async function saveWritingSheetResult() {
     scaleScore: snapshot.scaleScore,
     answers,
     gradedStates,
-    date: Date.now(),
+    date: savedAt,
     durationSeconds
   });
 
   await persistHistory({ mode: "merge" });
+  STATE.isSavingAttempt = false;
   renderDashboard();
 }
 
 // HELPERS
+function updateModalPageLock() {
+  const hasOpenModal = document.querySelector(".modal-overlay") !== null;
+  document.documentElement.classList.toggle("modal-open", hasOpenModal);
+  document.body.classList.toggle("modal-open", hasOpenModal);
+}
+
+function mountModal(modal) {
+  document.body.appendChild(modal);
+  updateModalPageLock();
+}
+
 function closeModal() {
   const modals = document.querySelectorAll(".modal-overlay");
   const modal = modals[modals.length - 1];
   if (modal) modal.remove();
+  updateModalPageLock();
 }
 
 function closeAllModals() {
   document.querySelectorAll(".modal-overlay").forEach(modal => modal.remove());
+  updateModalPageLock();
 }
 
 function escapeJS(str) {
@@ -3043,7 +3092,7 @@ function openAllAttemptsModal() {
       </div>
     </div>
   `;
-  document.body.appendChild(modal);
+  mountModal(modal);
 }
 
 function getSectionIconSVG(section) {
