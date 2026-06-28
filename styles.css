@@ -36,6 +36,11 @@ body {
   overflow-x: hidden;
 }
 
+html.modal-open,
+body.modal-open {
+  overflow: hidden;
+}
+
 body {
   font-family: var(--font-family);
   background: var(--bg-main);
@@ -2023,34 +2028,28 @@ input.sheet-text-input:disabled,
   grid-template-columns: minmax(0, 0.9fr) minmax(460px, 1.1fr);
 }
 
-.modal-content.history-review-modal[data-history-section="useOfEnglish"] {
+.modal-content.history-review-modal[data-history-section="useOfEnglish"].text-open {
   width: min(1180px, 100%);
+  max-width: 1180px !important;
 }
 
 .history-review-scroll-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  overflow-y: auto;
 }
 
 .history-review-workspace {
-  min-height: 420px;
-  height: min(62vh, 680px);
-  flex: 1;
-  overflow: hidden;
+  min-height: 0;
+  height: auto;
+  overflow: visible;
 }
 
 .history-review-workspace > div {
   min-width: 0;
-  min-height: 0;
-  overflow-y: auto;
-  padding-right: 6px;
+  overflow: visible;
 }
 
 .history-review-part-text-panel {
-  position: static;
-  height: 100%;
+  height: min(62vh, 680px);
 }
 
 .history-grade-edit-controls {
@@ -2766,20 +2765,6 @@ input.sheet-text-input:disabled,
   .ue-text-workspace.text-open,
   .history-review-workspace.text-open {
     grid-template-columns: 1fr;
-  }
-
-  .history-review-scroll-body {
-    overflow-y: auto;
-  }
-
-  .history-review-workspace {
-    height: auto;
-    min-height: 0;
-    overflow: visible;
-  }
-
-  .history-review-workspace > div {
-    max-height: min(58vh, 620px);
   }
 
   .history-review-part-text-panel {
