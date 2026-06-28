@@ -665,32 +665,25 @@ button {
   margin-top: 0;
 }
 
-.ue-errors-layout {
+.ue-text-workspace {
   display: grid;
-  grid-template-columns: minmax(280px, 0.75fr) minmax(0, 1.25fr);
-  gap: 18px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+  min-width: 0;
+}
+
+.ue-text-workspace.text-open {
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.42fr);
+}
+
+.ue-errors-workspace {
   padding-top: 16px;
 }
 
-.ue-recent-errors h3,
-.ue-part-register h3 {
-  margin-bottom: 10px;
-  color: var(--text-main);
-  font-size: 0.88rem;
-  font-weight: 900;
-}
-
-.ue-error-list,
 .ue-part-error-list {
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
-
-.ue-error-list {
-  max-height: 590px;
-  overflow-y: auto;
-  padding-right: 4px;
 }
 
 .ue-error-item {
@@ -773,6 +766,37 @@ button {
   color: var(--accent-color);
 }
 
+.ue-error-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.ue-error-actions .ue-error-review {
+  margin-top: 0;
+}
+
+.ue-error-text-button,
+.history-question-text-button,
+.history-part-text-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent-color);
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 850;
+}
+
+.ue-error-text-button:hover,
+.history-question-text-button:hover,
+.history-part-text-button:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
 .ue-part-register-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -781,6 +805,8 @@ button {
 
 .ue-part-card {
   min-width: 0;
+  display: flex;
+  flex-direction: column;
   padding: 12px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -828,9 +854,7 @@ button {
 }
 
 .ue-part-error-list {
-  max-height: 500px;
-  overflow-y: auto;
-  padding-right: 3px;
+  flex: 1;
 }
 
 .ue-part-empty {
@@ -839,6 +863,114 @@ button {
 
 .ue-errors-empty {
   min-height: 120px;
+}
+
+.ue-view-all-errors {
+  min-height: 36px;
+  margin-top: 10px;
+  font-size: 0.76rem;
+}
+
+.ue-part-text-panel {
+  min-width: 0;
+  align-self: start;
+  position: sticky;
+  top: 8px;
+  max-height: 650px;
+  padding: 14px;
+  overflow-y: auto;
+  border: 1px solid #a7d8ce;
+  border-radius: 8px;
+  background: #f7faf9;
+}
+
+.ue-part-text-panel-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #d8ebe6;
+}
+
+.ue-part-text-panel-head span,
+.ue-part-text-panel-head strong {
+  display: block;
+}
+
+.ue-part-text-panel-head span {
+  color: var(--accent-color);
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.ue-part-text-panel-head strong {
+  margin-top: 2px;
+  font-size: 0.92rem;
+}
+
+.ue-part-text-panel-head button {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1.3rem;
+}
+
+.ue-part-text-panel-head button:hover {
+  background: #e8f3f0;
+  color: var(--text-main);
+}
+
+.ue-part-text-panel-meta {
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.ue-part-text-content,
+.ue-part-text-missing {
+  margin-top: 12px;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  background: #ffffff;
+  color: var(--text-main);
+  font-size: 0.82rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+}
+
+.ue-part-text-missing {
+  color: var(--text-muted);
+}
+
+.ue-part-text-open-review {
+  margin-top: 12px;
+  min-height: 36px;
+  font-size: 0.76rem;
+}
+
+.ue-all-errors-modal {
+  width: min(1040px, 100%);
+  max-height: 90vh;
+}
+
+.ue-all-errors-workspace {
+  overflow-y: auto;
+}
+
+.ue-all-errors-list {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .panel-title {
@@ -1833,6 +1965,41 @@ input.sheet-text-input:disabled,
   overflow-wrap: anywhere;
 }
 
+.history-question-text-button {
+  margin-top: 7px;
+}
+
+.history-part-card {
+  margin-bottom: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+}
+
+.history-part-card-headline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 0.35rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.history-part-card-headline h4 {
+  color: var(--accent-color);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.history-review-workspace.text-open {
+  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+}
+
+.history-review-part-text-panel {
+  max-height: 62vh;
+}
+
 .history-grade-edit-controls {
   display: flex;
   align-items: center;
@@ -1879,6 +2046,55 @@ input.sheet-text-input:disabled,
 .history-error-note-editor textarea:focus {
   border-color: var(--color-error);
   box-shadow: 0 0 0 3px rgba(200, 63, 73, 0.1);
+}
+
+.ue-part-text-editor {
+  margin-bottom: 12px;
+  padding: 12px;
+  border: 1px dashed #a7d8ce;
+  border-radius: 8px;
+  background: #f7faf9;
+}
+
+.ue-part-text-editor label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 7px;
+}
+
+.ue-part-text-editor label span {
+  color: var(--accent-color);
+  font-size: 0.76rem;
+  font-weight: 900;
+}
+
+.ue-part-text-editor label small {
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.ue-part-text-editor textarea {
+  width: 100%;
+  min-height: 124px;
+  padding: 10px 11px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  background: #ffffff;
+  color: var(--text-main);
+  font: inherit;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  resize: vertical;
+  outline: none;
+}
+
+.ue-part-text-editor textarea:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
 }
 
 .history-review-mode {
@@ -2423,7 +2639,8 @@ input.sheet-text-input:disabled,
     grid-template-columns: 1fr;
   }
 
-  .ue-errors-layout {
+  .ue-text-workspace.text-open,
+  .history-review-workspace.text-open {
     grid-template-columns: 1fr;
   }
 
@@ -2600,6 +2817,15 @@ input.sheet-text-input:disabled,
 
   .ue-part-register-grid {
     grid-template-columns: 1fr;
+  }
+
+  .ue-part-text-editor label {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .ue-part-text-editor label small {
+    text-align: left;
   }
 
   .writing-type-control {
