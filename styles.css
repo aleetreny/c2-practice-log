@@ -892,6 +892,10 @@ button {
   background: #f7faf9;
 }
 
+.ue-part-text-panel[hidden] {
+  display: none;
+}
+
 .ue-part-text-panel-head {
   display: flex;
   align-items: flex-start;
@@ -2395,6 +2399,54 @@ input.sheet-text-input:disabled,
   font-weight: 850;
 }
 
+.writing-correction-field,
+.history-writing-correction-editor {
+  display: grid;
+  gap: 6px;
+}
+
+.writing-correction-field {
+  padding-top: 14px;
+  border-top: 1px solid var(--border-color);
+}
+
+.writing-correction-field > span,
+.history-writing-correction-editor > span {
+  color: var(--text-main);
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.writing-correction-field small {
+  color: var(--text-muted);
+  font-size: 0.74rem;
+}
+
+.writing-correction-field textarea,
+.history-writing-correction-editor textarea {
+  width: 100%;
+  min-height: 130px;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--text-main);
+  font: inherit;
+  line-height: 1.5;
+  resize: vertical;
+  outline: none;
+}
+
+.writing-correction-field textarea:focus,
+.history-writing-correction-editor textarea:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+}
+
+.history-writing-correction-editor {
+  margin: 10px 0 14px;
+}
+
 .writing-part-total {
   margin-top: 2px;
   color: var(--text-main);
@@ -2498,6 +2550,29 @@ input.sheet-text-input:disabled,
   color: var(--text-main);
   font-family: ui-monospace, "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 0.8rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.history-writing-correction {
+  margin-top: 10px;
+  padding: 12px;
+  border: 1px solid #a7d8ce;
+  border-radius: 8px;
+  background: var(--accent-soft);
+}
+
+.history-writing-correction strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--accent-hover);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.history-writing-correction p {
+  color: var(--text-main);
   line-height: 1.55;
   white-space: pre-wrap;
 }
