@@ -1932,6 +1932,7 @@ function openHistoryDetailModal(sessionId, editMode = false) {
           <button class="btn btn-secondary" onclick="reopenHistoryDetailModal('${escapeJS(item.id)}', false)">Cancel</button>
           <button class="btn btn-primary" id="history-review-save" onclick="saveHistoryReviewEdits('${escapeJS(item.id)}')">Save changes</button>
         ` : `
+          <button class="btn history-review-delete" onclick="deleteHistoryItemFromReview('${escapeJS(item.id)}')">Delete this attempt</button>
           <button class="btn btn-secondary" onclick="reopenHistoryDetailModal('${escapeJS(item.id)}', true)">Edit corrections</button>
           <button class="btn btn-primary" onclick="closeModal()">Close</button>
         `}
@@ -2773,6 +2774,19 @@ async function deleteHistoryItem(id) {
     await persistHistory({ mode: "replace" });
     refreshCurrentView();
   }
+}
+
+async function deleteHistoryItemFromReview(id) {
+  const item = STATE.history.find(historyItem => historyItem.id === id);
+  if (!item) return;
+
+  const sectionName = C2_EXAM_METADATA[item.section]?.name || "exam";
+  if (!confirm(`Delete this ${sectionName} attempt? The rest of your history will stay unchanged.`)) return;
+
+  closeAllModals();
+  STATE.history = STATE.history.filter(historyItem => historyItem.id !== id);
+  await persistHistory({ mode: "replace" });
+  refreshCurrentView();
 }
 
 async function clearHistory() {

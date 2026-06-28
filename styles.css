@@ -1922,9 +1922,22 @@ input.sheet-text-input:disabled,
   display: flex;
   justify-content: flex-end;
   gap: 8px;
+  flex-wrap: wrap;
   margin-top: 1rem;
   padding-top: 12px;
   border-top: 1px solid var(--border-color);
+}
+
+.history-review-delete {
+  margin-right: auto;
+  border-color: #e5b9be;
+  background: #ffffff;
+  color: var(--color-error);
+}
+
+.history-review-delete:hover {
+  border-color: var(--color-error);
+  background: var(--color-error-bg);
 }
 
 .history-writing-edit-grid {
@@ -2622,6 +2635,11 @@ input.sheet-text-input:disabled,
 
   .history-review-actions .btn {
     flex: 1;
+  }
+
+  .history-review-actions .history-review-delete {
+    flex-basis: 100%;
+    margin-right: 0;
   }
 
   .new-profile-row {
