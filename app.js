@@ -1133,12 +1133,14 @@ function showUseOfEnglishPartText(sessionId, partKey, panelId) {
     </div>
     <div class="ue-part-text-panel-meta">Saved with the attempt from ${formatCompactDateTime(item.date)}</div>
     ${text
-      ? `<div class="ue-part-text-content">${escapeHTML(text)}</div>`
+      ? `<div class="ue-part-text-content" tabindex="0" aria-label="Full text for ${getUseOfEnglishPartShortLabel(partKey)}">${escapeHTML(text)}</div>`
       : `<div class="ue-part-text-missing">No text is attached to this part yet. Open the review and choose <strong>Edit corrections</strong> to add it.</div>`}
     <button class="btn btn-secondary btn-full ue-part-text-open-review" onclick="openHistoryDetailModal('${escapeJS(item.id)}')">Open review</button>
   `;
   panel.hidden = false;
   panel.closest(".ue-text-workspace")?.classList.add("text-open");
+  const textContent = panel.querySelector(".ue-part-text-content");
+  if (textContent) textContent.scrollTop = 0;
 }
 
 function hideUseOfEnglishPartText(panelId) {
@@ -2027,7 +2029,7 @@ function openHistoryDetailModal(sessionId, editMode = false) {
     </div>
   ` : sheetHTML;
 
-  const reviewMaxWidth = item.section === "useOfEnglish" ? "1040px" : editMode ? "760px" : "600px";
+  const reviewMaxWidth = item.section === "useOfEnglish" ? "1180px" : editMode ? "760px" : "600px";
 
   modal.innerHTML = `
     <div class="modal-content history-review-modal ${editMode ? "editing" : ""}"
@@ -2039,7 +2041,7 @@ function openHistoryDetailModal(sessionId, editMode = false) {
         </div>
         <button class="modal-close" onclick="closeModal()">&times;</button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body ${item.section === "useOfEnglish" && !editMode ? "history-review-scroll-body" : ""}">
         <div style="display:flex; justify-content:space-between; align-items:center; background-color:#f9fafb; border:1px solid var(--border-color); border-radius:6px; padding:0.75rem 1rem; margin-bottom:1.5rem;">
           <div>
             <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase;">Scale score</div>
