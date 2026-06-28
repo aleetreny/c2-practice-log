@@ -673,11 +673,17 @@ button {
 }
 
 .ue-text-workspace.text-open {
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.42fr);
+  grid-template-columns: minmax(0, 1fr) minmax(440px, 0.72fr);
 }
 
 .ue-errors-workspace {
   padding-top: 16px;
+}
+
+.ue-errors-workspace.text-open .ue-part-register {
+  max-height: min(72vh, 720px);
+  overflow-y: auto;
+  padding-right: 5px;
 }
 
 .ue-part-error-list {
@@ -876,9 +882,11 @@ button {
   align-self: start;
   position: sticky;
   top: 8px;
-  max-height: 650px;
+  height: min(72vh, 720px);
+  display: flex;
+  flex-direction: column;
   padding: 14px;
-  overflow-y: auto;
+  overflow: hidden;
   border: 1px solid #a7d8ce;
   border-radius: 8px;
   background: #f7faf9;
@@ -891,6 +899,7 @@ button {
   gap: 12px;
   padding-bottom: 10px;
   border-bottom: 1px solid #d8ebe6;
+  flex: 0 0 auto;
 }
 
 .ue-part-text-panel-head span,
@@ -932,12 +941,16 @@ button {
   color: var(--text-muted);
   font-size: 0.7rem;
   font-weight: 700;
+  flex: 0 0 auto;
 }
 
 .ue-part-text-content,
 .ue-part-text-missing {
+  min-height: 0;
+  flex: 1 1 auto;
   margin-top: 12px;
   padding: 12px;
+  overflow-y: auto;
   border: 1px solid var(--border-color);
   border-radius: 7px;
   background: #ffffff;
@@ -952,25 +965,35 @@ button {
 }
 
 .ue-part-text-open-review {
+  flex: 0 0 auto;
   margin-top: 12px;
   min-height: 36px;
   font-size: 0.76rem;
 }
 
-.ue-all-errors-modal {
-  width: min(1040px, 100%);
+.modal-content.ue-all-errors-modal {
+  width: min(1180px, 100%);
   max-height: 90vh;
 }
 
 .ue-all-errors-workspace {
-  overflow-y: auto;
+  height: min(68vh, 700px);
+  overflow: hidden;
 }
 
 .ue-all-errors-list {
   min-width: 0;
+  min-height: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.ue-all-errors-workspace .ue-part-text-panel {
+  position: static;
+  height: 100%;
 }
 
 .panel-title {
@@ -1993,11 +2016,37 @@ input.sheet-text-input:disabled,
 }
 
 .history-review-workspace.text-open {
-  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  grid-template-columns: minmax(0, 0.9fr) minmax(460px, 1.1fr);
+}
+
+.modal-content.history-review-modal[data-history-section="useOfEnglish"] {
+  width: min(1180px, 100%);
+}
+
+.history-review-scroll-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.history-review-workspace {
+  min-height: 420px;
+  height: min(62vh, 680px);
+  flex: 1;
+  overflow: hidden;
+}
+
+.history-review-workspace > div {
+  min-width: 0;
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 6px;
 }
 
 .history-review-part-text-panel {
-  max-height: 62vh;
+  position: static;
+  height: 100%;
 }
 
 .history-grade-edit-controls {
@@ -2642,6 +2691,24 @@ input.sheet-text-input:disabled,
   .ue-text-workspace.text-open,
   .history-review-workspace.text-open {
     grid-template-columns: 1fr;
+  }
+
+  .history-review-scroll-body {
+    overflow-y: auto;
+  }
+
+  .history-review-workspace {
+    height: auto;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .history-review-workspace > div {
+    max-height: min(58vh, 620px);
+  }
+
+  .history-review-part-text-panel {
+    height: min(58vh, 620px);
   }
 
   .ue-part-register-grid {
