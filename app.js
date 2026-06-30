@@ -2923,7 +2923,7 @@ async function saveGradedSheetResult() {
   }
 
   const savedAt = Date.now();
-  STATE.history.push({
+  const savedAttempt = {
     id: `session_${STATE.activeSection}_${savedAt}`,
     section: STATE.activeSection,
     correct: rawScoreTotal,
@@ -2934,14 +2934,158 @@ async function saveGradedSheetResult() {
     gradedStates: { ...STATE.gradedStates },
     date: savedAt,
     durationSeconds
-  });
+  };
+  STATE.history.push(savedAttempt);
 
   await persistHistory({ mode: "merge" });
   STATE.isSavingAttempt = false;
   renderDashboard();
+  openAttemptResultModal(savedAttempt.id);
 }
 
 // ==========================================================================
+function getAttemptResultMood(scaleScore, isNewBest, hasPreviousAttempts) {
+  if (!hasPreviousAttempts) {
+    return {
+      emoji: "🚀",
+      title: "Baseline unlocked!",
+      message: "The graph has its first dot. Tiny dot, enormous administrative importance."
+    };
+  }
+
+  if (isNewBest) {
+    return {
+      emoji: "🏆",
+      title: "New personal best!",
+      message: "The previous record has been thanked for its service and gently escorted out."
+    };
+  }
+
+  if (scaleScore >= 220) {
+    return {
+      emoji: "🧐",
+      title: "Grade A behaviour.",
+      message: "The examiner has dropped their monocle. Very inconvenient. Very impressive."
+    };
+  }
+
+  if (scaleScore >= 200) {
+    return {
+      emoji: "✨",
+      title: "C2 secured.",
+      message: "Extremely civilised. Put the kettle on and pretend this was effortless."
+    };
+  }
+
+  if (scaleScore >= 180) {
+    return {
+      emoji: "😤",
+      title: "C2 is getting nervous.",
+      message: "Solid C1 territory. The montage music has officially started."
+    };
+  }
+
+  return {
+    emoji: "🛠️",
+    title: "Useful evidence collected.",
+    message: "Not the glamorous bit, but excellent detective work. We know what to fix next."
+  };
+}
+
+function getAttemptResultMilestone(scaleScore) {
+  if (scaleScore >= 220) return "Grade A territory";
+  if (scaleScore >= 200) return `${220 - scaleScore} points to Grade A`;
+  if (scaleScore >= 180) return `${200 - scaleScore} points to C2`;
+  return `${180 - scaleScore} points to C1`;
+}
+
+function animateAttemptResultScore(targetScore) {
+  const scoreElement = document.getElementById("attempt-result-score");
+  if (!scoreElement) return;
+
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    scoreElement.textContent = String(targetScore);
+    return;
+  }
+
+  const startValue = Math.min(targetScore, 120);
+  const startedAt = performance.now();
+  const duration = 900;
+
+  function update(now) {
+    const progress = Math.min(1, (now - startedAt) / duration);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    scoreElement.textContent = String(Math.round(startValue + ((targetScore - startValue) * eased)));
+    if (progress < 1) requestAnimationFrame(update);
+  }
+
+  requestAnimationFrame(update);
+}
+
+function openAttemptResultModal(attemptId) {
+  const item = STATE.history.find(attempt => attempt.id === attemptId);
+  if (!item) return;
+
+  const previousAttempts = STATE.history.filter(attempt => attempt.section === item.section && attempt.id !== item.id);
+  const previousBest = previousAttempts.length > 0
+    ? Math.max(...previousAttempts.map(attempt => attempt.scaleScore))
+    : null;
+  const isNewBest = previousBest !== null && item.scaleScore > previousBest;
+  const mood = getAttemptResultMood(item.scaleScore, isNewBest, previousAttempts.length > 0);
+  const scoreTone = item.scaleScore >= 220 ? "excellent" : item.scaleScore >= 200 ? "pass" : item.scaleScore >= 180 ? "c1" : "risk";
+  const durationText = formatAttemptDuration(getAttemptDurationSeconds(item));
+  const ringProgress = Math.max(4, Math.min(100, Math.round((item.scaleScore / 230) * 100)));
+  const bestLabel = previousBest === null
+    ? "First result"
+    : isNewBest
+      ? `Previous ${previousBest}`
+      : `Best ${Math.max(previousBest, item.scaleScore)}`;
+  const confetti = Array.from({ length: 22 }, (_, index) => {
+    const left = 4 + ((index * 17) % 93);
+    const delay = ((index * 7) % 12) / 20;
+    const drift = -42 + ((index * 29) % 84);
+    return `<i style="--confetti-left:${left}%; --confetti-delay:${delay}s; --confetti-drift:${drift}px; --confetti-rotation:${120 + ((index * 43) % 260)}deg"></i>`;
+  }).join("");
+
+  const modal = document.createElement("div");
+  modal.className = "modal-overlay result-modal-overlay";
+  modal.innerHTML = `
+    <div class="modal-content attempt-result-modal ${scoreTone}" role="dialog" aria-modal="true" aria-labelledby="attempt-result-title">
+      <div class="result-confetti" aria-hidden="true">${confetti}</div>
+      <button class="modal-close result-modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+      <div class="result-mascot" aria-hidden="true">${mood.emoji}</div>
+      <span class="eyebrow">${C2_EXAM_METADATA[item.section].name} complete</span>
+      <h2 id="attempt-result-title">${mood.title}</h2>
+      <p class="result-message">${mood.message}</p>
+      <div class="result-score-layout">
+        <div class="result-score-ring" style="--result-progress:${ringProgress}%">
+          <div>
+            <strong id="attempt-result-score">120</strong>
+            <span>Cambridge scale</span>
+          </div>
+        </div>
+        <div class="result-grade-copy">
+          <span>Your result</span>
+          <strong>${getCambridgeGrade(item.scaleScore)}</strong>
+          <small>${getAttemptResultMilestone(item.scaleScore)}</small>
+        </div>
+      </div>
+      <div class="result-stat-grid">
+        <article><span>Raw score</span><strong>${item.correct}/${item.total}</strong></article>
+        <article><span>Accuracy</span><strong>${item.percentage}%</strong></article>
+        <article><span>Record</span><strong>${bestLabel}</strong></article>
+        ${durationText ? `<article><span>Time</span><strong>${durationText}</strong></article>` : ""}
+      </div>
+      <div class="result-actions">
+        <button class="btn btn-secondary" onclick="closeModal(); openHistoryDetailModal('${escapeJS(item.id)}')">Review answers</button>
+        <button class="btn btn-primary" autofocus onclick="closeModal()">Back to progress</button>
+      </div>
+    </div>
+  `;
+  mountModal(modal);
+  animateAttemptResultScore(item.scaleScore);
+}
+
 // 5. WRITING GRADING FLOW (CRITERIA CHIPS)
 // ==========================================================================
 const WRITING_PART2_TYPES = [
@@ -3338,7 +3482,7 @@ async function saveWritingSheetResult() {
   }
 
   const savedAt = Date.now();
-  STATE.history.push({
+  const savedAttempt = {
     id: `session_writing_${savedAt}`,
     section: "writing",
     correct: snapshot.equivalentRaw,
@@ -3349,11 +3493,13 @@ async function saveWritingSheetResult() {
     gradedStates,
     date: savedAt,
     durationSeconds
-  });
+  };
+  STATE.history.push(savedAttempt);
 
   await persistHistory({ mode: "merge" });
   STATE.isSavingAttempt = false;
   renderDashboard();
+  openAttemptResultModal(savedAttempt.id);
 }
 
 // HELPERS
