@@ -1376,7 +1376,17 @@ function renderProgressMapHTML(sectionStats = getAllSectionStats()) {
                   <span class="section-code">${getSectionIconSVG(stats.section)}</span>
                   <strong>${C2_EXAM_METADATA[stats.section].name}</strong>
                 </div>
-                <span>${stats.avgScale || "--"} avg</span>
+                <span class="progress-row-actions">
+                  <span class="progress-row-average">${stats.avgScale || "--"} avg</span>
+                  <button class="progress-evolution-button"
+                          type="button"
+                          onclick="openSectionEvolutionModal('${stats.section}')"
+                          ${sectionLogs.length === 0 ? "disabled" : ""}
+                          aria-label="View ${C2_EXAM_METADATA[stats.section].name} evolution">
+                    View evolution
+                    <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 12.5 5.2 9l2.5 2 5.8-7"></path><path d="M10 4h3.5v3.5"></path></svg>
+                  </button>
+                </span>
               </div>
               <div class="attempt-sparkline">
                 ${sectionLogs.length === 0 ? `<span class="no-attempts">No attempts</span>` : visibleLogs.map((item, index) => {
@@ -1406,6 +1416,249 @@ function renderProgressMapHTML(sectionStats = getAllSectionStats()) {
       </div>
     </section>
   `;
+}
+
+function getSectionEvolutionMetrics(section) {
+  const logs = STATE.history
+    .filter(item => item.section === section)
+    .slice()
+    .sort((a, b) => (a.date || 0) - (b.date || 0));
+
+  if (logs.length === 0) {
+    return {
+      logs,
+      latest: null,
+      first: null,
+      best: null,
+      improvement: 0,
+      recentAverage: 0,
+      recentTrend: 0,
+      consistency: null,
+      c2Rate: 0,
+      averageAccuracy: 0
+    };
+  }
+
+  const latest = logs[logs.length - 1];
+  const first = logs[0];
+  const best = logs.reduce((top, item) => item.scaleScore > top.scaleScore ? item : top, logs[0]);
+  const recent = logs.slice(-3);
+  const previous = logs.slice(Math.max(0, logs.length - 6), Math.max(0, logs.length - 3));
+  const recentAverage = Math.round(recent.reduce((sum, item) => sum + item.scaleScore, 0) / recent.length);
+  const previousAverage = previous.length
+    ? previous.reduce((sum, item) => sum + item.scaleScore, 0) / previous.length
+    : first.scaleScore;
+  const consistencySet = logs.slice(-5).map(item => item.scaleScore);
+  const consistencyAverage = consistencySet.reduce((sum, value) => sum + value, 0) / consistencySet.length;
+  const variance = consistencySet.reduce((sum, value) => sum + Math.pow(value - consistencyAverage, 2), 0) / consistencySet.length;
+
+  return {
+    logs,
+    latest,
+    first,
+    best,
+    improvement: latest.scaleScore - first.scaleScore,
+    recentAverage,
+    recentTrend: logs.length > 1 ? Math.round(recentAverage - previousAverage) : 0,
+    consistency: logs.length > 1 ? Math.round(Math.sqrt(variance)) : null,
+    c2Rate: Math.round((logs.filter(item => item.scaleScore >= 200).length / logs.length) * 100),
+    averageAccuracy: Math.round(logs.reduce((sum, item) => sum + item.percentage, 0) / logs.length)
+  };
+}
+
+function formatSignedNumber(value) {
+  const number = Number(value) || 0;
+  return number > 0 ? `+${number}` : String(number);
+}
+
+function getConsistencyLabel(deviation) {
+  if (deviation === null) return "More data needed";
+  if (deviation <= 4) return "Very steady";
+  if (deviation <= 8) return "Steady";
+  if (deviation <= 14) return "Variable";
+  return "Highly variable";
+}
+
+function renderSectionEvolutionChartHTML(section, logs) {
+  if (logs.length === 0) {
+    return `<div class="evolution-empty">No ${C2_EXAM_METADATA[section].name} attempts yet.</div>`;
+  }
+
+  const width = Math.max(720, 112 + ((logs.length - 1) * 76));
+  const height = 320;
+  const plot = { left: 58, right: 28, top: 20, bottom: 58 };
+  const plotWidth = width - plot.left - plot.right;
+  const plotHeight = height - plot.top - plot.bottom;
+  const yForScore = score => plot.top + ((230 - Math.max(120, Math.min(230, score))) / 110) * plotHeight;
+  const xForIndex = index => logs.length === 1
+    ? plot.left + (plotWidth / 2)
+    : plot.left + (index / (logs.length - 1)) * plotWidth;
+  const gridScores = [230, 220, 200, 180, 160, 120];
+  const points = logs.map((item, index) => `${xForIndex(index).toFixed(1)},${yForScore(item.scaleScore).toFixed(1)}`).join(" ");
+
+  return `
+    <div class="evolution-chart-scroll" tabindex="0" aria-label="Scrollable evolution chart">
+      <svg class="evolution-chart" viewBox="0 0 ${width} ${height}" style="width:${width}px" role="img" aria-labelledby="evolution-chart-title-${section} evolution-chart-desc-${section}">
+        <title id="evolution-chart-title-${section}">${C2_EXAM_METADATA[section].name} score evolution</title>
+        <desc id="evolution-chart-desc-${section}">${logs.length} attempts in chronological order. Cambridge scale scores range from 120 to 230.</desc>
+        ${gridScores.map(score => {
+          const y = yForScore(score);
+          const thresholdClass = score === 200 ? " c2-threshold" : score === 220 ? " grade-a-threshold" : "";
+          return `
+            <line class="evolution-grid-line${thresholdClass}" x1="${plot.left}" y1="${y}" x2="${width - plot.right}" y2="${y}"></line>
+            <text class="evolution-axis-label${thresholdClass}" x="${plot.left - 12}" y="${y + 4}" text-anchor="end">${score}</text>
+          `;
+        }).join("")}
+        ${logs.length > 1 ? `<polyline class="evolution-line" points="${points}"></polyline>` : ""}
+        ${logs.map((item, index) => {
+          const x = xForIndex(index);
+          const y = yForScore(item.scaleScore);
+          const tone = item.scaleScore >= 220 ? "excellent" : item.scaleScore >= 200 ? "pass" : "risk";
+          const attemptTitle = `Attempt ${index + 1}: ${item.scaleScore} scale, ${item.percentage}% accuracy, ${formatCompactDateTime(item.date)}`;
+          return `
+            <g class="evolution-point ${tone}" role="button" tabindex="0"
+               onclick="openHistoryDetailModal('${escapeJS(item.id)}')"
+               onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openHistoryDetailModal('${escapeJS(item.id)}'); }"
+               aria-label="${escapeHTML(attemptTitle)}">
+              <circle class="evolution-point-halo" cx="${x}" cy="${y}" r="12"></circle>
+              <circle class="evolution-point-dot" cx="${x}" cy="${y}" r="5.5"></circle>
+              <text class="evolution-point-score" x="${x}" y="${y - 17}" text-anchor="middle">${item.scaleScore}</text>
+              <text class="evolution-attempt-label" x="${x}" y="${height - 31}" text-anchor="middle">#${index + 1}</text>
+              <text class="evolution-date-label" x="${x}" y="${height - 14}" text-anchor="middle">${escapeHTML(formatShortDate(item.date))}</text>
+              <title>${escapeHTML(attemptTitle)}</title>
+            </g>
+          `;
+        }).join("")}
+      </svg>
+    </div>
+  `;
+}
+
+function renderSectionEvolutionContentHTML(section) {
+  const metrics = getSectionEvolutionMetrics(section);
+  const weakestPart = getWeakestPart(section);
+  const latestTone = metrics.latest
+    ? metrics.latest.scaleScore >= 220 ? "excellent" : metrics.latest.scaleScore >= 200 ? "pass" : "risk"
+    : "neutral";
+  const trendTone = metrics.recentTrend > 0 ? "positive" : metrics.recentTrend < 0 ? "negative" : "neutral";
+  const consistencyDetail = metrics.consistency === null ? "Save another attempt" : `±${metrics.consistency} points · ${getConsistencyLabel(metrics.consistency)}`;
+
+  return `
+    <div class="evolution-section-heading">
+      <div>
+        <span class="section-code">${getSectionIconSVG(section)}</span>
+        <div>
+          <span class="eyebrow">Full history</span>
+          <h4>${C2_EXAM_METADATA[section].name}</h4>
+        </div>
+      </div>
+      <span>${metrics.logs.length} ${metrics.logs.length === 1 ? "attempt" : "attempts"}</span>
+    </div>
+    ${metrics.logs.length === 0 ? renderSectionEvolutionChartHTML(section, metrics.logs) : `
+      <div class="evolution-metric-grid">
+        <article class="evolution-metric-card featured ${latestTone}">
+          <span>Current level</span>
+          <strong>${metrics.latest.scaleScore}</strong>
+          <small>${getCambridgeGrade(metrics.latest.scaleScore)} · ${metrics.latest.percentage}% raw</small>
+        </article>
+        <article class="evolution-metric-card">
+          <span>Improvement</span>
+          <strong class="metric-${metrics.improvement > 0 ? "positive" : metrics.improvement < 0 ? "negative" : "neutral"}">${formatSignedNumber(metrics.improvement)}</strong>
+          <small>points from first to latest</small>
+        </article>
+        <article class="evolution-metric-card">
+          <span>Personal best</span>
+          <strong>${metrics.best.scaleScore}</strong>
+          <small>${formatShortDate(metrics.best.date)}</small>
+        </article>
+        <article class="evolution-metric-card">
+          <span>Recent form</span>
+          <strong class="metric-${trendTone}">${metrics.recentAverage}</strong>
+          <small>${formatSignedNumber(metrics.recentTrend)} ${metrics.logs.length >= 4 ? "vs previous block" : "vs first attempt"}</small>
+        </article>
+        <article class="evolution-metric-card">
+          <span>Consistency</span>
+          <strong>${metrics.consistency === null ? "--" : metrics.consistency}</strong>
+          <small>${consistencyDetail}</small>
+        </article>
+        <article class="evolution-metric-card">
+          <span>C2 success rate</span>
+          <strong>${metrics.c2Rate}%</strong>
+          <small>${metrics.averageAccuracy}% average raw accuracy</small>
+        </article>
+      </div>
+      <section class="evolution-chart-card">
+        <div class="evolution-chart-head">
+          <div>
+            <h5>Scale score evolution</h5>
+            <p>Every saved attempt, oldest to newest. Select a point to open its review.</p>
+          </div>
+          <div class="evolution-legend" aria-label="Score thresholds">
+            <span><i class="c2"></i>C2 · 200</span>
+            <span><i class="grade-a"></i>Grade A · 220</span>
+          </div>
+        </div>
+        ${renderSectionEvolutionChartHTML(section, metrics.logs)}
+      </section>
+      <aside class="evolution-study-focus">
+        <span>Study focus</span>
+        <div>
+          <strong>${weakestPart ? weakestPart.name : "Keep collecting part-level data"}</strong>
+          <p>${weakestPart
+            ? `${weakestPart.averagePct}% average across ${weakestPart.attempts} ${weakestPart.attempts === 1 ? "attempt" : "attempts"}. Prioritise this part in the next focused session.`
+            : "Complete and correct another paper to unlock a targeted recommendation."}</p>
+        </div>
+      </aside>
+    `}
+  `;
+}
+
+function openSectionEvolutionModal(section) {
+  if (!SECTION_ORDER.includes(section)) return;
+
+  const modal = document.createElement("div");
+  modal.className = "modal-overlay";
+  modal.innerHTML = `
+    <div class="modal-content evolution-modal">
+      <div class="modal-header evolution-modal-header">
+        <div>
+          <span class="eyebrow">Progress map</span>
+          <h3 class="modal-title">Performance evolution</h3>
+        </div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+      </div>
+      <div class="evolution-tabs" role="tablist" aria-label="Exam sections">
+        ${SECTION_ORDER.map(tabSection => `
+          <button type="button" role="tab"
+                  class="evolution-tab ${tabSection === section ? "active" : ""}"
+                  aria-selected="${tabSection === section}"
+                  onclick="switchSectionEvolution('${tabSection}', this)">
+            <span class="section-code">${getSectionIconSVG(tabSection)}</span>
+            ${C2_EXAM_METADATA[tabSection].name}
+          </button>
+        `).join("")}
+      </div>
+      <div class="modal-body evolution-modal-body" id="section-evolution-content">
+        ${renderSectionEvolutionContentHTML(section)}
+      </div>
+    </div>
+  `;
+  mountModal(modal);
+}
+
+function switchSectionEvolution(section, button) {
+  if (!SECTION_ORDER.includes(section)) return;
+  const modal = button?.closest(".evolution-modal");
+  const content = modal?.querySelector("#section-evolution-content");
+  if (!modal || !content) return;
+
+  modal.querySelectorAll(".evolution-tab").forEach(tab => {
+    const isActive = tab === button;
+    tab.classList.toggle("active", isActive);
+    tab.setAttribute("aria-selected", String(isActive));
+  });
+  content.innerHTML = renderSectionEvolutionContentHTML(section);
+  content.scrollTop = 0;
 }
 
 function renderPartBreakdownHTML() {
