@@ -1456,8 +1456,8 @@ function renderProgressMapHTML(sectionStats = getAllSectionStats()) {
               <div class="progress-row-foot">
                 <span>${stats.attempts} attempts</span>
                 <span>Latest ${latest ? latest.scaleScore : "--"}</span>
+                <span class="progress-row-weakest">${weakestPart ? `Weakest part: ${weakestPart.name}` : "Part data pending"}</span>
                 <span class="progress-row-average-foot">${stats.avgScale || "--"} avg</span>
-                <span>${weakestPart ? `Weakest part: ${weakestPart.name}` : "Part data pending"}</span>
               </div>
             </article>
           `;
