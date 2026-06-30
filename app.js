@@ -1430,9 +1430,11 @@ function getSectionEvolutionMetrics(section) {
       latest: null,
       first: null,
       best: null,
-      improvement: 0,
-      recentAverage: 0,
-      recentTrend: 0,
+      currentScale: 0,
+      currentAccuracy: 0,
+      comparisonAverage: null,
+      comparisonCount: 0,
+      improvement: null,
       consistency: null,
       c2Rate: 0,
       averageAccuracy: 0
@@ -1443,11 +1445,12 @@ function getSectionEvolutionMetrics(section) {
   const first = logs[0];
   const best = logs.reduce((top, item) => item.scaleScore > top.scaleScore ? item : top, logs[0]);
   const recent = logs.slice(-3);
-  const previous = logs.slice(Math.max(0, logs.length - 6), Math.max(0, logs.length - 3));
-  const recentAverage = Math.round(recent.reduce((sum, item) => sum + item.scaleScore, 0) / recent.length);
-  const previousAverage = previous.length
-    ? previous.reduce((sum, item) => sum + item.scaleScore, 0) / previous.length
-    : first.scaleScore;
+  const comparisonLogs = logs.slice(0, -recent.length);
+  const currentScale = Math.round(recent.reduce((sum, item) => sum + item.scaleScore, 0) / recent.length);
+  const currentAccuracy = Math.round(recent.reduce((sum, item) => sum + item.percentage, 0) / recent.length);
+  const comparisonAverage = comparisonLogs.length
+    ? Math.round(comparisonLogs.reduce((sum, item) => sum + item.scaleScore, 0) / comparisonLogs.length)
+    : null;
   const consistencySet = logs.slice(-5).map(item => item.scaleScore);
   const consistencyAverage = consistencySet.reduce((sum, value) => sum + value, 0) / consistencySet.length;
   const variance = consistencySet.reduce((sum, value) => sum + Math.pow(value - consistencyAverage, 2), 0) / consistencySet.length;
@@ -1457,9 +1460,11 @@ function getSectionEvolutionMetrics(section) {
     latest,
     first,
     best,
-    improvement: latest.scaleScore - first.scaleScore,
-    recentAverage,
-    recentTrend: logs.length > 1 ? Math.round(recentAverage - previousAverage) : 0,
+    currentScale,
+    currentAccuracy,
+    comparisonAverage,
+    comparisonCount: comparisonLogs.length,
+    improvement: comparisonAverage === null ? null : currentScale - comparisonAverage,
     consistency: logs.length > 1 ? Math.round(Math.sqrt(variance)) : null,
     c2Rate: Math.round((logs.filter(item => item.scaleScore >= 200).length / logs.length) * 100),
     averageAccuracy: Math.round(logs.reduce((sum, item) => sum + item.percentage, 0) / logs.length)
@@ -1562,9 +1567,9 @@ function renderSectionEvolutionContentHTML(section) {
   const metrics = getSectionEvolutionMetrics(section);
   const weakestPart = getWeakestPart(section);
   const latestTone = metrics.latest
-    ? metrics.latest.scaleScore >= 220 ? "excellent" : metrics.latest.scaleScore >= 200 ? "pass" : "risk"
+    ? metrics.currentScale >= 220 ? "excellent" : metrics.currentScale >= 200 ? "pass" : "risk"
     : "neutral";
-  const trendTone = metrics.recentTrend > 0 ? "positive" : metrics.recentTrend < 0 ? "negative" : "neutral";
+  const trendTone = metrics.improvement > 0 ? "positive" : metrics.improvement < 0 ? "negative" : "neutral";
   const consistencyDetail = metrics.consistency === null ? "More data needed" : `±${metrics.consistency} · ${getConsistencyLabel(metrics.consistency)}`;
 
   return `
@@ -1596,17 +1601,18 @@ function renderSectionEvolutionContentHTML(section) {
         <aside class="evolution-insights">
           <article class="evolution-score-summary ${latestTone}">
             <div>
-              <span>Current level</span>
-              <strong>${metrics.latest.scaleScore}</strong>
-              <small>${getCambridgeGrade(metrics.latest.scaleScore)} · ${metrics.latest.percentage}% raw</small>
+              <span>Current level · last 3 avg</span>
+              <strong>${metrics.currentScale}</strong>
+              <small>${getCambridgeGrade(metrics.currentScale)} · ${metrics.currentAccuracy}% raw</small>
             </div>
-            <span class="evolution-improvement metric-${metrics.improvement > 0 ? "positive" : metrics.improvement < 0 ? "negative" : "neutral"}">
-              ${formatSignedNumber(metrics.improvement)} <small>since first</small>
+            <span class="evolution-improvement metric-${trendTone}">
+              ${metrics.improvement === null ? "--" : formatSignedNumber(metrics.improvement)}
+              <small>${metrics.comparisonCount ? `vs ${metrics.comparisonCount} earlier` : "more history needed"}</small>
             </span>
           </article>
           <div class="evolution-compact-metrics">
             <article><span>Best</span><strong>${metrics.best.scaleScore}</strong><small>${formatShortDate(metrics.best.date)}</small></article>
-            <article><span>Recent form</span><strong class="metric-${trendTone}">${metrics.recentAverage}</strong><small>${formatSignedNumber(metrics.recentTrend)} trend</small></article>
+            <article><span>Previous avg</span><strong>${metrics.comparisonAverage === null ? "--" : metrics.comparisonAverage}</strong><small>${metrics.comparisonCount ? `${metrics.comparisonCount} earlier tests` : "before current block"}</small></article>
             <article><span>Consistency</span><strong>${metrics.consistency === null ? "--" : metrics.consistency}</strong><small>${consistencyDetail}</small></article>
             <article><span>C2 rate</span><strong>${metrics.c2Rate}%</strong><small>scores at 200+</small></article>
           </div>
