@@ -1,6 +1,6 @@
 // STATE MANAGEMENT
 const STATE = {
-  currentView: "home", // "home" | "dashboard" | "sheet"
+  currentView: "home", // "home" | "dashboard" | "vocabulary" | "vocabularyReview" | "sheet"
   activeSection: null, // "useOfEnglish" | "reading" | "listening" | "writing"
   answers: {}, // Q-num -> string
   gradedStates: {}, // Q-num -> "correct" | "incorrect" | score (0|1|2)
@@ -17,6 +17,26 @@ const STATE = {
   supabaseUserEmail: "",
   syncStatus: "local",
   syncMessage: "Local backup",
+  vocabularyEntries: [],
+  vocabularyArchivedIds: [],
+  vocabularyReviewStats: {},
+  vocabularyUpdatedAt: 0,
+  vocabularyFilters: {
+    query: "",
+    family: "all",
+    topic: "all",
+    source: "all",
+    page: 1
+  },
+  vocabularyEditingId: null,
+  vocabularyNotice: "",
+  vocabularyReviewSetup: {
+    mode: "recognition",
+    family: "all",
+    topic: "all",
+    size: 5
+  },
+  vocabularyReviewSession: null,
   timer: {
     elapsedSeconds: 0,
     isRunning: false,
@@ -27,6 +47,9 @@ const STATE = {
 
 const OWNER_PROFILE = "Aleetreny";
 const LOCAL_HISTORY_KEY = "c2_owner_history";
+const LOCAL_VOCABULARY_KEY = "c2_vocabulary_library";
+const LOCAL_VOCABULARY_REVIEW_KEY = "c2_vocabulary_review_stats";
+const VOCABULARY_STATE_ID_PREFIX = "vocabulary_state_";
 const SUPABASE_SESSION_KEY = "c2_supabase_session";
 const SUPABASE_CONFIG = {
   restUrl: "https://irsugdtdqnvlrcbotvfe.supabase.co/rest/v1",
@@ -34,6 +57,7 @@ const SUPABASE_CONFIG = {
   redirectUrl: "https://aleetreny.github.io/c2-practice-log/",
   anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlyc3VnZHRkcW52bHJjYm90dmZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0Nzk4MjgsImV4cCI6MjA5ODA1NTgyOH0.MMJwed40u5tszDUYeS_Tx0BMo0PLWdY-eEp6Qs4XC9o"
 };
+let vocabularySyncTimeoutId = null;
 
 // INITIALIZE APP
 window.addEventListener("DOMContentLoaded", async () => {
@@ -66,10 +90,52 @@ function loadLocalStorage() {
     ];
 
     STATE.history = mergeHistoryCollections(...localHistories);
+    const storedVocabulary = JSON.parse(localStorage.getItem(LOCAL_VOCABULARY_KEY) || "{}");
+    STATE.vocabularyEntries = Array.isArray(storedVocabulary.entries) ? storedVocabulary.entries : [];
+    STATE.vocabularyArchivedIds = Array.isArray(storedVocabulary.archivedIds) ? storedVocabulary.archivedIds : [];
+    STATE.vocabularyUpdatedAt = Number(storedVocabulary.updatedAt) || 0;
+    const storedReviewStats = JSON.parse(localStorage.getItem(LOCAL_VOCABULARY_REVIEW_KEY) || "{}");
+    STATE.vocabularyReviewStats = storedReviewStats && typeof storedReviewStats === "object" ? storedReviewStats : {};
   } catch (e) {
     console.error("Failed to load local storage", e);
     STATE.history = [];
+    STATE.vocabularyEntries = [];
+    STATE.vocabularyArchivedIds = [];
+    STATE.vocabularyReviewStats = {};
+    STATE.vocabularyUpdatedAt = 0;
   }
+}
+
+function saveVocabularyLocalStorage(options = {}) {
+  try {
+    localStorage.setItem(LOCAL_VOCABULARY_KEY, JSON.stringify({
+      entries: STATE.vocabularyEntries,
+      archivedIds: STATE.vocabularyArchivedIds,
+      updatedAt: STATE.vocabularyUpdatedAt
+    }));
+    localStorage.setItem(LOCAL_VOCABULARY_REVIEW_KEY, JSON.stringify(STATE.vocabularyReviewStats));
+    if (options.sync !== false) queueVocabularyCloudSync();
+  } catch (error) {
+    console.error("Failed to save vocabulary", error);
+  }
+}
+
+function markVocabularyChanged() {
+  STATE.vocabularyUpdatedAt = Date.now();
+  saveVocabularyLocalStorage();
+}
+
+function queueVocabularyCloudSync() {
+  if (!STATE.isAuthenticated) return;
+  if (vocabularySyncTimeoutId) clearTimeout(vocabularySyncTimeoutId);
+  vocabularySyncTimeoutId = setTimeout(async () => {
+    vocabularySyncTimeoutId = null;
+    try {
+      await saveRemoteVocabularyState();
+    } catch (error) {
+      console.warn("Vocabulary cloud sync unavailable", error);
+    }
+  }, 450);
 }
 
 function saveLocalStorage() {
@@ -316,11 +382,71 @@ function supabaseRowToHistoryItem(row) {
   };
 }
 
+function getVocabularyStateRowId() {
+  const userId = STATE.supabaseSession?.user?.id;
+  return userId ? `${VOCABULARY_STATE_ID_PREFIX}${userId}` : "";
+}
+
+function vocabularyStateToSupabaseRow() {
+  return {
+    id: getVocabularyStateRowId(),
+    user_id: STATE.supabaseSession.user.id,
+    section: "writing",
+    correct: 0,
+    total: 1,
+    percentage: 0,
+    scale_score: 160,
+    answers: {
+      __kind: "vocabulary_state",
+      entries: STATE.vocabularyEntries,
+      archivedIds: STATE.vocabularyArchivedIds,
+      reviewStats: STATE.vocabularyReviewStats,
+      updatedAt: STATE.vocabularyUpdatedAt
+    },
+    graded_states: {},
+    attempted_at: new Date(STATE.vocabularyUpdatedAt || Date.now()).toISOString()
+  };
+}
+
+function isVocabularyStateRow(row) {
+  return String(row?.id || "").startsWith(VOCABULARY_STATE_ID_PREFIX) || row?.answers?.__kind === "vocabulary_state";
+}
+
+function applyRemoteVocabularyState(row) {
+  const payload = row?.answers;
+  if (!payload || payload.__kind !== "vocabulary_state") return false;
+  STATE.vocabularyEntries = Array.isArray(payload.entries) ? payload.entries : [];
+  STATE.vocabularyArchivedIds = Array.isArray(payload.archivedIds) ? payload.archivedIds : [];
+  STATE.vocabularyReviewStats = payload.reviewStats && typeof payload.reviewStats === "object" ? payload.reviewStats : {};
+  STATE.vocabularyUpdatedAt = Number(payload.updatedAt) || (row.attempted_at ? new Date(row.attempted_at).getTime() : 0);
+  saveVocabularyLocalStorage({ sync: false });
+  return true;
+}
+
 async function fetchSupabaseHistory() {
   const rows = await supabaseRequest(
     "/c2_attempts?select=id,section,correct,total,percentage,scale_score,answers,graded_states,attempted_at&order=attempted_at.asc"
   );
-  return Array.isArray(rows) ? rows.map(supabaseRowToHistoryItem) : [];
+  return Array.isArray(rows) ? rows.filter(row => !isVocabularyStateRow(row)).map(supabaseRowToHistoryItem) : [];
+}
+
+async function fetchSupabaseVocabularyState() {
+  const rowId = getVocabularyStateRowId();
+  if (!rowId) return null;
+  const rows = await supabaseRequest(
+    `/c2_attempts?id=eq.${encodeURIComponent(rowId)}&select=id,answers,attempted_at&limit=1`
+  );
+  return Array.isArray(rows) ? rows[0] || null : null;
+}
+
+async function saveRemoteVocabularyState() {
+  if (!STATE.isAuthenticated || !getVocabularyStateRowId()) return { online: false };
+  await supabaseRequest("/c2_attempts?on_conflict=id", {
+    method: "POST",
+    headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
+    body: JSON.stringify([vocabularyStateToSupabaseRow()])
+  });
+  return { online: true };
 }
 
 async function hydrateRemoteHistory() {
@@ -336,10 +462,20 @@ async function hydrateRemoteHistory() {
     STATE.syncStatus = "syncing";
     STATE.syncMessage = "Syncing";
 
-    const remoteHistory = await fetchSupabaseHistory();
+    const [remoteHistory, remoteVocabularyState] = await Promise.all([
+      fetchSupabaseHistory(),
+      fetchSupabaseVocabularyState()
+    ]);
     const mergedHistory = mergeHistoryCollections(remoteHistory, STATE.history);
     STATE.history = mergedHistory;
     saveLocalStorage();
+
+    const remoteVocabularyUpdatedAt = Number(remoteVocabularyState?.answers?.updatedAt) || 0;
+    if (remoteVocabularyState && remoteVocabularyUpdatedAt > STATE.vocabularyUpdatedAt) {
+      applyRemoteVocabularyState(remoteVocabularyState);
+    } else if (STATE.vocabularyUpdatedAt > remoteVocabularyUpdatedAt) {
+      await saveRemoteVocabularyState();
+    }
 
     if (mergedHistory.length !== remoteHistory.length) {
       await saveRemoteHistory("merge");
@@ -369,6 +505,10 @@ async function saveRemoteHistory(mode = "merge") {
       },
       body: JSON.stringify(STATE.history.map(historyItemToSupabaseRow))
     });
+  }
+
+  if (STATE.vocabularyUpdatedAt > 0) {
+    await saveRemoteVocabularyState();
   }
 
   const history = await fetchSupabaseHistory();
@@ -915,6 +1055,32 @@ function getNextFocusInsight(sectionStats = getAllSectionStats()) {
 // ==========================================================================
 // 1. HOME HUB CONTROLLER (CLEAN INITIAL STATE, VISUALLY SQUARE)
 // ==========================================================================
+function renderMainNavigation(activeView) {
+  const items = [
+    { key: "home", label: "Practice", action: "renderHome()" },
+    { key: "dashboard", label: "Progress", action: "renderDashboard()" },
+    { key: "vocabulary", label: "Vocabulary", action: "openVocabulary()" },
+    { key: "vocabularyReview", label: "Review", action: "openVocabularyReview()" }
+  ];
+
+  return `
+    <nav class="topbar-actions" aria-label="Main navigation">
+      <div class="nav-group">
+        ${items.map(item => `
+          <button class="nav-pill ${activeView === item.key ? "active" : ""}" onclick="${item.action}">${item.label}</button>
+        `).join("")}
+      </div>
+      <button class="candidate-switch" onclick="openProfileModal()" title="Account and sync">
+        <span class="profile-avatar">${STATE.activeProfile.charAt(0).toUpperCase()}</span>
+        <span class="candidate-copy">
+          <span class="candidate-label">${getSyncLabel()}</span>
+          <span class="candidate-name">${escapeHTML(STATE.activeProfile)}</span>
+        </span>
+      </button>
+    </nav>
+  `;
+}
+
 function renderHome() {
   if (STATE.currentView === "sheet") {
     clearPracticeTimerInterval();
@@ -939,17 +1105,7 @@ function renderHome() {
           </span>
         </button>
 
-        <nav class="topbar-actions" aria-label="Main navigation">
-          <button class="nav-pill active" onclick="renderHome()">Practice</button>
-          <button class="nav-pill" onclick="renderDashboard()">Progress</button>
-          <button class="candidate-switch" onclick="openProfileModal()" title="Account and sync">
-            <span class="profile-avatar">${STATE.activeProfile.charAt(0).toUpperCase()}</span>
-            <span class="candidate-copy">
-              <span class="candidate-label">${getSyncLabel()}</span>
-              <span class="candidate-name">${escapeHTML(STATE.activeProfile)}</span>
-            </span>
-          </button>
-        </nav>
+        ${renderMainNavigation("home")}
       </header>
 
       <main class="home-main">
@@ -1020,6 +1176,648 @@ function renderHome() {
   `;
 }
 
+// ==========================================================================
+// VOCABULARY LIBRARY AND QUICK REVIEW
+// ==========================================================================
+const VOCABULARY_FAMILIES = {
+  vocabulary: { label: "Vocabulary", shortLabel: "Vocabulary", icon: "V" },
+  patterns: { label: "Patterns & Collocations", shortLabel: "Patterns", icon: "P" },
+  idioms: { label: "Idioms & Fixed Phrases", shortLabel: "Idioms", icon: "I" },
+  wordFormation: { label: "Word Formation", shortLabel: "Word formation", icon: "W" }
+};
+
+function getAllVocabularyEntries() {
+  const seed = typeof VOCABULARY_SEED !== "undefined" && Array.isArray(VOCABULARY_SEED)
+    ? VOCABULARY_SEED
+    : [];
+  const byId = new Map(seed.map(entry => [entry.id, { ...entry, isImported: true }]));
+  STATE.vocabularyEntries.forEach(entry => {
+    byId.set(entry.id, { ...entry, isImported: entry.id.startsWith("notion-") });
+  });
+  STATE.vocabularyArchivedIds.forEach(id => byId.delete(id));
+  return [...byId.values()];
+}
+
+function getVocabularyEntry(id) {
+  return getAllVocabularyEntries().find(entry => entry.id === id) || null;
+}
+
+function getVocabularyTopics(entries = getAllVocabularyEntries(), family = "all") {
+  const scoped = family === "all" ? entries : entries.filter(entry => (entry.families || [entry.family]).includes(family));
+  const counts = new Map();
+  scoped.forEach(entry => {
+    (entry.topics?.length ? entry.topics : [entry.topic]).filter(Boolean).forEach(topic => {
+      counts.set(topic, (counts.get(topic) || 0) + 1);
+    });
+  });
+  return [...counts.entries()]
+    .map(([topic, count]) => ({ topic, count }))
+    .sort((a, b) => a.topic.localeCompare(b.topic, "en", { sensitivity: "base" }));
+}
+
+function getVocabularySources(entries = getAllVocabularyEntries()) {
+  const counts = new Map();
+  entries.forEach(entry => (entry.sources || []).forEach(source => {
+    counts.set(source, (counts.get(source) || 0) + 1);
+  }));
+  return [...counts.entries()]
+    .map(([source, count]) => ({ source, count }))
+    .sort((a, b) => a.source.localeCompare(b.source, "en", { sensitivity: "base" }));
+}
+
+function normalizeVocabularySearch(value = "") {
+  return String(value).toLocaleLowerCase("en").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+function getFilteredVocabularyEntries() {
+  const filters = STATE.vocabularyFilters;
+  const query = normalizeVocabularySearch(filters.query.trim());
+  return getAllVocabularyEntries()
+    .filter(entry => filters.family === "all" || (entry.families || [entry.family]).includes(filters.family))
+    .filter(entry => filters.topic === "all" || (entry.topics || [entry.topic]).includes(filters.topic))
+    .filter(entry => filters.source === "all" || (entry.sources || []).includes(filters.source))
+    .filter(entry => {
+      if (!query) return true;
+      return normalizeVocabularySearch([
+        entry.term,
+        entry.meaning,
+        entry.example,
+        entry.topic,
+        ...(entry.sources || [])
+      ].join(" ")).includes(query);
+    })
+    .sort((a, b) => a.term.localeCompare(b.term, "en", { sensitivity: "base" }));
+}
+
+function getVocabularyMastery(entryId) {
+  const stat = STATE.vocabularyReviewStats[entryId];
+  if (!stat?.views) return null;
+  return Math.round((stat.known / stat.views) * 100);
+}
+
+function openVocabulary() {
+  STATE.vocabularyEditingId = null;
+  renderVocabulary();
+  window.scrollTo({ top: 0 });
+}
+
+function openVocabularyReview() {
+  STATE.vocabularyReviewSession = null;
+  renderVocabularyReview();
+  window.scrollTo({ top: 0 });
+}
+
+function renderVocabulary() {
+  if (STATE.currentView === "sheet") clearPracticeTimerInterval();
+  STATE.currentView = "vocabulary";
+  const entries = getAllVocabularyEntries();
+  const filtered = getFilteredVocabularyEntries();
+  const perPage = 48;
+  const pageCount = Math.max(1, Math.ceil(filtered.length / perPage));
+  STATE.vocabularyFilters.page = Math.min(STATE.vocabularyFilters.page, pageCount);
+  const pageStart = (STATE.vocabularyFilters.page - 1) * perPage;
+  const visibleEntries = filtered.slice(pageStart, pageStart + perPage);
+  const topics = getVocabularyTopics(entries, STATE.vocabularyFilters.family);
+  const sources = getVocabularySources(entries);
+  const reviewed = Object.values(STATE.vocabularyReviewStats).filter(stat => stat?.views > 0).length;
+  const editingEntry = STATE.vocabularyEditingId ? getVocabularyEntry(STATE.vocabularyEditingId) : null;
+  const customCount = STATE.vocabularyEntries.filter(entry => !entry.id.startsWith("notion-")).length;
+  const appContainer = document.getElementById("app-container");
+
+  appContainer.innerHTML = `
+    <div class="vocabulary-container app-shell">
+      <header class="app-topbar">
+        <button class="brand-button" onclick="renderHome()" aria-label="Practice home" style="text-align:left">
+          <span style="text-align:left;display:block">
+            <span class="brand-title">Practice Log</span>
+            <span class="brand-subtitle">Cambridge C2</span>
+          </span>
+        </button>
+        ${renderMainNavigation("vocabulary")}
+      </header>
+
+      <main class="vocabulary-main">
+        <section class="vocabulary-hero">
+          <div>
+            <span class="eyebrow">Vocabulary library</span>
+            <h1>Your C2 language bank.</h1>
+            <p>${entries.length.toLocaleString("en-GB")} unique entries from Notion, organised without the repetition.</p>
+          </div>
+          <div class="vocabulary-hero-stats" aria-label="Vocabulary overview">
+            <div><strong>${entries.length.toLocaleString("en-GB")}</strong><span>entries</span></div>
+            <div><strong>${customCount}</strong><span>added here</span></div>
+            <div><strong>${reviewed}</strong><span>reviewed</span></div>
+          </div>
+        </section>
+
+        <section class="quick-capture-panel" aria-labelledby="quick-capture-title">
+          <div class="capture-heading">
+            <div>
+              <span class="eyebrow">Quick capture</span>
+              <h2 id="quick-capture-title">${editingEntry ? "Edit this entry" : "Write it down while it is fresh"}</h2>
+            </div>
+            ${editingEntry ? `<button class="btn btn-secondary" type="button" onclick="cancelVocabularyEdit()">Cancel edit</button>` : ""}
+          </div>
+          <form class="vocabulary-capture-form" onsubmit="saveVocabularyEntry(event)">
+            <label class="capture-field capture-term">
+              <span>Word, phrase or pattern</span>
+              <input name="term" required autocomplete="off" placeholder="e.g. take something with a pinch of salt" value="${escapeHTML(editingEntry?.term || "")}">
+            </label>
+            <label class="capture-field capture-meaning">
+              <span>Meaning</span>
+              <input name="meaning" autocomplete="off" placeholder="Short definition or Spanish cue" value="${escapeHTML(editingEntry?.meaning || "")}">
+            </label>
+            <label class="capture-field">
+              <span>Family</span>
+              <select name="family">
+                ${Object.entries(VOCABULARY_FAMILIES).map(([key, meta]) => `<option value="${key}" ${(editingEntry?.family || STATE.vocabularyFilters.family) === key ? "selected" : ""}>${meta.label}</option>`).join("")}
+              </select>
+            </label>
+            <label class="capture-field">
+              <span>Category</span>
+              <input name="topic" list="vocabulary-topic-options" autocomplete="off" placeholder="e.g. Emotions & Reactions" value="${escapeHTML(editingEntry?.topic || "Personal vocabulary")}">
+              <datalist id="vocabulary-topic-options">${getVocabularyTopics(entries).map(item => `<option value="${escapeHTML(item.topic)}"></option>`).join("")}</datalist>
+            </label>
+            <label class="capture-field capture-example">
+              <span>Example or context <small>optional</small></span>
+              <textarea name="example" rows="2" placeholder="The sentence where you found it, or one you would actually use.">${escapeHTML(editingEntry?.example || "")}</textarea>
+            </label>
+            <button class="btn btn-primary capture-submit" type="submit">${editingEntry ? "Save changes" : "Add to library"}</button>
+          </form>
+          ${STATE.vocabularyNotice ? `<div class="capture-notice" role="status">${escapeHTML(STATE.vocabularyNotice)}</div>` : ""}
+        </section>
+
+        <section class="vocabulary-family-grid" aria-label="Vocabulary families">
+          ${Object.entries(VOCABULARY_FAMILIES).map(([key, meta]) => {
+            const count = entries.filter(entry => (entry.families || [entry.family]).includes(key)).length;
+            return `<button class="vocabulary-family-card ${STATE.vocabularyFilters.family === key ? "active" : ""}" onclick="setVocabularyFilter('family','${key}')">
+              <span class="family-monogram">${meta.icon}</span>
+              <span><strong>${meta.label}</strong><small>${count.toLocaleString("en-GB")} entries</small></span>
+            </button>`;
+          }).join("")}
+        </section>
+
+        <section class="vocabulary-browser">
+          <div class="vocabulary-browser-head">
+            <div>
+              <span class="eyebrow">Browse the bank</span>
+              <h2>${filtered.length.toLocaleString("en-GB")} ${filtered.length === 1 ? "entry" : "entries"}</h2>
+            </div>
+            <button class="btn btn-primary" onclick="reviewCurrentVocabularySelection()" ${filtered.length ? "" : "disabled"}>Review this selection</button>
+          </div>
+          <div class="vocabulary-filters">
+            <label class="vocabulary-search">
+              <span class="sr-only">Search vocabulary</span>
+              <input id="vocabulary-search-input" type="search" placeholder="Search term, meaning or example…" value="${escapeHTML(STATE.vocabularyFilters.query)}" oninput="setVocabularySearch(this.value)">
+            </label>
+            <select aria-label="Filter by family" onchange="setVocabularyFilter('family',this.value)">
+              <option value="all">All families</option>
+              ${Object.entries(VOCABULARY_FAMILIES).map(([key, meta]) => `<option value="${key}" ${STATE.vocabularyFilters.family === key ? "selected" : ""}>${meta.shortLabel}</option>`).join("")}
+            </select>
+            <select aria-label="Filter by category" onchange="setVocabularyFilter('topic',this.value)">
+              <option value="all">All categories</option>
+              ${topics.map(item => `<option value="${escapeHTML(item.topic)}" ${STATE.vocabularyFilters.topic === item.topic ? "selected" : ""}>${escapeHTML(item.topic)} (${item.count})</option>`).join("")}
+            </select>
+            <select aria-label="Filter by source" onchange="setVocabularyFilter('source',this.value)">
+              <option value="all">All sources</option>
+              ${sources.map(item => `<option value="${escapeHTML(item.source)}" ${STATE.vocabularyFilters.source === item.source ? "selected" : ""}>${escapeHTML(item.source)} (${item.count})</option>`).join("")}
+            </select>
+            <button class="btn btn-secondary" onclick="clearVocabularyFilters()">Clear</button>
+          </div>
+
+          <div class="vocabulary-card-grid">
+            ${visibleEntries.length ? visibleEntries.map(renderVocabularyEntryCard).join("") : `<div class="vocabulary-empty"><strong>No entries match.</strong><span>Try clearing one of the filters.</span></div>`}
+          </div>
+          ${pageCount > 1 ? `
+            <div class="vocabulary-pagination">
+              <button class="btn btn-secondary" onclick="changeVocabularyPage(-1)" ${STATE.vocabularyFilters.page === 1 ? "disabled" : ""}>Previous</button>
+              <span>Page ${STATE.vocabularyFilters.page} of ${pageCount}</span>
+              <button class="btn btn-secondary" onclick="changeVocabularyPage(1)" ${STATE.vocabularyFilters.page === pageCount ? "disabled" : ""}>Next</button>
+            </div>` : ""}
+        </section>
+      </main>
+    </div>
+  `;
+}
+
+function renderVocabularyEntryCard(entry) {
+  const family = VOCABULARY_FAMILIES[entry.family] || VOCABULARY_FAMILIES.vocabulary;
+  const mastery = getVocabularyMastery(entry.id);
+  const isEdited = STATE.vocabularyEntries.some(item => item.id === entry.id);
+  return `
+    <article class="vocabulary-entry-card family-${entry.family}">
+      <div class="vocabulary-entry-topline">
+        <span class="vocabulary-family-tag">${family.shortLabel}</span>
+        <div class="vocabulary-card-actions">
+          ${mastery !== null ? `<span class="mastery-chip ${mastery >= 70 ? "good" : mastery < 40 ? "risk" : ""}">${mastery}% familiar</span>` : ""}
+          <button onclick="startVocabularyEdit('${entry.id}')" aria-label="Edit ${escapeHTML(entry.term)}">Edit</button>
+          <button onclick="deleteVocabularyEntry('${entry.id}')" aria-label="Delete ${escapeHTML(entry.term)}">Delete</button>
+        </div>
+      </div>
+      <h3>${escapeHTML(entry.term)}</h3>
+      ${entry.meaning ? `<p class="vocabulary-meaning">${escapeHTML(entry.meaning)}</p>` : `<p class="vocabulary-meaning muted">Meaning not added yet</p>`}
+      ${entry.example ? `<blockquote>${escapeHTML(entry.example)}</blockquote>` : ""}
+      <div class="vocabulary-entry-meta">
+        <span>${escapeHTML(entry.topic || "General")}</span>
+        <span>${escapeHTML((entry.sources || ["Personal entry"]).join(" · "))}${isEdited ? " · edited" : ""}</span>
+      </div>
+    </article>
+  `;
+}
+
+function setVocabularySearch(value) {
+  STATE.vocabularyFilters.query = value;
+  STATE.vocabularyFilters.page = 1;
+  renderVocabulary();
+  requestAnimationFrame(() => {
+    const input = document.getElementById("vocabulary-search-input");
+    if (input) {
+      input.focus();
+      input.setSelectionRange(input.value.length, input.value.length);
+    }
+  });
+}
+
+function setVocabularyFilter(key, value) {
+  STATE.vocabularyFilters[key] = value;
+  STATE.vocabularyFilters.page = 1;
+  if (key === "family") {
+    const validTopics = getVocabularyTopics(getAllVocabularyEntries(), value).map(item => item.topic);
+    if (!validTopics.includes(STATE.vocabularyFilters.topic)) STATE.vocabularyFilters.topic = "all";
+  }
+  renderVocabulary();
+}
+
+function clearVocabularyFilters() {
+  STATE.vocabularyFilters = { query: "", family: "all", topic: "all", source: "all", page: 1 };
+  renderVocabulary();
+}
+
+function changeVocabularyPage(direction) {
+  STATE.vocabularyFilters.page += direction;
+  renderVocabulary();
+  document.querySelector(".vocabulary-browser")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function saveVocabularyEntry(event) {
+  event.preventDefault();
+  const formData = new FormData(event.currentTarget);
+  const term = String(formData.get("term") || "").trim();
+  if (!term) return;
+  const existing = STATE.vocabularyEditingId ? getVocabularyEntry(STATE.vocabularyEditingId) : null;
+  const id = existing?.id || `custom-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+  const topic = String(formData.get("topic") || "Personal vocabulary").trim() || "Personal vocabulary";
+  const entry = {
+    id,
+    term,
+    meaning: String(formData.get("meaning") || "").trim(),
+    example: String(formData.get("example") || "").trim(),
+    family: String(formData.get("family") || "vocabulary"),
+    families: [String(formData.get("family") || "vocabulary")],
+    topic,
+    topics: [topic],
+    sources: existing?.sources || ["Personal entry"],
+    notionPages: existing?.notionPages || [],
+    updatedAt: Date.now()
+  };
+  STATE.vocabularyEntries = STATE.vocabularyEntries.filter(item => item.id !== id).concat(entry);
+  STATE.vocabularyArchivedIds = STATE.vocabularyArchivedIds.filter(archivedId => archivedId !== id);
+  STATE.vocabularyEditingId = null;
+  STATE.vocabularyNotice = existing ? `Updated “${term}”.` : `Added “${term}” to your library.`;
+  markVocabularyChanged();
+  renderVocabulary();
+}
+
+function startVocabularyEdit(id) {
+  STATE.vocabularyEditingId = id;
+  STATE.vocabularyNotice = "";
+  renderVocabulary();
+  requestAnimationFrame(() => document.querySelector(".quick-capture-panel input[name='term']")?.focus());
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function cancelVocabularyEdit() {
+  STATE.vocabularyEditingId = null;
+  STATE.vocabularyNotice = "";
+  renderVocabulary();
+}
+
+function deleteVocabularyEntry(id) {
+  const entry = getVocabularyEntry(id);
+  if (!entry || !confirm(`Remove “${entry.term}” from the library?`)) return;
+  STATE.vocabularyEntries = STATE.vocabularyEntries.filter(item => item.id !== id);
+  if (id.startsWith("notion-") && !STATE.vocabularyArchivedIds.includes(id)) STATE.vocabularyArchivedIds.push(id);
+  delete STATE.vocabularyReviewStats[id];
+  STATE.vocabularyNotice = `Removed “${entry.term}”.`;
+  markVocabularyChanged();
+  renderVocabulary();
+}
+
+function reviewCurrentVocabularySelection() {
+  STATE.vocabularyReviewSetup = {
+    ...STATE.vocabularyReviewSetup,
+    family: STATE.vocabularyFilters.family,
+    topic: STATE.vocabularyFilters.topic
+  };
+  STATE.vocabularyReviewSession = null;
+  renderVocabularyReview();
+  window.scrollTo({ top: 0 });
+}
+
+function findVocabularyClozeMatch(entry) {
+  const example = entry.example || "";
+  const term = entry.term || "";
+  if (!example || !term) return null;
+  const lowerExample = example.toLocaleLowerCase("en").replace(/[’‘]/g, "'");
+  const lowerTerm = term.toLocaleLowerCase("en").replace(/[’‘]/g, "'");
+  const findExpandableMatch = phrase => {
+    let searchFrom = 0;
+    while (searchFrom < lowerExample.length) {
+      const index = lowerExample.indexOf(phrase, searchFrom);
+      if (index < 0) return null;
+      const startsAtBoundary = index === 0 || !/[a-z]/.test(lowerExample[index - 1]);
+      if (startsAtBoundary) {
+        let end = index + phrase.length;
+        while (end < lowerExample.length && /[a-z'-]/.test(lowerExample[end])) end += 1;
+        return { index, length: end - index };
+      }
+      searchFrom = index + 1;
+    }
+    return null;
+  };
+  const exactMatch = findExpandableMatch(lowerTerm);
+  if (exactMatch) return exactMatch;
+
+  const stopWords = new Set(["something", "somebody", "someone", "sth", "sb", "one", "ones", "one's", "your", "his", "her", "their", "the", "to", "be", "a", "an", "it"]);
+  const tokens = lowerTerm.match(/[a-z][a-z'-]*/g)?.filter(token => !stopWords.has(token)) || [];
+  for (let width = tokens.length; width >= 2; width -= 1) {
+    for (let start = 0; start <= tokens.length - width; start += 1) {
+      const phrase = tokens.slice(start, start + width).join(" ");
+      const phraseMatch = findExpandableMatch(phrase);
+      if (phraseMatch) return phraseMatch;
+    }
+  }
+  for (const token of [...tokens].sort((a, b) => b.length - a.length)) {
+    if (token.length < 4) continue;
+    const tokenMatch = findExpandableMatch(token);
+    if (tokenMatch) return tokenMatch;
+  }
+  return null;
+}
+
+function getReviewEligibleEntries(setup = STATE.vocabularyReviewSetup) {
+  return getAllVocabularyEntries()
+    .filter(entry => setup.family === "all" || (entry.families || [entry.family]).includes(setup.family))
+    .filter(entry => setup.topic === "all" || (entry.topics || [entry.topic]).includes(setup.topic))
+    .filter(entry => {
+      if (setup.mode === "recall") return Boolean(entry.meaning || entry.example);
+      if (setup.mode === "context") return Boolean(findVocabularyClozeMatch(entry));
+      return true;
+    });
+}
+
+function shuffleVocabularyEntries(entries) {
+  const result = [...entries];
+  for (let index = result.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [result[index], result[swapIndex]] = [result[swapIndex], result[index]];
+  }
+  return result;
+}
+
+function renderVocabularyReview() {
+  if (STATE.currentView === "sheet") clearPracticeTimerInterval();
+  STATE.currentView = "vocabularyReview";
+  const appContainer = document.getElementById("app-container");
+  appContainer.innerHTML = `
+    <div class="vocabulary-container review-container app-shell">
+      <header class="app-topbar">
+        <button class="brand-button" onclick="renderHome()" aria-label="Practice home" style="text-align:left">
+          <span style="text-align:left;display:block">
+            <span class="brand-title">Practice Log</span>
+            <span class="brand-subtitle">Cambridge C2</span>
+          </span>
+        </button>
+        ${renderMainNavigation("vocabularyReview")}
+      </header>
+      <main class="review-main">
+        ${STATE.vocabularyReviewSession ? renderVocabularyReviewSessionHTML() : renderVocabularyReviewSetupHTML()}
+      </main>
+    </div>
+  `;
+}
+
+function renderVocabularyReviewSetupHTML() {
+  const setup = STATE.vocabularyReviewSetup;
+  const entries = getAllVocabularyEntries();
+  const topics = getVocabularyTopics(entries, setup.family);
+  const eligible = getReviewEligibleEntries(setup);
+  return `
+    <section class="review-setup-hero">
+      <div>
+        <span class="eyebrow">Vocabulary review</span>
+        <h1>A small, sharp round.</h1>
+        <p>Choose what you want to retrieve, then clear five cards in a couple of minutes.</p>
+      </div>
+      <div class="review-setup-count"><strong>${eligible.length.toLocaleString("en-GB")}</strong><span>cards available</span></div>
+    </section>
+
+    <section class="review-setup-panel">
+      <div class="review-setup-step">
+        <span class="review-step-number">1</span>
+        <div>
+          <h2>How do you want to remember it?</h2>
+          <div class="review-mode-grid">
+            ${[
+              ["recognition", "Recognise", "See the term, retrieve its meaning."],
+              ["recall", "Recall", "See the meaning, produce the term."],
+              ["context", "In context", "Complete the missing expression in its example."]
+            ].map(([key, title, detail]) => `<button class="review-mode-card ${setup.mode === key ? "active" : ""}" onclick="setVocabularyReviewOption('mode','${key}')"><strong>${title}</strong><span>${detail}</span></button>`).join("")}
+          </div>
+        </div>
+      </div>
+
+      <div class="review-setup-step">
+        <span class="review-step-number">2</span>
+        <div>
+          <h2>What should be in the deck?</h2>
+          <div class="review-scope-controls">
+            <label><span>Family</span><select onchange="setVocabularyReviewOption('family',this.value)">
+              <option value="all">Everything</option>
+              ${Object.entries(VOCABULARY_FAMILIES).map(([key, meta]) => `<option value="${key}" ${setup.family === key ? "selected" : ""}>${meta.label}</option>`).join("")}
+            </select></label>
+            <label><span>Category</span><select onchange="setVocabularyReviewOption('topic',this.value)">
+              <option value="all">All categories</option>
+              ${topics.map(item => `<option value="${escapeHTML(item.topic)}" ${setup.topic === item.topic ? "selected" : ""}>${escapeHTML(item.topic)} (${item.count})</option>`).join("")}
+            </select></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-setup-step">
+        <span class="review-step-number">3</span>
+        <div>
+          <h2>Keep it deliberately short.</h2>
+          <div class="review-size-row">
+            ${[5, 10, 20].map(size => `<button class="review-size-button ${Number(setup.size) === size ? "active" : ""}" onclick="setVocabularyReviewOption('size',${size})"><strong>${size}</strong><span>cards</span></button>`).join("")}
+          </div>
+        </div>
+      </div>
+
+      <div class="review-launch-row">
+        <div><strong>${eligible.length ? `${Math.min(Number(setup.size), eligible.length)} ${Math.min(Number(setup.size), eligible.length) === 1 ? "card" : "cards"} ready` : "No compatible cards"}</strong><span>${setup.mode === "context" ? "Context mode hides the term, or the recognisable core of a flexible expression." : "Randomised every round."}</span></div>
+        <button class="btn btn-primary review-launch-button" onclick="startVocabularyReviewSession()" ${eligible.length ? "" : "disabled"}>Start review</button>
+      </div>
+    </section>
+  `;
+}
+
+function setVocabularyReviewOption(key, value) {
+  STATE.vocabularyReviewSetup[key] = key === "size" ? Number(value) : value;
+  if (key === "family") {
+    const validTopics = getVocabularyTopics(getAllVocabularyEntries(), value).map(item => item.topic);
+    if (!validTopics.includes(STATE.vocabularyReviewSetup.topic)) STATE.vocabularyReviewSetup.topic = "all";
+  }
+  renderVocabularyReview();
+}
+
+function startVocabularyReviewSession() {
+  const eligible = getReviewEligibleEntries();
+  if (!eligible.length) return;
+  const items = shuffleVocabularyEntries(eligible).slice(0, Math.min(Number(STATE.vocabularyReviewSetup.size), eligible.length));
+  STATE.vocabularyReviewSession = {
+    itemIds: items.map(item => item.id),
+    index: 0,
+    revealed: false,
+    complete: false,
+    ratings: { again: 0, unsure: 0, known: 0 }
+  };
+  renderVocabularyReview();
+  window.scrollTo({ top: 0 });
+}
+
+function renderVocabularyReviewSessionHTML() {
+  const session = STATE.vocabularyReviewSession;
+  if (session.complete) return renderVocabularyReviewCompleteHTML(session);
+  const entry = getVocabularyEntry(session.itemIds[session.index]);
+  if (!entry) {
+    session.index += 1;
+    if (session.index >= session.itemIds.length) session.complete = true;
+    return renderVocabularyReviewSessionHTML();
+  }
+  const progress = Math.round((session.index / session.itemIds.length) * 100);
+  const setup = STATE.vocabularyReviewSetup;
+  return `
+    <section class="review-session-shell">
+      <div class="review-session-topbar">
+        <button class="btn btn-secondary" onclick="exitVocabularyReviewSession()">End round</button>
+        <div class="review-progress-copy"><strong>${session.index + 1} / ${session.itemIds.length}</strong><span>${VOCABULARY_FAMILIES[entry.family]?.shortLabel || "Vocabulary"} · ${escapeHTML(entry.topic || "General")}</span></div>
+        <div class="review-progress-track" aria-label="${progress}% complete"><span style="width:${progress}%"></span></div>
+      </div>
+      <article class="review-flashcard ${session.revealed ? "revealed" : ""}">
+        <div class="review-card-prompt">
+          <span>${setup.mode === "recognition" ? "What does this mean?" : setup.mode === "recall" ? "Which term fits?" : "Complete the expression"}</span>
+          <div class="review-card-front">${renderVocabularyReviewFront(entry, setup.mode)}</div>
+        </div>
+        ${session.revealed ? `
+          <div class="review-card-answer">
+            <span>Answer</span>
+            <h2>${escapeHTML(entry.term)}</h2>
+            ${entry.meaning ? `<p>${escapeHTML(entry.meaning)}</p>` : `<p class="muted">No definition saved — assess whether you recognised how to use it.</p>`}
+            ${entry.example && setup.mode !== "context" ? `<blockquote>${escapeHTML(entry.example)}</blockquote>` : ""}
+            <small>${escapeHTML((entry.sources || []).join(" · "))}</small>
+          </div>` : ""}
+      </article>
+      ${session.revealed ? `
+        <div class="review-rating-row">
+          <button class="review-rating again" onclick="rateVocabularyCard('again')"><kbd>1</kbd><span><strong>Again</strong><small>It did not come back</small></span></button>
+          <button class="review-rating unsure" onclick="rateVocabularyCard('unsure')"><kbd>2</kbd><span><strong>Unsure</strong><small>Slow or incomplete</small></span></button>
+          <button class="review-rating known" onclick="rateVocabularyCard('known')"><kbd>3</kbd><span><strong>Got it</strong><small>Quick and confident</small></span></button>
+        </div>` : `
+        <button class="btn btn-primary review-reveal-button" onclick="revealVocabularyCard()">Reveal answer <kbd>Space</kbd></button>`}
+    </section>
+  `;
+}
+
+function renderVocabularyReviewFront(entry, mode) {
+  if (mode === "recognition") return `<h2>${escapeHTML(entry.term)}</h2>`;
+  if (mode === "recall") {
+    return `${entry.meaning ? `<h2>${escapeHTML(entry.meaning)}</h2>` : ""}${entry.example ? `<blockquote>${escapeHTML(entry.example)}</blockquote>` : ""}`;
+  }
+  const example = entry.example || "";
+  const match = findVocabularyClozeMatch(entry);
+  if (!match) return `<blockquote>${escapeHTML(example)}</blockquote>`;
+  return `<blockquote>${escapeHTML(example.slice(0, match.index))}<mark>________</mark>${escapeHTML(example.slice(match.index + match.length))}</blockquote>`;
+}
+
+function revealVocabularyCard() {
+  if (!STATE.vocabularyReviewSession || STATE.vocabularyReviewSession.complete) return;
+  STATE.vocabularyReviewSession.revealed = true;
+  renderVocabularyReview();
+}
+
+function rateVocabularyCard(rating) {
+  const session = STATE.vocabularyReviewSession;
+  if (!session || !session.revealed || session.complete) return;
+  const id = session.itemIds[session.index];
+  const current = STATE.vocabularyReviewStats[id] || { views: 0, known: 0, unsure: 0, again: 0 };
+  current.views += 1;
+  current[rating] = (current[rating] || 0) + 1;
+  current.lastRating = rating;
+  current.lastReviewedAt = Date.now();
+  STATE.vocabularyReviewStats[id] = current;
+  session.ratings[rating] += 1;
+  session.index += 1;
+  session.revealed = false;
+  if (session.index >= session.itemIds.length) session.complete = true;
+  markVocabularyChanged();
+  renderVocabularyReview();
+}
+
+function renderVocabularyReviewCompleteHTML(session) {
+  const confidentPct = Math.round((session.ratings.known / session.itemIds.length) * 100);
+  return `
+    <section class="review-complete-panel">
+      <span class="review-complete-mark">✓</span>
+      <span class="eyebrow">Round complete</span>
+      <h1>${session.itemIds.length} ${session.itemIds.length === 1 ? "card" : "cards"}, done.</h1>
+      <p>${confidentPct}% came back quickly. Keep the “Again” pile small by meeting it often.</p>
+      <div class="review-complete-stats">
+        <div class="again"><strong>${session.ratings.again}</strong><span>Again</span></div>
+        <div class="unsure"><strong>${session.ratings.unsure}</strong><span>Unsure</span></div>
+        <div class="known"><strong>${session.ratings.known}</strong><span>Got it</span></div>
+      </div>
+      <div class="review-complete-actions">
+        <button class="btn btn-primary" onclick="startVocabularyReviewSession()">Another random round</button>
+        <button class="btn btn-secondary" onclick="exitVocabularyReviewSession()">Change setup</button>
+        <button class="btn btn-secondary" onclick="openVocabulary()">Open library</button>
+      </div>
+    </section>
+  `;
+}
+
+function exitVocabularyReviewSession() {
+  STATE.vocabularyReviewSession = null;
+  renderVocabularyReview();
+  window.scrollTo({ top: 0 });
+}
+
+function handleVocabularyReviewKeyboard(event) {
+  if (STATE.currentView !== "vocabularyReview" || !STATE.vocabularyReviewSession) return;
+  if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) return;
+  if (event.code === "Space" && !STATE.vocabularyReviewSession.revealed) {
+    event.preventDefault();
+    revealVocabularyCard();
+    return;
+  }
+  if (!STATE.vocabularyReviewSession.revealed) return;
+  if (event.key === "1") rateVocabularyCard("again");
+  if (event.key === "2") rateVocabularyCard("unsure");
+  if (event.key === "3") rateVocabularyCard("known");
+}
+
+window.addEventListener("keydown", handleVocabularyReviewKeyboard);
+
 function renderDashboard() {
   renderDashboardView();
 }
@@ -1054,17 +1852,7 @@ function renderDashboardView() {
           </span>
         </button>
 
-        <nav class="topbar-actions" aria-label="Main navigation">
-          <button class="nav-pill" onclick="renderHome()">Practice</button>
-          <button class="nav-pill active" onclick="renderDashboard()">Progress</button>
-          <button class="candidate-switch" onclick="openProfileModal()" title="Account and sync">
-            <span class="profile-avatar">${STATE.activeProfile.charAt(0).toUpperCase()}</span>
-            <span class="candidate-copy">
-              <span class="candidate-label">${getSyncLabel()}</span>
-              <span class="candidate-name">${escapeHTML(STATE.activeProfile)}</span>
-            </span>
-          </button>
-        </nav>
+        ${renderMainNavigation("dashboard")}
       </header>
 
       <main class="dashboard-main">
@@ -3577,6 +4365,10 @@ function storeInputAnswer(qNum, value) {
 function refreshCurrentView() {
   if (STATE.currentView === "dashboard") {
     renderDashboard();
+  } else if (STATE.currentView === "vocabulary") {
+    renderVocabulary();
+  } else if (STATE.currentView === "vocabularyReview") {
+    renderVocabularyReview();
   } else if (STATE.currentView === "sheet") {
     renderAnswerSheetHTML();
   } else {
