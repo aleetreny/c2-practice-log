@@ -748,6 +748,38 @@ button {
   text-transform: uppercase;
 }
 
+.error-question-text {
+  margin-top: 8px;
+  padding: 8px 9px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  background: #ffffff;
+  color: var(--text-main);
+  font-size: 0.75rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.error-question-text span,
+.error-answer-label {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--text-muted);
+  font-size: 0.62rem;
+  font-weight: 850;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.error-question-text em {
+  color: var(--text-muted);
+}
+
+.error-answer-label {
+  margin-top: 8px;
+  margin-bottom: -4px;
+}
+
 .ue-error-note {
   margin-top: 6px;
   color: var(--text-main);
@@ -810,7 +842,7 @@ button {
 
 .ue-part-register-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
 }
 
@@ -2714,6 +2746,11 @@ input.sheet-text-input:disabled,
   line-height: 1.4;
 }
 
+.sheet-question-text-input {
+  min-height: 76px;
+  margin-bottom: 10px;
+}
+
 .history-error-note {
   margin-top: 8px;
   padding: 8px 10px;
@@ -2730,6 +2767,26 @@ input.sheet-text-input:disabled,
   display: block;
   margin-bottom: 2px;
   color: var(--color-error);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.history-question-text {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-left: 3px solid var(--accent-color);
+  border-radius: 0 6px 6px 0;
+  background: var(--accent-soft);
+  color: var(--text-main);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+
+.history-question-text strong {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--accent-hover);
   font-size: 0.7rem;
   text-transform: uppercase;
 }
@@ -2853,6 +2910,16 @@ input.sheet-text-input:disabled,
 .history-error-note-editor textarea:focus {
   border-color: var(--color-error);
   box-shadow: 0 0 0 3px rgba(200, 63, 73, 0.1);
+}
+
+.history-error-note-editor .history-question-text-editor {
+  margin-bottom: 9px;
+  border-color: #a7d8ce;
+}
+
+.history-error-note-editor .history-question-text-editor:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
 }
 
 .ue-part-text-editor {
