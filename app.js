@@ -1426,7 +1426,6 @@ function renderProgressMapHTML(sectionStats = getAllSectionStats()) {
                   <strong>${C2_EXAM_METADATA[stats.section].name}</strong>
                 </div>
                 <span class="progress-row-actions">
-                  <span class="progress-row-average">${stats.avgScale || "--"} avg</span>
                   <button class="progress-evolution-button"
                           type="button"
                           onclick="openSectionEvolutionModal('${stats.section}')"
@@ -1457,6 +1456,7 @@ function renderProgressMapHTML(sectionStats = getAllSectionStats()) {
               <div class="progress-row-foot">
                 <span>${stats.attempts} attempts</span>
                 <span>Latest ${latest ? latest.scaleScore : "--"}</span>
+                <span class="progress-row-average-foot">${stats.avgScale || "--"} avg</span>
                 <span>${weakestPart ? `Weakest part: ${weakestPart.name}` : "Part data pending"}</span>
               </div>
             </article>
