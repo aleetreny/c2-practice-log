@@ -1235,17 +1235,19 @@ button {
   font-weight: inherit;
 }
 
-.progress-row-average {
-  color: var(--text-main);
-  font-size: 0.84rem;
-  font-weight: 900;
-}
-
 .progress-row-average-foot {
+  grid-column: 3;
+  grid-row: 2;
+  align-self: end;
   color: var(--text-main);
   font-size: 0.72rem;
   font-weight: 900;
   text-align: right;
+}
+
+.progress-row-weakest {
+  grid-column: 1 / span 2;
+  grid-row: 2;
 }
 
 .progress-evolution-button {
@@ -1390,10 +1392,6 @@ button {
   overflow: visible;
   text-overflow: clip;
   white-space: normal;
-}
-
-.progress-row-foot span:last-child {
-  grid-column: 1 / -1;
 }
 
 /* Full section evolution */
@@ -3921,11 +3919,18 @@ input.sheet-text-input:disabled,
   }
 
   .progress-row-foot {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr) auto;
   }
 
   .progress-row-average-foot {
-    text-align: left;
+    grid-column: 2;
+    grid-row: 2;
+    text-align: right;
+  }
+
+  .progress-row-weakest {
+    grid-column: 1;
+    grid-row: 2;
   }
 
   .progress-row-head {
