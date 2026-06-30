@@ -3017,6 +3017,11 @@ function openAttemptResultModal(attemptId) {
   const previousBest = previousAttempts.length > 0
     ? Math.max(...previousAttempts.map(attempt => attempt.scaleScore))
     : null;
+  const previousAttempt = previousAttempts
+    .slice()
+    .sort((a, b) => (a.date || 0) - (b.date || 0))
+    .pop() || null;
+  const previousDelta = previousAttempt ? item.scaleScore - previousAttempt.scaleScore : null;
   const isNewBest = previousBest !== null && item.scaleScore > previousBest;
   const mood = getAttemptResultMood(item.scaleScore, isNewBest, previousAttempts.length > 0);
   const scoreTone = item.scaleScore >= 220 ? "excellent" : item.scaleScore >= 200 ? "pass" : item.scaleScore >= 180 ? "c1" : "risk";
@@ -3061,7 +3066,11 @@ function openAttemptResultModal(attemptId) {
         <article><span>Raw score</span><strong>${item.correct}/${item.total}</strong></article>
         <article><span>Accuracy</span><strong>${item.percentage}%</strong></article>
         <article><span>Record</span><strong>${bestLabel}</strong></article>
-        ${durationText ? `<article><span>Time</span><strong>${durationText}</strong></article>` : ""}
+        ${durationText
+          ? `<article><span>Time</span><strong>${durationText}</strong></article>`
+          : previousAttempt
+            ? `<article><span>Vs previous</span><strong class="metric-${previousDelta > 0 ? "positive" : previousDelta < 0 ? "negative" : "neutral"}">${formatSignedNumber(previousDelta)} pts</strong></article>`
+            : `<article><span>Section attempt</span><strong>#1</strong></article>`}
       </div>
       <div class="result-actions">
         <button class="btn btn-secondary" onclick="closeModal(); openHistoryDetailModal('${escapeJS(item.id)}')">Review answers</button>
