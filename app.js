@@ -1489,13 +1489,13 @@ function renderSectionEvolutionChartHTML(section, logs) {
   const plot = { left: 46, right: 18, top: 18, bottom: 42 };
   const plotWidth = width - plot.left - plot.right;
   const plotHeight = height - plot.top - plot.bottom;
-  const yForScore = score => plot.top + ((230 - Math.max(120, Math.min(230, score))) / 110) * plotHeight;
+  const yForScore = score => plot.top + ((230 - Math.max(160, Math.min(230, score))) / 70) * plotHeight;
   const xForIndex = index => logs.length === 1
     ? plot.left + (plotWidth / 2)
     : plot.left + (index / (logs.length - 1)) * plotWidth;
-  const gridScores = [230, 220, 200, 180, 120];
+  const gridScores = [230, 220, 200, 180, 160];
   const points = logs.map((item, index) => `${xForIndex(index).toFixed(1)},${yForScore(item.scaleScore).toFixed(1)}`).join(" ");
-  const baselineY = yForScore(120);
+  const baselineY = yForScore(160);
   const areaPoints = `${points} ${xForIndex(logs.length - 1).toFixed(1)},${baselineY.toFixed(1)} ${xForIndex(0).toFixed(1)},${baselineY.toFixed(1)}`;
   const bestIndex = logs.reduce((topIndex, item, index) => item.scaleScore > logs[topIndex].scaleScore ? index : topIndex, 0);
   const dateLabelIndexes = new Set([0, logs.length - 1]);
@@ -1510,7 +1510,7 @@ function renderSectionEvolutionChartHTML(section, logs) {
     <div class="evolution-chart-frame" aria-label="Complete evolution chart">
       <svg class="evolution-chart" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="evolution-chart-title-${section} evolution-chart-desc-${section}">
         <title id="evolution-chart-title-${section}">${C2_EXAM_METADATA[section].name} score evolution</title>
-        <desc id="evolution-chart-desc-${section}">${logs.length} attempts in chronological order. Cambridge scale scores range from 120 to 230.</desc>
+        <desc id="evolution-chart-desc-${section}">${logs.length} attempts in chronological order. Cambridge scale scores range from 160 to 230.</desc>
         <defs>
           <linearGradient id="evolution-area-${section}" x1="0" y1="0" x2="0" y2="1">
             <stop offset="0%" stop-color="#0f766e" stop-opacity="0.26"></stop>
