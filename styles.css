@@ -1241,6 +1241,13 @@ button {
   font-weight: 900;
 }
 
+.progress-row-average-foot {
+  color: var(--text-main);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-align: right;
+}
+
 .progress-evolution-button {
   min-height: 32px;
   display: inline-flex;
@@ -3915,6 +3922,10 @@ input.sheet-text-input:disabled,
 
   .progress-row-foot {
     grid-template-columns: 1fr;
+  }
+
+  .progress-row-average-foot {
+    text-align: left;
   }
 
   .progress-row-head {
