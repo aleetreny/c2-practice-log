@@ -1484,23 +1484,42 @@ function renderSectionEvolutionChartHTML(section, logs) {
     return `<div class="evolution-empty">No ${C2_EXAM_METADATA[section].name} attempts yet.</div>`;
   }
 
-  const width = Math.max(720, 112 + ((logs.length - 1) * 76));
-  const height = 320;
-  const plot = { left: 58, right: 28, top: 20, bottom: 58 };
+  const width = 760;
+  const height = 286;
+  const plot = { left: 46, right: 18, top: 18, bottom: 42 };
   const plotWidth = width - plot.left - plot.right;
   const plotHeight = height - plot.top - plot.bottom;
   const yForScore = score => plot.top + ((230 - Math.max(120, Math.min(230, score))) / 110) * plotHeight;
   const xForIndex = index => logs.length === 1
     ? plot.left + (plotWidth / 2)
     : plot.left + (index / (logs.length - 1)) * plotWidth;
-  const gridScores = [230, 220, 200, 180, 160, 120];
+  const gridScores = [230, 220, 200, 180, 120];
   const points = logs.map((item, index) => `${xForIndex(index).toFixed(1)},${yForScore(item.scaleScore).toFixed(1)}`).join(" ");
+  const baselineY = yForScore(120);
+  const areaPoints = `${points} ${xForIndex(logs.length - 1).toFixed(1)},${baselineY.toFixed(1)} ${xForIndex(0).toFixed(1)},${baselineY.toFixed(1)}`;
+  const bestIndex = logs.reduce((topIndex, item, index) => item.scaleScore > logs[topIndex].scaleScore ? index : topIndex, 0);
+  const dateLabelIndexes = new Set([0, logs.length - 1]);
+  if (logs.length <= 6) {
+    logs.forEach((_, index) => dateLabelIndexes.add(index));
+  } else {
+    const labelStep = Math.ceil((logs.length - 1) / 4);
+    for (let index = labelStep; index < logs.length - 1; index += labelStep) dateLabelIndexes.add(index);
+  }
 
   return `
-    <div class="evolution-chart-scroll" tabindex="0" aria-label="Scrollable evolution chart">
-      <svg class="evolution-chart" viewBox="0 0 ${width} ${height}" style="width:${width}px" role="img" aria-labelledby="evolution-chart-title-${section} evolution-chart-desc-${section}">
+    <div class="evolution-chart-frame" aria-label="Complete evolution chart">
+      <svg class="evolution-chart" viewBox="0 0 ${width} ${height}" role="img" aria-labelledby="evolution-chart-title-${section} evolution-chart-desc-${section}">
         <title id="evolution-chart-title-${section}">${C2_EXAM_METADATA[section].name} score evolution</title>
         <desc id="evolution-chart-desc-${section}">${logs.length} attempts in chronological order. Cambridge scale scores range from 120 to 230.</desc>
+        <defs>
+          <linearGradient id="evolution-area-${section}" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0f766e" stop-opacity="0.26"></stop>
+            <stop offset="72%" stop-color="#0f766e" stop-opacity="0.055"></stop>
+            <stop offset="100%" stop-color="#0f766e" stop-opacity="0"></stop>
+          </linearGradient>
+        </defs>
+        <rect class="evolution-zone grade-a" x="${plot.left}" y="${yForScore(230)}" width="${plotWidth}" height="${yForScore(220) - yForScore(230)}"></rect>
+        <rect class="evolution-zone c2" x="${plot.left}" y="${yForScore(220)}" width="${plotWidth}" height="${yForScore(200) - yForScore(220)}"></rect>
         ${gridScores.map(score => {
           const y = yForScore(score);
           const thresholdClass = score === 200 ? " c2-threshold" : score === 220 ? " grade-a-threshold" : "";
@@ -1509,22 +1528,27 @@ function renderSectionEvolutionChartHTML(section, logs) {
             <text class="evolution-axis-label${thresholdClass}" x="${plot.left - 12}" y="${y + 4}" text-anchor="end">${score}</text>
           `;
         }).join("")}
+        <polygon class="evolution-area" points="${areaPoints}" fill="url(#evolution-area-${section})"></polygon>
         ${logs.length > 1 ? `<polyline class="evolution-line" points="${points}"></polyline>` : ""}
         ${logs.map((item, index) => {
           const x = xForIndex(index);
           const y = yForScore(item.scaleScore);
           const tone = item.scaleScore >= 220 ? "excellent" : item.scaleScore >= 200 ? "pass" : "risk";
           const attemptTitle = `Attempt ${index + 1}: ${item.scaleScore} scale, ${item.percentage}% accuracy, ${formatCompactDateTime(item.date)}`;
+          const isLatest = index === logs.length - 1;
+          const isBest = index === bestIndex;
+          const showScore = isLatest || isBest;
+          const scoreAnchor = isLatest ? "end" : "middle";
+          const scoreX = isLatest ? x - 2 : x;
           return `
-            <g class="evolution-point ${tone}" role="button" tabindex="0"
+            <g class="evolution-point ${tone} ${isLatest ? "latest" : ""}" role="button" tabindex="0"
                onclick="openHistoryDetailModal('${escapeJS(item.id)}')"
                onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openHistoryDetailModal('${escapeJS(item.id)}'); }"
                aria-label="${escapeHTML(attemptTitle)}">
               <circle class="evolution-point-halo" cx="${x}" cy="${y}" r="12"></circle>
-              <circle class="evolution-point-dot" cx="${x}" cy="${y}" r="5.5"></circle>
-              <text class="evolution-point-score" x="${x}" y="${y - 17}" text-anchor="middle">${item.scaleScore}</text>
-              <text class="evolution-attempt-label" x="${x}" y="${height - 31}" text-anchor="middle">#${index + 1}</text>
-              <text class="evolution-date-label" x="${x}" y="${height - 14}" text-anchor="middle">${escapeHTML(formatShortDate(item.date))}</text>
+              <circle class="evolution-point-dot" cx="${x}" cy="${y}" r="${isLatest ? 6 : 4.5}"></circle>
+              ${showScore ? `<text class="evolution-point-score" x="${scoreX}" y="${Math.max(14, y - 13)}" text-anchor="${scoreAnchor}">${item.scaleScore}${isLatest ? " · now" : ""}</text>` : ""}
+              ${dateLabelIndexes.has(index) ? `<text class="evolution-date-label" x="${x}" y="${height - 13}" text-anchor="${index === 0 ? "start" : isLatest ? "end" : "middle"}">${escapeHTML(formatShortDate(item.date))}</text>` : ""}
               <title>${escapeHTML(attemptTitle)}</title>
             </g>
           `;
@@ -1541,7 +1565,7 @@ function renderSectionEvolutionContentHTML(section) {
     ? metrics.latest.scaleScore >= 220 ? "excellent" : metrics.latest.scaleScore >= 200 ? "pass" : "risk"
     : "neutral";
   const trendTone = metrics.recentTrend > 0 ? "positive" : metrics.recentTrend < 0 ? "negative" : "neutral";
-  const consistencyDetail = metrics.consistency === null ? "Save another attempt" : `±${metrics.consistency} points · ${getConsistencyLabel(metrics.consistency)}`;
+  const consistencyDetail = metrics.consistency === null ? "More data needed" : `±${metrics.consistency} · ${getConsistencyLabel(metrics.consistency)}`;
 
   return `
     <div class="evolution-section-heading">
@@ -1555,60 +1579,52 @@ function renderSectionEvolutionContentHTML(section) {
       <span>${metrics.logs.length} ${metrics.logs.length === 1 ? "attempt" : "attempts"}</span>
     </div>
     ${metrics.logs.length === 0 ? renderSectionEvolutionChartHTML(section, metrics.logs) : `
-      <div class="evolution-metric-grid">
-        <article class="evolution-metric-card featured ${latestTone}">
-          <span>Current level</span>
-          <strong>${metrics.latest.scaleScore}</strong>
-          <small>${getCambridgeGrade(metrics.latest.scaleScore)} · ${metrics.latest.percentage}% raw</small>
-        </article>
-        <article class="evolution-metric-card">
-          <span>Improvement</span>
-          <strong class="metric-${metrics.improvement > 0 ? "positive" : metrics.improvement < 0 ? "negative" : "neutral"}">${formatSignedNumber(metrics.improvement)}</strong>
-          <small>points from first to latest</small>
-        </article>
-        <article class="evolution-metric-card">
-          <span>Personal best</span>
-          <strong>${metrics.best.scaleScore}</strong>
-          <small>${formatShortDate(metrics.best.date)}</small>
-        </article>
-        <article class="evolution-metric-card">
-          <span>Recent form</span>
-          <strong class="metric-${trendTone}">${metrics.recentAverage}</strong>
-          <small>${formatSignedNumber(metrics.recentTrend)} ${metrics.logs.length >= 4 ? "vs previous block" : "vs first attempt"}</small>
-        </article>
-        <article class="evolution-metric-card">
-          <span>Consistency</span>
-          <strong>${metrics.consistency === null ? "--" : metrics.consistency}</strong>
-          <small>${consistencyDetail}</small>
-        </article>
-        <article class="evolution-metric-card">
-          <span>C2 success rate</span>
-          <strong>${metrics.c2Rate}%</strong>
-          <small>${metrics.averageAccuracy}% average raw accuracy</small>
-        </article>
+      <div class="evolution-workspace">
+        <section class="evolution-chart-card">
+          <div class="evolution-chart-head">
+            <div>
+              <h5>Scale score</h5>
+              <p>All attempts · select any point to open its review</p>
+            </div>
+            <div class="evolution-legend" aria-label="Score bands">
+              <span><i class="c2"></i>C2 200–219</span>
+              <span><i class="grade-a"></i>Grade A 220+</span>
+            </div>
+          </div>
+          ${renderSectionEvolutionChartHTML(section, metrics.logs)}
+        </section>
+        <aside class="evolution-insights">
+          <article class="evolution-score-summary ${latestTone}">
+            <div>
+              <span>Current level</span>
+              <strong>${metrics.latest.scaleScore}</strong>
+              <small>${getCambridgeGrade(metrics.latest.scaleScore)} · ${metrics.latest.percentage}% raw</small>
+            </div>
+            <span class="evolution-improvement metric-${metrics.improvement > 0 ? "positive" : metrics.improvement < 0 ? "negative" : "neutral"}">
+              ${formatSignedNumber(metrics.improvement)} <small>since first</small>
+            </span>
+          </article>
+          <div class="evolution-compact-metrics">
+            <article><span>Best</span><strong>${metrics.best.scaleScore}</strong><small>${formatShortDate(metrics.best.date)}</small></article>
+            <article><span>Recent form</span><strong class="metric-${trendTone}">${metrics.recentAverage}</strong><small>${formatSignedNumber(metrics.recentTrend)} trend</small></article>
+            <article><span>Consistency</span><strong>${metrics.consistency === null ? "--" : metrics.consistency}</strong><small>${consistencyDetail}</small></article>
+            <article><span>C2 rate</span><strong>${metrics.c2Rate}%</strong><small>scores at 200+</small></article>
+          </div>
+          <div class="evolution-accuracy">
+            <div><span>Average raw accuracy</span><strong>${metrics.averageAccuracy}%</strong></div>
+            <div class="evolution-accuracy-track"><span style="width:${metrics.averageAccuracy}%"></span></div>
+          </div>
+          <aside class="evolution-study-focus">
+            <span>Next focus</span>
+            <div>
+              <strong>${weakestPart ? weakestPart.name : "Keep collecting part data"}</strong>
+              <p>${weakestPart
+                ? `${weakestPart.averagePct}% average · prioritise this part next.`
+                : "Complete another paper to unlock a recommendation."}</p>
+            </div>
+          </aside>
+        </aside>
       </div>
-      <section class="evolution-chart-card">
-        <div class="evolution-chart-head">
-          <div>
-            <h5>Scale score evolution</h5>
-            <p>Every saved attempt, oldest to newest. Select a point to open its review.</p>
-          </div>
-          <div class="evolution-legend" aria-label="Score thresholds">
-            <span><i class="c2"></i>C2 · 200</span>
-            <span><i class="grade-a"></i>Grade A · 220</span>
-          </div>
-        </div>
-        ${renderSectionEvolutionChartHTML(section, metrics.logs)}
-      </section>
-      <aside class="evolution-study-focus">
-        <span>Study focus</span>
-        <div>
-          <strong>${weakestPart ? weakestPart.name : "Keep collecting part-level data"}</strong>
-          <p>${weakestPart
-            ? `${weakestPart.averagePct}% average across ${weakestPart.attempts} ${weakestPart.attempts === 1 ? "attempt" : "attempts"}. Prioritise this part in the next focused session.`
-            : "Complete and correct another paper to unlock a targeted recommendation."}</p>
-        </div>
-      </aside>
     `}
   `;
 }
