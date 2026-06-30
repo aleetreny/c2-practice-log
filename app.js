@@ -5,8 +5,8 @@ const STATE = {
   answers: {}, // Q-num -> string
   gradedStates: {}, // Q-num -> "correct" | "incorrect" | score (0|1|2)
   errorNotes: {}, // Tracked error Q-num -> correction note
-  questionTexts: {}, // Reading Part 1 Q-num -> question text
   useOfEnglishPartTexts: {}, // part2 | part3 | part4 -> reference text
+  readingPartTexts: {}, // part1 -> shared Reading reference text
   isCorrecting: false,
   isSavingAttempt: false,
   activeProfile: "Aleetreny",
@@ -490,16 +490,27 @@ function getErrorNotes(item = {}) {
   return getPlainObject(meta.errorNotes);
 }
 
-function getErrorQuestionTexts(item = {}) {
-  const answers = getPlainObject(item.answers);
-  const meta = getPlainObject(answers.meta);
-  return getPlainObject(meta.questionTexts);
-}
-
 function getUseOfEnglishPartTexts(item = {}) {
   const answers = getPlainObject(item.answers);
   const meta = getPlainObject(answers.meta);
   return getPlainObject(meta.useOfEnglishPartTexts);
+}
+
+function getReadingPartTexts(item = {}) {
+  const answers = getPlainObject(item.answers);
+  const meta = getPlainObject(answers.meta);
+  const savedTexts = getPlainObject(meta.readingPartTexts);
+  if (savedTexts.part1) return savedTexts;
+
+  const legacyQuestionTexts = getPlainObject(meta.questionTexts);
+  const legacyText = Object.values(legacyQuestionTexts).find(value => typeof value === "string" && value.trim());
+  return legacyText ? { part1: legacyText } : {};
+}
+
+function getPartReferenceTexts(item = {}) {
+  if (item.section === "useOfEnglish") return getUseOfEnglishPartTexts(item);
+  if (item.section === "reading") return getReadingPartTexts(item);
+  return {};
 }
 
 function getUseOfEnglishPartShortLabel(partKey) {
@@ -525,18 +536,18 @@ function getPartEntryForQuestion(section, qNum) {
 
 function getTrackedErrorColumns() {
   return [
-    ...Object.entries(C2_EXAM_METADATA.useOfEnglish.parts).map(([partKey, partData]) => ({
-      section: "useOfEnglish",
-      sectionName: C2_EXAM_METADATA.useOfEnglish.name,
-      partKey,
-      partData
-    })),
     {
       section: "reading",
       sectionName: C2_EXAM_METADATA.reading.name,
       partKey: "part1",
       partData: C2_EXAM_METADATA.reading.parts.part1
-    }
+    },
+    ...Object.entries(C2_EXAM_METADATA.useOfEnglish.parts).map(([partKey, partData]) => ({
+      section: "useOfEnglish",
+      sectionName: C2_EXAM_METADATA.useOfEnglish.name,
+      partKey,
+      partData
+    }))
   ];
 }
 
@@ -549,13 +560,14 @@ function getTrackedErrorEntries() {
       const answers = getPlainObject(item.answers);
       const gradedStates = getPlainObject(item.gradedStates);
       const notes = getErrorNotes(item);
-      const questionTexts = getErrorQuestionTexts(item);
 
       Object.entries(C2_EXAM_METADATA[item.section].parts).forEach(([partKey, partData]) => {
         if (!isTrackedErrorPart(item.section, partKey)) return;
         for (let q = partData.startQ; q <= partData.endQ; q++) {
           const gradeState = gradedStates[q];
           if (!isObjectiveError(partData, gradeState)) continue;
+          const note = typeof notes[q] === "string" ? notes[q].trim() : "";
+          if (!note) continue;
 
           entries.push({
             attemptId: item.id,
@@ -567,8 +579,7 @@ function getTrackedErrorEntries() {
             question: q,
             answer: answers[q] || "",
             gradeState,
-            note: typeof notes[q] === "string" ? notes[q] : "",
-            questionText: typeof questionTexts[q] === "string" ? questionTexts[q] : ""
+            note
           });
         }
       });
@@ -1134,7 +1145,6 @@ function renderTrackedErrorItemHTML(error, compact = false, textPanelId = "ue-da
     : "Missed";
   const answer = error.answer ? escapeHTML(error.answer) : "No answer";
   const note = error.note.trim();
-  const questionText = error.questionText.trim();
 
   return `
     <article class="ue-error-item ${compact ? "compact" : ""}">
@@ -1145,34 +1155,31 @@ function renderTrackedErrorItemHTML(error, compact = false, textPanelId = "ue-da
         </div>
         <span>${gradeLabel}</span>
       </div>
-      ${error.section === "reading" ? `<div class="error-question-text"><span>Question text</span>${questionText ? escapeHTML(questionText) : `<em>No question text added</em>`}</div>` : ""}
       <span class="error-answer-label">Your answer</span>
       <div class="ue-error-answer">${answer}</div>
-      ${note ? `<p class="ue-error-note">${escapeHTML(note)}</p>` : `<p class="ue-error-note empty">No note added</p>`}
+      <p class="ue-error-note">${escapeHTML(note)}</p>
       <div class="ue-error-actions">
-        ${error.section === "useOfEnglish"
-          ? `<button class="ue-error-text-button" onclick="showUseOfEnglishPartText('${escapeJS(error.attemptId)}', '${error.partKey}', '${textPanelId}')">View part text</button>`
-          : `<span></span>`}
+        <button class="ue-error-text-button" onclick="showPartReferenceText('${escapeJS(error.attemptId)}', '${error.section}', '${error.partKey}', '${textPanelId}')">View part text</button>
         <button class="ue-error-review" onclick="openHistoryDetailModal('${escapeJS(error.attemptId)}')">${formatCompactDateTime(error.date)}</button>
       </div>
     </article>
   `;
 }
 
-function showUseOfEnglishPartText(sessionId, partKey, panelId) {
+function showPartReferenceText(sessionId, section, partKey, panelId) {
   const item = STATE.history.find(historyItem => historyItem.id === sessionId);
   const panel = document.getElementById(panelId);
-  const partData = C2_EXAM_METADATA.useOfEnglish.parts[partKey];
-  if (!item || !panel || !partData) return;
+  const partData = C2_EXAM_METADATA[section]?.parts?.[partKey];
+  if (!item || item.section !== section || !panel || !partData) return;
 
-  const text = getUseOfEnglishPartTexts(item)[partKey]?.trim() || "";
+  const text = getPartReferenceTexts(item)[partKey]?.trim() || "";
   panel.innerHTML = `
     <div class="ue-part-text-panel-head">
       <div>
         <span>${getUseOfEnglishPartShortLabel(partKey)}</span>
         <strong>${partData.name.replace(/^Part \d+ - /, "")}</strong>
       </div>
-      <button type="button" onclick="hideUseOfEnglishPartText('${panelId}')" aria-label="Close part text">&times;</button>
+      <button type="button" onclick="hidePartReferenceText('${panelId}')" aria-label="Close part text">&times;</button>
     </div>
     <div class="ue-part-text-panel-meta">Saved with the attempt from ${formatCompactDateTime(item.date)}</div>
     ${text
@@ -1190,7 +1197,7 @@ function showUseOfEnglishPartText(sessionId, partKey, panelId) {
   if (textContent) textContent.scrollTop = 0;
 }
 
-function hideUseOfEnglishPartText(panelId) {
+function hidePartReferenceText(panelId) {
   const panel = document.getElementById(panelId);
   if (!panel) return;
   panel.hidden = true;
@@ -1236,10 +1243,10 @@ function renderErrorLogDashboardHTML() {
     <section class="dash-panel ue-errors-panel" aria-label="Error log">
       <div class="panel-title">
         <span>Error log</span>
-        <small>${errors.length} ${errors.length === 1 ? "error" : "errors"} saved</small>
+        <small>${errors.length} noted ${errors.length === 1 ? "error" : "errors"}</small>
       </div>
       ${errors.length === 0 ? `
-        <div class="empty-state ue-errors-empty">Your Use of English and Reading Part 1 errors will appear here.</div>
+        <div class="empty-state ue-errors-empty">Errors with notes from Reading Part 1 and Use of English will appear here.</div>
       ` : `
         <div class="ue-text-workspace ue-errors-workspace">
           <section class="ue-part-register">
@@ -1265,7 +1272,7 @@ function renderErrorLogDashboardHTML() {
                           View all ${partErrors.length} errors
                         </button>
                       ` : ""}
-                    ` : `<p class="ue-part-empty">No errors recorded.</p>`}
+                    ` : `<p class="ue-part-empty">No noted errors.</p>`}
                   </article>
                 `;
               }).join("")}
@@ -2069,16 +2076,10 @@ function renderHistoryErrorNoteEditorHTML(item, q, partKey, partData, gradeState
   if (!isTrackedErrorPart(item.section, partKey)) return "";
 
   const note = getErrorNotes(item)[q] || "";
-  const questionText = getErrorQuestionTexts(item)[q] || "";
   const isError = isObjectiveError(partData, gradeState);
 
   return `
     <div class="history-error-note-editor" id="history-error-note-editor-${q}" ${isError ? "" : "hidden"}>
-      ${item.section === "reading" ? `
-        <label for="history-question-text-${q}">Question text</label>
-        <textarea id="history-question-text-${q}" rows="3" class="history-question-text-editor"
-                  placeholder="Paste the sentence, question and relevant options.">${escapeHTML(questionText)}</textarea>
-      ` : ""}
       <label for="history-error-note-${q}">Error note</label>
       <textarea id="history-error-note-${q}" rows="2"
                 placeholder="Add the rule, correction or reminder.">${escapeHTML(note)}</textarea>
@@ -2086,14 +2087,14 @@ function renderHistoryErrorNoteEditorHTML(item, q, partKey, partData, gradeState
   `;
 }
 
-function renderUseOfEnglishPartTextEditorHTML(partKey, value = "", context = "sheet") {
-  const partData = C2_EXAM_METADATA.useOfEnglish.parts[partKey];
+function renderPartReferenceTextEditorHTML(section, partKey, value = "", context = "sheet") {
+  const partData = C2_EXAM_METADATA[section]?.parts?.[partKey];
   if (!partData) return "";
 
   const isSheetEditor = context === "sheet";
-  const inputId = isSheetEditor ? `use-part-text-${partKey}` : `history-part-text-${partKey}`;
+  const inputId = isSheetEditor ? `part-reference-text-${section}-${partKey}` : `history-part-text-${partKey}`;
   const inputHandler = isSheetEditor
-    ? `oninput="storeUseOfEnglishPartText('${partKey}', this.value)"`
+    ? `oninput="storePartReferenceText('${section}', '${partKey}', this.value)"`
     : "";
   const helperText = isSheetEditor
     ? "Optional - saved with this attempt for future review"
@@ -2274,7 +2275,6 @@ async function saveHistoryReviewEdits(sessionId) {
       const answers = { ...getPlainObject(item.answers) };
       const meta = { ...getPlainObject(answers.meta) };
       const errorNotes = {};
-      const questionTexts = {};
       const partTexts = {};
       const sectionParts = C2_EXAM_METADATA[item.section].parts;
 
@@ -2284,14 +2284,10 @@ async function saveHistoryReviewEdits(sessionId) {
           if (!isObjectiveError(partData, snapshot.gradedStates[q])) continue;
           const note = document.getElementById(`history-error-note-${q}`)?.value.trim() || "";
           if (note) errorNotes[q] = note;
-          const questionText = document.getElementById(`history-question-text-${q}`)?.value.trim() || "";
-          if (questionText) questionTexts[q] = questionText;
         }
 
-        if (item.section === "useOfEnglish") {
-          const partText = document.getElementById(`history-part-text-${partKey}`)?.value.trim() || "";
-          if (partText) partTexts[partKey] = partText;
-        }
+        const partText = document.getElementById(`history-part-text-${partKey}`)?.value.trim() || "";
+        if (partText) partTexts[partKey] = partText;
       });
 
       if (Object.keys(errorNotes).length > 0) {
@@ -2301,11 +2297,12 @@ async function saveHistoryReviewEdits(sessionId) {
       }
 
       if (item.section === "reading") {
-        if (Object.keys(questionTexts).length > 0) {
-          meta.questionTexts = questionTexts;
+        if (Object.keys(partTexts).length > 0) {
+          meta.readingPartTexts = partTexts;
         } else {
-          delete meta.questionTexts;
+          delete meta.readingPartTexts;
         }
+        delete meta.questionTexts;
       }
 
       if (item.section === "useOfEnglish") {
@@ -2361,7 +2358,6 @@ function openHistoryDetailModal(sessionId, editMode = false) {
         const gradeState = item.gradedStates[q];
         const isError = isTrackedErrorPart(item.section, partKey) && isObjectiveError(partData, gradeState);
         const errorNote = isError ? (getErrorNotes(item)[q] || "").trim() : "";
-        const questionText = isError ? (getErrorQuestionTexts(item)[q] || "").trim() : "";
         
         let gradeLabel = "";
         if (editMode) {
@@ -2383,12 +2379,9 @@ function openHistoryDetailModal(sessionId, editMode = false) {
             </div>
             ${editMode
               ? renderHistoryErrorNoteEditorHTML(item, q, partKey, partData, gradeState)
-              : `
-                ${questionText ? `<div class="history-question-text"><strong>Question text</strong>${escapeHTML(questionText)}</div>` : ""}
-                ${errorNote ? `<div class="history-error-note"><strong>Error note</strong>${escapeHTML(errorNote)}</div>` : ""}
-              `}
-            ${!editMode && isError && item.section === "useOfEnglish" ? `
-              <button class="history-question-text-button" onclick="showUseOfEnglishPartText('${escapeJS(item.id)}', '${partKey}', 'history-review-part-text-panel')">
+              : errorNote ? `<div class="history-error-note"><strong>Error note</strong>${escapeHTML(errorNote)}</div>` : ""}
+            ${!editMode && isError ? `
+              <button class="history-question-text-button" onclick="showPartReferenceText('${escapeJS(item.id)}', '${item.section}', '${partKey}', 'history-review-part-text-panel')">
                 View ${getUseOfEnglishPartShortLabel(partKey)} text
               </button>
             ` : ""}
@@ -2400,12 +2393,12 @@ function openHistoryDetailModal(sessionId, editMode = false) {
         <div class="history-part-card">
           <div class="history-part-card-headline">
             <h4>${partData.name}</h4>
-            ${item.section === "useOfEnglish" && !editMode ? `
-              <button class="history-part-text-button" onclick="showUseOfEnglishPartText('${escapeJS(item.id)}', '${partKey}', 'history-review-part-text-panel')">View part text</button>
+            ${isTrackedErrorPart(item.section, partKey) && !editMode ? `
+              <button class="history-part-text-button" onclick="showPartReferenceText('${escapeJS(item.id)}', '${item.section}', '${partKey}', 'history-review-part-text-panel')">View part text</button>
             ` : ""}
           </div>
-          ${item.section === "useOfEnglish" && editMode
-            ? renderUseOfEnglishPartTextEditorHTML(partKey, getUseOfEnglishPartTexts(item)[partKey] || "", "history")
+          ${isTrackedErrorPart(item.section, partKey) && editMode
+            ? renderPartReferenceTextEditorHTML(item.section, partKey, getPartReferenceTexts(item)[partKey] || "", "history")
             : ""}
           ${rowsHTML}
         </div>
@@ -2414,7 +2407,7 @@ function openHistoryDetailModal(sessionId, editMode = false) {
     sheetHTML = questionsHTML;
   }
 
-  const reviewSheetHTML = item.section === "useOfEnglish" && !editMode ? `
+  const reviewSheetHTML = (item.section === "useOfEnglish" || item.section === "reading") && !editMode ? `
     <div class="ue-text-workspace history-review-workspace">
       <div>${sheetHTML}</div>
       <aside class="ue-part-text-panel history-review-part-text-panel" id="history-review-part-text-panel" hidden aria-live="polite"></aside>
@@ -2477,8 +2470,8 @@ function openAnswerSheet(section) {
   STATE.answers = {};
   STATE.gradedStates = {};
   STATE.errorNotes = {};
-  STATE.questionTexts = {};
   STATE.useOfEnglishPartTexts = {};
+  STATE.readingPartTexts = {};
   STATE.isCorrecting = false;
   STATE.isSavingAttempt = false;
   resetPracticeTimer();
@@ -2696,8 +2689,8 @@ function clearSheetInputs() {
     STATE.answers = {};
     STATE.gradedStates = {};
     STATE.errorNotes = {};
-    STATE.questionTexts = {};
     STATE.useOfEnglishPartTexts = {};
+    STATE.readingPartTexts = {};
     STATE.isCorrecting = false;
     renderAnswerSheetHTML();
   }
@@ -2718,13 +2711,17 @@ function lockAnswersAndStartCorrection() {
   
   STATE.isCorrecting = true;
 
-  if (STATE.activeSection === "useOfEnglish") {
-    Object.keys(sectionMeta.parts).forEach(partKey => {
+  if (STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") {
+    Object.keys(sectionMeta.parts).filter(partKey => isTrackedErrorPart(STATE.activeSection, partKey)).forEach(partKey => {
       const partTextArea = document.getElementById(`part-text-area-${partKey}`);
       if (partTextArea) {
-        partTextArea.innerHTML = renderUseOfEnglishPartTextEditorHTML(
+        const storedTexts = STATE.activeSection === "useOfEnglish"
+          ? STATE.useOfEnglishPartTexts
+          : STATE.readingPartTexts;
+        partTextArea.innerHTML = renderPartReferenceTextEditorHTML(
+          STATE.activeSection,
           partKey,
-          STATE.useOfEnglishPartTexts[partKey] || "",
+          storedTexts[partKey] || "",
           "sheet"
         );
       }
@@ -2769,7 +2766,6 @@ function markBinaryGrade(qNum, state) {
     cBtn.classList.add("active");
     iBtn.classList.remove("active");
     delete STATE.errorNotes[qNum];
-    delete STATE.questionTexts[qNum];
   } else {
     iBtn.classList.add("active");
     cBtn.classList.remove("active");
@@ -2813,12 +2809,6 @@ function updateErrorNoteArea(qNum) {
 
   noteArea.innerHTML = `
     <div class="sheet-error-note-box">
-      ${STATE.activeSection === "reading" ? `
-        <label for="question-text-${qNum}">Question text (optional)</label>
-        <textarea class="sheet-error-note-input sheet-question-text-input" id="question-text-${qNum}" rows="3"
-                  oninput="storeQuestionText(${qNum}, this.value)"
-                  placeholder="Paste the sentence, question and relevant options.">${escapeHTML(STATE.questionTexts[qNum] || "")}</textarea>
-      ` : ""}
       <label for="error-note-${qNum}">Error note (optional)</label>
       <textarea class="sheet-error-note-input" id="error-note-${qNum}" rows="2"
                 oninput="storeErrorNote(${qNum}, this.value)"
@@ -2833,15 +2823,13 @@ function storeErrorNote(qNum, value) {
   STATE.errorNotes[qNum] = value;
 }
 
-function storeQuestionText(qNum, value) {
-  const partEntry = getPartEntryForQuestion(STATE.activeSection, qNum);
-  if (STATE.activeSection !== "reading" || partEntry?.[0] !== "part1") return;
-  STATE.questionTexts[qNum] = value;
-}
-
-function storeUseOfEnglishPartText(partKey, value) {
-  if (STATE.activeSection !== "useOfEnglish") return;
-  STATE.useOfEnglishPartTexts[partKey] = value;
+function storePartReferenceText(section, partKey, value) {
+  if (STATE.activeSection !== section || !isTrackedErrorPart(section, partKey)) return;
+  if (section === "useOfEnglish") {
+    STATE.useOfEnglishPartTexts[partKey] = value;
+  } else if (section === "reading") {
+    STATE.readingPartTexts[partKey] = value;
+  }
 }
 
 async function saveGradedSheetResult() {
@@ -2889,13 +2877,13 @@ async function saveGradedSheetResult() {
       .map(([q, note]) => [q, typeof note === "string" ? note.trim() : ""])
       .filter(([, note]) => note.length > 0)
   );
-  const questionTexts = Object.fromEntries(
-    Object.entries(STATE.questionTexts)
-      .map(([q, text]) => [q, typeof text === "string" ? text.trim() : ""])
-      .filter(([, text]) => text.length > 0)
-  );
+  const activePartTexts = STATE.activeSection === "useOfEnglish"
+    ? STATE.useOfEnglishPartTexts
+    : STATE.activeSection === "reading"
+      ? STATE.readingPartTexts
+      : {};
   const partTexts = Object.fromEntries(
-    Object.entries(STATE.useOfEnglishPartTexts)
+    Object.entries(activePartTexts)
       .map(([partKey, text]) => [partKey, typeof text === "string" ? text.trim() : ""])
       .filter(([, text]) => text.length > 0)
   );
@@ -2903,14 +2891,13 @@ async function saveGradedSheetResult() {
   if (
     durationSeconds > 0
     || ((STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") && Object.keys(errorNotes).length > 0)
-    || (STATE.activeSection === "reading" && Object.keys(questionTexts).length > 0)
-    || (STATE.activeSection === "useOfEnglish" && Object.keys(partTexts).length > 0)
+    || ((STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") && Object.keys(partTexts).length > 0)
   ) {
     answers.meta = {
       ...getPlainObject(answers.meta),
       ...(durationSeconds > 0 ? { durationSeconds } : {}),
       ...((STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") && Object.keys(errorNotes).length > 0 ? { errorNotes } : {}),
-      ...(STATE.activeSection === "reading" && Object.keys(questionTexts).length > 0 ? { questionTexts } : {}),
+      ...(STATE.activeSection === "reading" && Object.keys(partTexts).length > 0 ? { readingPartTexts: partTexts } : {}),
       ...(STATE.activeSection === "useOfEnglish" && Object.keys(partTexts).length > 0 ? { useOfEnglishPartTexts: partTexts } : {})
     };
   }
