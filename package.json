@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "check": "node --check app.js && node --check api/login.js && node --check api/logout.js && node --check api/me.js && node --check api/history.js && node --check api/_auth.js && node --check api/_githubStore.js"
+    "check": "node --check app.js && node --check vocabulary-data.js && node --check scripts/build-vocabulary-data.js && node --check api/login.js && node --check api/logout.js && node --check api/me.js && node --check api/history.js && node --check api/_auth.js && node --check api/_githubStore.js"
   },
   "engines": {
     "node": ">=18"
