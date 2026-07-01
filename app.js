@@ -1,6 +1,6 @@
 // STATE MANAGEMENT
 const STATE = {
-  currentView: "home", // "home" | "dashboard" | "vocabulary" | "vocabularyReview" | "sheet"
+  currentView: "home", // "home" | "dashboard" | "writingLab" | "vocabulary" | "vocabularyReview" | "sheet"
   activeSection: null, // "useOfEnglish" | "reading" | "listening" | "writing"
   answers: {}, // Q-num -> string
   gradedStates: {}, // Q-num -> "correct" | "incorrect" | score (0|1|2)
@@ -36,6 +36,11 @@ const STATE = {
     size: 5
   },
   vocabularyReviewSession: null,
+  writingLabTab: "essay",
+  writingSituationGroup: "all",
+  writingLabQuery: "",
+  writingGenre: "report",
+  writingToolkitGroup: "compare",
   timer: {
     elapsedSeconds: 0,
     isRunning: false,
@@ -1063,6 +1068,7 @@ function renderMainNavigation(activeView) {
   const items = [
     { key: "home", label: "Practice", action: "renderHome()" },
     { key: "dashboard", label: "Progress", action: "renderDashboard()" },
+    { key: "writingLab", label: "Writing", action: "openWritingLab()" },
     { key: "vocabulary", label: "Vocabulary", action: "openVocabulary()" },
     { key: "vocabularyReview", label: "Review", action: "openVocabularyReview()" }
   ];
@@ -2052,6 +2058,291 @@ function handleVocabularyReviewKeyboard(event) {
 }
 
 window.addEventListener("keydown", handleVocabularyReviewKeyboard);
+
+// ==========================================================================
+// WRITING LAB
+// ==========================================================================
+const WRITING_SITUATION_GROUPS = {
+  all: "All situations",
+  orient: "Set up the texts",
+  compare: "Compare authors",
+  evaluate: "Support or challenge",
+  nuance: "Add nuance",
+  reason: "Cause, effect & examples",
+  position: "Position & conclude"
+};
+
+function openWritingLab(tab = STATE.writingLabTab || "essay") {
+  if (STATE.currentView === "sheet") clearPracticeTimerInterval();
+  STATE.currentView = "writingLab";
+  STATE.writingLabTab = tab;
+  renderWritingLab();
+  window.scrollTo({ top: 0 });
+}
+
+function renderWritingLab() {
+  STATE.currentView = "writingLab";
+  const appContainer = document.getElementById("app-container");
+  const tabs = [
+    ["essay", "Essay map", "4-paragraph architecture"],
+    ["situations", "Situation bank", "Get unstuck by function"],
+    ["language", "Language", "Verbs, nouns and upgrades"],
+    ["formats", "Other text types", "Report, review, article, letters"]
+  ];
+
+  appContainer.innerHTML = `
+    <div class="writing-lab-container app-shell">
+      <header class="app-topbar">
+        <button class="brand-button" onclick="renderHome()" aria-label="Practice home" style="text-align:left">
+          <span style="text-align:left;display:block"><span class="brand-title">Practice Log</span><span class="brand-subtitle">Cambridge C2</span></span>
+        </button>
+        ${renderMainNavigation("writingLab")}
+      </header>
+      <main class="writing-lab-main">
+        <section class="writing-lab-hero">
+          <div>
+            <span class="eyebrow">Writing lab</span>
+            <h1>Know what the sentence needs to do.</h1>
+            <p>Find the function first, then choose language that fits its exact position. Built around the two-text C2 essay.</p>
+          </div>
+          <div class="writing-lab-hero-flow" aria-label="Essay flow">
+            ${WRITING_ESSAY_STAGES.map(stage => `<span><b>${stage.paragraph}</b>${escapeHTML(stage.title)}</span>`).join("")}
+          </div>
+        </section>
+
+        <nav class="writing-lab-tabs" aria-label="Writing lab sections">
+          ${tabs.map(([key, label, detail]) => `<button class="${STATE.writingLabTab === key ? "active" : ""}" onclick="setWritingLabTab('${key}')"><strong>${label}</strong><span>${detail}</span></button>`).join("")}
+        </nav>
+
+        <div class="writing-lab-content">
+          ${renderWritingLabContentHTML()}
+        </div>
+      </main>
+    </div>
+  `;
+}
+
+function setWritingLabTab(tab) {
+  STATE.writingLabTab = tab;
+  renderWritingLab();
+  window.scrollTo({ top: 0 });
+}
+
+function renderWritingLabContentHTML() {
+  if (STATE.writingLabTab === "situations") return renderWritingSituationsHTML();
+  if (STATE.writingLabTab === "language") return renderWritingLanguageHTML();
+  if (STATE.writingLabTab === "formats") return renderWritingFormatsHTML();
+  return renderWritingEssayMapHTML();
+}
+
+function renderWritingEssayMapHTML() {
+  return `
+    <section class="writing-lab-section essay-map-section">
+      <div class="writing-section-heading">
+        <div><span class="eyebrow">Part 1 · 240–280 words</span><h2>One argument, four jobs</h2><p>Every paragraph must compare, evaluate or decide. Summary alone is never enough.</p></div>
+        <button class="btn btn-primary" onclick="openWritingToolkit()">Open quick rescue</button>
+      </div>
+
+      <div class="essay-brief-strip">
+        <div><span>Input</span><strong>2 short texts</strong></div><i>→</i>
+        <div><span>Your work</span><strong>Summarise + evaluate</strong></div><i>→</i>
+        <div><span>Output</span><strong>A qualified position</strong></div>
+      </div>
+
+      <div class="essay-stage-grid">
+        ${WRITING_ESSAY_STAGES.map((stage, index) => `
+          <article class="essay-stage-card stage-${index + 1}">
+            <div class="essay-stage-head"><span>${stage.paragraph}</span><div><h3>${escapeHTML(stage.title)}</h3><small>${escapeHTML(stage.target)}</small></div></div>
+            <p>${escapeHTML(stage.role)}</p>
+            <div class="essay-move-row">${stage.moves.map(move => `<span>${escapeHTML(move)}</span>`).join("")}</div>
+            <details><summary>See it in position</summary><blockquote>${escapeHTML(stage.example)}</blockquote></details>
+          </article>
+        `).join("")}
+      </div>
+
+      <div class="essay-position-demo">
+        <div class="writing-section-heading compact"><div><span class="eyebrow">Worked comparison</span><h2>How the paragraphs connect</h2><p>The example keeps one thread: autonomy versus collaboration in remote work.</p></div></div>
+        <div class="essay-position-rail">
+          ${WRITING_ESSAY_STAGES.map((stage, index) => `<article><span class="position-number">${index + 1}</span><div><strong>${stage.paragraph} · ${escapeHTML(stage.title)}</strong><p>${escapeHTML(stage.example)}</p></div></article>`).join("")}
+        </div>
+      </div>
+
+      <aside class="writing-principle-card">
+        <strong>The anti-template rule</strong>
+        <p>Memorise the <em>move</em>, not the completed sentence. Replace every bracket with a precise idea from the texts and vary the reporting verb, evaluation and consequence.</p>
+      </aside>
+    </section>
+  `;
+}
+
+function getFilteredWritingSituations() {
+  const query = STATE.writingLabQuery.trim().toLocaleLowerCase("en");
+  return WRITING_ESSAY_SITUATIONS.filter(item => {
+    const groupMatches = STATE.writingSituationGroup === "all" || item.group === STATE.writingSituationGroup;
+    const haystack = [item.title, item.cue, ...item.phrases].join(" ").toLocaleLowerCase("en");
+    return groupMatches && (!query || haystack.includes(query));
+  });
+}
+
+function renderWritingSituationsHTML() {
+  const situations = getFilteredWritingSituations();
+  return `
+    <section class="writing-lab-section">
+      <div class="writing-section-heading">
+        <div><span class="eyebrow">Essay rescue bank</span><h2>What are you trying to do?</h2><p>Filter by rhetorical job. Position tags show where each move normally belongs.</p></div>
+        <label class="writing-lab-search"><span class="sr-only">Search writing situations</span><input id="writing-lab-search" type="search" placeholder="Search: contradict, support, consequence…" value="${escapeHTML(STATE.writingLabQuery)}" oninput="setWritingLabQuery(this.value)"></label>
+      </div>
+      <div class="writing-filter-row">
+        ${Object.entries(WRITING_SITUATION_GROUPS).map(([key, label]) => `<button class="${STATE.writingSituationGroup === key ? "active" : ""}" onclick="setWritingSituationGroup('${key}')">${label}</button>`).join("")}
+      </div>
+      <div class="writing-situation-count"><strong>${situations.length}</strong> situations · click a phrase to copy it</div>
+      ${situations.length ? `<div class="writing-situation-grid">${situations.map(renderWritingSituationCardHTML).join("")}</div>` : `<div class="writing-empty"><strong>No matching function.</strong><span>Try a broader term or clear the filters.</span></div>`}
+    </section>
+  `;
+}
+
+function renderWritingSituationCardHTML(item, compact = false) {
+  return `
+    <article class="writing-situation-card ${compact ? "compact" : ""}">
+      <div class="writing-situation-head"><div><span class="situation-group">${escapeHTML(WRITING_SITUATION_GROUPS[item.group])}</span><h3>${escapeHTML(item.title)}</h3></div><div class="position-tags">${item.positions.map(position => `<span>${position}</span>`).join("")}</div></div>
+      <p>${escapeHTML(item.cue)}</p>
+      <div class="writing-phrase-list">${item.phrases.map(phrase => renderWritingPhraseButtonHTML(phrase)).join("")}</div>
+    </article>
+  `;
+}
+
+function renderWritingPhraseButtonHTML(phrase) {
+  return `<button class="writing-phrase" data-phrase="${escapeHTML(phrase)}" onclick="copyWritingPhrase(this)"><span>${escapeHTML(phrase)}</span><small>Copy</small></button>`;
+}
+
+function setWritingSituationGroup(group) {
+  STATE.writingSituationGroup = group;
+  renderWritingLab();
+}
+
+function setWritingLabQuery(value) {
+  STATE.writingLabQuery = value;
+  renderWritingLab();
+  requestAnimationFrame(() => {
+    const input = document.getElementById("writing-lab-search");
+    if (input) {
+      input.focus();
+      input.setSelectionRange(input.value.length, input.value.length);
+    }
+  });
+}
+
+async function copyWritingPhrase(button) {
+  const phrase = button.dataset.phrase || "";
+  if (!phrase) return;
+  try {
+    await navigator.clipboard.writeText(phrase);
+  } catch {
+    const textarea = document.createElement("textarea");
+    textarea.value = phrase;
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    textarea.remove();
+  }
+  const label = button.querySelector("small");
+  if (!label) return;
+  label.textContent = "Copied";
+  button.classList.add("copied");
+  setTimeout(() => {
+    label.textContent = "Copy";
+    button.classList.remove("copied");
+  }, 1200);
+}
+
+function renderWritingLanguageHTML() {
+  return `
+    <section class="writing-lab-section">
+      <div class="writing-section-heading"><div><span class="eyebrow">Precision bank</span><h2>Choose language by function</h2><p>Patterns and examples prevent impressive words from being used in the wrong construction.</p></div></div>
+      <div class="writing-language-grid">
+        ${WRITING_LANGUAGE_GROUPS.map(group => `
+          <article class="writing-language-card">
+            <div><span class="eyebrow">${escapeHTML(group.id.replace(/-/g, " "))}</span><h3>${escapeHTML(group.title)}</h3><p>${escapeHTML(group.note)}</p></div>
+            <div class="writing-language-table">
+              ${group.items.map(([term, pattern, example]) => `<div><strong>${escapeHTML(term)}</strong><code>${escapeHTML(pattern)}</code><span>${escapeHTML(example)}</span></div>`).join("")}
+            </div>
+          </article>
+        `).join("")}
+      </div>
+
+      <div class="writing-resource-split">
+        <article class="writing-upgrade-panel">
+          <div class="writing-section-heading compact"><div><span class="eyebrow">Upgrade carefully</span><h2>Replace vague words</h2></div></div>
+          ${WRITING_UPGRADES.map(item => `<div class="writing-upgrade-row"><strong>${escapeHTML(item.plain)}</strong><span>${escapeHTML(item.options)}</span><small>${escapeHTML(item.collocation)}</small></div>`).join("")}
+        </article>
+        <article class="writing-safe-panel">
+          <div class="writing-section-heading compact"><div><span class="eyebrow">Formal-safe expressions</span><h2>Useful, not decorative</h2></div></div>
+          ${WRITING_SAFE_EXPRESSIONS.map(([phrase, use]) => `<div><strong>${escapeHTML(phrase)}</strong><span>${escapeHTML(use)}</span></div>`).join("")}
+        </article>
+      </div>
+    </section>
+  `;
+}
+
+function renderWritingFormatsHTML() {
+  const genre = WRITING_GENRES[STATE.writingGenre] || WRITING_GENRES.report;
+  return `
+    <section class="writing-lab-section">
+      <div class="writing-section-heading"><div><span class="eyebrow">Part 2 compass</span><h2>Change the genre, change the writing</h2><p>Purpose, reader and structure come before advanced vocabulary.</p></div></div>
+      <div class="writing-genre-picker">
+        ${Object.entries(WRITING_GENRES).map(([key, item]) => `<button class="${STATE.writingGenre === key ? "active" : ""}" onclick="setWritingGenre('${key}')"><strong>${escapeHTML(item.label)}</strong><span>${escapeHTML(item.meta)}</span></button>`).join("")}
+      </div>
+      <article class="writing-genre-workspace">
+        <div class="writing-genre-title"><div><span class="eyebrow">${escapeHTML(genre.label)}</span><h2>${escapeHTML(genre.meta)}</h2></div></div>
+        <div class="writing-genre-structure">${genre.structure.map((step, index) => `<div><span>${index + 1}</span><strong>${escapeHTML(step)}</strong></div>`).join("")}</div>
+        <div class="writing-genre-grid">
+          <div class="writing-genre-phrases">
+            <h3>High-value moves</h3>
+            ${genre.phrases.map(([label, phrase]) => `<div><span>${escapeHTML(label)}</span>${renderWritingPhraseButtonHTML(phrase)}</div>`).join("")}
+          </div>
+          <aside class="writing-avoid-card"><span class="eyebrow">Avoid</span><h3>Genre drift</h3><ul>${genre.avoid.map(item => `<li>${escapeHTML(item)}</li>`).join("")}</ul></aside>
+        </div>
+      </article>
+    </section>
+  `;
+}
+
+function setWritingGenre(genre) {
+  STATE.writingGenre = genre;
+  renderWritingLab();
+}
+
+function openWritingToolkit() {
+  const modal = document.createElement("div");
+  modal.className = "modal-overlay writing-toolkit-overlay";
+  modal.innerHTML = `
+    <div class="modal-content writing-toolkit-modal" role="dialog" aria-modal="true" aria-labelledby="writing-toolkit-title">
+      <div class="modal-header">
+        <div><span class="eyebrow">Keep your draft open</span><h3 class="modal-title" id="writing-toolkit-title">Essay quick rescue</h3><p>Choose the job your next sentence must perform.</p></div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+      </div>
+      <div class="writing-toolkit-tabs">
+        ${Object.entries(WRITING_SITUATION_GROUPS).filter(([key]) => key !== "all").map(([key, label]) => `<button class="${STATE.writingToolkitGroup === key ? "active" : ""}" data-toolkit-group="${key}" onclick="setWritingToolkitGroup('${key}')">${label}</button>`).join("")}
+      </div>
+      <div class="modal-body writing-toolkit-body" id="writing-toolkit-body">${renderWritingToolkitBodyHTML()}</div>
+    </div>
+  `;
+  mountModal(modal);
+}
+
+function renderWritingToolkitBodyHTML() {
+  const situations = WRITING_ESSAY_SITUATIONS.filter(item => item.group === STATE.writingToolkitGroup);
+  return `<div class="writing-toolkit-note"><strong>Use the position tag.</strong><span>It stops a good phrase appearing in the wrong paragraph.</span></div><div class="writing-toolkit-list">${situations.map(item => renderWritingSituationCardHTML(item, true)).join("")}</div>`;
+}
+
+function setWritingToolkitGroup(group) {
+  STATE.writingToolkitGroup = group;
+  document.querySelectorAll("[data-toolkit-group]").forEach(button => button.classList.toggle("active", button.dataset.toolkitGroup === group));
+  const body = document.getElementById("writing-toolkit-body");
+  if (body) body.innerHTML = renderWritingToolkitBodyHTML();
+}
 
 function renderDashboard() {
   renderDashboardView();
@@ -3562,6 +3853,7 @@ function renderAnswerSheetHTML() {
           </div>
           <div class="sheet-header-actions">
             ${renderPracticeTimerHTML()}
+            ${STATE.activeSection === "writing" ? `<button class="btn btn-secondary writing-toolkit-trigger" onclick="openWritingToolkit()">Writing toolkit</button>` : ""}
             <button class="btn btn-secondary" onclick="renderHome()">Back</button>
           </div>
         </div>
@@ -4600,6 +4892,8 @@ function storeInputAnswer(qNum, value) {
 function refreshCurrentView() {
   if (STATE.currentView === "dashboard") {
     renderDashboard();
+  } else if (STATE.currentView === "writingLab") {
+    renderWritingLab();
   } else if (STATE.currentView === "vocabulary") {
     renderVocabulary();
   } else if (STATE.currentView === "vocabularyReview") {
