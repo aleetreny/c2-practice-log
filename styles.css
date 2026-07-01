@@ -4663,6 +4663,10 @@ input.sheet-text-input:disabled,
   margin-top: 12px;
 }
 
+.review-mode-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .review-mode-card,
 .review-size-button {
   display: grid;

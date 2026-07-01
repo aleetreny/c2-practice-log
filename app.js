@@ -1817,11 +1817,7 @@ function getReviewEligibleEntries(setup = STATE.vocabularyReviewSetup) {
   return getAllVocabularyEntries()
     .filter(entry => getVocabularyCollection(entry) !== "personal")
     .filter(entry => setup.collection === "all" || getVocabularyCollection(entry) === setup.collection)
-    .filter(entry => {
-      if (setup.mode === "recognition" || setup.mode === "recall") return Boolean(entry.meaning);
-      if (setup.mode === "context") return Boolean(findVocabularyClozeMatch(entry));
-      return false;
-    });
+    .filter(entry => ["recognition", "recall"].includes(setup.mode) && Boolean(entry.meaning));
 }
 
 function shuffleVocabularyEntries(entries) {
@@ -1860,8 +1856,9 @@ function renderVocabularyReviewSetupHTML() {
   if (setup.collection === "personal") setup.collection = "all";
   const entries = getAllVocabularyEntries();
   const scopedEntries = entries.filter(entry => getVocabularyCollection(entry) !== "personal").filter(entry => setup.collection === "all" || getVocabularyCollection(entry) === setup.collection);
-  const modeCounts = Object.fromEntries(["recognition", "recall", "context"].map(mode => [mode, getReviewEligibleEntries({ ...setup, mode }).length]));
-  if (!modeCounts[setup.mode]) setup.mode = ["recognition", "recall", "context"].find(mode => modeCounts[mode]) || setup.mode;
+  const reviewModes = ["recognition", "recall"];
+  const modeCounts = Object.fromEntries(reviewModes.map(mode => [mode, getReviewEligibleEntries({ ...setup, mode }).length]));
+  if (!reviewModes.includes(setup.mode) || !modeCounts[setup.mode]) setup.mode = reviewModes.find(mode => modeCounts[mode]) || "recognition";
   const eligible = getReviewEligibleEntries(setup);
   const skipped = scopedEntries.length - eligible.length;
   return `
@@ -1882,8 +1879,7 @@ function renderVocabularyReviewSetupHTML() {
           <div class="review-mode-grid">
             ${[
               ["recognition", "Recognise", "See the term, retrieve its saved meaning."],
-              ["recall", "Recall", "See the meaning, produce the term."],
-              ["context", "In context", "Complete an expression inside its example."]
+              ["recall", "Recall", "See the meaning, produce the term."]
             ].map(([key, title, detail]) => `<button class="review-mode-card ${setup.mode === key ? "active" : ""}" onclick="setVocabularyReviewOption('mode','${key}')" ${modeCounts[key] ? "" : "disabled"}><strong>${title}<small>${modeCounts[key].toLocaleString("en-GB")}</small></strong><span>${detail}</span></button>`).join("")}
           </div>
         </div>
@@ -1913,7 +1909,7 @@ function renderVocabularyReviewSetupHTML() {
       </div>
 
       <div class="review-launch-row">
-        <div><strong>${eligible.length ? `${Math.min(Number(setup.size), eligible.length)} ${Math.min(Number(setup.size), eligible.length) === 1 ? "card" : "cards"} ready` : "No compatible cards"}</strong><span>${skipped ? `${skipped.toLocaleString("en-GB")} ${skipped === 1 ? "row is" : "rows are"} intentionally skipped because ${skipped === 1 ? "it has" : "they have"} no compatible answer field.` : setup.mode === "context" ? "Every selected row contains usable context." : "Randomised every round."}</span></div>
+        <div><strong>${eligible.length ? `${Math.min(Number(setup.size), eligible.length)} ${Math.min(Number(setup.size), eligible.length) === 1 ? "card" : "cards"} ready` : "No compatible cards"}</strong><span>${skipped ? `${skipped.toLocaleString("en-GB")} ${skipped === 1 ? "row is" : "rows are"} intentionally skipped because ${skipped === 1 ? "it has" : "they have"} no compatible answer field.` : "Randomised every round."}</span></div>
         <button class="btn btn-primary review-launch-button" onclick="startVocabularyReviewSession()" ${eligible.length ? "" : "disabled"}>Start review</button>
       </div>
     </section>
@@ -1961,7 +1957,7 @@ function renderVocabularyReviewSessionHTML() {
       </div>
       <article class="review-flashcard ${session.revealed ? "revealed" : ""}">
         <div class="review-card-prompt">
-          <span>${setup.mode === "recognition" ? "What does this mean?" : setup.mode === "recall" ? "Which term fits?" : "Complete the expression"}</span>
+          <span>${setup.mode === "recognition" ? "What does this mean?" : "Which term fits?"}</span>
           <div class="review-card-front">${renderVocabularyReviewFront(entry, setup.mode)}</div>
         </div>
         ${session.revealed ? `
@@ -1969,7 +1965,7 @@ function renderVocabularyReviewSessionHTML() {
             <span>Answer</span>
             <h2>${escapeHTML(entry.term)}</h2>
             ${entry.meaning ? `<p>${escapeHTML(entry.meaning)}</p>` : `<p class="muted">No definition saved — assess whether you recognised how to use it.</p>`}
-            ${entry.example && setup.mode !== "context" ? `<blockquote>${escapeHTML(entry.example)}</blockquote>` : ""}
+            ${entry.example ? `<blockquote>${escapeHTML(entry.example)}</blockquote>` : ""}
             <small>${escapeHTML((entry.sources || []).join(" · "))}</small>
           </div>` : ""}
       </article>
@@ -1986,13 +1982,7 @@ function renderVocabularyReviewSessionHTML() {
 
 function renderVocabularyReviewFront(entry, mode) {
   if (mode === "recognition") return `<h2>${escapeHTML(entry.term)}</h2>`;
-  if (mode === "recall") {
-    return entry.meaning ? `<h2>${escapeHTML(entry.meaning)}</h2>` : "";
-  }
-  const example = entry.example || "";
-  const match = findVocabularyClozeMatch(entry);
-  if (!match) return `<blockquote>${escapeHTML(example)}</blockquote>`;
-  return `<blockquote>${escapeHTML(example.slice(0, match.index))}<mark>________</mark>${escapeHTML(example.slice(match.index + match.length))}</blockquote>`;
+  return entry.meaning ? `<h2>${escapeHTML(entry.meaning)}</h2>` : "";
 }
 
 function revealVocabularyCard() {
