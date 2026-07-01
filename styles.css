@@ -5106,3 +5106,458 @@ kbd {
     width: 100%;
   }
 }
+
+/* Adaptive Notion-style vocabulary tables */
+.vocabulary-table-main {
+  gap: 16px;
+}
+
+.compact-vocabulary-hero {
+  align-items: center;
+  padding: 15px 22px;
+}
+
+.compact-vocabulary-hero h1 {
+  font-size: clamp(1.65rem, 2.7vw, 2.2rem);
+}
+
+.compact-vocabulary-hero p {
+  margin-top: 4px;
+}
+
+.adaptive-capture-panel {
+  padding: 18px 20px;
+}
+
+@media (min-width: 981px) {
+  .adaptive-capture-panel.type-only {
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    gap: 7px 18px;
+    align-items: center;
+    padding: 12px 18px;
+  }
+
+  .adaptive-capture-panel.type-only .capture-heading {
+    margin: 0;
+  }
+
+  .adaptive-capture-panel.type-only .capture-heading .eyebrow {
+    display: none;
+  }
+
+  .adaptive-capture-panel.type-only .capture-heading h2 {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .adaptive-capture-panel.type-only .capture-type-hint {
+    grid-column: 2;
+    margin: 0;
+  }
+}
+
+.capture-type-picker {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.capture-type-picker button {
+  min-height: 38px;
+  padding: 6px 9px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  background: #fff;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.capture-type-picker button:hover,
+.capture-type-picker button.active {
+  border-color: #78aaa4;
+  background: var(--accent-soft);
+  color: var(--accent-color);
+}
+
+.capture-type-hint {
+  margin-top: 10px;
+  color: var(--text-soft);
+  font-size: 0.74rem;
+}
+
+.adaptive-capture-panel .vocabulary-capture-form {
+  grid-template-columns: 1.2fr 1.2fr 0.8fr auto;
+  margin-top: 12px;
+}
+
+.adaptive-capture-panel .capture-example {
+  grid-column: 1 / -2;
+}
+
+.adaptive-capture-panel .capture-submit {
+  min-width: 150px;
+}
+
+.adaptive-capture-panel .adaptive-personal {
+  grid-template-columns: 1.4fr 1fr auto;
+}
+
+.adaptive-capture-panel .adaptive-wordFormation {
+  grid-template-columns: 1fr 1fr auto;
+}
+
+.adaptive-capture-panel .adaptive-personal .capture-submit,
+.adaptive-capture-panel .adaptive-wordFormation .capture-submit {
+  min-height: 62px;
+}
+
+.notion-table-panel {
+  padding: 0;
+  overflow: hidden;
+}
+
+.notion-table-panel .vocabulary-browser-head {
+  align-items: center;
+  margin: 0;
+  padding: 18px 20px 14px;
+}
+
+.notion-table-panel .vocabulary-browser-head h2 {
+  margin-top: 2px;
+}
+
+.notion-table-panel .vocabulary-browser-head p {
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+}
+
+.vocabulary-collection-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.vocabulary-collection-tabs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 0 11px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 750;
+  cursor: pointer;
+}
+
+.vocabulary-collection-tabs button.active {
+  border-bottom-color: var(--accent-color);
+  color: var(--text-main);
+}
+
+.vocabulary-collection-tabs button span {
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #eef2f4;
+  color: var(--text-soft);
+  font-size: 0.62rem;
+}
+
+.vocabulary-table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--border-color);
+  background: #fbfcfd;
+}
+
+.vocabulary-table-toolbar .vocabulary-search {
+  width: min(420px, 70%);
+}
+
+.vocabulary-table-toolbar input {
+  width: 100%;
+  min-height: 34px;
+  padding: 6px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: #fff;
+  outline: none;
+}
+
+.vocabulary-table-toolbar input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.08);
+}
+
+.vocabulary-table-toolbar > span {
+  color: var(--text-soft);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.vocabulary-table-wrap {
+  max-height: min(690px, 70vh);
+  overflow: auto;
+  scrollbar-gutter: stable;
+}
+
+.vocabulary-table {
+  width: 100%;
+  min-width: 840px;
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.vocabulary-table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  height: 34px;
+  padding: 7px 10px;
+  border-right: 1px solid #e8ecf0;
+  border-bottom: 1px solid var(--border-color);
+  background: #f6f8f9;
+  color: var(--text-soft);
+  font-size: 0.63rem;
+  font-weight: 800;
+  text-align: left;
+  text-transform: uppercase;
+  letter-spacing: 0.045em;
+}
+
+.vocabulary-table td {
+  height: 42px;
+  padding: 7px 10px;
+  border-right: 1px solid #edf0f2;
+  border-bottom: 1px solid #edf0f2;
+  background: #fff;
+  color: #435160;
+  font-size: 0.74rem;
+  line-height: 1.32;
+  vertical-align: middle;
+}
+
+.vocabulary-table tbody tr:hover td {
+  background: #fafcfb;
+}
+
+.vocabulary-table th:last-child,
+.vocabulary-table td:last-child {
+  border-right: 0;
+}
+
+.vocabulary-table .col-term {
+  width: 23%;
+}
+
+.vocabulary-table .col-meaning,
+.vocabulary-table .col-notes {
+  width: 29%;
+}
+
+.vocabulary-table .col-example {
+  width: 31%;
+}
+
+.vocabulary-table .col-topic {
+  width: 13%;
+}
+
+.vocabulary-table .col-actions {
+  width: 76px;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.vocabulary-table.table-personal .col-term {
+  width: 62%;
+}
+
+.vocabulary-table.table-personal .col-notes {
+  width: auto;
+}
+
+.vocabulary-table.table-wordFormation .col-term {
+  width: 42%;
+}
+
+.vocabulary-table.table-wordFormation .col-meaning {
+  width: auto;
+}
+
+.vocabulary-table.table-curated .col-term {
+  width: 27%;
+}
+
+.vocabulary-table.table-curated .col-meaning {
+  width: auto;
+}
+
+.vocabulary-table.table-curated .col-topic {
+  width: 20%;
+}
+
+.vocabulary-table td strong {
+  display: inline;
+  color: var(--text-main);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.table-cell-copy {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.table-cell-copy.empty {
+  color: #a2abb5;
+  font-style: italic;
+}
+
+.table-mastery {
+  display: inline-flex;
+  margin-left: 7px;
+  padding: 1px 5px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-color);
+  font-size: 0.56rem;
+  font-weight: 800;
+  vertical-align: 1px;
+}
+
+.vocabulary-table .col-actions button {
+  padding: 2px 3px;
+  border: 0;
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 0.62rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.vocabulary-table .col-actions button:hover {
+  color: var(--accent-color);
+}
+
+.notion-table-panel .vocabulary-empty {
+  min-height: 180px;
+}
+
+.notion-table-panel .vocabulary-pagination {
+  margin: 0;
+  padding: 12px;
+  border-top: 1px solid var(--border-color);
+}
+
+.review-mode-card strong {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.review-mode-card strong small {
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: #eef2f4;
+  color: var(--text-soft);
+  font-size: 0.62rem;
+}
+
+.review-mode-card:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.review-scope-controls.single-control {
+  grid-template-columns: minmax(260px, 560px);
+}
+
+@media (max-width: 980px) {
+  .capture-type-picker {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .adaptive-capture-panel .vocabulary-capture-form,
+  .adaptive-capture-panel .adaptive-personal,
+  .adaptive-capture-panel .adaptive-wordFormation {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .adaptive-capture-panel .capture-example {
+    grid-column: 1 / -1;
+  }
+
+  .adaptive-capture-panel .capture-submit {
+    grid-column: 1 / -1;
+    min-height: 42px;
+  }
+}
+
+@media (max-width: 680px) {
+  .compact-vocabulary-hero,
+  .adaptive-capture-panel {
+    padding: 16px;
+  }
+
+  .capture-type-picker {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 3px;
+  }
+
+  .capture-type-picker button {
+    flex: 0 0 auto;
+  }
+
+  .adaptive-capture-panel .vocabulary-capture-form,
+  .adaptive-capture-panel .adaptive-personal,
+  .adaptive-capture-panel .adaptive-wordFormation {
+    grid-template-columns: 1fr;
+  }
+
+  .notion-table-panel .vocabulary-browser-head {
+    align-items: stretch;
+    padding: 16px;
+  }
+
+  .vocabulary-collection-tabs {
+    overflow-x: auto;
+    padding: 0 12px;
+  }
+
+  .vocabulary-collection-tabs button {
+    flex: 0 0 auto;
+  }
+
+  .vocabulary-table-toolbar {
+    padding: 9px 12px;
+  }
+
+  .vocabulary-table-toolbar .vocabulary-search {
+    width: auto;
+    flex: 1;
+  }
+
+  .vocabulary-table-wrap {
+    max-height: 66vh;
+  }
+
+  .vocabulary-table {
+    min-width: 720px;
+  }
+}
