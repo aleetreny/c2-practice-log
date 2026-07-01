@@ -4225,6 +4225,7 @@ input.sheet-text-input:disabled,
 .vocabulary-main,
 .review-main {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: 22px;
   padding-top: 24px;
 }
@@ -5114,6 +5115,15 @@ kbd {
 /* Adaptive Notion-style vocabulary tables */
 .vocabulary-table-main {
   gap: 16px;
+  min-width: 0;
+}
+
+.vocabulary-table-main > *,
+.notion-table-panel,
+.vocabulary-table-toolbar,
+.vocabulary-table-wrap {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .compact-vocabulary-hero {
@@ -5226,7 +5236,7 @@ kbd {
 .notion-table-panel .vocabulary-browser-head {
   align-items: center;
   margin: 0;
-  padding: 18px 20px 14px;
+  padding: 20px 24px 16px;
 }
 
 .notion-table-panel .vocabulary-browser-head h2 {
@@ -5242,7 +5252,7 @@ kbd {
 .vocabulary-collection-tabs {
   display: flex;
   gap: 2px;
-  padding: 0 20px;
+  padding: 0 24px;
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -5279,8 +5289,11 @@ kbd {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 10px 20px;
-  border-bottom: 1px solid var(--border-color);
+  margin: 0 20px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-bottom: 0;
+  border-radius: 9px 9px 0 0;
   background: #fbfcfd;
 }
 
@@ -5311,13 +5324,17 @@ kbd {
 
 .vocabulary-table-wrap {
   max-height: min(690px, 70vh);
+  width: auto;
+  margin: 0 20px 20px;
   overflow: auto;
+  border: 1px solid var(--border-color);
+  border-radius: 0 0 9px 9px;
   scrollbar-gutter: stable;
 }
 
 .vocabulary-table {
   width: 100%;
-  min-width: 840px;
+  min-width: 760px;
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed;
@@ -5362,30 +5379,24 @@ kbd {
 }
 
 .vocabulary-table .col-term {
-  width: 23%;
+  width: 28%;
 }
 
 .vocabulary-table .col-meaning,
 .vocabulary-table .col-notes {
-  width: 29%;
+  width: 30%;
 }
 
 .vocabulary-table .col-example {
-  width: 31%;
+  width: auto;
 }
 
 .vocabulary-table .col-topic {
   width: 13%;
 }
 
-.vocabulary-table .col-actions {
-  width: 76px;
-  white-space: nowrap;
-  text-align: right;
-}
-
 .vocabulary-table.table-personal .col-term {
-  width: 62%;
+  width: 58%;
 }
 
 .vocabulary-table.table-personal .col-notes {
@@ -5393,7 +5404,7 @@ kbd {
 }
 
 .vocabulary-table.table-wordFormation .col-term {
-  width: 42%;
+  width: 44%;
 }
 
 .vocabulary-table.table-wordFormation .col-meaning {
@@ -5405,7 +5416,7 @@ kbd {
 }
 
 .vocabulary-table.table-curated .col-meaning {
-  width: auto;
+  width: 29%;
 }
 
 .vocabulary-table.table-curated .col-topic {
@@ -5443,9 +5454,32 @@ kbd {
   vertical-align: 1px;
 }
 
-.vocabulary-table .col-actions button {
-  padding: 2px 3px;
+.table-term-layout {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-width: 0;
+}
+
+.table-term-label {
+  min-width: 0;
+}
+
+.table-row-actions {
+  display: inline-flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid #e5e9ee;
+  border-radius: 6px;
+  background: #f8fafb;
+}
+
+.table-row-actions button {
+  padding: 2px 5px;
   border: 0;
+  border-radius: 4px;
   background: transparent;
   color: var(--text-soft);
   font-size: 0.62rem;
@@ -5453,8 +5487,14 @@ kbd {
   cursor: pointer;
 }
 
-.vocabulary-table .col-actions button:hover {
+.table-row-actions button:hover {
+  background: var(--accent-soft);
   color: var(--accent-color);
+}
+
+.table-row-actions .delete-action:hover {
+  background: var(--color-error-bg);
+  color: var(--color-error);
 }
 
 .notion-table-panel .vocabulary-empty {
@@ -5513,6 +5553,13 @@ kbd {
 }
 
 @media (max-width: 680px) {
+  .vocabulary-main,
+  .vocabulary-main > *,
+  .notion-table-panel {
+    width: 100%;
+    min-width: 0;
+  }
+
   .compact-vocabulary-hero,
   .adaptive-capture-panel {
     padding: 16px;
@@ -5540,16 +5587,27 @@ kbd {
   }
 
   .vocabulary-collection-tabs {
-    overflow-x: auto;
-    padding: 0 12px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: visible;
+    padding: 0 14px;
   }
 
   .vocabulary-collection-tabs button {
-    flex: 0 0 auto;
+    min-width: 0;
+    justify-content: center;
+    gap: 4px;
+    padding: 0 4px;
+    font-size: 0.7rem;
+  }
+
+  .vocabulary-collection-tabs button span {
+    padding-inline: 4px;
   }
 
   .vocabulary-table-toolbar {
-    padding: 9px 12px;
+    margin: 0 12px;
+    padding: 9px 10px;
   }
 
   .vocabulary-table-toolbar .vocabulary-search {
@@ -5559,9 +5617,11 @@ kbd {
 
   .vocabulary-table-wrap {
     max-height: 66vh;
+    width: auto;
+    margin: 0 12px 14px;
   }
 
   .vocabulary-table {
-    min-width: 720px;
+    min-width: 680px;
   }
 }
