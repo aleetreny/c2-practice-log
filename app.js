@@ -1622,7 +1622,7 @@ function getVocabularyTableColumns(collectionKey) {
 function renderVocabularyTableHTML(entries, collectionKey) {
   if (!entries.length) return `<div class="vocabulary-empty"><strong>No rows match.</strong><span>Clear the search to see the collection again.</span></div>`;
   const columns = getVocabularyTableColumns(collectionKey);
-  return `<div class="vocabulary-table-wrap"><table class="vocabulary-table table-${collectionKey}"><thead><tr>${columns.map(column => `<th class="col-${column.className}">${column.label}</th>`).join("")}<th class="col-actions"><span class="sr-only">Actions</span></th></tr></thead><tbody>${entries.map(entry => renderVocabularyTableRowHTML(entry, columns, collectionKey)).join("")}</tbody></table></div>`;
+  return `<div class="vocabulary-table-wrap"><table class="vocabulary-table table-${collectionKey}"><thead><tr>${columns.map(column => `<th class="col-${column.className}">${column.label}</th>`).join("")}</tr></thead><tbody>${entries.map(entry => renderVocabularyTableRowHTML(entry, columns, collectionKey)).join("")}</tbody></table></div>`;
 }
 
 function renderVocabularyTableRowHTML(entry, columns, collectionKey) {
@@ -1630,8 +1630,8 @@ function renderVocabularyTableRowHTML(entry, columns, collectionKey) {
   return `<tr>${columns.map(column => {
     const rawValue = entry[column.key] || "";
     const fallback = collectionKey === "personal" && column.key === "meaning" ? "No notes" : "—";
-    return `<td class="col-${column.className}" title="${escapeHTML(rawValue)}">${column.key === "term" ? `<strong>${escapeHTML(rawValue)}</strong>${mastery !== null ? `<small class="table-mastery">${mastery}% familiar</small>` : ""}` : `<span class="table-cell-copy ${rawValue ? "" : "empty"}">${escapeHTML(rawValue || fallback)}</span>`}</td>`;
-  }).join("")}<td class="col-actions"><button onclick="startVocabularyEdit('${entry.id}')" aria-label="Edit ${escapeHTML(entry.term)}">Edit</button><button onclick="deleteVocabularyEntry('${entry.id}')" aria-label="Delete ${escapeHTML(entry.term)}">Delete</button></td></tr>`;
+    return `<td class="col-${column.className}" title="${escapeHTML(rawValue)}">${column.key === "term" ? `<div class="table-term-layout"><span class="table-term-label"><strong>${escapeHTML(rawValue)}</strong>${mastery !== null ? `<small class="table-mastery">${mastery}% familiar</small>` : ""}</span><span class="table-row-actions"><button onclick="startVocabularyEdit('${entry.id}')" aria-label="Edit ${escapeHTML(entry.term)}">Edit</button><button class="delete-action" onclick="deleteVocabularyEntry('${entry.id}')" aria-label="Delete ${escapeHTML(entry.term)}">Delete</button></span></div>` : `<span class="table-cell-copy ${rawValue ? "" : "empty"}">${escapeHTML(rawValue || fallback)}</span>`}</td>`;
+  }).join("")}</tr>`;
 }
 
 function setVocabularySearch(value) {
