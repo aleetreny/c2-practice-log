@@ -90,7 +90,7 @@ function loadLocalStorage() {
 
     STATE.history = mergeHistoryCollections(...localHistories);
     const storedVocabulary = JSON.parse(localStorage.getItem(LOCAL_VOCABULARY_KEY) || "{}");
-    STATE.vocabularyEntries = Array.isArray(storedVocabulary.entries) ? storedVocabulary.entries : [];
+    STATE.vocabularyEntries = Array.isArray(storedVocabulary.entries) ? storedVocabulary.entries.map(stripVocabularyCategory) : [];
     STATE.vocabularyArchivedIds = Array.isArray(storedVocabulary.archivedIds) ? storedVocabulary.archivedIds : [];
     STATE.vocabularyUpdatedAt = Number(storedVocabulary.updatedAt) || 0;
     const storedReviewStats = JSON.parse(localStorage.getItem(LOCAL_VOCABULARY_REVIEW_KEY) || "{}");
@@ -117,6 +117,11 @@ function saveVocabularyLocalStorage(options = {}) {
   } catch (error) {
     console.error("Failed to save vocabulary", error);
   }
+}
+
+function stripVocabularyCategory(entry) {
+  const { topic, topics, ...cleanEntry } = entry || {};
+  return cleanEntry;
 }
 
 function markVocabularyChanged() {
@@ -397,7 +402,7 @@ function vocabularyStateToSupabaseRow() {
     scale_score: 160,
     answers: {
       __kind: "vocabulary_state",
-      entries: STATE.vocabularyEntries,
+      entries: STATE.vocabularyEntries.map(stripVocabularyCategory),
       archivedIds: STATE.vocabularyArchivedIds,
       reviewStats: STATE.vocabularyReviewStats,
       updatedAt: STATE.vocabularyUpdatedAt
@@ -414,7 +419,7 @@ function isVocabularyStateRow(row) {
 function applyRemoteVocabularyState(row) {
   const payload = row?.answers;
   if (!payload || payload.__kind !== "vocabulary_state") return false;
-  STATE.vocabularyEntries = Array.isArray(payload.entries) ? payload.entries : [];
+  STATE.vocabularyEntries = Array.isArray(payload.entries) ? payload.entries.map(stripVocabularyCategory) : [];
   STATE.vocabularyArchivedIds = Array.isArray(payload.archivedIds) ? payload.archivedIds : [];
   STATE.vocabularyReviewStats = payload.reviewStats && typeof payload.reviewStats === "object" ? payload.reviewStats : {};
   STATE.vocabularyUpdatedAt = Number(payload.updatedAt) || (row.attempted_at ? new Date(row.attempted_at).getTime() : 0);
@@ -1191,7 +1196,7 @@ const VOCABULARY_COLLECTIONS = {
     label: "Curated Vocabulary",
     shortLabel: "Curated",
     entryType: "general",
-    description: "Words with a concise meaning, grouped by your broad topics."
+    description: "Words paired with a concise meaning and a usage example."
   },
   official: {
     family: "vocabulary",
@@ -1564,7 +1569,7 @@ function renderVocabulary() {
         <section class="vocabulary-browser notion-table-panel">
           <div class="vocabulary-browser-head">
             <div><span class="eyebrow">${escapeHTML(VOCABULARY_FAMILIES[STATE.vocabularyFilters.family].label)}</span><h2>${escapeHTML(activeCollection.label)}</h2><p>${escapeHTML(activeCollection.description)}</p></div>
-            <button class="btn btn-primary" onclick="reviewCurrentVocabularySelection()" ${filtered.length ? "" : "disabled"}>Review this collection</button>
+            ${STATE.vocabularyFilters.collection === "personal" ? `<button class="btn btn-secondary" disabled>Reference only</button>` : `<button class="btn btn-primary" onclick="reviewCurrentVocabularySelection()" ${filtered.length ? "" : "disabled"}>Review this collection</button>`}
           </div>
           ${allowedCollections.length > 1 ? `<div class="vocabulary-collection-tabs" role="tablist" aria-label="Vocabulary collections">
             ${allowedCollections.map(key => {
@@ -1597,14 +1602,10 @@ function renderAdaptiveVocabularyFormHTML(editingEntry, entries) {
   const isPersonal = typeKey === "personal";
   const isWordFormation = typeKey === "wordFormation";
   const supportsExample = ["general", "patterns", "idioms"].includes(typeKey);
-  const supportsTopic = !isPersonal && !isWordFormation;
-  const topicValue = editingEntry?.topic || (typeKey === "patterns" ? "General patterns" : typeKey === "idioms" ? "General idioms" : isWordFormation ? "Word formation" : isPersonal ? "Personal vocabulary" : "General vocabulary");
-  const topics = getVocabularyTopics(entries, type.family);
   return `<form class="vocabulary-capture-form adaptive-${typeKey}" onsubmit="saveVocabularyEntry(event)">
     <input type="hidden" name="entryType" value="${typeKey}">
     <label class="capture-field capture-term"><span>${type.noun}</span>${isPersonal ? `<textarea name="term" rows="2" required autocomplete="off" placeholder="Keep the phrase or sentence exactly as you want it.">${escapeHTML(editingEntry?.term || "")}</textarea>` : `<input name="term" required autocomplete="off" placeholder="${typeKey === "wordFormation" ? "e.g. (Abolish) Abolition" : typeKey === "patterns" ? "e.g. take issue with" : typeKey === "idioms" ? "e.g. a blessing in disguise" : "e.g. inexhaustible"}" value="${escapeHTML(editingEntry?.term || "")}">`}</label>
     <label class="capture-field capture-meaning"><span>${isPersonal ? "Notes · optional" : "Meaning"}</span>${isPersonal ? `<textarea name="meaning" rows="2" placeholder="Add a cue only if it helps; no translation is required.">${escapeHTML(editingEntry?.meaning || "")}</textarea>` : `<input name="meaning" required autocomplete="off" placeholder="Short definition or Spanish cue" value="${escapeHTML(editingEntry?.meaning || "")}">`}</label>
-    ${supportsTopic ? `<label class="capture-field capture-topic"><span>Broad category <small>optional</small></span><input name="topic" list="vocabulary-topic-options" autocomplete="off" placeholder="e.g. Emotions & Reactions" value="${escapeHTML(topicValue)}"><datalist id="vocabulary-topic-options">${topics.map(item => `<option value="${escapeHTML(item.topic)}"></option>`).join("")}</datalist></label>` : `<input type="hidden" name="topic" value="${escapeHTML(topicValue)}">`}
     ${supportsExample ? `<label class="capture-field capture-example"><span>Example or context <small>optional</small></span><textarea name="example" rows="2" placeholder="A sentence you would actually use.">${escapeHTML(editingEntry?.example || "")}</textarea></label>` : ""}
     <button class="btn btn-primary capture-submit" type="submit">${editingEntry ? "Save changes" : `Add ${type.label.toLowerCase()}`}</button>
   </form>`;
@@ -1613,9 +1614,9 @@ function renderAdaptiveVocabularyFormHTML(editingEntry, entries) {
 function getVocabularyTableColumns(collectionKey) {
   if (collectionKey === "personal") return [{ key: "term", label: "Phrase or sentence", className: "term" }, { key: "meaning", label: "Notes", className: "notes" }];
   if (collectionKey === "wordFormation") return [{ key: "term", label: "Word / family", className: "term" }, { key: "meaning", label: "Meaning", className: "meaning" }];
-  if (collectionKey === "curated") return [{ key: "term", label: "Term", className: "term" }, { key: "meaning", label: "Meaning", className: "meaning" }, { key: "topic", label: "Category", className: "topic" }];
+  if (collectionKey === "curated") return [{ key: "term", label: "Term", className: "term" }, { key: "meaning", label: "Meaning", className: "meaning" }, { key: "example", label: "Example", className: "example" }];
   const noun = collectionKey === "patterns" ? "Pattern / collocation" : collectionKey === "idioms" ? "Expression" : "Term";
-  return [{ key: "term", label: noun, className: "term" }, { key: "meaning", label: collectionKey === "official" ? "Definition" : "Meaning", className: "meaning" }, { key: "example", label: "Example", className: "example" }, { key: "topic", label: "Category", className: "topic" }];
+  return [{ key: "term", label: noun, className: "term" }, { key: "meaning", label: collectionKey === "official" ? "Definition" : "Meaning", className: "meaning" }, { key: "example", label: "Example", className: "example" }];
 }
 
 function renderVocabularyTableHTML(entries, collectionKey) {
@@ -1691,8 +1692,6 @@ function saveVocabularyEntry(event) {
   const entryType = String(formData.get("entryType") || STATE.vocabularyEntryType || "general");
   const type = VOCABULARY_ENTRY_TYPES[entryType] || VOCABULARY_ENTRY_TYPES.general;
   const id = existing?.id || `custom-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-  const defaultTopic = entryType === "personal" ? "Personal vocabulary" : entryType === "wordFormation" ? "Word formation" : entryType === "patterns" ? "General patterns" : entryType === "idioms" ? "General idioms" : "General vocabulary";
-  const topic = String(formData.get("topic") || defaultTopic).trim() || defaultTopic;
   const entry = {
     id,
     term,
@@ -1702,8 +1701,6 @@ function saveVocabularyEntry(event) {
     families: [type.family],
     entryType,
     collection: existing ? getVocabularyCollection(existing) : type.collection,
-    topic,
-    topics: [topic],
     sources: existing?.sources || ["Personal entry"],
     notionPages: existing?.notionPages || [],
     updatedAt: Date.now()
@@ -1762,9 +1759,18 @@ function reviewCurrentVocabularySelection() {
   window.scrollTo({ top: 0 });
 }
 
+function getVocabularyAnswerTerm(entry) {
+  let value = String(entry.term || "").trim();
+  const familyMatch = value.match(/^\([^)]*\)\s*(.+)$/);
+  if (familyMatch) value = familyMatch[1];
+  value = value.replace(/\s*\([^)]*(?:no |noun|adj|verb|adverb)[^)]*\)\s*$/i, "").trim();
+  value = value.split(/\s+\/\s+|\/|::/)[0].trim();
+  return value || entry.term;
+}
+
 function findVocabularyClozeMatch(entry) {
   const example = entry.example || "";
-  const term = entry.term || "";
+  const term = getVocabularyAnswerTerm(entry);
   if (!example || !term) return null;
   const lowerExample = example.toLocaleLowerCase("en").replace(/[’‘]/g, "'");
   const lowerTerm = term.toLocaleLowerCase("en").replace(/[’‘]/g, "'");
@@ -1796,15 +1802,20 @@ function findVocabularyClozeMatch(entry) {
     }
   }
   for (const token of [...tokens].sort((a, b) => b.length - a.length)) {
-    if (token.length < 4) continue;
-    const tokenMatch = findExpandableMatch(token);
-    if (tokenMatch) return tokenMatch;
+    if (token.length < 3) continue;
+    const irregular = { catch: "caught", throw: "threw", swell: "swollen", get: "got" };
+    const variants = [token, irregular[token], token.endsWith("e") ? `${token.slice(0, -1)}ing` : `${token}ing`, `${token}ed`, `${token}s`].filter(Boolean);
+    for (const variant of variants) {
+      const tokenMatch = findExpandableMatch(variant);
+      if (tokenMatch) return tokenMatch;
+    }
   }
   return null;
 }
 
 function getReviewEligibleEntries(setup = STATE.vocabularyReviewSetup) {
   return getAllVocabularyEntries()
+    .filter(entry => getVocabularyCollection(entry) !== "personal")
     .filter(entry => setup.collection === "all" || getVocabularyCollection(entry) === setup.collection)
     .filter(entry => {
       if (setup.mode === "recognition" || setup.mode === "recall") return Boolean(entry.meaning);
@@ -1846,8 +1857,9 @@ function renderVocabularyReview() {
 
 function renderVocabularyReviewSetupHTML() {
   const setup = STATE.vocabularyReviewSetup;
+  if (setup.collection === "personal") setup.collection = "all";
   const entries = getAllVocabularyEntries();
-  const scopedEntries = entries.filter(entry => setup.collection === "all" || getVocabularyCollection(entry) === setup.collection);
+  const scopedEntries = entries.filter(entry => getVocabularyCollection(entry) !== "personal").filter(entry => setup.collection === "all" || getVocabularyCollection(entry) === setup.collection);
   const modeCounts = Object.fromEntries(["recognition", "recall", "context"].map(mode => [mode, getReviewEligibleEntries({ ...setup, mode }).length]));
   if (!modeCounts[setup.mode]) setup.mode = ["recognition", "recall", "context"].find(mode => modeCounts[mode]) || setup.mode;
   const eligible = getReviewEligibleEntries(setup);
@@ -1884,7 +1896,7 @@ function renderVocabularyReviewSetupHTML() {
           <div class="review-scope-controls single-control">
             <label><span>Collection</span><select onchange="setVocabularyReviewOption('collection',this.value)">
               <option value="all">All testable collections</option>
-              ${Object.entries(VOCABULARY_COLLECTIONS).map(([key, meta]) => `<option value="${key}" ${setup.collection === key ? "selected" : ""}>${meta.label} (${entries.filter(entry => getVocabularyCollection(entry) === key).length})</option>`).join("")}
+              ${Object.entries(VOCABULARY_COLLECTIONS).filter(([key]) => key !== "personal").map(([key, meta]) => `<option value="${key}" ${setup.collection === key ? "selected" : ""}>${meta.label} (${entries.filter(entry => getVocabularyCollection(entry) === key).length})</option>`).join("")}
             </select></label>
           </div>
         </div>
@@ -1944,7 +1956,7 @@ function renderVocabularyReviewSessionHTML() {
     <section class="review-session-shell">
       <div class="review-session-topbar">
         <button class="btn btn-secondary" onclick="exitVocabularyReviewSession()">End round</button>
-        <div class="review-progress-copy"><strong>${session.index + 1} / ${session.itemIds.length}</strong><span>${escapeHTML(collection?.shortLabel || "Vocabulary")} · ${escapeHTML(entry.topic || "General")}</span></div>
+        <div class="review-progress-copy"><strong>${session.index + 1} / ${session.itemIds.length}</strong><span>${escapeHTML(collection?.shortLabel || "Vocabulary")}</span></div>
         <div class="review-progress-track" aria-label="${progress}% complete"><span style="width:${progress}%"></span></div>
       </div>
       <article class="review-flashcard ${session.revealed ? "revealed" : ""}">
@@ -1975,7 +1987,7 @@ function renderVocabularyReviewSessionHTML() {
 function renderVocabularyReviewFront(entry, mode) {
   if (mode === "recognition") return `<h2>${escapeHTML(entry.term)}</h2>`;
   if (mode === "recall") {
-    return `${entry.meaning ? `<h2>${escapeHTML(entry.meaning)}</h2>` : ""}${entry.example ? `<blockquote>${escapeHTML(entry.example)}</blockquote>` : ""}`;
+    return entry.meaning ? `<h2>${escapeHTML(entry.meaning)}</h2>` : "";
   }
   const example = entry.example || "";
   const match = findVocabularyClozeMatch(entry);

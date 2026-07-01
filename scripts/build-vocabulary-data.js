@@ -202,7 +202,22 @@ for (const fileName of files) {
   rawEntries.push(...(pageNumber === "07" ? parsePersonalPage(filePath) : parseTablePage(filePath, pageNumber)));
 }
 
-const entries = mergeEntries(rawEntries);
+const enrichmentPath = path.resolve(__dirname, "..", "data", "vocabulary-enrichment.json");
+const enrichment = process.env.SKIP_VOCABULARY_ENRICHMENT === "1" || !fs.existsSync(enrichmentPath) ? {} : JSON.parse(fs.readFileSync(enrichmentPath, "utf8"));
+const entries = mergeEntries(rawEntries).map(entry => {
+  const override = enrichment[entry.id] || {};
+  return {
+    id: entry.id,
+    term: entry.term,
+    meaning: override.meaning || entry.meaning || "",
+    example: override.example || entry.example || "",
+    family: entry.family,
+    families: entry.families,
+    collection: override.collection || "",
+    sources: entry.sources,
+    notionPages: entry.notionPages
+  };
+});
 const stats = {
   imported: entries.length,
   raw: rawEntries.length,
