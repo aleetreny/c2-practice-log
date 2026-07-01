@@ -4,7 +4,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2021",
     "term": "(Abolish) Abolition",
     "meaning": "Abolición, prohibicion",
-    "example": "the abolition of capital punishment",
+    "example": "With the abolition of African slavery in 1863, workers were brought in from India and Java.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21,7 +21,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2050",
     "term": "(Absent(adj)) Absentees",
     "meaning": "Ausente (noun). Absence: ausencia",
-    "example": "In her notes, she chose ?) Absentees? as the most precise wording for the situation.",
+    "example": "A flu outbreak left twelve absentees in a class of thirty students.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -38,7 +38,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2097",
     "term": "(Absolve) Absolution",
     "meaning": "Absolucion",
-    "example": "In her notes, she chose ?Absolution? as the most precise wording for the situation.",
+    "example": "The priest read the prayers of absolution over Tom after hearing his confession.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -55,7 +55,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1988",
     "term": "(Abstain) Abstentions",
     "meaning": "Abstenciones",
-    "example": "In her notes, she chose ?Abstentions? as the most precise wording for the situation.",
+    "example": "The party charter passes with twenty-one votes against and four abstentions.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -72,7 +72,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2031",
     "term": "(Acquaint) Acquaintance",
     "meaning": "Conocido. Acquainted (with) es familiarizado con",
-    "example": "I have trouble remembering the names of all my acquaintances",
+    "example": "That topic is too intimate to share with casual acquaintances.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -89,7 +89,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2002",
     "term": "(Acquit) Acquittal",
     "meaning": "(Absolver) Absolucion",
-    "example": "In her notes, she chose ?Acquittal? as the most precise wording for the situation.",
+    "example": "The defence attorney did his best on behalf of Tom to secure his acquittal.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -106,7 +106,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1994",
     "term": "(Adhere) Adhesion",
     "meaning": "aderencia",
-    "example": "the adhesion of Seville was decisive",
+    "example": "The surgeon explained that scar-tissue adhesion could restrict movement after the operation.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -123,7 +123,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2011",
     "term": "(Advise) Advice",
     "meaning": "(Aconsejar) Consejo. Inadvisable",
-    "example": "In her notes, she chose ?Advice? as the most precise wording for the situation.",
+    "example": "It would be better for you not to ask him for advice.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -140,7 +140,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2053",
     "term": "(Allow) Allowance",
     "meaning": "paga, asignacion. Disallow: rechazar",
-    "example": "In her notes, she chose ?Allowance? as the most precise wording for the situation.",
+    "example": "The woman was asked to make allowance for the poor health of the baby.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -157,7 +157,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2055",
     "term": "(Alter) Alteration",
     "meaning": "Alteracion",
-    "example": "In her notes, she chose ?Alteration? as the most precise wording for the situation.",
+    "example": "Restoring and refurbishing the carousel and its animals after years of alterations was a slow, painstaking process.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -172,9 +172,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-2019",
-    "term": "(Amateur (n/a) ) Amateurishly",
+    "term": "(Amateur) Amateurishly",
     "meaning": "chapuceramente, de manera poco profesional (amateurish es negativo, mientras amateur es neutro)",
-    "example": "In her notes, she chose ?) Amateurishly? as the most precise wording for the situation.",
+    "example": "The shelves had been assembled so amateurishly that they tilted under the weight of a few paperbacks.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -191,7 +191,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2036",
     "term": "(Angle) Angular",
     "meaning": "anguloso. Angular face, con rasgos marcados.",
-    "example": "In her notes, she chose ?Angular? as the most precise wording for the situation.",
+    "example": "I noticed a tall, thin, angular man seated in an arm-chair by the fire.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -208,7 +208,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2057",
     "term": "(Annoy) Annoyance",
     "meaning": "Enfado",
-    "example": "In her notes, she chose ?Annoyance? as the most precise wording for the situation.",
+    "example": "Mary won the \"Annoyance to the Empire\" medal for the third year in a row.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -225,7 +225,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2009",
     "term": "(Apology) Apologetic",
     "meaning": "arrepentido (apologetically: arrepentidamente)",
-    "example": "an apologetic note",
+    "example": "People who know me say I'm overly apologetic and self-blaming.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -242,7 +242,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2075",
     "term": "(Appear) Appearance",
     "meaning": "Aparicion, apariencia.",
-    "example": "they try to keep up appearances",
+    "example": "We cannot separate the sheep from the goats by appearance.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -259,7 +259,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2086",
     "term": "(Appraise) Appraisal",
     "meaning": "Tasación",
-    "example": "In her notes, she chose ?Appraisal? as the most precise wording for the situation.",
+    "example": "The World Bank has begun appraisal of Laos’ controversial Nam Theun II hydroelectric project.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -274,9 +274,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-2105",
-    "term": "(Apprehesion) Apprehesive",
+    "term": "(Apprehension) Apprehensive",
     "meaning": "(Inquietud) Preocupado",
-    "example": "In her notes, she chose ?Apprehesive? as the most precise wording for the situation.",
+    "example": "She felt apprehensive about raising the safeguarding issue without knowing how the committee would react.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -293,7 +293,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2070",
     "term": "(Argue) Argument",
     "meaning": "discusion, argumento. Arguably",
-    "example": "In her notes, she chose ?Argument? as the most precise wording for the situation.",
+    "example": "Your argument is not any more convincing than that of my stubborn father.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -310,7 +310,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2023",
     "term": "(Art) Artful",
     "meaning": "Astuto, si es Artistic es artistico.",
-    "example": "the artful dodger",
+    "example": "Tom is such an artful dodger that he always finds a way to get out of trouble.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -327,7 +327,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1990",
     "term": "(Automatic) Automaton",
     "meaning": "Automata",
-    "example": "In her notes, she chose ?Automaton? as the most precise wording for the situation.",
+    "example": "The time is coming when human workers may be replaced by automatons.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -344,7 +344,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2012",
     "term": "(Avoid) Unavoidable",
     "meaning": "Inevitable",
-    "example": "an unavoidable accident",
+    "example": "The strangest thing is that he saved his arch enemy from an unavoidable death.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -361,7 +361,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2073",
     "term": "(Believe) Disbelief",
     "meaning": "Incredulidad. stare in disbelief",
-    "example": "In her notes, she chose ?Disbelief? as the most precise wording for the situation.",
+    "example": "In order to enjoy the speech, you need to start by suspending your disbelief.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -378,7 +378,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2077",
     "term": "(Betray) Betrayal",
     "meaning": "Traiccion",
-    "example": "In her notes, she chose ?Betrayal? as the most precise wording for the situation.",
+    "example": "This is a story full of intrigue, love, betrayal and secrets.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -395,7 +395,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2080",
     "term": "(Breath) Breathless",
     "meaning": "Sin aliento.",
-    "example": "In her notes, she chose ?Breathless? as the most precise wording for the situation.",
+    "example": "In my fantasies, our bodies intertwine, creating an intense connection that leaves me breathless.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -412,7 +412,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2119",
     "term": "(Breed) Cross-breeding",
     "meaning": "Cruces (entre animales)",
-    "example": "In her notes, she chose ?Cross-breeding? as the most precise wording for the situation.",
+    "example": "Many herds also show some evidence of cattle gene introgression from early 19th century cross-breeding with domestic cattle.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -429,7 +429,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2022",
     "term": "(Clean) Cleanliness",
     "meaning": "limpieza",
-    "example": "In her notes, she chose ?Cleanliness? as the most precise wording for the situation.",
+    "example": "I was also impressed with the school's cleanliness and the students' pride in it.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -444,9 +444,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-2082",
-    "term": "(Command) Commandements",
+    "term": "(Command) Commandments",
     "meaning": "mandamientos",
-    "example": "In her notes, she chose ?Commandements? as the most precise wording for the situation.",
+    "example": "The prohibition against bearing false witness is one of the Ten Commandments.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -463,7 +463,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2091",
     "term": "(Compulsion) Compulsory",
     "meaning": "(Obligacion) obligatorio",
-    "example": "in most schools physical education is compulsory",
+    "example": "In South Korea, compulsory military service lasts between 21 and 24 months.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -480,7 +480,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1999",
     "term": "(Conceal) Concealment",
     "meaning": "Ocultacion",
-    "example": "In her notes, she chose ?Concealment? as the most precise wording for the situation.",
+    "example": "The concealment of facts by a witness is a criminal offense.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -497,7 +497,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2010",
     "term": "(Concede) Concessions",
     "meaning": "Concesiones",
-    "example": "In her notes, she chose ?Concessions? as the most precise wording for the situation.",
+    "example": "Unless they manage to force the company to make the necessary concessions, they should give up hope.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -514,7 +514,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2090",
     "term": "(Conceive) Inconceivable",
     "meaning": "Inconcebible. Conception, conceptual, misconception",
-    "example": "In her notes, she chose ?Inconceivable? as the most precise wording for the situation.",
+    "example": "It's inconceivable that you would talk on the phone whilst behind the wheel.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -531,7 +531,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2059",
     "term": "(Consequence) Consequential",
     "meaning": "Derivado de / con consecuencias importantes",
-    "example": "the year's only really consequential legislation",
+    "example": "All elections are important. But we know in our bones this one is more consequential.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -548,7 +548,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2081",
     "term": "(Constant) Constancy",
     "meaning": "Constancia",
-    "example": "In her notes, she chose ?Constancy? as the most precise wording for the situation.",
+    "example": "Dripping water wears away a stone not with its strength, but with its constancy.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -565,7 +565,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2056",
     "term": "(Contempt) Contemptuous",
     "meaning": "Condescenciente. Contemptible act",
-    "example": "In her notes, she chose ?Contemptuous? as the most precise wording for the situation.",
+    "example": "Most scientists are contemptuous of reports that aliens from outer space have landed on the Earth.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -582,7 +582,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1995",
     "term": "(Courage) Encouragement",
     "meaning": "animo",
-    "example": "In her notes, she chose ?Encouragement? as the most precise wording for the situation.",
+    "example": "In spite of our encouragement, he decided to throw in the towel.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -599,7 +599,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1991",
     "term": "(Curse) Accursed",
     "meaning": "Maldito, detestable",
-    "example": "In her notes, she chose ?Accursed? as the most precise wording for the situation.",
+    "example": "The idol of fear will survive in this accursed realm a thousand years.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -616,7 +616,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2109",
     "term": "(Deception) Deceptive",
     "meaning": "(Engaño) Engañoso.",
-    "example": "the deceptive calm in the eye of the storm",
+    "example": "The relative calm that we've experienced in the last few years is deceptive.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -633,7 +633,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2018",
     "term": "(Defend) Indefensible",
     "meaning": "injustificable",
-    "example": "In her notes, she chose ?Indefensible? as the most precise wording for the situation.",
+    "example": "They're hiding it from you because what they did is indefensible.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -650,7 +650,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2083",
     "term": "(Defy) Defiance",
     "meaning": "Desobediencia directa. Defiant: desafiante",
-    "example": "In her notes, she chose ?Defiance? as the most precise wording for the situation.",
+    "example": "There was a sort of sulky defiance in her eyes, which only goes with guilty knowledge.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -667,7 +667,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2000",
     "term": "(Descend) Descent",
     "meaning": "Descenso",
-    "example": "In her notes, she chose ?Descent? as the most precise wording for the situation.",
+    "example": "Once at the summit enjoy the vista, then on the descent reap the benefits of your hard work.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -684,7 +684,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2078",
     "term": "(Despair) Desperate",
     "meaning": "Desesperado (attempt)",
-    "example": "a desperate illness",
+    "example": "The young man must have felt very desperate when he resorted to such a terrible act.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -701,7 +701,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1985",
     "term": "(Dismissed) dismissive",
     "meaning": "que lo rechaza sin considerarlo seriamente",
-    "example": "they took dismissive action after the third violation",
+    "example": "We didn't know how to interpret the dismissive gesture that Tom made with his hands.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -718,7 +718,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2122",
     "term": "(Divert) Diversion",
     "meaning": "Distraccion. Diverting: divertido",
-    "example": "In her notes, she chose ?Diversion? as the most precise wording for the situation.",
+    "example": "A diversion is in effect around roadworks in the city centre.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -735,7 +735,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2063",
     "term": "(Dizzy) Dizziness",
     "meaning": "Mareo",
-    "example": "In her notes, she chose ?Dizziness? as the most precise wording for the situation.",
+    "example": "I felt a wave of dizziness, and when I looked up, Tom was gone.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -752,7 +752,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2114",
     "term": "(Doubt) Doubter",
     "meaning": "Esceptico, la persona que duda.",
-    "example": "In her notes, she chose ?Doubter? as the most precise wording for the situation.",
+    "example": "I was charmed with it, adopted it, dropped my abrupt contradiction and positive argumentation, and put on the humble inquirer and doubter.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -769,7 +769,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2116",
     "term": "(Doubt) Undoubtedly (no undoubtfully)",
     "meaning": "Sin duda = Doubtless. Undoubted: indiscutible, doubtful: dudoso",
-    "example": "it's undoubtedly very beautiful",
+    "example": "The most important figure of mathematics of the nineteenth century is, undoubtedly, Gauss.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -786,7 +786,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2027",
     "term": "(Dull) Dullness",
     "meaning": "(aburrido) Aburrimiento, monotonia",
-    "example": "the dullness of the pencil made his writing illegible",
+    "example": "Is the fact that the meaning of our own sentences escapes us a sign of ingenuity or dullness?",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -803,7 +803,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2084",
     "term": "(Empire) Imperial",
     "meaning": "Imperial. Imperialism. Emperor",
-    "example": "golden age of imperial splendor",
+    "example": "Godzilla will never ever destroy the Imperial Palace nor the signboards of the sponsoring companies.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -820,7 +820,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2110",
     "term": "(Enter) Entry",
     "meaning": "Entrada (de diario), entry fee, entry requirements. Entrance: lugar de entrada, main entrance. Entrant: participante.",
-    "example": "In her notes, she chose ?Entry? as the most precise wording for the situation.",
+    "example": "Her name came up in 42 separate entries in a Google search.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -837,7 +837,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1979",
     "term": "(Evolve) Evolutionary",
     "meaning": "evolutionary tree of life, nunca se usa evolutive",
-    "example": "evolutionary biology",
+    "example": "The popular conception of evolutionary psychology is even less scientific than the discipline itself.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -854,7 +854,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1992",
     "term": "(Exclude) Exclusive (to)",
     "meaning": "exclusivo (de)",
-    "example": "In her notes, she chose ?Exclusive (to)? as the most precise wording for the situation.",
+    "example": "I’m not comfortable with the idea of being exclusive to one partner.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -871,7 +871,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1997",
     "term": "(Exhaustion) Inexhaustible",
     "meaning": "Inagotable",
-    "example": "an inexhaustible supply of coal",
+    "example": "Words are, in my not humble opinion, our inexhaustible source of magic, capable of hurting and healing.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -888,7 +888,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2001",
     "term": "(Expel) Expulsion",
     "meaning": "(Expulsar) Expulsion",
-    "example": "In her notes, she chose ?Expulsion? as the most precise wording for the situation.",
+    "example": "The UN Committee on the Elimination of Racial Discrimination calls collective expulsions a violation under international law.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -905,7 +905,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2041",
     "term": "(Face) Facial",
     "meaning": "Facial",
-    "example": "In her notes, she chose ?Facial? as the most precise wording for the situation.",
+    "example": "I have a facial boil. There's a painful lump at the back of one nostril.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -922,7 +922,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2062",
     "term": "(Fact) Factual",
     "meaning": "Basado en los hecho, objetivo.",
-    "example": "factual considerations",
+    "example": "Tom can give factual statements in French, but he can't discuss abstract concepts.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -939,7 +939,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2106",
     "term": "(False) Falsehood",
     "meaning": "Falsedad",
-    "example": "In her notes, she chose ?Falsehood? as the most precise wording for the situation.",
+    "example": "There has a ring of falsehood in his story.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -956,7 +956,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2017",
     "term": "(Fix) Fixation",
     "meaning": "Obsesion",
-    "example": "In her notes, she chose ?Fixation? as the most precise wording for the situation.",
+    "example": "Tom has a strange fixation to potato salad.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -973,7 +973,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1982",
     "term": "(Foot) Footing",
     "meaning": "situacion. On equal footing",
-    "example": "In her notes, she chose ?Footing? as the most precise wording for the situation.",
+    "example": "The sound footing of his book were interviews with more than 500 millionaires and billionaires.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -990,7 +990,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2121",
     "term": "(Fore) Foremost",
     "meaning": "Principal. The foremost expert: el principal experto. Fore es “por adelantado”: Foresee, forecast, forewarn",
-    "example": "In her notes, she chose ?Foremost? as the most precise wording for the situation.",
+    "example": "We need peace and stability first and foremost - these are the most important things.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1007,7 +1007,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2066",
     "term": "(Grace) Graceful",
     "meaning": "Elegancia en movimiento. She walked gracefully into the room. She graciously welcomed everyone: Cortes",
-    "example": "In her notes, she chose ?Graceful? as the most precise wording for the situation.",
+    "example": "The spectators were moved by her graceful performance.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1024,7 +1024,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2006",
     "term": "(Grieve) Aggrieved",
     "meaning": "ofendido (grieve: ofender, grief: ofensa, grievous: muy dañino)",
-    "example": "In her notes, she chose ?Aggrieved? as the most precise wording for the situation.",
+    "example": "I felt fine this morning until I noticed what they'd done to me. I'm feeling so aggrieved.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1041,7 +1041,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2024",
     "term": "(Haste) Hasten",
     "meaning": "(Prisa) Apresurar",
-    "example": "In her notes, she chose ?Hasten? as the most precise wording for the situation.",
+    "example": "Hasten slowly, and without losing heart, put your work twenty times upon the anvil.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1058,7 +1058,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2038",
     "term": "(Hate) Hatred",
     "meaning": "Odio",
-    "example": "In her notes, she chose ?Hatred? as the most precise wording for the situation.",
+    "example": "Suddenly, there was a period of terrible violence and hatred between blacks and whites.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1075,7 +1075,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2076",
     "term": "(Head) Behead",
     "meaning": "Decapitar",
-    "example": "the French King was beheaded during the Revolution",
+    "example": "Many revolutionaries have been beheaded by the axe of a guillotine.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1092,7 +1092,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2095",
     "term": "(Hell) Hellish",
     "meaning": "Infernal",
-    "example": "hellish torture",
+    "example": "The pile driver is destroying the peaceful morning with a hellish racket.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1109,7 +1109,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2008",
     "term": "(Hinder) Hindrance",
     "meaning": "(Obstaculizar) Obstaculo",
-    "example": "In her notes, she chose ?Hindrance? as the most precise wording for the situation.",
+    "example": "These learning materials are less of a help to pupils and more of a hindrance.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1126,7 +1126,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2071",
     "term": "(Idle) Idleness",
     "meaning": "(Inactivo) Inactividad. Idleness can lead to boredom.",
-    "example": "In her notes, she chose ?Idleness? as the most precise wording for the situation.",
+    "example": "If it were not for his idleness, he would be a nice fellow.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1141,9 +1141,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-1986",
-    "term": "(Impression) impresssionable",
+    "term": "(Impression) Impressionable",
     "meaning": "influenciable, same as suggestible",
-    "example": "In her notes, she chose ?impresssionable? as the most precise wording for the situation.",
+    "example": "Impressionable teenagers can be particularly vulnerable to influencers promoting extreme diets.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1160,7 +1160,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2039",
     "term": "(Inquire) Inquiry",
     "meaning": "Consulta. Tambien esta inquisitive: curioso.",
-    "example": "In her notes, she chose ?Inquiry? as the most precise wording for the situation.",
+    "example": "Thank you very much if the shipment has already been made and please disregard this inquiry.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1177,7 +1177,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2092",
     "term": "(Intrige) Intriguing",
     "meaning": "Intrigante",
-    "example": "our team came up with some most intriguing finds",
+    "example": "This is a highly intriguing phenomenon that will likely be the subject of much research.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1194,7 +1194,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1989",
     "term": "(Invent) Inventive",
     "meaning": "Inventivo, ingenioso",
-    "example": "In her notes, she chose ?Inventive? as the most precise wording for the situation.",
+    "example": "Butterflies are just flowers that took flight on a feast day when nature was particularly inventive and fruitful.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1211,7 +1211,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2103",
     "term": "(Lead) Misled",
     "meaning": "Pasado de lead, engaño. Leadership, Misleading",
-    "example": "In her notes, she chose ?Misled? as the most precise wording for the situation.",
+    "example": "Jugurtha was purposely misled by his father-in-law, Bocchus.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1228,7 +1228,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2093",
     "term": "(Line) Lineage",
     "meaning": "Linaje. Underline",
-    "example": "In her notes, she chose ?Lineage? as the most precise wording for the situation.",
+    "example": "Speaking a language or living somewhere doesn't mean belonging to a certain genetic lineage.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1245,7 +1245,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2014",
     "term": "(Master) Mastery",
     "meaning": "Maestria, dominio",
-    "example": "In her notes, she chose ?Mastery? as the most precise wording for the situation.",
+    "example": "Many people say that learning a foreign language requires mastery of vocabulary and grammar.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1260,9 +1260,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-2020",
-    "term": "(Mean) meannes",
+    "term": "(Mean) Meanness",
     "meaning": "mezquindad",
-    "example": "In her notes, she chose ?meannes? as the most precise wording for the situation.",
+    "example": "He didn't do that out of meanness, but rather out of absent-mindedness.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1279,7 +1279,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2005",
     "term": "(Mercy) Mercilessly",
     "meaning": "despiadamente, (merciless: despiadado) (merci: misericordia, compasion) (merciful: misericordioso)",
-    "example": "he was mercilessly trounced by his opponent in the House",
+    "example": "When I transform into a rabbit, I mercilessly hug people.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1294,9 +1294,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-2046",
-    "term": "(Method) Methodical (man)",
+    "term": "(Method) Methodical",
     "meaning": "Metodico. Methodology: metodologia",
-    "example": "In her notes, she chose ?Methodical (man)? as the most precise wording for the situation.",
+    "example": "Tom doesn't seem to be as methodical as Mary seems to be.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1313,7 +1313,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2004",
     "term": "(Mimic) Mimicry",
     "meaning": "mimetismo, imitacion (mimica es mime (n/a))",
-    "example": "In her notes, she chose ?Mimicry? as the most precise wording for the situation.",
+    "example": "One of the key components of empathy is what scientists call facial mimicry.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1328,9 +1328,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-2025",
-    "term": "(Minimun) Minimal effort",
+    "term": "(Minimum) Minimal effort",
     "meaning": "(el minimo (sus)) minimo esfuerzo (adj)",
-    "example": "In her notes, she chose ?Minimal effort? as the most precise wording for the situation.",
+    "example": "The landlord made only a minimal effort to repair the leak, placing a bucket beneath it and leaving.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1347,7 +1347,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2051",
     "term": "(Miracle) Miraculous",
     "meaning": "milagroso",
-    "example": "In her notes, she chose ?Miraculous? as the most precise wording for the situation.",
+    "example": "What miraculous sign can you show us to prove your authority to do all this?",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1364,7 +1364,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2054",
     "term": "(Mischief) Mischievous",
     "meaning": "(Travesura) Travieso. Con tendencia a meterse en lios",
-    "example": "mischievous rumors and falsehoods",
+    "example": "It is true the boy is mischievous, but he is kind at heart.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1381,7 +1381,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2065",
     "term": "(Moist) Moisture",
     "meaning": "Humedad",
-    "example": "In her notes, she chose ?Moisture? as the most precise wording for the situation.",
+    "example": "Plant growth and productivity react sharply to a complex combination of temperature and moisture.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1398,7 +1398,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2013",
     "term": "(Moment) Momentous",
     "meaning": "trascendente, de enorme importancia",
-    "example": "a momentous event",
+    "example": "The discovery will have a momentous effect on the treatment of cancer.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1415,7 +1415,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2029",
     "term": "(Moral) immoral",
     "meaning": "tambien esta amoral, que no es negativo, sino ausente de moral, como un huracan.",
-    "example": "they considered colonialism immoral",
+    "example": "The immoral cannot be made moral through the use of secret law.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1432,7 +1432,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2048",
     "term": "(Mount) Insurmountable",
     "meaning": "insuperable. Viene de Surmount: superar obstaculos.",
-    "example": "In her notes, she chose ?Insurmountable? as the most precise wording for the situation.",
+    "example": "The odds were seemingly insurmountable but he overcame them to win the presidency.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1447,9 +1447,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-2047",
-    "term": "(Mount) Mountanious",
+    "term": "(Mount) Mountainous",
     "meaning": "Montañoso",
-    "example": "In her notes, she chose ?Mountanious? as the most precise wording for the situation.",
+    "example": "The mountainous interior is sparsely populated and almost inaccessible during winter.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1466,7 +1466,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2089",
     "term": "(Mourn) Mourning",
     "meaning": "(Llorar la muerte de alguien) Luto. Mournful: triste",
-    "example": "In her notes, she chose ?Mourning? as the most precise wording for the situation.",
+    "example": "Tom was still mourning his daughter Mary who had died in a car accident.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1483,7 +1483,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2016",
     "term": "(Mouth) Mouthful",
     "meaning": "bocado, cantidad que cabe en la boca",
-    "example": "In her notes, she chose ?Mouthful? as the most precise wording for the situation.",
+    "example": "The rider untied a water bottle from his saddle and gulped down a few mouthfuls.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1500,7 +1500,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2067",
     "term": "(Movement) Movable",
     "meaning": "Movible. Immovable",
-    "example": "In her notes, she chose ?Movable? as the most precise wording for the situation.",
+    "example": "There is also a reproduction of the costume from the 1954 film \"Creature from the Black Lagoon,\" with movable gills.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1517,7 +1517,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2104",
     "term": "(Nightmare) Nightmarish",
     "meaning": "Terrorificos, propio de una pesadilla",
-    "example": "In her notes, she chose ?Nightmarish? as the most precise wording for the situation.",
+    "example": "Bruno had a nightmarish story to tell.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1534,7 +1534,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2117",
     "term": "(Ordinary) Extraordinary",
     "meaning": "No existe Unordinary",
-    "example": "an ambassador extraordinary",
+    "example": "Two hundred fifty kilograms is an extraordinary weight even for a sumo wrestler.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1551,7 +1551,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2033",
     "term": "(Parent) Parental",
     "meaning": "Parental (care). Parenthood es mas bien para “challenges of parenhood”: paternidad",
-    "example": "parental guidance",
+    "example": "We try to set a good example providing my staff with 12 weeks of paid parental leave.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1568,7 +1568,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1996",
     "term": "(Pass) Impassable",
     "meaning": "impasable, intransitable",
-    "example": "In her notes, she chose ?Impassable? as the most precise wording for the situation.",
+    "example": "Many roads are impassable, so UN aid workers are unable to reach people easily.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1585,7 +1585,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2060",
     "term": "(Pathos) Pathetic",
     "meaning": "(Compasion: sense of pathos), digno de merecer compasion, patetico.",
-    "example": "In her notes, she chose ?Pathetic? as the most precise wording for the situation.",
+    "example": "You know you're in pathetic shape when you can't even do one chin-up.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1602,7 +1602,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2064",
     "term": "(Piece) Piecemeal",
     "meaning": "gradual, por partes, a piecemeal reform. Apiece = cada uno: te teams scored one goal apice.",
-    "example": "the research structure has developed piecemeal",
+    "example": "He said that the piecemeal solution of the government will not work.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1619,7 +1619,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2015",
     "term": "(Pollute) Pollutants",
     "meaning": "Contaminantes",
-    "example": "In her notes, she chose ?Pollutants? as the most precise wording for the situation.",
+    "example": "Pollutants like this derive mainly from the combustion of fuel in car engines.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1636,7 +1636,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2100",
     "term": "(Post) Postage",
     "meaning": "Gastos de envio. Postage costs. Postal service",
-    "example": "In her notes, she chose ?Postage? as the most precise wording for the situation.",
+    "example": "Be like a postage stamp. Stick to one thing until you get there.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1653,7 +1653,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1981",
     "term": "(Power) Empower",
     "meaning": "empoderar",
-    "example": "In her notes, she chose ?Empower? as the most precise wording for the situation.",
+    "example": "Women need to feel empowered to do whichever kind of job they want to do.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1670,7 +1670,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2030",
     "term": "(Prince) principality",
     "meaning": "principado",
-    "example": "In her notes, she chose ?principality? as the most precise wording for the situation.",
+    "example": "The Principality of Liechtenstein was established within the Holy Roman Empire in 1719.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1687,7 +1687,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2108",
     "term": "(Proceed) Proceedings",
     "meaning": "Procedimientos. Procedure: safety procedure",
-    "example": "In her notes, she chose ?Proceedings? as the most precise wording for the situation.",
+    "example": "Before initiating proceedings against Bartłomiej Z., the prosecutor's office first had to prove his sanity.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1704,7 +1704,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2032",
     "term": "(Rear) Rearing",
     "meaning": "Crianza",
-    "example": "In her notes, she chose ?Rearing? as the most precise wording for the situation.",
+    "example": "Researchers have been capturing coral spawn and rearing millions of larvae in large tanks.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1721,7 +1721,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2069",
     "term": "(Rebel) Rebellion",
     "meaning": "(Rebelde, rebelarse) Rebelion. Rebellious",
-    "example": "In her notes, she chose ?Rebellion? as the most precise wording for the situation.",
+    "example": "The speaker tried to incite the people to rebellion.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1738,7 +1738,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2035",
     "term": "(Recognise) Recognition",
     "meaning": "Reconocimiento",
-    "example": "he was unable to make his motion because he couldn't get recognition by the chairman",
+    "example": "In order to gain media recognition, sometimes AIDS patients have to push themselves into the public eye.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1755,7 +1755,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2094",
     "term": "(Red) Reddish",
     "meaning": "Rojizo. Redden: enrojecer, Redness: enrojecimiento",
-    "example": "In her notes, she chose ?Reddish? as the most precise wording for the situation.",
+    "example": "The reddish appearance of Mars is believed to be caused by an iron-rich soil.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1772,7 +1772,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2074",
     "term": "(Rehearse) Rehearsal",
     "meaning": "Ensayo",
-    "example": "In her notes, she chose ?Rehearsal? as the most precise wording for the situation.",
+    "example": "We had a dress rehearsal for the dance show the morning before opening night.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1789,7 +1789,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2037",
     "term": "(Remain) Remainder",
     "meaning": "Resto, remanente.",
-    "example": "The publisher remaindered the books",
+    "example": "They cut the fins and tossed back the remainder of the living shark in the ocean.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1806,7 +1806,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2034",
     "term": "(Resolution) Irresolute",
     "meaning": "Indeciso. ontrario de Resolute: decidido, firme",
-    "example": "the committee was timid and mediocre and irresolute",
+    "example": "Hiromi sat irresolute at the voting booth, rereading the propositions without feeling convinced either way.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1823,7 +1823,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1983",
     "term": "(Resource) resourcefulness",
     "meaning": "ingenio, capacidad resolutiva",
-    "example": "In her notes, she chose ?resourcefulness? as the most precise wording for the situation.",
+    "example": "Use your resourcefulness to find creative solutions.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1840,7 +1840,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2107",
     "term": "(Respectable) Respectability",
     "meaning": "Respetabilidad. A desire for respectability. Disrespect",
-    "example": "In her notes, she chose ?Respectability? as the most precise wording for the situation.",
+    "example": "He has an air of respectability about him.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1857,7 +1857,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2045",
     "term": "(Restrain) Restraint",
     "meaning": "Moderacion",
-    "example": "the car did not have proper restraints fitted",
+    "example": "In such a case, restraints in fiscal policy must be brought into play.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1874,7 +1874,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2058",
     "term": "(Resume) Resumption",
     "meaning": "Reanudacion",
-    "example": "In her notes, she chose ?Resumption? as the most precise wording for the situation.",
+    "example": "I look forward to the resumption of normal traffic patterns once the bridge is repaired.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1891,7 +1891,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2096",
     "term": "(Retain) Retention",
     "meaning": "Retencion",
-    "example": "In her notes, she chose ?Retention? as the most precise wording for the situation.",
+    "example": "Continuous practice allows for the retention of grammar rules, sentence structures, and idiomatic expressions.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1908,7 +1908,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2099",
     "term": "(Reveal) Revelatory",
     "meaning": "Que cambia tu comprension. Revealing es mas como revelador, que revela informacion.",
-    "example": "In her notes, she chose ?Revelatory? as the most precise wording for the situation.",
+    "example": "Her revelatory account exposes how executives concealed the fault from safety inspectors.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1925,7 +1925,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2026",
     "term": "(Sanity) insane",
     "meaning": "loco, sin cordura",
-    "example": "took insane risks behind the wheel",
+    "example": "Are you insane for you to stay up all night playing cards?",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1942,7 +1942,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1998",
     "term": "(Scene) Scenic",
     "meaning": "Pintoresco",
-    "example": "scenic design",
+    "example": "We went for a scenic drive as far as Lake Superior.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1959,7 +1959,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2120",
     "term": "(See) Sightings",
     "meaning": "Avistamientos. Eyesight: vista. Foresight: prevision. Sightless: ciego",
-    "example": "In her notes, she chose ?Sightings? as the most precise wording for the situation.",
+    "example": "Ziri placed some cameras in the areas where strange sightings occured in the woods.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1976,7 +1976,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2079",
     "term": "(Shake) Shaky",
     "meaning": "Tembloroso, inestable.",
-    "example": "a shaky marriage",
+    "example": "Tom is on pretty shaky ground as it is.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -1993,7 +1993,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2040",
     "term": "(Shame) Ashamed",
     "meaning": "Avengonzado. Shameful (vergonzoso)",
-    "example": "are you ashamed for having lied?",
+    "example": "Harry is ashamed of having lied to Sally.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2010,7 +2010,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2112",
     "term": "(Solitude) Solitary",
     "meaning": "Solitario. Solitary walk",
-    "example": "a solitary retreat",
+    "example": "If you are idle, be not solitary, if you are solitary, be not idle.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2027,7 +2027,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1984",
     "term": "(Speak) outspoken",
     "meaning": "directo, franco, que dice lo que piensa",
-    "example": "it is possible to be outspoken without being rude",
+    "example": "Hector's uncommonly brash and outspoken today. He's usually deathly quiet.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2044,7 +2044,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2118",
     "term": "(Spring) Offspring",
     "meaning": "descendencia",
-    "example": "In her notes, she chose ?Offspring? as the most precise wording for the situation.",
+    "example": "If the cat eats her own offspring, why would she let a rat get away?",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2061,7 +2061,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2003",
     "term": "(Star) Stardom",
     "meaning": "Fama",
-    "example": "stardom meant nothing to her",
+    "example": "She rose to stardom when she was just twelve.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2078,7 +2078,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2113",
     "term": "(Stiff) Stiffen",
     "meaning": "(Rigido) Ponerse rigido.",
-    "example": "stiffen the regulations",
+    "example": "She felt him stiffen in surprise when he heard the news.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2095,7 +2095,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1980",
     "term": "(Submit) Submissively",
     "meaning": "con sumisión, sin oponer resistencia",
-    "example": "In her notes, she chose ?Submissively? as the most precise wording for the situation.",
+    "example": "He nodded submissively, although it was obvious that he strongly disagreed with the decision.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2112,7 +2112,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2098",
     "term": "(Sudden) Suddenness",
     "meaning": "(Repentino, Brusco) Brusquedad",
-    "example": "In her notes, she chose ?Suddenness? as the most precise wording for the situation.",
+    "example": "With dramatic suddenness he struck a match, and by its light exposed a stain of blood upon the whitewashed wall.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2129,7 +2129,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2102",
     "term": "(Sustain) Sustenance",
     "meaning": "Sustento",
-    "example": "they were in want of sustenance",
+    "example": "Tom kept two or three cows for the sustenance of his family.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2163,7 +2163,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2072",
     "term": "(Thought) Thoughtless",
     "meaning": "No pensaste bien en las consecuencias, poco reflexivo",
-    "example": "the thoughtless saying of a great princess on being informed that the people had no bread; `Let them eat cake'",
+    "example": "The movie star ate crow many times because of all the thoughtless things she said.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2180,7 +2180,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2068",
     "term": "(Threat) Threaten",
     "meaning": "Amenazar. Threatening",
-    "example": "The clouds threaten rain",
+    "example": "Management has threatened to lock out the workforce if they do not accept the proposed changes.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2197,7 +2197,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2085",
     "term": "(Tobacco) Tobacconist",
     "meaning": "Tabaqueria",
-    "example": "In her notes, she chose ?Tobacconist? as the most precise wording for the situation.",
+    "example": "People used to buy their smokes at a tobacconist. Now they buy them at a convenience store.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2214,7 +2214,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2061",
     "term": "(Touch) Touching",
     "meaning": "Conmovedor. Touchy: susceptible, delicado.",
-    "example": "his gratitude was simple and touching",
+    "example": "Her touching account of the reunion moved several listeners to tears.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2231,7 +2231,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2007",
     "term": "(Trouble) Troublesome",
     "meaning": "problematico",
-    "example": "a troublesome infection",
+    "example": "It's troublesome that Internet Explorer's stop icon looks like a shiitake mushroom.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2248,7 +2248,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2101",
     "term": "(Tyrant) Tyrannical",
     "meaning": "Tiranico. Tyranny",
-    "example": "a tyrannical government",
+    "example": "He liked to blame most of his faults and misfortunes on a tyrannical father.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2265,7 +2265,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2052",
     "term": "(Understand) Misunderstanding",
     "meaning": "Malententido",
-    "example": "there must be some misunderstanding--I don't have a sister",
+    "example": "I find it apt to cause misunderstanding that society confers such emotional privileges upon youth.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2282,7 +2282,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2028",
     "term": "(Upheave) Upheaval",
     "meaning": "(levantar rapidamente) conmocion",
-    "example": "In her notes, she chose ?Upheaval? as the most precise wording for the situation.",
+    "example": "The Industrial Revolution caused a great upheaval in society.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2299,7 +2299,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2049",
     "term": "(Victory) Victorious",
     "meaning": "Victorioso",
-    "example": "In her notes, she chose ?Victorious? as the most precise wording for the situation.",
+    "example": "After a war, always, the victorious side is right and the vanquished side is wrong.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2316,7 +2316,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2111",
     "term": "(Vision) Visionary",
     "meaning": "visionario. Invisible. Envision: imaginar",
-    "example": "visionary schemes for getting rich",
+    "example": "In Germany, writers who are not linguistically up to their worldview are called visionaries.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2333,7 +2333,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2044",
     "term": "(War) Warfare",
     "meaning": "Guerra, forma de hacer guerra. Modern warfare, naval warfare. Warlike es agresivo, inclinado a la guerra.",
-    "example": "diplomatic warfare",
+    "example": "Modern warfare often results in the indiscriminate killing of combatants and innocent civilians alike.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2350,7 +2350,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1993",
     "term": "(Warm) Warmth",
     "meaning": "calidez",
-    "example": "In her notes, she chose ?Warmth? as the most precise wording for the situation.",
+    "example": "In other words, reliability is impossible unless there is a natural warmth.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2367,7 +2367,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2043",
     "term": "(Will) Willingness (to)",
     "meaning": "disposicion. Unwilling to change (poco dispuesto a )",
-    "example": "In her notes, she chose ?Willingness (to)? as the most precise wording for the situation.",
+    "example": "Patriotism is the willingness to kill and be killed for trivial reasons.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2384,7 +2384,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2042",
     "term": "(Worth) Worthwhile",
     "meaning": "Que merece la pena. Worthy necesita ir seguido de OF. A worthwhile investment, worthy of praise",
-    "example": "a worthwhile book",
+    "example": "It is worthwhile to have a try at it.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2401,7 +2401,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2088",
     "term": "(Young) Youngster",
     "meaning": "Chaval, joven",
-    "example": "`tiddler' is a British term for youngster",
+    "example": "With the help of earphones, amplifiers, and hearing aids, some youngsters can hear the music.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2418,7 +2418,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2087",
     "term": "(Zeal) Zealous",
     "meaning": "(Entusiasmo) Entusiasmado. Con energia y dedicacion. Zealot: fanatico.",
-    "example": "In her notes, she chose ?Zealous? as the most precise wording for the situation.",
+    "example": "Tom was a bit too zealous about the questionable tradition of Zwarte Piet.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -2435,7 +2435,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0043",
     "term": "A bit down in the dumps",
     "meaning": "(despondent) decaído, desanimado",
-    "example": "During the discussion, she used the expression ?A bit down in the dumps? to make her point.",
+    "example": "I’ve been a bit down in the dumps since my closest colleague moved abroad.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -2452,7 +2452,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0171",
     "term": "A bit of a grey area",
     "meaning": "algo que no está claramente definido o es ambiguo",
-    "example": "During the discussion, she used the expression ?A bit of a grey area? to make her point.",
+    "example": "Using AI to rephrase your own draft is a bit of a grey area under the university’s rules.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -2525,7 +2525,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0306",
     "term": "A chink in the armour",
     "meaning": "un punto débil",
-    "example": "During the discussion, she used the expression ?A chink in the armour? to make her point.",
+    "example": "There must be a chink in the armour somewhere.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -2542,7 +2542,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0139",
     "term": "A chip off the old block",
     "meaning": "de tal palo, tal astilla",
-    "example": "During the discussion, she used the expression ?A chip off the old block? to make her point.",
+    "example": "Everyone says that I'm a chip off the old block.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -2610,7 +2610,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0072",
     "term": "A deluge of",
     "meaning": "aluvión (diluvio), avalancha (figurative) / inundación (a flood of)",
-    "example": "During the discussion, she used the expression ?A deluge of? to make her point.",
+    "example": "Even under a deluge of scandal, the shameless politician would not abnegate their post.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -2627,7 +2627,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0163",
     "term": "A dollop of (ketchup / mayo)",
     "meaning": "cucharada / un trozo, pedazo (food: sticky / soft)",
-    "example": "During the discussion, she used the expression ?A dollop of (ketchup? to make her point.",
+    "example": "Add a dollop of yoghurt to the curry just before serving it.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -2644,7 +2644,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0158",
     "term": "A faint glimmer of light",
     "meaning": "un débil / tenue haz de luz",
-    "example": "During the discussion, she used the expression ?A faint glimmer of light? to make her point.",
+    "example": "Through the boarded-up window, we could see a faint glimmer of light.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -2695,7 +2695,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0157",
     "term": "A hint of bitterness",
     "meaning": "un toque de amargura",
-    "example": "During the discussion, she used the expression ?A hint of bitterness? to make her point.",
+    "example": "Her congratulations carried a hint of bitterness after she narrowly lost the promotion.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -2712,7 +2712,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0916",
     "term": "A key sticking point",
     "meaning": "un punto clave de desacuerdo",
-    "example": "During the discussion, she used the expression ?A key sticking point? to make her point.",
+    "example": "Who should pay for long-term maintenance remains a key sticking point in the negotiations.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -2783,7 +2783,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1302",
     "term": "A lost cause",
     "meaning": "caso perdido",
-    "example": "During the discussion, she used the expression ?A lost cause? to make her point.",
+    "example": "The employee was a lost cause, and was fired after some time.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -2800,7 +2800,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1535",
     "term": "A lucky break",
     "meaning": "buena racha, racha de buena suerte",
-    "example": "During the discussion, she used the expression ?A lucky break? to make her point.",
+    "example": "This is what they call a lucky break.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -2817,7 +2817,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0160",
     "term": "A modicum of (respect / common sense)",
     "meaning": "un minimo de respeto (desired) (se usa para cosas abstractas, no fisicas)",
-    "example": "During the discussion, she used the expression ?A modicum of (respect? to make her point.",
+    "example": "Anyone handling confidential records should show at least a modicum of common sense.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -2851,7 +2851,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1533",
     "term": "A New York minute",
     "meaning": "a very short amount of time",
-    "example": "During the discussion, she used the expression ?A New York minute? to make her point.",
+    "example": "Once the alarm sounded, the firefighters were out of the station in a New York minute.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -2868,7 +2868,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0154",
     "term": "A pang of regret",
     "meaning": "un poco de remordimiento / arrepentimiento",
-    "example": "During the discussion, she used the expression ?A pang of regret? to make her point.",
+    "example": "He felt a pang of regret as the train pulled away and his hometown disappeared from view.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -2885,7 +2885,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0375",
     "term": "a play on words",
     "meaning": "juego de palabras",
-    "example": "During the discussion, she used the expression ?a play on words? to make her point.",
+    "example": "Calling the bakery ‘Bread Pitt’ is an obvious play on words.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -2902,7 +2902,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0166",
     "term": "A raft of sth",
     "meaning": "un montón de, una pila de",
-    "example": "During the discussion, she used the expression ?A raft of sth? to make her point.",
+    "example": "The revised bus timetables have caused a raft of complaints from the public.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -2936,7 +2936,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0140",
     "term": "A shot in the dark",
     "meaning": "a voleo (i) (f) (wild guess)",
-    "example": "During the discussion, she used the expression ?A shot in the dark? to make her point.",
+    "example": "It was just a shot in the dark.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -2953,7 +2953,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0161",
     "term": "A shred of (evidence / truth)",
     "meaning": "una pizca, un poco de / trozo, tira (papel, tela) (-)",
-    "example": "During the discussion, she used the expression ?A shred of (evidence? to make her point.",
+    "example": "There was not a shred of evidence that the professor had plagiarized his research paper, but he was accused nonetheless.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -3009,7 +3009,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0164",
     "term": "A smidgen of (oil / wine)",
     "meaning": "una pizca, un poco (liquid)",
-    "example": "During the discussion, she used the expression ?A smidgen of (oil? to make her point.",
+    "example": "A smidgen of olive oil will stop the pasta from sticking together.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -3026,7 +3026,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0162",
     "term": "A snippet of (information / news / conversation)",
     "meaning": "fragmento, trozo, pedazo, recorte",
-    "example": "During the discussion, she used the expression ?A snippet of (information? to make her point.",
+    "example": "She gave me a snippet of information which is top secret.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -3060,7 +3060,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1148",
     "term": "A stretch",
     "meaning": "exageración",
-    "example": "During the discussion, she used the expression ?A stretch? to make her point.",
+    "example": "The little girls were afforded a stretch limousine for their insipid, saccharine songs.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -3077,7 +3077,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0156",
     "term": "A stroke of genius",
     "meaning": "una genialidad, una idea genial",
-    "example": "During the discussion, she used the expression ?A stroke of genius? to make her point.",
+    "example": "Selling products sometimes requires having a stroke of genius.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -3094,7 +3094,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0079",
     "term": "A stroke of good luck",
     "meaning": "un golpe de suerte",
-    "example": "During the discussion, she used the expression ?A stroke of good luck? to make her point.",
+    "example": "Tom had a stroke of good luck.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -3131,7 +3131,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1298",
     "term": "A wild goose chase",
     "meaning": "buscar una aguja en un pajar",
-    "example": "During the discussion, she used the expression ?A wild goose chase? to make her point.",
+    "example": "I think it's a wild goose chase.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -3148,7 +3148,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0008",
     "term": "Abashed by/that",
     "meaning": "avergonzado por/de",
-    "example": "During the discussion, she used the expression ?Abashed by? to make her point.",
+    "example": "He was not at all abashed by her open admiration.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -3165,7 +3165,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1349",
     "term": "Abbey",
     "meaning": "abadia, monasterio, convento",
-    "example": "In her notes, she chose ?Abbey? as the most precise wording for the situation.",
+    "example": "Westminster Abbey is one of the most famous tourist sites in Britain’s capital, London.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -3185,7 +3185,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1415",
     "term": "Abbot",
     "meaning": "abad (head of the monastery)",
-    "example": "In her notes, she chose ?Abbot? as the most precise wording for the situation.",
+    "example": "The former baroque residence of the abbot now houses the town history museum.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -3205,7 +3205,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1102",
     "term": "Abhor",
     "meaning": "aborrecer, odiar, detestar",
-    "example": "She abhors cats",
+    "example": "As a staunch pacifist, she abhors all forms of violence.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -3222,7 +3222,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1777",
     "term": "Abhorrence",
     "meaning": "aborrecimiento, odio",
-    "example": "In her notes, she chose ?Abhorrence? as the most precise wording for the situation.",
+    "example": "The aim of imperialist philosophy is to suggest distrust and even abhorrence of the truth.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -3239,7 +3239,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1103",
     "term": "Abhorrent",
     "meaning": "aborrecible, aberrante, abominable",
-    "example": "an abhorrent deed",
+    "example": "The whole idea is abhorrent to me.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -3256,7 +3256,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1774",
     "term": "Ablaze",
     "meaning": "en llamas / brillante, luminoso, colorido",
-    "example": "streets ablaze with lighted Christmas trees",
+    "example": "The mountainside was ablaze with the autumn colors of the trees.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -3273,7 +3273,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1400",
     "term": "Abolition",
     "meaning": "abolición",
-    "example": "the abolition of capital punishment",
+    "example": "Israel is currently laying the groundwork of its own abolition by ruling out the two-state solution.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -3293,7 +3293,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1193",
     "term": "Abound",
     "meaning": "abundar",
-    "example": "The room abounded with screaming children",
+    "example": "English is a language abounding in idiomatic expressions.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -3310,7 +3310,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0692",
     "term": "Abrasion",
     "meaning": "abrasión",
-    "example": "In her notes, she chose ?Abrasion? as the most precise wording for the situation.",
+    "example": "It's just an abrasion and a bruise. Nothing's broken.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -3327,7 +3327,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1707",
     "term": "Absenteeism",
     "meaning": "absentismo, ausentismo",
-    "example": "In her notes, she chose ?Absenteeism? as the most precise wording for the situation.",
+    "example": "Persistent absenteeism has forced the school to appoint a dedicated attendance officer.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -3344,7 +3344,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1421",
     "term": "Absentees",
     "meaning": "ausente",
-    "example": "In her notes, she chose ?Absentees? as the most precise wording for the situation.",
+    "example": "Frequent absentees must catch up on the laboratory work before the final assessment.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -3381,7 +3381,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1693",
     "term": "Absorption",
     "meaning": "absorción",
-    "example": "In her notes, she chose ?Absorption? as the most precise wording for the situation.",
+    "example": "Could you explain to me how food absorption takes place?",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -3398,7 +3398,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1371",
     "term": "Abstention",
     "meaning": "abstención",
-    "example": "In her notes, she chose ?Abstention? as the most precise wording for the situation.",
+    "example": "There were two votes in favor of the measure, two against, and one abstention.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -3418,7 +3418,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0009",
     "term": "Abstinence from",
     "meaning": "abstinencia a",
-    "example": "During the discussion, she used the expression ?Abstinence from? to make her point.",
+    "example": "I don't see complete abstinence from drugs as an end in itself.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -3454,7 +3454,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1166",
     "term": "Accolades",
     "meaning": "elogio / galardón, premio",
-    "example": "In her notes, she chose ?Accolades? as the most precise wording for the situation.",
+    "example": "William's contributions to science earned him numerous awards and accolades, including the Nobel Prize.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -3471,7 +3471,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0006",
     "term": "Accord with",
     "meaning": "concordar, corresponder con",
-    "example": "During the discussion, she used the expression ?Accord with? to make her point.",
+    "example": "We hope to come to an accord with them about arms reduction.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -3488,7 +3488,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1374",
     "term": "Accursed",
     "meaning": "maldito",
-    "example": "In her notes, she chose ?Accursed? as the most precise wording for the situation.",
+    "example": "And then the accursed Alexander burned and cast it away into the sea.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -3508,7 +3508,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1697",
     "term": "Accusatory",
     "meaning": "acusatorio",
-    "example": "In her notes, she chose ?Accusatory? as the most precise wording for the situation.",
+    "example": "\"Everyone knows who the culprit is\", said she, in an accusatory tone.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -3543,7 +3543,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1296",
     "term": "Achilles’ heel",
     "meaning": "talón de Aquiles",
-    "example": "During the discussion, she used the expression ?Achilles’ heel? to make her point.",
+    "example": "Impatience is the otherwise meticulous editor’s Achilles’ heel.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -3560,7 +3560,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0440",
     "term": "Acquaint",
     "meaning": "presentarse, familiarizarse",
-    "example": "Please acquaint your colleagues of your plans to move",
+    "example": "Mr Smith and I have been acquainted with each other for a long time.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -3577,7 +3577,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1385",
     "term": "Acquittal",
     "meaning": "absolución, exculpación",
-    "example": "In her notes, she chose ?Acquittal? as the most precise wording for the situation.",
+    "example": "Twenty four trials were conducted, some involving multiple defendants, resulting in thirty two convictions and thirteen acquittals.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -3614,7 +3614,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1071",
     "term": "Acute",
     "meaning": "agudo/a, fino/a, muy desarrollado (sense)",
-    "example": "an acute (or critical) lack of research funds",
+    "example": "This city will suffer from an acute water shortage unless it rains soon.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -3650,7 +3650,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1205",
     "term": "Adamantly",
     "meaning": "insistentemente, tercamente, obstinadamente",
-    "example": "adamantly opposed to the marriage",
+    "example": "Tom adamantly denied that he had anything to do with the robbery.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -3665,9 +3665,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-1761",
-    "term": "Addittion",
+    "term": "Addition",
     "meaning": "suma",
-    "example": "In her notes, she chose ?Addittion? as the most precise wording for the situation.",
+    "example": "The addition of five more items to the agenda will make the meeting unbearably long.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -3684,7 +3684,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1252",
     "term": "Address",
     "meaning": "abordar, tratar, atender, encargarse de, ocuparse de",
-    "example": "In her notes, she chose ?Address? as the most precise wording for the situation.",
+    "example": "The minister’s speech failed to address the underlying causes of rural poverty.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -3701,7 +3701,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0404",
     "term": "address concerns",
     "meaning": "abordar preocupaciones",
-    "example": "During the discussion, she used the expression ?address concerns? to make her point.",
+    "example": "The revised proposal addresses residents’ concerns about noise and late-night traffic.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -3718,7 +3718,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1701",
     "term": "Addressee",
     "meaning": "destinatario, receptor",
-    "example": "In her notes, she chose ?Addressee? as the most precise wording for the situation.",
+    "example": "Send a registered letter to be sure that it will reach its addressee.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -3735,7 +3735,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0053",
     "term": "Adept at",
     "meaning": "experto en",
-    "example": "During the discussion, she used the expression ?Adept at? to make her point.",
+    "example": "Tom was adept at churning out quality content quickly.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -3752,7 +3752,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0395",
     "term": "adhere to your principles",
     "meaning": "mantenerse fiel a los propios principios.",
-    "example": "During the discussion, she used the expression ?adhere to your principles? to make her point.",
+    "example": "It is hardest to adhere to your principles when compromising would bring an immediate reward.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -3769,7 +3769,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1376",
     "term": "Adhesion",
     "meaning": "adherencia",
-    "example": "the adhesion of Seville was decisive",
+    "example": "A strong adhesive primer ensures better adhesion between the paint and the metal.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -3789,7 +3789,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0001",
     "term": "Adjacent to",
     "meaning": "adyacente, contiguo, al lado",
-    "example": "During the discussion, she used the expression ?Adjacent to? to make her point.",
+    "example": "The post office is adjacent to the library.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -3806,7 +3806,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0005",
     "term": "Adjust to",
     "meaning": "adaptarse, ajustarse a",
-    "example": "During the discussion, she used the expression ?Adjust to? to make her point.",
+    "example": "When he left the navy, he found it hard to adjust to life ashore.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -3823,7 +3823,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1629",
     "term": "Admirably",
     "meaning": "admirablemente",
-    "example": "the children's responses were admirably normal",
+    "example": "All emotions, and that one particularly, were abhorrent to his cold, precise but admirably balanced mind.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -3840,7 +3840,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1630",
     "term": "Admiringly",
     "meaning": "con admiración / aprobación (with approval)",
-    "example": "he looked at his wife admiringly",
+    "example": "Then, on her way homeward in the evening, she thought of him admiringly; and that thought was the beginning of love.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -3857,7 +3857,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1649",
     "term": "Admittedly",
     "meaning": "ciertamente (in truth, I confess)",
-    "example": "In her notes, she chose ?Admittedly? as the most precise wording for the situation.",
+    "example": "Admittedly, this is an unrewarding task, but somebody has got to deal with it.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -3874,7 +3874,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0623",
     "term": "Adroitly",
     "meaning": "hábilmente (skilfully)",
-    "example": "he handled the situation adroitly",
+    "example": "She adroitly redirected the hostile question towards the policy’s proven benefits.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -3891,7 +3891,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1750",
     "term": "Advancement",
     "meaning": "avance, progreso, ascenso",
-    "example": "advancement of knowledge",
+    "example": "Many economists reject the premise that technological advancements will lead to catastrophic job loss.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -3906,9 +3906,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-1728",
-    "term": "Afeccionate",
+    "term": "Affectionate",
     "meaning": "cariñoso, afectuoso",
-    "example": "In her notes, she chose ?Afeccionate? as the most precise wording for the situation.",
+    "example": "She eulogised her always warm and affectionate brother.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -3925,7 +3925,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0628",
     "term": "Affluent",
     "meaning": "rico, pudiente, acaudalado, próspero",
-    "example": "an affluent banker",
+    "example": "There are very affluent communities of Algerians in France, Canada, and Spain.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -3980,7 +3980,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1506",
     "term": "Affronted",
     "meaning": "ofendido, insultado",
-    "example": "In her notes, she chose ?Affronted? as the most precise wording for the situation.",
+    "example": "She looked genuinely affronted when the interviewer questioned her professional integrity.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4082,7 +4082,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0084",
     "term": "Agape at",
     "meaning": "boquiabierto, pasmado (open mouthed, gawping)",
-    "example": "During the discussion, she used the expression ?Agape at? to make her point.",
+    "example": "The children stood agape at the enormous skeleton suspended above the museum hall.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -4099,7 +4099,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1388",
     "term": "Aggrieved",
     "meaning": "agraviado, ofendido, perjudicado",
-    "example": "In her notes, she chose ?Aggrieved? as the most precise wording for the situation.",
+    "example": "It aggrieved her much that she could not go.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -4119,7 +4119,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0756",
     "term": "Agnostic",
     "meaning": "escéptico, indeciso (doubting, uncertain) / (undecided in religion)",
-    "example": "In her notes, she chose ?Agnostic? as the most precise wording for the situation.",
+    "example": "I've never met anyone who is agnostic about the existence of Zeus.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4152,9 +4152,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0032",
-    "term": "Agree to differ/disagree",
+    "term": "Agree to disagree",
     "meaning": "Aceptar diferencias, opiniones (parar de discutir)",
-    "example": "During the discussion, she used the expression ?Agree to differ? to make her point.",
+    "example": "We will never share the same view on private education, so let’s agree to disagree.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -4174,7 +4174,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0173",
     "term": "Agree to disagree",
     "meaning": "aceptar estar en desacuerdo",
-    "example": "During the discussion, she used the expression ?Agree to disagree? to make her point.",
+    "example": "You don't have to win every argument. Agree to disagree.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -4191,7 +4191,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0796",
     "term": "Ailment",
     "meaning": "enfermedad, mal, dolencia",
-    "example": "In her notes, she chose ?Ailment? as the most precise wording for the situation.",
+    "example": "Radiation sickness often causes hair and fingernails to fall out, among other more serious ailments.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4208,7 +4208,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1331",
     "term": "Ailments",
     "meaning": "enfermedad, dolencia",
-    "example": "In her notes, she chose ?Ailments? as the most precise wording for the situation.",
+    "example": "You can avoid stomach ailments by drinking purified water and always washing your hands before eating.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4242,7 +4242,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0742",
     "term": "Akin",
     "meaning": "parecido a, similar a, como",
-    "example": "In her notes, she chose ?Akin? as the most precise wording for the situation.",
+    "example": "The singing of the local birds is akin to the sound of a drill.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4259,7 +4259,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0661",
     "term": "Albeit",
     "meaning": "aunque, si bien (=although)",
-    "example": "In her notes, she chose ?Albeit? as the most precise wording for the situation.",
+    "example": "Ziri is not bad at all, albeit a little on the boring side.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4293,7 +4293,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0241",
     "term": "All in all",
     "meaning": "en definitiva, a fin de cuentas, en resumidas cuentas",
-    "example": "all in all, it's not so bad",
+    "example": "There are some misprints, but all in all, it's a good book.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -4310,7 +4310,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0984",
     "term": "All or nothing",
     "meaning": "todo o nada",
-    "example": "During the discussion, she used the expression ?All or nothing? to make her point.",
+    "example": "Now is not the time for half measures: it's all or nothing!",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4327,7 +4327,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1666",
     "term": "Allegedly",
     "meaning": "presuntamente, supuestamente",
-    "example": "he was on trial for allegedly murdering his wife",
+    "example": "He was allegedly seduced by her into giving the key to the vault.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -4344,7 +4344,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1253",
     "term": "Alleviate",
     "meaning": "aliviar, calmar",
-    "example": "In her notes, she chose ?Alleviate? as the most precise wording for the situation.",
+    "example": "Simple breathing exercises can alleviate anxiety before a public presentation.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4361,7 +4361,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0871",
     "term": "Allowance",
     "meaning": "paga",
-    "example": "In her notes, she chose ?Allowance? as the most precise wording for the situation.",
+    "example": "I'm going to give you a year's worth of allowance all at once.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4376,9 +4376,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0872",
-    "term": "Allowence",
-    "meaning": "permiso",
-    "example": "In her notes, she chose ?Allowence? as the most precise wording for the situation.",
+    "term": "Allowance",
+    "meaning": "cantidad permitida o franquicia; permiso",
+    "example": "Each traveller has a twenty-kilogram baggage allowance included in the fare.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4395,7 +4395,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0681",
     "term": "Allure",
     "meaning": "atracción, fascinación, seducción",
-    "example": "In her notes, she chose ?Allure? as the most precise wording for the situation.",
+    "example": "There is an allure and excitement to the power of an old-fashioned steam train.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4412,7 +4412,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1514",
     "term": "Alluring",
     "meaning": "atractivo, seductor",
-    "example": "an alluring prospect",
+    "example": "The prospect of flexible hours makes the otherwise demanding role more alluring.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4480,7 +4480,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1792",
     "term": "Altruistic",
     "meaning": "altruista",
-    "example": "In her notes, she chose ?Altruistic? as the most precise wording for the situation.",
+    "example": "I also think that someone is sure to use it for selfish and not purely altruistic ends.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -4497,7 +4497,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1397",
     "term": "Amateurishly",
     "meaning": "de forma amateur",
-    "example": "he performed the piece amateurishly",
+    "example": "The lock had been repaired so amateurishly that any key could open it.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -4517,7 +4517,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1823",
     "term": "Amazingly",
     "meaning": "asombrosamente, increíblemente",
-    "example": "amazingly, he finished medical school in three years",
+    "example": "Fudge is not at all healthy, but it sure is amazingly tasty.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -4534,7 +4534,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1835",
     "term": "Ambitiousness",
     "meaning": "the quality of having a strong desire to succeed or achieve something",
-    "example": "In her notes, she chose ?Ambitiousness? as the most precise wording for the situation.",
+    "example": "A certain amount of ambitiousness, before it reaches the malignant stage, can also be an engine for progress.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -4551,7 +4551,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1516",
     "term": "Amid/Amidst",
     "meaning": "in the middle of or surrounded by",
-    "example": "In her notes, she chose ?Amid? as the most precise wording for the situation.",
+    "example": "Tom dashed into the room amid a shower of sparks and splinters of burning woodwork.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4568,7 +4568,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1191",
     "term": "Amidst",
     "meaning": "entre, en medio de",
-    "example": "In her notes, she chose ?Amidst? as the most precise wording for the situation.",
+    "example": "One should not be scared of poverty, and instead, be determined amidst it.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4585,7 +4585,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1407",
     "term": "Amoral",
     "meaning": "amoral (lacking moral sense)",
-    "example": "In her notes, she chose ?Amoral? as the most precise wording for the situation.",
+    "example": "He believes all big businesses are amoral, driven only by profit.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -4605,7 +4605,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0003",
     "term": "Amounts to",
     "meaning": "equivale, es lo mismo (lenguaje legal)",
-    "example": "During the discussion, she used the expression ?Amounts to? to make her point.",
+    "example": "The total expense for the project amounts to one hundred million yen.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -4741,7 +4741,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1146",
     "term": "Anguish",
     "meaning": "angustia",
-    "example": "In her notes, she chose ?Anguish? as the most precise wording for the situation.",
+    "example": "The newspaper told of the mother's anguish at the death of her son.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4758,7 +4758,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0002",
     "term": "Animosity towards",
     "meaning": "resentimiento, rencor hacia",
-    "example": "During the discussion, she used the expression ?Animosity towards? to make her point.",
+    "example": "I can't comprehend why he has such animosity towards me.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -4775,7 +4775,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1423",
     "term": "Annoyance",
     "meaning": "enfado, irritación, enojo",
-    "example": "In her notes, she chose ?Annoyance? as the most precise wording for the situation.",
+    "example": "Few things are harder to put up with than the annoyance of a good example.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -4795,7 +4795,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1816",
     "term": "Annuity",
     "meaning": "anualidad, renta (pension, allawonce)",
-    "example": "his retirement fund was set up to be paid as an annuity",
+    "example": "If it weren't for her annuity, she'd never be able to pay the bills.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -4812,7 +4812,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1414",
     "term": "Anonymity",
     "meaning": "anonimato",
-    "example": "In her notes, she chose ?Anonymity? as the most precise wording for the situation.",
+    "example": "The anonymity of the Internet often makes it easier for people to talk about personal issues.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -4851,7 +4851,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1227",
     "term": "Apex",
     "meaning": "cima, cúspide, punta",
-    "example": "In her notes, she chose ?Apex? as the most precise wording for the situation.",
+    "example": "When it comes to ground warfare, tanks remain the apex predators.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4868,7 +4868,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1429",
     "term": "Apiece",
     "meaning": "a cada uno (each)",
-    "example": "In her notes, she chose ?Apiece? as the most precise wording for the situation.",
+    "example": "Shovels and spades sold for ten dollars apiece.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -4888,7 +4888,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1198",
     "term": "Aplenty",
     "meaning": "en abundancia",
-    "example": "In her notes, she chose ?Aplenty? as the most precise wording for the situation.",
+    "example": "During the harvest festival, local food and live music are available aplenty.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4905,7 +4905,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1208",
     "term": "Appalled",
     "meaning": "en shock, paralizado",
-    "example": "In her notes, she chose ?Appalled? as the most precise wording for the situation.",
+    "example": "I was appalled by the traffic in Bangkok, but travellers told me Taipei was worse.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4922,7 +4922,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0580",
     "term": "Appalling",
     "meaning": "terrible, espantoso, pésimo, desastroso",
-    "example": "appalling conditions",
+    "example": "Of course, Layla didn't deserve to die in this appalling way.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -4939,7 +4939,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1670",
     "term": "Apparitions",
     "meaning": "aparición",
-    "example": "In her notes, she chose ?Apparitions? as the most precise wording for the situation.",
+    "example": "White House guests and staff have reported seeing apparitions in the Lincoln Bedroom, which President Abraham Lincoln used as an office.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -4956,7 +4956,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1679",
     "term": "Appraisal",
     "meaning": "apreciación, estimación, opinión",
-    "example": "In her notes, she chose ?Appraisal? as the most precise wording for the situation.",
+    "example": "Tom generally makes good decisions based on a realistic appraisal of the situation he's faced with.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -4973,7 +4973,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0007",
     "term": "Appreciative of",
     "meaning": "agradecido por (=grateful)",
-    "example": "During the discussion, she used the expression ?Appreciative of? to make her point.",
+    "example": "I've never been more appreciative of life since I had my car accident.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -4990,7 +4990,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1688",
     "term": "Apprehensive",
     "meaning": "ansioso, inquieto",
-    "example": "apprehensive for one's life",
+    "example": "They are apprehensive that some further disaster might occur.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -5024,7 +5024,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1869",
     "term": "Aptness",
     "meaning": "aptitud",
-    "example": "the phrase had considerable aptness",
+    "example": "The aptness of the title becomes clear only in the novel’s final chapter.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -5058,7 +5058,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1705",
     "term": "Ardent",
     "meaning": "apasionado, fogoso, ardiente",
-    "example": "from rank to rank she darts her ardent eyes",
+    "example": "The more I detest men individually the more ardent becomes my love for humanity.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -5075,7 +5075,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0481",
     "term": "arduous",
     "meaning": "arduo (tiring, challenging)",
-    "example": "the arduous work of preparing a dictionary",
+    "example": "Pioneer men and women had an arduous life, and their children, too.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -5126,7 +5126,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1741",
     "term": "Arguable",
     "meaning": "discutible",
-    "example": "In her notes, she chose ?Arguable? as the most precise wording for the situation.",
+    "example": "Whether the intervention actually shortened the conflict remains highly arguable.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -5143,7 +5143,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1467",
     "term": "Armful",
     "meaning": "amount carried on one or both arms",
-    "example": "In her notes, she chose ?Armful? as the most precise wording for the situation.",
+    "example": "Tom came out of the library with an armful of books.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -5160,7 +5160,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0075",
     "term": "Around the bend",
     "meaning": "estar como una cabra",
-    "example": "During the discussion, she used the expression ?Around the bend? to make her point.",
+    "example": "Three nights without sleep would be enough to drive anyone around the bend.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -5177,7 +5177,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0004",
     "term": "Arrested for",
     "meaning": "detenido, arrestado por",
-    "example": "During the discussion, she used the expression ?Arrested for? to make her point.",
+    "example": "Not less than 10 people were arrested for being involved in the riot.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -5194,7 +5194,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1402",
     "term": "Artful",
     "meaning": "ingenioso, astuto, habilidoso",
-    "example": "the artful dodger",
+    "example": "Through artful questioning, the barrister exposed several contradictions in the witness’s story.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -5270,9 +5270,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0547",
-    "term": "As dull ditch water",
+    "term": "As dull as ditchwater",
     "meaning": "aburrido (boring, uninteresting)",
-    "example": "During the discussion, she used the expression ?As dull ditch water? to make her point.",
+    "example": "The lecture was as dull as ditchwater until the speaker began describing his fieldwork in Antarctica.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -5310,7 +5310,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1127",
     "term": "As it stands",
     "meaning": "tal como está, en su estado actual",
-    "example": "In her notes, she chose ?As it stands? as the most precise wording for the situation.",
+    "example": "As it stands now, we have to work this weekend.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -5386,7 +5386,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1729",
     "term": "Ascendancy",
     "meaning": "ascendencia, dominancia",
-    "example": "In her notes, she chose ?Ascendancy? as the most precise wording for the situation.",
+    "example": "The ascendancy of monarchs is what keeps their subjects from rebellion.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -5403,7 +5403,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0938",
     "term": "Aspersion",
     "meaning": "difamación, calumnia",
-    "example": "In her notes, she chose ?Aspersion? as the most precise wording for the situation.",
+    "example": "The defense attorneys cast aspersions on the probity of the witness.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -5420,7 +5420,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1139",
     "term": "Assemblage",
     "meaning": "reunión / colección, recopilación / montaje",
-    "example": "In her notes, she chose ?Assemblage? as the most precise wording for the situation.",
+    "example": "The assemblage of antique cars at the car show was impressive.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -5437,7 +5437,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1738",
     "term": "Assertions",
     "meaning": "afirmación, reivindicación",
-    "example": "In her notes, she chose ?Assertions? as the most precise wording for the situation.",
+    "example": "So long as you have no evidence for your assertions, I am not having this conversation.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -5454,7 +5454,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1001",
     "term": "Assessment",
     "meaning": "evaluación, valoración",
-    "example": "In her notes, she chose ?Assessment? as the most precise wording for the situation.",
+    "example": "The report gives a sober assessment of the current state of science education in the US.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -5490,7 +5490,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0242",
     "term": "At any rate",
     "meaning": "de todas formas, en todo caso, de cualquier forma",
-    "example": "they felt--at any rate Jim felt--relieved though still wary",
+    "example": "At any rate, I can go out when it stops raining.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -5526,7 +5526,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0130",
     "term": "At odds with",
     "meaning": "no concordar con, en desacuerdo con",
-    "example": "During the discussion, she used the expression ?At odds with? to make her point.",
+    "example": "Tom and Mary have been at odds with each other for a long time.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -5577,7 +5577,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0178",
     "term": "At risk of",
     "meaning": "en riesgo, en peligro",
-    "example": "During the discussion, she used the expression ?At risk of? to make her point.",
+    "example": "Koalas are officially listed as at risk of disappearing in New South Wales, Australia.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -5613,7 +5613,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0204",
     "term": "At the crack of dawn",
     "meaning": "de madrugada, al amanecer (i)",
-    "example": "During the discussion, she used the expression ?At the crack of dawn? to make her point.",
+    "example": "We have to set off at the crack of dawn tomorrow.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -5630,7 +5630,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0112",
     "term": "At the expense of",
     "meaning": "a costa de, a expensas de",
-    "example": "During the discussion, she used the expression ?At the expense of? to make her point.",
+    "example": "Such an economic program will help the rich at the expense of the poor.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -5664,7 +5664,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0129",
     "term": "At the forefront",
     "meaning": "a la vanguardia, a la delantera, en cabeza",
-    "example": "During the discussion, she used the expression ?At the forefront? to make her point.",
+    "example": "At the forefront of our agenda has to be what is best for the citizens.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -5719,7 +5719,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0779",
     "term": "Atrocious",
     "meaning": "atroz / cruel / brutal",
-    "example": "an atrocious automobile accident",
+    "example": "This fighting game is beautiful, but nobody will play it because of the atrocious input latency.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -5736,7 +5736,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1473",
     "term": "Attainment",
     "meaning": "logro, éxito",
-    "example": "In her notes, she chose ?Attainment? as the most precise wording for the situation.",
+    "example": "Repression for the attainment of economic ends is a necessary weapon of the socialist dictatorship.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -5753,7 +5753,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0225",
     "term": "Attuned to",
     "meaning": "acostumbrado a / en sintonía con",
-    "example": "During the discussion, she used the expression ?Attuned to? to make her point.",
+    "example": "Ever since the beginning of COVID-19, I am more attuned to my environment.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -5770,7 +5770,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1915",
     "term": "Authoritative",
     "meaning": "con autoridad, autoritario / serio, confiable",
-    "example": "an authoritative communique",
+    "example": "Every piece of knowledge must have a single, unambiguous, authoritative representation within a system.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -5787,7 +5787,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1372",
     "term": "Automaton",
     "meaning": "autómata",
-    "example": "In her notes, she chose ?Automaton? as the most precise wording for the situation.",
+    "example": "Professor Jackson drew a deterministic finite automaton on the board.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -5807,7 +5807,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1921",
     "term": "Autumnal",
     "meaning": "otoñal",
-    "example": "a serene autumnal mood",
+    "example": "There was the smell of seaweed in the air and of herby autumnal flowers.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -5824,7 +5824,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0010",
     "term": "Aversion to",
     "meaning": "aversión, repugnancia, asco a (=strong dislike/disgust)",
-    "example": "During the discussion, she used the expression ?Aversion to? to make her point.",
+    "example": "Squashing the centipede crossed Rodrigo's mind, but he hesitated due to his aversion to killing living creatures.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -5858,7 +5858,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0695",
     "term": "Avid",
     "meaning": "entusiasta (keen / enthusiastic) - ansioso, codicioso (eager, gready)",
-    "example": "an avid sports fan",
+    "example": "That is why I am not an avid bike rider.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -5875,7 +5875,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1106",
     "term": "Awe",
     "meaning": "asombro / asombrar (v)",
-    "example": "The famous professor awed the undergraduates",
+    "example": "With deep and reverent awe I replaced the candelabrum in its former position.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -5892,7 +5892,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1753",
     "term": "Awesome",
     "meaning": "impresionante, genial, estupendo",
-    "example": "the awesome complexity of the universe",
+    "example": "This is the first time I've climbed this mountain. The sight is really awesome.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -5909,7 +5909,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0508",
     "term": "axe",
     "meaning": "to close a business, stop providing a service, or get rid of workers that you do not need",
-    "example": "Almost 1,000 jobs were axed.",
+    "example": "The handle of an axe is Death to its own tribe.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -5928,7 +5928,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1488",
     "term": "Babyhood",
     "meaning": "infancia, niñez",
-    "example": "In her notes, she chose ?Babyhood? as the most precise wording for the situation.",
+    "example": "Most people retain no conscious memories from babyhood.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -5945,7 +5945,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1946",
     "term": "Bachelorhood",
     "meaning": "soltería",
-    "example": "In her notes, she chose ?Bachelorhood? as the most precise wording for the situation.",
+    "example": "After a decade of contented bachelorhood, Arun was surprised to find himself planning a wedding.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -5981,7 +5981,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0888",
     "term": "Backlash",
     "meaning": "oposición, respuesta negativa, reacción violenta, revuelo",
-    "example": "the political movie backlashed on the Democrats",
+    "example": "The revitalisation project faced backlash for fear that it could displace low-income families in the city.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -5998,7 +5998,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1079",
     "term": "Backtrack",
     "meaning": "retroceder, volver atrás / cambiar de opinión, retactarse",
-    "example": "In her notes, she chose ?Backtrack? as the most precise wording for the situation.",
+    "example": "It's better to backtrack than get lost.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -6015,7 +6015,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1659",
     "term": "Backward",
     "meaning": "hacia atrás, marcha atrás",
-    "example": "lovers of the past looking fondly backward",
+    "example": "In tennis and ping-pong backhand the hand is turned backwards in making the stroke.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -6032,7 +6032,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0494",
     "term": "backwater",
     "meaning": "lugar remoto (isolated, rural place)",
-    "example": "the country is an economic backwater",
+    "example": "The breathtaking landscapes of India, from the Himalayas to Kerala's backwaters, are awe-inspiring.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -6083,7 +6083,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2223",
     "term": "baffle",
     "meaning": "if a problem, someone’s behaviour etc. baffles you, you cannot understand it or solve it",
-    "example": "Detectives remain baffled by these crimes.",
+    "example": "Tom had not liked being a supply teacher; students would often cut up and play baffling tricks.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -6100,7 +6100,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0788",
     "term": "Bail",
     "meaning": "fianza / pagar la fianza de (pay to release from jail)",
-    "example": "In her notes, she chose ?Bail? as the most precise wording for the situation.",
+    "example": "Mary bailed Tom out of jail after he got into a fight at the bar.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -6117,7 +6117,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1225",
     "term": "Baize",
     "meaning": "paño, tapete",
-    "example": "In her notes, she chose ?Baize? as the most precise wording for the situation.",
+    "example": "Some blue chalk fell from the tip of the snooker cue on to the green baize.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -6168,7 +6168,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0408",
     "term": "Ballistic",
     "meaning": "(go ballistic) ponerse furioso",
-    "example": "ballistic missile",
+    "example": "Everyone in Hawaii received an emergency alert that a ballistic missile was inbound.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -6185,7 +6185,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0729",
     "term": "Balmy",
     "meaning": "templado, agradable (pleasant, mild)",
-    "example": "balmy days and nights",
+    "example": "Frequently clear and balmy weather deteriorates and it soon rains cats and dogs.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -6202,7 +6202,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0016",
     "term": "Ban on",
     "meaning": "prohibición",
-    "example": "During the discussion, she used the expression ?Ban on? to make her point.",
+    "example": "India's 21-day ban on venturing out puts nearly one-fifth of the world's population under lockdown.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -6219,7 +6219,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0259",
     "term": "Bark up the wrong tree",
     "meaning": "estar equivocado, mear fuera de tiesto (follow a mistaken",
-    "example": "During the discussion, she used the expression ?Bark up the wrong tree? to make her point.",
+    "example": "If you suspect the accountant of leaking the figures, you’re barking up the wrong tree; she was on leave.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -6236,7 +6236,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0530",
     "term": "Barren",
     "meaning": "vacío, árido (land) estéril, infértil (woman)",
-    "example": "writing barren of insight",
+    "example": "The plundering of this land has left it barren and infertile.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -6253,7 +6253,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0439",
     "term": "Bartered",
     "meaning": "negociar, intercambiar, hacer trueques (exhange, trade)",
-    "example": "In her notes, she chose ?Bartered? as the most precise wording for the situation.",
+    "example": "The explorer bartered with the natives for food.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -6270,7 +6270,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0014",
     "term": "Bartered for",
     "meaning": "intercambiar por",
-    "example": "During the discussion, she used the expression ?Bartered for? to make her point.",
+    "example": "At the remote market, we bartered two spare batteries for a basket of fresh vegetables.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -6287,7 +6287,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0011",
     "term": "Based on",
     "meaning": "basado en",
-    "example": "During the discussion, she used the expression ?Based on? to make her point.",
+    "example": "There is no evidence that the story is based on his own experience.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -6304,7 +6304,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1195",
     "term": "Bash",
     "meaning": "celebración, fiesta (slang: party)",
-    "example": "In her notes, she chose ?Bash? as the most precise wording for the situation.",
+    "example": "The family of the teenage bashing victim took the agonising decision to switch off his life support.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -6338,7 +6338,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0610",
     "term": "Basked",
     "meaning": "tumbarse, disfrutar del calor/sol",
-    "example": "In her notes, she chose ?Basked? as the most precise wording for the situation.",
+    "example": "David basked in the sun, enjoying the view.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -6355,7 +6355,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0017",
     "term": "Basked in the sun",
     "meaning": "tumbarse, echarse, disfrutar al sol",
-    "example": "During the discussion, she used the expression ?Basked in the sun? to make her point.",
+    "example": "Have you ever basked in the sun of the Sahara desert?",
     "family": "patterns",
     "families": [
       "patterns"
@@ -6372,7 +6372,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1912",
     "term": "Bathe",
     "meaning": "lavarse, bañarse",
-    "example": "In her notes, she chose ?Bathe? as the most precise wording for the situation.",
+    "example": "At dawn, pilgrims bathe in the river as part of the religious ceremony.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -6389,7 +6389,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0822",
     "term": "Battle",
     "meaning": "combatir (v)",
-    "example": "they battled over the budget",
+    "example": "We can say that Japan was fighting a constant battle against hunger during the war.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -6406,7 +6406,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1270",
     "term": "Be a tight squeeze",
     "meaning": "una situación en la que se dispone de muy poco espacio o",
-    "example": "During the discussion, she used the expression ?Be a tight squeeze? to make her point.",
+    "example": "Fitting six adults and their luggage into that tiny car will be a tight squeeze.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -6423,7 +6423,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0659",
     "term": "Be a total blast",
     "meaning": "ser una bomba",
-    "example": "During the discussion, she used the expression ?Be a total blast? to make her point.",
+    "example": "The reunion was a total blast: we danced until sunrise and laughed about our school days.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -6440,7 +6440,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0237",
     "term": "Be at a loss",
     "meaning": "confundido, perdido, desconcertado (unable to understand)",
-    "example": "During the discussion, she used the expression ?Be at a loss? to make her point.",
+    "example": "If it were not for your advice, I would be at a loss.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -6475,7 +6475,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1523",
     "term": "Be below the belt",
     "meaning": "ser un golpe bajo, cruel",
-    "example": "During the discussion, she used the expression ?Be below the belt? to make her point.",
+    "example": "Mocking a candidate’s disability is below the belt and irrelevant to the debate.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -6492,7 +6492,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1352",
     "term": "Be bereaved",
     "meaning": "que perdió a un ser querido",
-    "example": "In her notes, she chose ?Be bereaved? as the most precise wording for the situation.",
+    "example": "Employees who are recently bereaved can request additional compassionate leave.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -6509,7 +6509,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0036",
     "term": "Be beside oneself with anger/excitement",
     "meaning": "estar extremadamente enfadado o exitado",
-    "example": "During the discussion, she used the expression ?Be beside oneself with anger? to make her point.",
+    "example": "Marta was beside herself with anger when she discovered that the evidence had been destroyed.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -6529,7 +6529,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0092",
     "term": "Be bound to",
     "meaning": "destinado a (informal) (likely or certain to)",
-    "example": "During the discussion, she used the expression ?Be bound to? to make her point.",
+    "example": "A documentary based on such remarkable footage is bound to attract international attention.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -6599,7 +6599,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0212",
     "term": "Be hard up",
     "meaning": "sin un duro (i) (poor)",
-    "example": "During the discussion, she used the expression ?Be hard up? to make her point.",
+    "example": "Tom seems to be hard up for food.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -6616,7 +6616,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0268",
     "term": "Be in a tight spot",
     "meaning": "estar en apuros, en problemas, en un lío",
-    "example": "During the discussion, she used the expression ?Be in a tight spot? to make her point.",
+    "example": "We were in a tight spot: the rent was due, but neither of us had been paid.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -6633,7 +6633,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0383",
     "term": "Be in no hurry",
     "meaning": "no tener prisa",
-    "example": "During the discussion, she used the expression ?Be in no hurry? to make her point.",
+    "example": "Tom seems to be in no hurry to get married.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -6650,7 +6650,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0202",
     "term": "Be in the dark",
     "meaning": "ser ajeno a (f) (uninformed, without knowledge of sth)",
-    "example": "During the discussion, she used the expression ?Be in the dark? to make her point.",
+    "example": "I hate to be in the dark when all the rest of the world is in light.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -6667,7 +6667,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0218",
     "term": "Be in the groove",
     "meaning": "cogerle el tranquillo (perform well at sth enjoyable)",
-    "example": "During the discussion, she used the expression ?Be in the groove? to make her point.",
+    "example": "After a hesitant opening song, the band found its rhythm and was soon in the groove.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -6705,7 +6705,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0028",
     "term": "Be of / have no fixed abode",
     "meaning": "sin techo (=homeless - to not have a permanent home)",
-    "example": "During the discussion, she used the expression ?Be of? to make her point.",
+    "example": "The form records him as having no fixed abode since leaving the hostel.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -6746,7 +6746,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0336",
     "term": "Be on target",
     "meaning": "ir según lo previsto",
-    "example": "During the discussion, she used the expression ?Be on target? to make her point.",
+    "example": "Construction is on target to finish before the new academic year begins.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -6797,7 +6797,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0269",
     "term": "Be out of line",
     "meaning": "ser inaceptable, impresentable / pasarse de la raya / estar fuera de",
-    "example": "During the discussion, she used the expression ?Be out of line? to make her point.",
+    "example": "Demanding access to her private messages was completely out of line.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -6874,7 +6874,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0024",
     "term": "Be the apple of somebody’s eye",
     "meaning": "ser la niña de los ojos de alguien / ojito derecho",
-    "example": "During the discussion, she used the expression ?Be the apple of somebody’s eye? to make her point.",
+    "example": "His youngest granddaughter is the apple of his eye, and he never tires of reading to her.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -6892,9 +6892,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0034",
-    "term": "Be thrown of balance",
+    "term": "Throw somebody off balance",
     "meaning": "estar sorprendido, confundido",
-    "example": "During the discussion, she used the expression ?Be thrown of balance? to make her point.",
+    "example": "The unexpected resignation threw the entire negotiating team off balance.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -6911,7 +6911,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1522",
     "term": "Be thrown off balance",
     "meaning": "estar sorprendido, confundido.",
-    "example": "During the discussion, she used the expression ?Be thrown off balance? to make her point.",
+    "example": "Even experienced investors were thrown off balance by the sudden collapse in confidence.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -6928,7 +6928,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0992",
     "term": "Be top-drawer",
     "meaning": "ser de primera, de la mejor calidad",
-    "example": "During the discussion, she used the expression ?Be top-drawer? to make her point.",
+    "example": "The restaurant is expensive, but its service and seasonal menu are genuinely top-drawer.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -6945,7 +6945,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0180",
     "term": "Be up in arms",
     "meaning": "indignado (f) (i)",
-    "example": "During the discussion, she used the expression ?Be up in arms? to make her point.",
+    "example": "Local shopkeepers are up in arms over the council’s plan to remove all nearby parking.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -6962,7 +6962,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0388",
     "term": "be witness to something",
     "meaning": "no “for”. The city was witness to an expansion in joy",
-    "example": "During the discussion, she used the expression ?be witness to something? to make her point.",
+    "example": "We have few occasions in life to be witness to extraordinary history.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -6997,7 +6997,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0620",
     "term": "Beam",
     "meaning": "sonreir (smile widely - celebrities)",
-    "example": "She was beaming with joy",
+    "example": "A beam of white light is split by a prism into rays of various colors.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7068,7 +7068,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1781",
     "term": "Beautician",
     "meaning": "esteticien",
-    "example": "In her notes, she chose ?Beautician? as the most precise wording for the situation.",
+    "example": "She grabbed me by the ears and had me go to the beautician.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -7100,9 +7100,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0340",
-    "term": "Become of age",
+    "term": "Come of age",
     "meaning": "llegar a la mayoría de edad, madurar, desarrollarse",
-    "example": "During the discussion, she used the expression ?Become of age? to make her point.",
+    "example": "The novel follows four friends as they come of age in a declining seaside town.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -7136,7 +7136,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1054",
     "term": "Bedrock",
     "meaning": "cimientos de, base de, fundamentos de",
-    "example": "In her notes, she chose ?Bedrock? as the most precise wording for the situation.",
+    "example": "The bedrock of a healthy diet is a variety of fruits and vegetables.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7153,7 +7153,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0608",
     "term": "Beeline",
     "meaning": "línea recta / directa (=queue)",
-    "example": "he made a beeline for the bathroom",
+    "example": "As soon as Jim got home, he made a beeline for the rest room.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7170,7 +7170,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0019",
     "term": "Beg for",
     "meaning": "suplicar, rogar por",
-    "example": "During the discussion, she used the expression ?Beg for? to make her point.",
+    "example": "When only death remains, the last resort is to beg for food.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -7187,7 +7187,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0988",
     "term": "Beg, borrow or steal",
     "meaning": "to do whatever is necessary to get something",
-    "example": "During the discussion, she used the expression ?Beg, borrow or steal? to make her point.",
+    "example": "We’ll beg, borrow or steal the equipment we need—the exhibition must open on Friday.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7204,7 +7204,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1929",
     "term": "Beggar",
     "meaning": "mendigo",
-    "example": "In her notes, she chose ?Beggar? as the most precise wording for the situation.",
+    "example": "He is rich yet he lives like a beggar.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -7221,7 +7221,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1805",
     "term": "Belated",
     "meaning": "atrasado, tardío",
-    "example": "a belated birthday card",
+    "example": "Mary's husband took her to the fancy French restaurant for their belated anniversary dinner.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -7238,7 +7238,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0012",
     "term": "Believe in",
     "meaning": "creer en",
-    "example": "John believes in oat bran",
+    "example": "Socrates was accused of atheism because he did not believe in Zeus.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -7255,7 +7255,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0906",
     "term": "Belittle",
     "meaning": "denigrar, menospreciar, despreciar, subestimar",
-    "example": "don't belittle your colleagues",
+    "example": "That doesn't give you the right to belittle those who follow the Mormon faith.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7272,7 +7272,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0566",
     "term": "Bemoan",
     "meaning": "lamentarse, quejarse",
-    "example": "In her notes, she chose ?Bemoan? as the most precise wording for the situation.",
+    "example": "He had no intention of starting his new life bemoaning everything that had vanished.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7289,7 +7289,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0606",
     "term": "Bequeath",
     "meaning": "dejar algo en el testamento, legar algo",
-    "example": "My aunt bequeathed me all her jewelry",
+    "example": "Anna Maria Luisa bequeathed the Medici's art collection to the Tuscan state.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7306,7 +7306,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0784",
     "term": "Bereft",
     "meaning": "despejado, abandonado, carente de",
-    "example": "bereft of hope",
+    "example": "Men who were bereft of reason conducted the war.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7323,7 +7323,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1512",
     "term": "Besmirched",
     "meaning": "manchar, ensuciar (reputación)",
-    "example": "In her notes, she chose ?Besmirched? as the most precise wording for the situation.",
+    "example": "Years of fabricated stories had besmirched the newspaper’s once-impeccable reputation.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7340,7 +7340,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0409",
     "term": "Besotted",
     "meaning": "(infatuated) estar perdidamente enamorado",
-    "example": "In her notes, she chose ?Besotted? as the most precise wording for the situation.",
+    "example": "Newly besotted with gardening, he spends every spare hour in the greenhouse.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7393,7 +7393,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0013",
     "term": "Beware of",
     "meaning": "tener cuidado de",
-    "example": "During the discussion, she used the expression ?Beware of? to make her point.",
+    "example": "Beware of one who praises you to your face.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -7410,7 +7410,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0823",
     "term": "Bias",
     "meaning": "preferencia, inclinación",
-    "example": "a bias fold",
+    "example": "Anybody with at least a two-digit IQ knows this was a politically biased choice.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7427,7 +7427,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1524",
     "term": "Bide one’s time",
     "meaning": "esperar el momento (wait calmly)",
-    "example": "During the discussion, she used the expression ?Bide one’s time? to make her point.",
+    "example": "Rather than confront the director immediately, she bided her time until she had incontrovertible evidence.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -7444,7 +7444,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0877",
     "term": "Billiards",
     "meaning": "billar",
-    "example": "In her notes, she chose ?Billiards? as the most precise wording for the situation.",
+    "example": "She says she can't play billiards, but she wins every time. It must be beginner's luck.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7461,7 +7461,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0904",
     "term": "Binding",
     "meaning": "encuadernación / vinculante (f) (obligatorio) / ajustado",
-    "example": "a binding contract",
+    "example": "A tenancy agreement is a legally binding document between a landlord and their tenant.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7478,7 +7478,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0184",
     "term": "Bit by bit",
     "meaning": "poco a poco",
-    "example": "During the discussion, she used the expression ?Bit by bit? to make her point.",
+    "example": "I am becoming accustomed to the severe climate here bit by bit.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -7495,7 +7495,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1014",
     "term": "Bizarrely",
     "meaning": "extrañamente",
-    "example": "In her notes, she chose ?Bizarrely? as the most precise wording for the situation.",
+    "example": "Yanni had a bizarrely disturbing encounter with a man who told him that he was a wanted serial killer.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7566,7 +7566,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1276",
     "term": "Blank canvas",
     "meaning": "una hoja en blanco",
-    "example": "During the discussion, she used the expression ?Blank canvas? to make her point.",
+    "example": "My childhood feels like a blank canvas.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7583,7 +7583,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1062",
     "term": "Blank looks",
     "meaning": "Be expressionless, appear dumbstruck or overwhelmed",
-    "example": "In her notes, she chose ?Blank looks? as the most precise wording for the situation.",
+    "example": "The announcement that everyone would work through the weekend was met with blank looks.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7600,7 +7600,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0658",
     "term": "Blast",
     "meaning": "explosión, estallido",
-    "example": "In her notes, she chose ?Blast? as the most precise wording for the situation.",
+    "example": "The rock has been blasted to make a new course for the stream.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7617,7 +7617,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1525",
     "term": "Blaze a trail",
     "meaning": "descrubir, explorar algo nuevo (blaze-> to set on fire)",
-    "example": "During the discussion, she used the expression ?Blaze a trail? to make her point.",
+    "example": "These researchers blazed a trail for women entering the male-dominated field of aerospace engineering.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -7634,7 +7634,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0465",
     "term": "Bleak",
     "meaning": "lóbrego, lúgubre, desolador, desalentador",
-    "example": "bleak winds of the North Atlantic",
+    "example": "The outlook is bleak if society doesn't change, but it still can, Watson said.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7651,7 +7651,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0565",
     "term": "Blinkered",
     "meaning": "estrecho de miras (narrow-minded)",
-    "example": "In her notes, she chose ?Blinkered? as the most precise wording for the situation.",
+    "example": "He has not taken a narrow and blinkered view.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7685,7 +7685,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0426",
     "term": "Blistering",
     "meaning": "abrasador, ardiente (f) (heat: fierce)",
-    "example": "a blistering pace",
+    "example": "Walking to the office is not a good idea when it's blistering hot out.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7702,7 +7702,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1221",
     "term": "Blithely",
     "meaning": "alegremente, despreocupadamente",
-    "example": "In her notes, she chose ?Blithely? as the most precise wording for the situation.",
+    "example": "How can you go on so blithely, pretending nothing's wrong, when something so horrible has happened?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7719,7 +7719,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0800",
     "term": "Bloated",
     "meaning": "hinchado, inflado / desmesurado, inflado (f) (excessive)",
-    "example": "In her notes, she chose ?Bloated? as the most precise wording for the situation.",
+    "example": "He is fat and bloated; those who do not know him cannot recognize him.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7753,7 +7753,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1264",
     "term": "Blood run cold",
     "meaning": "causar a alguien una fuerte sensación de miedo, horror o",
-    "example": "During the discussion, she used the expression ?Blood run cold? to make her point.",
+    "example": "Yanni said something that made Skura's blood run cold.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7770,7 +7770,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0511",
     "term": "Blood, sweat and tears",
     "meaning": "extremely hard work, or the greatest effort possible, in",
-    "example": "During the discussion, she used the expression ?Blood, sweat and tears? to make her point.",
+    "example": "Restoring the abandoned theatre took four years of blood, sweat and tears.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7787,7 +7787,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0911",
     "term": "Blossom",
     "meaning": "flor / florecer / crecer, desarrollarse (f)",
-    "example": "Youth blossomed into maturity",
+    "example": "It will not be long before the cherry blossoms come out.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7804,7 +7804,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1126",
     "term": "Blot",
     "meaning": "mancha / borrar, secar",
-    "example": "In her notes, she chose ?Blot? as the most precise wording for the situation.",
+    "example": "I've tried to blot out the memory of him crying.",
     "family": "wordFormation",
     "families": [
       "vocabulary",
@@ -7824,7 +7824,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1672",
     "term": "Blotter",
     "meaning": "papel secante",
-    "example": "In her notes, she chose ?Blotter? as the most precise wording for the situation.",
+    "example": "The detective pressed the wet signature against a blotter before closing the notebook.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -7841,7 +7841,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0965",
     "term": "Blueprint",
     "meaning": "plano / proyecto (plan, design)",
-    "example": "In her notes, she chose ?Blueprint? as the most precise wording for the situation.",
+    "example": "There's no doubt that Tom's childhood laid down the blueprint for the rest of his life.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7858,7 +7858,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1183",
     "term": "Bluff",
     "meaning": "fingir, aparentar, ir de farol",
-    "example": "a bluff but pleasant manner",
+    "example": "She was tempted to call his bluff, hardly believing that he would carry out his threat.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7892,7 +7892,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1316",
     "term": "Blunder",
     "meaning": "metedura de pata",
-    "example": "He blundered his stupid ideas",
+    "example": "Thanks to a bureaucratic blunder, we don't have access to the building anymore.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7926,7 +7926,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1698",
     "term": "Boarder",
     "meaning": "internado (alumno)",
-    "example": "In her notes, she chose ?Boarder? as the most precise wording for the situation.",
+    "example": "As a commuter, it can be difficult to make friends with the other students, who are mostly boarders.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -7943,7 +7943,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0611",
     "term": "Boast",
     "meaning": "Presumir, alardear, fardear",
-    "example": "In her notes, she chose ?Boast? as the most precise wording for the situation.",
+    "example": "Tom boasts of never having been defeated in a horse race.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7960,7 +7960,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1344",
     "term": "Boast about",
     "meaning": "presumir, alardear",
-    "example": "In her notes, she chose ?Boast about? as the most precise wording for the situation.",
+    "example": "Despite his achievements, he is very humble and doesn't boast about them.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -7977,7 +7977,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0018",
     "term": "Boasts of/about",
     "meaning": "presumir de",
-    "example": "During the discussion, she used the expression ?Boasts of? to make her point.",
+    "example": "He isn't the sort of man that boasts of his abilities.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -7994,7 +7994,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1819",
     "term": "Bodily",
     "meaning": "corporal, del cuerpo",
-    "example": "he was translated bodily to heaven",
+    "example": "While you are asleep, the bodily functions slow down and body temperature falls.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -8011,7 +8011,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0850",
     "term": "Bog",
     "meaning": "(n) pantano, cienaga / (v) empantanarse, enredar, dificultar",
-    "example": "She bogged down many times while she wrote her dissertation",
+    "example": "After the downpour, both tractors became bogged down in the saturated field.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8028,7 +8028,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0859",
     "term": "Bolstered",
     "meaning": "apoyar, respaldar",
-    "example": "In her notes, she chose ?Bolstered? as the most precise wording for the situation.",
+    "example": "The implementation of comprehensive reforms has bolstered Algeria's institutional frameworks, reinforcing the rule of law and safeguarding human rights.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8045,7 +8045,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1814",
     "term": "Bookishness",
     "meaning": "afición a los libros, amor por los libros, afición a la lectura o, en un sentido más amplio, cultura libresca",
-    "example": "In her notes, she chose ?Bookishness? as the most precise wording for the situation.",
+    "example": "Her childhood bookishness developed into an encyclopaedic knowledge of Victorian fiction.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -8062,7 +8062,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1051",
     "term": "Boom and bust",
     "meaning": "pasar de tener muchas ganancias a no tener (a situation in which",
-    "example": "During the discussion, she used the expression ?Boom and bust? to make her point.",
+    "example": "The region’s dependence on construction has left it vulnerable to cycles of boom and bust.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8079,7 +8079,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0677",
     "term": "Boon",
     "meaning": "bendición, beneficio, ayuda (gift, blessing)",
-    "example": "boon companions",
+    "example": "Reliable broadband has been a major boon to businesses in isolated villages.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8096,7 +8096,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1358",
     "term": "Botanists",
     "meaning": "botánico",
-    "example": "In her notes, she chose ?Botanists? as the most precise wording for the situation.",
+    "example": "Botanists identified the rare orchid by examining the structure of its pollen.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -8116,7 +8116,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0324",
     "term": "Bottle up",
     "meaning": "reprimir",
-    "example": "he let his anger bottle up until he exploded",
+    "example": "I want to fill my water bottle up at the water fountain.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -8150,7 +8150,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0504",
     "term": "Bottom line",
     "meaning": "final (business: profit or loss)",
-    "example": "During the discussion, she used the expression ?Bottom line? to make her point.",
+    "example": "You haven't mentioned cost, and I won't sign until I know the bottom line.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8167,7 +8167,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1141",
     "term": "Bounded",
     "meaning": "limitado",
-    "example": "In her notes, she chose ?Bounded? as the most precise wording for the situation.",
+    "example": "The study is bounded by a small sample size and a relatively short follow-up period.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8184,7 +8184,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0824",
     "term": "Bouts",
     "meaning": "episodio (attack of illness) / pelea, combate (boxing)",
-    "example": "In her notes, she chose ?Bouts? as the most precise wording for the situation.",
+    "example": "The poor girl regularly had bouts of fever, and her headaches became unbearable.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8236,7 +8236,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0337",
     "term": "Bowl sb over",
     "meaning": "derribar, tumbar / dejar impresionado",
-    "example": "During the discussion, she used the expression ?Bowl sb over? to make her point.",
+    "example": "There’s some sugar in that bowl over there.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -8272,7 +8272,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0994",
     "term": "Brass",
     "meaning": "latón",
-    "example": "In her notes, she chose ?Brass? as the most precise wording for the situation.",
+    "example": "The restorer polished the brass handles until they reflected the workshop lights.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8289,7 +8289,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1941",
     "term": "Breadth",
     "meaning": "ancho, amplitud",
-    "example": "In her notes, she chose ?Breadth? as the most precise wording for the situation.",
+    "example": "It is likely that nobody can accurately estimate the depth and breadth of this ravine.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -8306,7 +8306,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0919",
     "term": "Break the ice",
     "meaning": "romper el hielo",
-    "example": "During the discussion, she used the expression ?Break the ice? to make her point.",
+    "example": "He got up enough guts to break the ice at the board meeting.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8364,7 +8364,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1457",
     "term": "Breakage",
     "meaning": "rotura, quiebre, destrozos, daños",
-    "example": "the breakage was unavoidable",
+    "example": "The carrier accepts no responsibility for breakage unless fragile items are properly packed.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8381,7 +8381,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1459",
     "term": "Brewery",
     "meaning": "cervecería",
-    "example": "In her notes, she chose ?Brewery? as the most precise wording for the situation.",
+    "example": "St. Louis, Missouri is famous for the Gateway Arch and the Anheuser-Busch Brewery.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8398,7 +8398,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1906",
     "term": "Brilliance",
     "meaning": "brillo, luminosidad, resplandor / genialidad, inteligencia",
-    "example": "In her notes, she chose ?Brilliance? as the most precise wording for the situation.",
+    "example": "Tom Wilkinson plays the passionate, bullheaded Arthur, who teeters between brilliance and lunacy.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -8415,7 +8415,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0097",
     "term": "Bring down",
     "meaning": "hundir, hacer caer, derribar, echar por tierra (f) (informal)",
-    "example": "During the discussion, she used the expression ?Bring down? to make her point.",
+    "example": "The leaked correspondence could bring down ministers who denied authorising the operation.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -8449,7 +8449,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0103",
     "term": "Bring down rate of inflation / cost of living",
     "meaning": "bajar / reducir inflación / coste",
-    "example": "During the discussion, she used the expression ?Bring down rate of inflation? to make her point.",
+    "example": "Subsidising public transport could help bring down the cost of living for low-income commuters.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -8466,7 +8466,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0353",
     "term": "Bring out the best in",
     "meaning": "sacar lo mejor",
-    "example": "During the discussion, she used the expression ?Bring out the best in? to make her point.",
+    "example": "When we seek to discover the best in others, we somehow bring out the best in ourselves.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -8483,7 +8483,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0272",
     "term": "Bring up the rear",
     "meaning": "seguir a la cola (to be last in a line or sequence of people). In the rankings, the company is still bringing up the rear.",
-    "example": "During the discussion, she used the expression ?Bring up the rear? to make her point.",
+    "example": "You people go ahead. We'll bring up the rear.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -8500,7 +8500,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0745",
     "term": "Brochure",
     "meaning": "folleto, panfleto (pamphlet)",
-    "example": "In her notes, she chose ?Brochure? as the most precise wording for the situation.",
+    "example": "Would you send, by real mail, some brochures that will help me to choose a hotel?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8517,7 +8517,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1128",
     "term": "Broker",
     "meaning": "corredor de bolsa / agente / comerciante",
-    "example": "In her notes, she chose ?Broker? as the most precise wording for the situation.",
+    "example": "An independent insurance broker compared policies from six different providers.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8553,7 +8553,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1132",
     "term": "Bud",
     "meaning": "capullo, brote (flower) / brotar, surgir, nacer",
-    "example": "a budding friendship",
+    "example": "The first green buds appear on the apple trees in early March.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8587,7 +8587,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1829",
     "term": "Buoyant",
     "meaning": "cheerful and optimistic, or able to stay afloat",
-    "example": "buoyant spirits",
+    "example": "How can ships be buoyant when not even rocks are?",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -8604,7 +8604,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0423",
     "term": "Burdensome",
     "meaning": "pesado (heavy, hard to carry) / pesado, molesto (f)",
-    "example": "the burdensome task of preparing the income tax return",
+    "example": "It doesn't matter how burdensome yesterday was, as you can always start anew today.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8621,7 +8621,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1515",
     "term": "Burning the midnight oil",
     "meaning": "working late into the night",
-    "example": "During the discussion, she used the expression ?Burning the midnight oil? to make her point.",
+    "example": "Tom is always burning the midnight oil.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8638,7 +8638,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0339",
     "term": "Burst into laughter",
     "meaning": "echarse a reír",
-    "example": "During the discussion, she used the expression ?Burst into laughter? to make her point.",
+    "example": "All at once, the Buddhist priest burst into laughter, spoiling the solemn atmosphere.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -8655,7 +8655,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0221",
     "term": "Bury your head in the sand",
     "meaning": "ignorar, negar (f) (ignore stressful situation)",
-    "example": "During the discussion, she used the expression ?Bury your head in the sand? to make her point.",
+    "example": "You cannot bury your head in the sand and hope that the mounting debt will disappear.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -8672,7 +8672,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0491",
     "term": "bustling crowds",
     "meaning": "large groups of people with lots of noise and activity",
-    "example": "Bustling crowds filled the market square.",
+    "example": "Bustling crowds filled the harbour as three cruise ships arrived simultaneously.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8691,7 +8691,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0243",
     "term": "By all means",
     "meaning": "por supuesto (of course, certainly)",
-    "example": "Visit us by all means",
+    "example": "We have to avoid the nuclear war by all means.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -8836,7 +8836,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0244",
     "term": "By the same token",
     "meaning": "del mismo modo/manera, igualmente, asimismo",
-    "example": "During the discussion, she used the expression ?By the same token? to make her point.",
+    "example": "The price of gold and by the same token silver too, is going to explode.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -8853,7 +8853,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1190",
     "term": "Bystander",
     "meaning": "testigo, transeúnte (onlooker, spectator)",
-    "example": "In her notes, she chose ?Bystander? as the most precise wording for the situation.",
+    "example": "Tom really wanted to walk away from the confrontation, but the bystanders kept egging him on.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8868,9 +8868,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0704",
-    "term": "Cacaphony",
+    "term": "Cacophony",
     "meaning": "cacofonía, disonancia (harsh jumble of sounds)",
-    "example": "In her notes, she chose ?Cacaphony? as the most precise wording for the situation.",
+    "example": "A cacophony of horns, sirens and drilling rose from the street below.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -8887,7 +8887,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0312",
     "term": "Call for",
     "meaning": "exigir, requerir",
-    "example": "During the discussion, she used the expression ?Call for? to make her point.",
+    "example": "I'm sorry to disturb you, but there's a phone call for you.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -8921,7 +8921,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0400",
     "term": "call for something",
     "meaning": "exigir algo",
-    "example": "During the discussion, she used the expression ?call for something? to make her point.",
+    "example": "Mail for you will be held until you call for it.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -8938,7 +8938,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0238",
     "term": "Call into question",
     "meaning": "dudar de",
-    "example": "During the discussion, she used the expression ?Call into question? to make her point.",
+    "example": "The newly uncovered emails call into question his account of when he first learned about the breach.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -8955,7 +8955,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0020",
     "term": "Can’t account for",
     "meaning": "no poder explicar",
-    "example": "During the discussion, she used the expression ?Can’t account for? to make her point.",
+    "example": "Tom can't account for his whereabouts on the day that Mary was murdered.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -8975,7 +8975,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0071",
     "term": "Cap on",
     "meaning": "limitar algo",
-    "example": "During the discussion, she used the expression ?Cap on? to make her point.",
+    "example": "Tom put his cap on back to front, in an effort to look hip.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -8992,7 +8992,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1520",
     "term": "Cast aspersions on",
     "meaning": "criticar, difamar",
-    "example": "During the discussion, she used the expression ?Cast aspersions on? to make her point.",
+    "example": "In his speech, he cast aspersions on all religions except his own.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -9009,7 +9009,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0971",
     "term": "Castigate",
     "meaning": "castigar, reprender a (reprimand, punish)",
-    "example": "In her notes, she chose ?Castigate? as the most precise wording for the situation.",
+    "example": "Don't castigate me. I haven't done anything wrong.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9080,7 +9080,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1025",
     "term": "Catch my drift",
     "meaning": "entender, captar (i) (f) (understand what sb means)",
-    "example": "During the discussion, she used the expression ?Catch my drift? to make her point.",
+    "example": "I'm going to the secret room, if you catch my drift.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9097,7 +9097,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1277",
     "term": "Catch my eye",
     "meaning": "llamar la atención",
-    "example": "In her notes, she chose ?Catch my eye? as the most precise wording for the situation.",
+    "example": "A striking photograph in the exhibition window caught my eye.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9133,7 +9133,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1199",
     "term": "Catch red-handed",
     "meaning": "agarrar con las manos en la masa",
-    "example": "During the discussion, she used the expression ?Catch red-handed? to make her point.",
+    "example": "Security guards caught the contractor red-handed as he removed confidential files from the archive.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9184,7 +9184,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0603",
     "term": "Catch your breath",
     "meaning": "tomarse un respiro",
-    "example": "In her notes, she chose ?Catch your breath? as the most precise wording for the situation.",
+    "example": "We stopped at the ridge to catch our breath and admire the valley below.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9201,7 +9201,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1295",
     "term": "Catch-22",
     "meaning": "callejón sin salida, encrucijada",
-    "example": "In her notes, she chose ?Catch-22? as the most precise wording for the situation.",
+    "example": "Call it a Catch-22, but sometimes, you just can't realistically come out on top.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9218,7 +9218,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1230",
     "term": "Catch-all",
     "meaning": "multifunción, multicontenido",
-    "example": "In her notes, she chose ?Catch-all? as the most precise wording for the situation.",
+    "example": "Don't use the sink as a catch-all for miscellaneous items.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9235,7 +9235,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1375",
     "term": "Cautiously",
     "meaning": "cuidadosamente",
-    "example": "In her notes, she chose ?Cautiously? as the most precise wording for the situation.",
+    "example": "Tom cautiously stuck his hand into the hole in the wall.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -9255,7 +9255,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0607",
     "term": "Caveat",
     "meaning": "advertencia, limitación, condición",
-    "example": "a caveat filed against the probate of a will",
+    "example": "The treatment is highly effective, with the caveat that it can cause temporary fatigue.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9272,7 +9272,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0591",
     "term": "Caveats",
     "meaning": "advertencia, limitación, condición",
-    "example": "In her notes, she chose ?Caveats? as the most precise wording for the situation.",
+    "example": "The device works offline, although there are two important caveats: maps expire and updates require Wi-Fi.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9289,7 +9289,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1866",
     "term": "Ceaselessly",
     "meaning": "incesantemente, ininterrumpidamente",
-    "example": "dance inspires him ceaselessly to strive higher and higher toward the shining pinnacle of perfection that is the goal of every artiste",
+    "example": "The gods had condemned Sisyphus to ceaselessly rolling a rock to the top of a mountain.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -9306,7 +9306,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1399",
     "term": "Cellist",
     "meaning": "violonchelista",
-    "example": "In her notes, she chose ?Cellist? as the most precise wording for the situation.",
+    "example": "Mister Stern supported and guided younger classical musicians. They include violinists Itzhak Perlman and Pinchas Zukerman, cellist Yo-Yo Ma, and pianist Yefim Bronfman.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -9326,7 +9326,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1877",
     "term": "Ceremonious",
     "meaning": "ceremonioso",
-    "example": "their ceremonious greetings did not seem heartfelt",
+    "example": "Their ceremonious exchange of gifts concealed the tension between the two delegations.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -9363,7 +9363,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1887",
     "term": "Chancy",
     "meaning": "incierto, arriesgado (risky)",
-    "example": "a chancy appeal at best",
+    "example": "Investing into stocks is a highly chancy endeavor.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -9397,7 +9397,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1436",
     "term": "Characterization",
     "meaning": "descripción, caracterización",
-    "example": "In her notes, she chose ?Characterization? as the most precise wording for the situation.",
+    "example": "I don't think that's a very accurate characterization of his point of view.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9414,7 +9414,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1891",
     "term": "Chargeable",
     "meaning": "facturable, cobrable / imputable",
-    "example": "the suspect was chargeable",
+    "example": "He was judged sane and was therefore chargeable with murder.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -9431,7 +9431,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1099",
     "term": "Chariot",
     "meaning": "carro, cuadriga",
-    "example": "In her notes, she chose ?Chariot? as the most precise wording for the situation.",
+    "example": "Perseus saw his children, one after the other, dragged behind the victor's chariot.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9448,7 +9448,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0899",
     "term": "Cherished",
     "meaning": "querido, amado (beloved)",
-    "example": "a cherished friend",
+    "example": "They knew what friendship is worth and cherished it like the apples of their eyes.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9499,7 +9499,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0879",
     "term": "Chicken pox",
     "meaning": "varicela",
-    "example": "In her notes, she chose ?Chicken pox? as the most precise wording for the situation.",
+    "example": "There was only one case of chicken pox at the school.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9516,7 +9516,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1470",
     "term": "Chivalrous",
     "meaning": "caballeroso, galante, cortés",
-    "example": "In her notes, she chose ?Chivalrous? as the most precise wording for the situation.",
+    "example": "To contend in a joust, be it verbal, one must also behave in a chivalrous way.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9533,7 +9533,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0983",
     "term": "Chop and change",
     "meaning": "cambiar todo el tiempo, cambiar contstantemente",
-    "example": "In her notes, she chose ?Chop and change? as the most precise wording for the situation.",
+    "example": "Brilliant chefs can chop and change any ingredient in a recipe and end up with something just as good, if not better.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9550,7 +9550,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1478",
     "term": "Christendom",
     "meaning": "Cristiandad, cristianismo",
-    "example": "for a thousand years the Roman Catholic Church was the principal church of Christendom",
+    "example": "The dispute divided scholars and church leaders throughout medieval Christendom.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9584,7 +9584,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0615",
     "term": "Chuckle",
     "meaning": "reírse por lo bajo, entre dientes, soltar una risita",
-    "example": "In her notes, she chose ?Chuckle? as the most precise wording for the situation.",
+    "example": "Tom chuckled to himself as he read Mary's letter.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9621,7 +9621,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0419",
     "term": "circuitous",
     "meaning": "enrevesado (indirect, roundabout)",
-    "example": "a long and circuitous journey by train and boat",
+    "example": "The train made a circuitous route back to the city center every day.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9655,7 +9655,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0719",
     "term": "Circumvents",
     "meaning": "eludir, evadir, rodear, dar la vuelta, circunvalar",
-    "example": "In her notes, she chose ?Circumvents? as the most precise wording for the situation.",
+    "example": "Routing payments through a shell company circumvents the safeguards built into the procurement process.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9670,9 +9670,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-1913",
-    "term": "Cirscumstancial",
+    "term": "Circumstantial",
     "meaning": "circunstancial",
-    "example": "In her notes, she chose ?Cirscumstancial? as the most precise wording for the situation.",
+    "example": "Officials say these preliminary suppositions are based upon forensic and circumstantial evidence, as well as intelligence analysis.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -9689,7 +9689,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1474",
     "term": "Civilian",
     "meaning": "civil",
-    "example": "civilian clothing",
+    "example": "Many soldiers had a hard time coping with civilian life after the war.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9706,7 +9706,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0517",
     "term": "Claimant",
     "meaning": "demandante, solicitante",
-    "example": "claimants of unemployment compensation",
+    "example": "The court shall apportion property rights among the claimants.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -9745,7 +9745,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1401",
     "term": "Cleanliness",
     "meaning": "higiene, limpieza, aseo",
-    "example": "In her notes, she chose ?Cleanliness? as the most precise wording for the situation.",
+    "example": "You are blessed, Goddess, mother of all creation, because you teach us cleanliness.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -9786,7 +9786,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1939",
     "term": "Cleavage",
     "meaning": "escote / división",
-    "example": "In her notes, she chose ?Cleavage? as the most precise wording for the situation.",
+    "example": "There's really no need for Mary's outfit to have a cleavage window.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -9803,7 +9803,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1499",
     "term": "Cleave",
     "meaning": "partir (dividir)",
-    "example": "In her notes, she chose ?Cleave? as the most precise wording for the situation.",
+    "example": "With feathered oars he cleaves the skies, and straight / on Libya's shores alighting, speeds his hest.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9838,7 +9838,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0433",
     "term": "Cliffhanger",
     "meaning": "momento o final de máximo suspense",
-    "example": "In her notes, she chose ?Cliffhanger? as the most precise wording for the situation.",
+    "example": "Was the cliffhanger a downer or did it whet your appetite for more?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9872,7 +9872,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0525",
     "term": "Climate emergency",
     "meaning": "emergencia climática",
-    "example": "In her notes, she chose ?Climate emergency? as the most precise wording for the situation.",
+    "example": "Treating the climate emergency as a distant threat only postpones the difficult decisions.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9889,7 +9889,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1943",
     "term": "Climatic",
     "meaning": "climático",
-    "example": "climatic changes",
+    "example": "Global climatic changes may have been responsible for the extinction of the dinosaurs.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -9906,7 +9906,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0326",
     "term": "Cling on to",
     "meaning": "aferrarse",
-    "example": "During the discussion, she used the expression ?Cling on to? to make her point.",
+    "example": "People cling on to life more than anything - a funny idea, given all the beautiful things that exist in the world.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -9940,7 +9940,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0831",
     "term": "Clingy",
     "meaning": "ajustado, ceñido (fabric) / dependiente (person: needy)",
-    "example": "In her notes, she chose ?Clingy? as the most precise wording for the situation.",
+    "example": "Ziri tried to explain to Walid how clingy and paranoid Rima was.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9957,7 +9957,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1641",
     "term": "Clockwise",
     "meaning": "en el sentido de las agujas del reloj",
-    "example": "please move clockwise in a circle",
+    "example": "The boiler can be reset by turning the left hand dial fully anti-clockwise.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -9974,7 +9974,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0848",
     "term": "Clog",
     "meaning": "zueco / atascar, taponar, obstruir",
-    "example": "Fear clogged her mind",
+    "example": "I don't want my bathtub to clog, so I need to buy a strainer.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -9991,7 +9991,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1950",
     "term": "Closure",
     "meaning": "cierre, clausura, fin",
-    "example": "debate was closured",
+    "example": "The closure of the factory was a tough pill to swallow for the town's residents.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -10025,7 +10025,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0898",
     "term": "Clutter",
     "meaning": "desorden, desastre, lio",
-    "example": "In her notes, she chose ?Clutter? as the most precise wording for the situation.",
+    "example": "There's too much clutter in the house now that we have two kids.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10061,7 +10061,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1956",
     "term": "Cohesive",
     "meaning": "coherente",
-    "example": "a cohesive organization",
+    "example": "The departmental heads, lost in petty argument, could not reach a cohesive decision.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -10076,9 +10076,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-1963",
-    "term": "Coincidential",
+    "term": "Coincidental",
     "meaning": "casual, furtivo",
-    "example": "In her notes, she chose ?Coincidential? as the most precise wording for the situation.",
+    "example": "It was entirely coincidental that both witnesses arrived wearing identical red coats.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -10113,7 +10113,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1254",
     "term": "Combat",
     "meaning": "combatir",
-    "example": "The Kurds are combating Iraqi troops in Northern Iraq",
+    "example": "In real combat, you must not forget that hesitation is a very dangerous thing.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10130,7 +10130,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0750",
     "term": "Come about",
     "meaning": "suceder, pasar, ocurrir (happen)",
-    "example": "In her notes, she chose ?Come about? as the most precise wording for the situation.",
+    "example": "Social unrest may come about as a result of the endless rising of prices.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10147,7 +10147,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0970",
     "term": "Come clean",
     "meaning": "confesar, sincerarse",
-    "example": "During the discussion, she used the expression ?Come clean? to make her point.",
+    "example": "If you want her forgiveness you need to come clean about what you did.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10164,7 +10164,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0387",
     "term": "come into being",
     "meaning": "surgir",
-    "example": "During the discussion, she used the expression ?come into being? to make her point.",
+    "example": "How do organic proteins and nucleic acids come into being from inorganic matter?",
     "family": "patterns",
     "families": [
       "patterns"
@@ -10181,7 +10181,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0179",
     "term": "Come out",
     "meaning": "(facts, news) salir a la luz, hacerse público, filtrarse",
-    "example": "During the discussion, she used the expression ?Come out? to make her point.",
+    "example": "It will not be long before the cherry blossoms on our campus come out.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -10216,7 +10216,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0773",
     "term": "Come round",
     "meaning": "convencerse de / cambiar de opinión",
-    "example": "In her notes, she chose ?Come round? as the most precise wording for the situation.",
+    "example": "Tom asked Mary if she wanted to come round and watch a film.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10250,7 +10250,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0299",
     "term": "Come to think of it",
     "meaning": "pensándolo mejor (=on reflection)",
-    "example": "During the discussion, she used the expression ?Come to think of it? to make her point.",
+    "example": "Come to think of it, it has been raining for a week.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -10267,7 +10267,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0096",
     "term": "Come up with",
     "meaning": "inventar, elaborar, coseguir",
-    "example": "During the discussion, she used the expression ?Come up with? to make her point.",
+    "example": "You don't have to come up with an unusual topic for your speech.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -10301,7 +10301,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0106",
     "term": "Come up with strategy/solution",
     "meaning": "elaborar/crear una estrategia",
-    "example": "During the discussion, she used the expression ?Come up with strategy? to make her point.",
+    "example": "The team came up with a strategy that cut waiting times without increasing staff workloads.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -10318,7 +10318,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0026",
     "term": "Come up with the solution",
     "meaning": "llegar a una solución",
-    "example": "During the discussion, she used the expression ?Come up with the solution? to make her point.",
+    "example": "After tracing the fault to a loose cable, the engineer finally came up with the solution.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -10338,7 +10338,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0892",
     "term": "Comeback",
     "meaning": "regreso, retorno, reparación, remontada / respuesta ingeniosa",
-    "example": "In her notes, she chose ?Comeback? as the most precise wording for the situation.",
+    "example": "Whatever I say, he has a comeback ready. You can't get a word in edgewise.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10355,7 +10355,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1674",
     "term": "Commandment",
     "meaning": "mandamiento, mandato",
-    "example": "In her notes, she chose ?Commandment? as the most precise wording for the situation.",
+    "example": "If God had given an eleventh commandment, I wonder what it would have been.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -10372,7 +10372,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0397",
     "term": "commit yourself to something",
     "meaning": "comprometerte plenamente con algo.",
-    "example": "During the discussion, she used the expression ?commit yourself to something? to make her point.",
+    "example": "Don't commit yourself to doing it within a week.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -10389,7 +10389,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0633",
     "term": "Commodity",
     "meaning": "producto, mercancía,materia prima (solo un tipo de mercancía)",
-    "example": "In her notes, she chose ?Commodity? as the most precise wording for the situation.",
+    "example": "Copper is a globally traded commodity whose price responds quickly to industrial demand.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10406,7 +10406,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1343",
     "term": "Commonplace",
     "meaning": "corriente, común, ordinario",
-    "example": "his remarks were trite and commonplace",
+    "example": "No new horror can be more terrible than the daily torture of the commonplace.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10442,7 +10442,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1134",
     "term": "Compendium",
     "meaning": "compendio (collection)",
-    "example": "In her notes, she chose ?Compendium? as the most precise wording for the situation.",
+    "example": "Although most people thought of the Bible as a compendium of inspirational thought and Near Eastern traditions, an American school board wanted to declare it a science textbook.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10459,7 +10459,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0723",
     "term": "Compile",
     "meaning": "recopilar, reunir",
-    "example": "In her notes, she chose ?Compile? as the most precise wording for the situation.",
+    "example": "Japan's national budget for a new fiscal year is normally compiled in December.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10476,7 +10476,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1059",
     "term": "Complacency",
     "meaning": "autosuficiencia, autocomplacencia (lack of concern)",
-    "example": "his complacency was absolutely disgusting",
+    "example": "All economic problems would be solved, if they made complacency taxable.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10493,7 +10493,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2279",
     "term": "complementary therapy",
     "meaning": "a form of treatment for an illness or medical condition that is used together with treatments based on science",
-    "example": "Complementary therapies include acupuncture and yoga.",
+    "example": "Some patients use complementary therapy alongside conventional treatment to manage chronic pain.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10510,7 +10510,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0416",
     "term": "Completely dumbfounded",
     "meaning": "(flabbergasted) atónito, bocabierto",
-    "example": "In her notes, she chose ?Completely dumbfounded? as the most precise wording for the situation.",
+    "example": "I was completely dumbfounded when the supposedly extinct bird landed on the fence beside me.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10527,7 +10527,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0047",
     "term": "Completely repulsed by",
     "meaning": "(grossed) dar asco, repugnar",
-    "example": "During the discussion, she used the expression ?Completely repulsed by? to make her point.",
+    "example": "Several jurors were completely repulsed by the cruelty revealed in the recordings.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -10544,7 +10544,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1706",
     "term": "Completeness",
     "meaning": "completud, completitud",
-    "example": "In her notes, she chose ?Completeness? as the most precise wording for the situation.",
+    "example": "For the sake of completeness, let us mention that the ring R, considered as a module over itself, has submodules of arbitrarily large finite length.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -10561,7 +10561,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1255",
     "term": "Compound",
     "meaning": "agravar",
-    "example": "In her notes, she chose ?Compound? as the most precise wording for the situation.",
+    "example": "Carbon monoxide is a poisonous substance formed by the incomplete combustion of carbon compounds.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10595,7 +10595,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0254",
     "term": "Con into",
     "meaning": "engañar a alguien para que haga algo / estafar, timar",
-    "example": "During the discussion, she used the expression ?Con into? to make her point.",
+    "example": "The caller conned an elderly resident into revealing her online banking password.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -10612,7 +10612,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1380",
     "term": "Concealment",
     "meaning": "encubrimiento, ocultación, mantener en secreto",
-    "example": "In her notes, she chose ?Concealment? as the most precise wording for the situation.",
+    "example": "The idea of his concealment, not only agrees very ill with his reputed divinity, but associates with it something of pusillanimity.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -10632,7 +10632,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0355",
     "term": "Concerted action",
     "meaning": "accion conjunta",
-    "example": "During the discussion, she used the expression ?Concerted action? to make her point.",
+    "example": "Concerted action by a pair of bishops can decide a match.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -10649,7 +10649,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1390",
     "term": "Concession",
     "meaning": "concesión",
-    "example": "they won all the concessions they asked for",
+    "example": "Are you willing to make a small concession in order to achieve your goal?",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -10688,7 +10688,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0509",
     "term": "condemn",
     "meaning": "to say publicly that you think someone or something is bad or wrong",
-    "example": "Politicians have condemned the attacks.",
+    "example": "According to today's morning paper, the condemned criminal committed suicide.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10707,7 +10707,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1635",
     "term": "Confidentially",
     "meaning": "confidencialmente, secretamente (privately)",
-    "example": "spoke to him intimately and confidentially",
+    "example": "I had also discussed confidentially with the minister yesterday regarding that matter but there is no decision yet.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -10724,7 +10724,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1636",
     "term": "Confidently",
     "meaning": "confiadamente",
-    "example": "we have to do what is right confidently",
+    "example": "When you are with an indecisive group, confidently propose something that no one would agree to.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -10779,7 +10779,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0960",
     "term": "Conjecture",
     "meaning": "conjetura (supposition)",
-    "example": "In her notes, she chose ?Conjecture? as the most precise wording for the situation.",
+    "example": "The entire public and political debate is based on conjecture, not on fact.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10796,7 +10796,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0188",
     "term": "Conjure up",
     "meaning": "hacer aparecer (magic) / inventarse, sacarse de la manga",
-    "example": "he conjured wild birds in the air",
+    "example": "Ziri was finally able to conjure up a plan to kill the monster.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -10813,7 +10813,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1187",
     "term": "Connive",
     "meaning": "confabularse para (conspire, plot to do sth)",
-    "example": "In her notes, she chose ?Connive? as the most precise wording for the situation.",
+    "example": "The group had to scrimp, connive, and hustle in order to get by.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10830,7 +10830,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1424",
     "term": "Consequential",
     "meaning": "consiguiente / significativo, relevante",
-    "example": "the year's only really consequential legislation",
+    "example": "Tom wanted to do something consequential for once.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -10850,7 +10850,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1631",
     "term": "Considerably",
     "meaning": "considerablemente (to a great extent)",
-    "example": "painting the room white made it seem considerably (or substantially) larger",
+    "example": "The spread of television has considerably deprived us of our time for reading.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -10867,7 +10867,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1632",
     "term": "Considerately",
     "meaning": "consideradamente (with thought for others )",
-    "example": "they considerately withdrew",
+    "example": "He considerately lowered his voice when he noticed the baby had fallen asleep.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -10884,7 +10884,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1149",
     "term": "Conspicuously",
     "meaning": "notablemente, visiblemente",
-    "example": "In her notes, she chose ?Conspicuously? as the most precise wording for the situation.",
+    "example": "On the day of the vote, the president of the Senate was conspicuously absent.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10901,7 +10901,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1754",
     "term": "Conspirators",
     "meaning": "conspirador",
-    "example": "In her notes, she chose ?Conspirators? as the most precise wording for the situation.",
+    "example": "The odds are slim to none that the true conspirators will be found.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -10918,7 +10918,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1673",
     "term": "Constancy",
     "meaning": "constancia, lealtad, fidelidad",
-    "example": "In her notes, she chose ?Constancy? as the most precise wording for the situation.",
+    "example": "In Daoism, to not know constancy is a tragedy.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -10952,7 +10952,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1015",
     "term": "Construe",
     "meaning": "interpretar, analizar (often passive) (interpret)",
-    "example": "In her notes, she chose ?Construe? as the most precise wording for the situation.",
+    "example": "This note is better construed as a sharp fifteenth rather than a flat ninth.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -10969,7 +10969,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1751",
     "term": "Consumer",
     "meaning": "consumidor",
-    "example": "In her notes, she chose ?Consumer? as the most precise wording for the situation.",
+    "example": "The purpose of advertising is to familiarize consumers with the name of a product.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -10986,7 +10986,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1422",
     "term": "Contemptuously",
     "meaning": "irrespetuosamente, con desprecio",
-    "example": "she spoke of him contemptuously",
+    "example": "Instead of slapping him in the face, she spit in it, and walked contemptuously away.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -11006,7 +11006,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1142",
     "term": "Contentious",
     "meaning": "peleador",
-    "example": "a central and contentious element of the book",
+    "example": "The debate was very contentious and didn't result in any fruitful conclusions.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11040,7 +11040,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0699",
     "term": "Contingent",
     "meaning": "depender de",
-    "example": "the results of confession were not contingent, they were certain",
+    "example": "Our departure tomorrow is contingent on fair weather.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11057,7 +11057,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1147",
     "term": "Continuum",
     "meaning": "continuo",
-    "example": "In her notes, she chose ?Continuum? as the most precise wording for the situation.",
+    "example": "Northern Berber is a continuum of dialects spoken in the northern part of North Africa.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11074,7 +11074,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1771",
     "term": "Contradictory",
     "meaning": "contradictorio",
-    "example": "In her notes, she chose ?Contradictory? as the most precise wording for the situation.",
+    "example": "For example, if a chain-smoking teacher cautions a pupil for smoking, that warning is self-contradictory.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -11091,7 +11091,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1787",
     "term": "Contributory",
     "meaning": "contribuyente, contributivo",
-    "example": "In her notes, she chose ?Contributory? as the most precise wording for the situation.",
+    "example": "The job did not offer a contributory pension.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -11108,7 +11108,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1122",
     "term": "Conundrum",
     "meaning": "problema, misterio, enigma, acertijo, adivinanza",
-    "example": "In her notes, she chose ?Conundrum? as the most precise wording for the situation.",
+    "example": "Even the leading scientists of the day were left baffled by the conundrum.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11125,7 +11125,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1756",
     "term": "Conversion",
     "meaning": "conversión, transformación",
-    "example": "In her notes, she chose ?Conversion? as the most precise wording for the situation.",
+    "example": "Tom's parents were greatly upset by his conversion to a different religious faith.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -11159,7 +11159,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1056",
     "term": "Cornerstones",
     "meaning": "pilar, concepto básico",
-    "example": "In her notes, she chose ?Cornerstones? as the most precise wording for the situation.",
+    "example": "Tolerance and respect for diversity are the cornerstones of any peace movement.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11176,7 +11176,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0876",
     "term": "Corps",
     "meaning": "cuerpo (plural noun)",
-    "example": "diplomatic corps",
+    "example": "The Army Air Corps, which became the U.S. Air Force, began in 1928.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11193,7 +11193,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1778",
     "term": "Corruptible",
     "meaning": "corrompible",
-    "example": "corruptible judges",
+    "example": "Any official with unchecked power and secret finances may prove corruptible.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -11210,7 +11210,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1521",
     "term": "Cost an arm and a leg",
     "meaning": "costar un riñón, un ojo de la cara",
-    "example": "During the discussion, she used the expression ?Cost an arm and a leg? to make her point.",
+    "example": "That diamond ring cost an arm and a leg.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -11244,7 +11244,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0327",
     "term": "Count in",
     "meaning": "contar con, incluir",
-    "example": "During the discussion, she used the expression ?Count in? to make her point.",
+    "example": "Do you also know how to count in Italian?",
     "family": "patterns",
     "families": [
       "patterns"
@@ -11261,7 +11261,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0921",
     "term": "Counteract",
     "meaning": "contrarrestar",
-    "example": "In her notes, she chose ?Counteract? as the most precise wording for the situation.",
+    "example": "Intellect is no great help in counteracting feelings of guilt, which originate in the heart.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11278,7 +11278,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0893",
     "term": "Counterpoint",
     "meaning": "contrapunto (f) (complement, contrast)",
-    "example": "Bach perfected the art of counterpointing",
+    "example": "This piece is a virtuosic display of the composer's mastery of counterpoint and orchestration.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11295,7 +11295,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0596",
     "term": "Coup",
     "meaning": "golpe de Estado / golpe maestro (f) (success, great achievement)",
-    "example": "In her notes, she chose ?Coup? as the most precise wording for the situation.",
+    "example": "Something in the president's psychological makeup went awry after the failed coup attempt.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11312,7 +11312,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1026",
     "term": "Cover all the bases",
     "meaning": "considerar todas las posibilidades, tomar todas las",
-    "example": "During the discussion, she used the expression ?Cover all the bases? to make her point.",
+    "example": "I tried to cover all the bases.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11329,7 +11329,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0827",
     "term": "Covert",
     "meaning": "encubierto (undercover, secret)",
-    "example": "a woman covert",
+    "example": "Subjugation of the lower classes is important to our covert centralization of resources.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11346,7 +11346,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1029",
     "term": "Craft",
     "meaning": "nave, navío, embarcación",
-    "example": "The artisan crafted a complicated tool",
+    "example": "I greatly recommend reading it to anybody thinking of learning a craft.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11363,7 +11363,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0759",
     "term": "Cram",
     "meaning": "apiñar, embutir (fit sth into a small space)",
-    "example": "In her notes, she chose ?Cram? as the most precise wording for the situation.",
+    "example": "I'm against us forcing the child to go to cram school.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11415,7 +11415,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0774",
     "term": "Cripplingly",
     "meaning": "incapacitante (disabling) / devastación, empobrecimiento, daño (f)",
-    "example": "In her notes, she chose ?Cripplingly? as the most precise wording for the situation.",
+    "example": "For a small charity, the annual licensing fee is cripplingly expensive.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11468,7 +11468,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0585",
     "term": "Crude",
     "meaning": "grosero, ordinario, vulgar",
-    "example": "only the crude vital statistics",
+    "example": "This figure is a mirror of the decrease in imports of crude oil.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11485,7 +11485,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0374",
     "term": "Crude sense of humor",
     "meaning": "Humor vulgar",
-    "example": "During the discussion, she used the expression ?Crude sense of humor? to make her point.",
+    "example": "Santiago always had a crude sense of humor.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -11502,7 +11502,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0847",
     "term": "Crunch",
     "meaning": "masticar, triturar / crujir / crisis",
-    "example": "In her notes, she chose ?Crunch? as the most precise wording for the situation.",
+    "example": "She could always call her parents when she was in a crunch.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11519,7 +11519,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1501",
     "term": "Cuff",
     "meaning": "puño (de la manga) / bajo (del pantalón)",
-    "example": "In her notes, she chose ?Cuff? as the most precise wording for the situation.",
+    "example": "Tom was wearing an orange jumpsuit and his hands were cuffed in front of him.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11536,7 +11536,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1097",
     "term": "Culprit",
     "meaning": "culpable / causa",
-    "example": "In her notes, she chose ?Culprit? as the most precise wording for the situation.",
+    "example": "It's totally without precedent for the suspect's attorney to be the true culprit.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11553,7 +11553,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0790",
     "term": "Culprits",
     "meaning": "culpables / causa (sth causing a problem)",
-    "example": "In her notes, she chose ?Culprits? as the most precise wording for the situation.",
+    "example": "No matter what they've done, I don't think we should name and shame the culprits.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11608,7 +11608,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1151",
     "term": "Curb",
     "meaning": "(v) frenar, contener",
-    "example": "In her notes, she chose ?Curb? as the most precise wording for the situation.",
+    "example": "The committee called on all nations to work side-by-side to curb air pollution.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11625,7 +11625,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1087",
     "term": "Curve ball",
     "meaning": "sth unexpected / throw + curve ball -> tomar a alguien por sopresa,",
-    "example": "During the discussion, she used the expression ?Curve ball? to make her point.",
+    "example": "I don't know how to throw a curve ball.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11662,7 +11662,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0088",
     "term": "Cut into",
     "meaning": "cortar en, reducir, interrumpir, disminuir",
-    "example": "During the discussion, she used the expression ?Cut into? to make her point.",
+    "example": "Because Ziri cut into the brown growth of the heather, it won't regrow.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -11679,7 +11679,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0040",
     "term": "Cut to the bone",
     "meaning": "reducido al mínimo",
-    "example": "During the discussion, she used the expression ?Cut to the bone? to make her point.",
+    "example": "The budget was cut to the bone.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -11699,7 +11699,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0972",
     "term": "Cut-and-dried",
     "meaning": "claro y simple / prepadrado de antemano / concretado, cerrado /",
-    "example": "During the discussion, she used the expression ?Cut-and-dried? to make her point.",
+    "example": "The inheritance dispute is anything but cut-and-dried because the latest will was never witnessed.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11716,7 +11716,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0468",
     "term": "Cut-throat",
     "meaning": "despiadado, feroz, asesino, degollador",
-    "example": "In her notes, she chose ?Cut-throat? as the most precise wording for the situation.",
+    "example": "Among the manufacturers of so-called consumer electronics, there's ruthless, cut-throat competition.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11733,7 +11733,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1723",
     "term": "Cyclic",
     "meaning": "ciclíco",
-    "example": "In her notes, she chose ?Cyclic? as the most precise wording for the situation.",
+    "example": "The team said the central structure of the nanotubes contains rings called cyclic peptides.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -11750,7 +11750,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0837",
     "term": "Dabs",
     "meaning": "pizca de, poco de",
-    "example": "In her notes, she chose ?Dabs? as the most precise wording for the situation.",
+    "example": "The restorer applied tiny dabs of paint where the portrait had begun to flake.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11767,7 +11767,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0626",
     "term": "Damp",
     "meaning": "humedad fría",
-    "example": "clothes damp with perspiration",
+    "example": "Old homes, especially traditional Japanese ones, can be damp and unfriendly to modern life.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11784,7 +11784,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0932",
     "term": "Dangling",
     "meaning": "colgando, que cuelga",
-    "example": "In her notes, she chose ?Dangling? as the most precise wording for the situation.",
+    "example": "Tom likes to sit on the dock with his feet dangling in the water.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11801,7 +11801,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0384",
     "term": "Date back to as early as 1728",
     "meaning": "con Far seria: Dat back as far as 1728",
-    "example": "During the discussion, she used the expression ?Date back to as early as 1728? to make her point.",
+    "example": "Written references to the ceremony date back to as early as 1728.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -11818,7 +11818,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0703",
     "term": "Daunting",
     "meaning": "abrumador, intimidante, desalentador (intimidating)",
-    "example": "In her notes, she chose ?Daunting? as the most precise wording for the situation.",
+    "example": "Brinkmann is excited for the opportunity, but acknowledged how daunting studying at Oxford is.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11835,7 +11835,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0343",
     "term": "Dawn on",
     "meaning": "percatarse, pasarse por la cabeza, caer en cuenta",
-    "example": "During the discussion, she used the expression ?Dawn on? to make her point.",
+    "example": "Gradually the true meaning of what he said began to dawn on me.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -11852,7 +11852,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0869",
     "term": "Dawned",
     "meaning": "alba, amanecer / principio / iluminarse (realize)",
-    "example": "In her notes, she chose ?Dawned? as the most precise wording for the situation.",
+    "example": "It has dawned upon my mind that you are in the right.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11907,7 +11907,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0265",
     "term": "Deal with",
     "meaning": "lidiar con, resolver, ocuparse de",
-    "example": "During the discussion, she used the expression ?Deal with? to make her point.",
+    "example": "A specialist unit deals with complaints involving identity theft and online fraud.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -11924,7 +11924,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1018",
     "term": "Dearth",
     "meaning": "escasez, carencia",
-    "example": "In her notes, she chose ?Dearth? as the most precise wording for the situation.",
+    "example": "There is no dearth of evil people in the world who disobey Allah.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11941,7 +11941,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1209",
     "term": "Debunk",
     "meaning": "desmentir / ridiculizar",
-    "example": "The physicist debunked the psychic's claims",
+    "example": "The idea that cats are antisocial is a common misconception I want to debunk.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -11958,7 +11958,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1188",
     "term": "Deceit",
     "meaning": "engaño, mentira",
-    "example": "In her notes, she chose ?Deceit? as the most precise wording for the situation.",
+    "example": "In a time of universal deceit, telling the truth is a revolutionary act.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -11978,7 +11978,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1691",
     "term": "Deceptive",
     "meaning": "engañoso, falaz",
-    "example": "the deceptive calm in the eye of the storm",
+    "example": "Judge people not by age, but by behavior. Years are deceptive.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -11995,7 +11995,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1143",
     "term": "Decorum",
     "meaning": "decoro, decencia",
-    "example": "In her notes, she chose ?Decorum? as the most precise wording for the situation.",
+    "example": "It was a surprise to see all the students behaving with decorum on prom night.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12012,7 +12012,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1353",
     "term": "Deed",
     "meaning": "acto, acción, hazaña",
-    "example": "In her notes, she chose ?Deed? as the most precise wording for the situation.",
+    "example": "For once in my life I'm doing a good deed... And it is useless.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12029,7 +12029,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0849",
     "term": "Deem",
     "meaning": "considerar, juzgar, estimar",
-    "example": "In her notes, she chose ?Deem? as the most precise wording for the situation.",
+    "example": "The state can take your children away if they deem you an unfit mother.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12046,7 +12046,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1435",
     "term": "Defiance",
     "meaning": "resistencia, desafío",
-    "example": "In her notes, she chose ?Defiance? as the most precise wording for the situation.",
+    "example": "Tom's defiance was a big problem for his parents and teachers.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12063,7 +12063,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1070",
     "term": "Defiant",
     "meaning": "desafiante, rebelde, insolente",
-    "example": "brought up to be aggressive and defiant",
+    "example": "Police say they are considering deploying special negotiators to help disperse defiant crowds.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12080,7 +12080,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1345",
     "term": "Defies",
     "meaning": "desafiar, retar",
-    "example": "In her notes, she chose ?Defies? as the most precise wording for the situation.",
+    "example": "He defies the present government which is no less oppressive than its predecessor.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12097,7 +12097,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1842",
     "term": "Deformity",
     "meaning": "malformación, deformidad",
-    "example": "In her notes, she chose ?Deformity? as the most precise wording for the situation.",
+    "example": "The turtle was born with deformities caused by the chemicals in the water.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -12114,7 +12114,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1930",
     "term": "Defrost",
     "meaning": "descongelar",
-    "example": "Defrost the car window",
+    "example": "You'll need to pee on the lock to defrost it.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -12148,7 +12148,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1181",
     "term": "Delude",
     "meaning": "engañar a / engañar a alguien para",
-    "example": "In her notes, she chose ?Delude? as the most precise wording for the situation.",
+    "example": "There is no point in deluding yourself; you know well that she's just playing games with you.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12182,7 +12182,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0789",
     "term": "Deluge",
     "meaning": "inundación / aluvión, avalancha (f) (overwhelming quantity)",
-    "example": "In her notes, she chose ?Deluge? as the most precise wording for the situation.",
+    "example": "The flood of 1342 was the biggest deluge in the history of central Europe.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12199,7 +12199,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1170",
     "term": "Delve",
     "meaning": "escarbar, indagar, hurgar",
-    "example": "In her notes, she chose ?Delve? as the most precise wording for the situation.",
+    "example": "You're going to have to delve deeper if you want to get to the truth.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12216,7 +12216,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1507",
     "term": "Demean",
     "meaning": "degradar, rebajar, menospreciar",
-    "example": "In her notes, she chose ?Demean? as the most precise wording for the situation.",
+    "example": "Billy uses his language skills to demean and humiliate those who are learning English.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12233,7 +12233,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1871",
     "term": "Dependant",
     "meaning": "persona dependiente de",
-    "example": "In her notes, she chose ?Dependant? as the most precise wording for the situation.",
+    "example": "When applying for a student loan you must report any dependants.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -12250,7 +12250,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0473",
     "term": "Depict",
     "meaning": "representar, describir",
-    "example": "In her notes, she chose ?Depict? as the most precise wording for the situation.",
+    "example": "I'm not a poet; I couldn't write a single line to depict its beauty.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12267,7 +12267,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1078",
     "term": "Depleted",
     "meaning": "agotado, exhausto (in short supply)",
-    "example": "our funds are depleted",
+    "example": "Haphazard eating habits caused the castaway's food supply to be quickly depleted.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12284,7 +12284,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1246",
     "term": "Depletion",
     "meaning": "agotamiento",
-    "example": "In her notes, she chose ?Depletion? as the most precise wording for the situation.",
+    "example": "Crop rotation helps maintain soil fertility by preventing the depletion of specific nutrients.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12301,7 +12301,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0554",
     "term": "Deploy",
     "meaning": "desplegar (move into position) / implementar, utilizar",
-    "example": "The U.S. deploys its weapons in the Middle East",
+    "example": "New York’s mayor called on U.S. President Donald Trump to deploy military personnel to his city.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12335,7 +12335,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1307",
     "term": "Derelict buildings",
     "meaning": "en ruinas, abandonado, descuidado",
-    "example": "In her notes, she chose ?Derelict buildings? as the most precise wording for the situation.",
+    "example": "The council plans to convert three derelict buildings into affordable flats and workshops.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12352,7 +12352,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1760",
     "term": "Derision",
     "meaning": "burla, mofa",
-    "example": "In her notes, she chose ?Derision? as the most precise wording for the situation.",
+    "example": "There are quite a few ways to express derision in Esperanto.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -12369,7 +12369,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0630",
     "term": "Derive",
     "meaning": "derivar de, provenir de, tener origen en",
-    "example": "In her notes, she chose ?Derive? as the most precise wording for the situation.",
+    "example": "A lot of problems derive from a lack of reading in the home.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12386,7 +12386,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1383",
     "term": "Descent",
     "meaning": "descenso, pendiente, cuesta",
-    "example": "In her notes, she chose ?Descent? as the most precise wording for the situation.",
+    "example": "I met them during my descent from the peak.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -12425,7 +12425,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0991",
     "term": "Deter sth",
     "meaning": "impedir / disuadir,desalentar, desanimar a",
-    "example": "In her notes, she chose ?Deter sth? as the most precise wording for the situation.",
+    "example": "Faith lets you try the impossible. Doubt, however, deters you even from the possible.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12442,7 +12442,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1242",
     "term": "Detrimental",
     "meaning": "perjudicial",
-    "example": "In her notes, she chose ?Detrimental? as the most precise wording for the situation.",
+    "example": "The online bullying towards Rodrigo had a detrimental impact on his self-esteem and confidence.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12459,7 +12459,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1794",
     "term": "Devious",
     "meaning": "retorcido, enrevesado",
-    "example": "a scenic but devious route",
+    "example": "Fadil wasted no time setting his devious plan in motion.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -12476,7 +12476,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0407",
     "term": "devise a campaign / strategy / plan",
     "meaning": "diseñar cuidadosamente",
-    "example": "During the discussion, she used the expression ?devise a campaign? to make her point.",
+    "example": "Public-health officials devised a campaign aimed specifically at first-time parents.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -12493,7 +12493,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0529",
     "term": "Dew",
     "meaning": "rocío, condensación",
-    "example": "in the morning the grass was wet with dew",
+    "example": "The hut kept the rain and dew out after a fashion.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12510,7 +12510,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1361",
     "term": "Diagnosis",
     "meaning": "diagnóstico",
-    "example": "In her notes, she chose ?Diagnosis? as the most precise wording for the situation.",
+    "example": "He exhibited a number of behaviors typical of his diagnosis.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -12530,7 +12530,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1167",
     "term": "Diffident",
     "meaning": "reservado, tímido",
-    "example": "stood in the doorway diffident and abashed",
+    "example": "Tom is such a diffident man. He seems to have quite low self-esteem.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12564,7 +12564,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0997",
     "term": "Dignitary",
     "meaning": "personaje importante (important person, VIP)",
-    "example": "In her notes, she chose ?Dignitary? as the most precise wording for the situation.",
+    "example": "When I fart and the dignitaries begin laughing at me, draw your swords.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12581,7 +12581,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1045",
     "term": "diminish",
     "meaning": "to become less or make something become less",
-    "example": "Rain forest habitats are slowly diminishing.",
+    "example": "With no supply of water from trees, rainfalls diminish in time and the area keeps drying up.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12600,7 +12600,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0854",
     "term": "Diminishes",
     "meaning": "disminuir, reducir, pensar",
-    "example": "In her notes, she chose ?Diminishes? as the most precise wording for the situation.",
+    "example": "The addition of electric lighting to the cathedral diminishes the impact of the stained glass.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12617,7 +12617,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1955",
     "term": "Disarmament",
     "meaning": "desarme",
-    "example": "the disarmament of the aggressor nations must be complete",
+    "example": "The countries agreed to a disarmament treaty and subsequently withdrew their troops.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -12634,7 +12634,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0488",
     "term": "discerning",
     "meaning": "exigente (good at judging)",
-    "example": "discerning taste",
+    "example": "Sarah was discerning enough to realize that her friends were trying to prank her.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12685,7 +12685,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1017",
     "term": "Disentangle",
     "meaning": "desenredar (untangle) / sacar, quitar (extricate sth)",
-    "example": "In her notes, she chose ?Disentangle? as the most precise wording for the situation.",
+    "example": "I'm not sure what's the best way to disentangle this.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12702,7 +12702,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1804",
     "term": "Disheartened",
     "meaning": "descorazonado",
-    "example": "the disheartened instructor tried vainly to arouse their interest",
+    "example": "He was not a man to be disheartened by a single failure.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -12717,9 +12717,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0701",
-    "term": "Dishearting",
+    "term": "Disheartening",
     "meaning": "desalentador (discouraging)",
-    "example": "In her notes, she chose ?Dishearting? as the most precise wording for the situation.",
+    "example": "The team’s repeated failure to act on clear feedback was deeply disheartening.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12736,7 +12736,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1364",
     "term": "Dishonourable",
     "meaning": "inmoral, indecente, deshonroso",
-    "example": "In her notes, she chose ?Dishonourable? as the most precise wording for the situation.",
+    "example": "It would be dishonourable to claim sole credit for work completed by the entire team.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -12756,7 +12756,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0581",
     "term": "Disillusioned",
     "meaning": "desilusionado, decepcionado,",
-    "example": "In her notes, she chose ?Disillusioned? as the most precise wording for the situation.",
+    "example": "Blessed is the one who expects nothing, for this one will never be disillusioned.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12773,7 +12773,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1454",
     "term": "Disloyal",
     "meaning": "desleal, traicionero",
-    "example": "disloyal aides revealed his indiscretions to the papers",
+    "example": "I may be many things, but disloyal is not one of them.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12790,7 +12790,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0754",
     "term": "Dismal",
     "meaning": "deprimente, lúgubre, funesto / pésimo, deplorable, pobre",
-    "example": "the first dismal dispiriting days of November",
+    "example": "The play was a great success, but the audience was a dismal failure.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12807,7 +12807,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1234",
     "term": "Dismantle",
     "meaning": "desmantelar,desmontar, desarmar",
-    "example": "In her notes, she chose ?Dismantle? as the most precise wording for the situation.",
+    "example": "Dan sent the machines to a site where they would be dismantled.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12824,7 +12824,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0901",
     "term": "Dismissal",
     "meaning": "permiso para retirarse / despedido / rechazado",
-    "example": "In her notes, she chose ?Dismissal? as the most precise wording for the situation.",
+    "example": "Mary will almost certainly sue Tom over what she perceives as an unjust dismissal.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12841,7 +12841,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0687",
     "term": "Dismissively",
     "meaning": "despectivamente (rejecting)",
-    "example": "In her notes, she chose ?Dismissively? as the most precise wording for the situation.",
+    "example": "The king waved his hand dismissively, indicating that he wasn't interested.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12858,7 +12858,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1721",
     "term": "Disobedient",
     "meaning": "desobediente",
-    "example": "In her notes, she chose ?Disobedient? as the most precise wording for the situation.",
+    "example": "From an adult's one-sided point of view, children's attitudes often seem to be disobedient.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -12875,7 +12875,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1853",
     "term": "Displeasure",
     "meaning": "desagrado, disgusto, descontento",
-    "example": "In her notes, she chose ?Displeasure? as the most precise wording for the situation.",
+    "example": "You are one of the most despicable people it has ever been my displeasure to meet.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -12911,7 +12911,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0881",
     "term": "Disregard",
     "meaning": "ignorar, olvidar, indiferencia",
-    "example": "Disregard the errors",
+    "example": "Disregarding the \"No Entry\" sign, she pushed open the door and walked inside.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12928,7 +12928,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1746",
     "term": "Dissension",
     "meaning": "desacuerdo, discordia",
-    "example": "In her notes, she chose ?Dissension? as the most precise wording for the situation.",
+    "example": "On the religious side, the decision caused serious dissension among followers.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -12962,7 +12962,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1863",
     "term": "Disuse",
     "meaning": "desuso, abandono, descuido",
-    "example": "In her notes, she chose ?Disuse? as the most precise wording for the situation.",
+    "example": "Liberty is a possession that grows with use but wilts with disuse.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -12979,7 +12979,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0830",
     "term": "Ditch",
     "meaning": "deshacerse, abandonar, terminar, descartar",
-    "example": "ditch the land to drain it",
+    "example": "You had as well throw your money into the ditch as give it to him.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -12996,7 +12996,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0829",
     "term": "Dividend",
     "meaning": "dividendo (finances: a profit share) / beneficio, fruto",
-    "example": "In her notes, she chose ?Dividend? as the most precise wording for the situation.",
+    "example": "Cash requirements for financing activities consist primarily of long-term debt repayments, interest payments and dividend payments to shareholders.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13049,7 +13049,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1767",
     "term": "Docility",
     "meaning": "docilidad",
-    "example": "In her notes, she chose ?Docility? as the most precise wording for the situation.",
+    "example": "The dog’s apparent docility vanished the moment a stranger approached the gate.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -13066,7 +13066,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0678",
     "term": "Dock",
     "meaning": "atracar (v) (ships / boats) / muelle (pier)",
-    "example": "dock the ships",
+    "example": "Tom likes to sit on the dock playing his tin whistle while looking at the sunset.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13083,7 +13083,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0624",
     "term": "Dodge",
     "meaning": "esquivar, evitar (whole body)",
-    "example": "He dodged the issue",
+    "example": "Tom decided not to play dodge ball because he wasn't feeling well.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13100,7 +13100,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1196",
     "term": "Dodgy",
     "meaning": "inestable / arriesgado / sospechoso, dudoso, deshonesto",
-    "example": "In her notes, she chose ?Dodgy? as the most precise wording for the situation.",
+    "example": "That website seems a bit dodgy, I wouldn't enter your credit card information there.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13117,7 +13117,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1875",
     "term": "Dogged",
     "meaning": "cabezón / persistente, tenaz, perseverante",
-    "example": "dogged persistence",
+    "example": "Despite City's slick attacking play, United managed to see out a nil-nil draw with a display of dogged defending.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -13134,7 +13134,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0998",
     "term": "Dogsbody",
     "meaning": "recadero, burro de carga (errand runner)",
-    "example": "In her notes, she chose ?Dogsbody? as the most precise wording for the situation.",
+    "example": "Sometimes an intern is just a dogsbody.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13151,7 +13151,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0023",
     "term": "Don’t approve of",
     "meaning": "no dar su aprobación",
-    "example": "During the discussion, she used the expression ?Don’t approve of? to make her point.",
+    "example": "I take it you don't approve of the way Tom's been behaving.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -13190,7 +13190,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0200",
     "term": "Don’t say boo to a goose",
     "meaning": "to be very nervous and easily frightened",
-    "example": "During the discussion, she used the expression ?Don’t say boo to a goose? to make her point.",
+    "example": "Leo talks confidently online, but in person he wouldn’t say boo to a goose.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -13207,7 +13207,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1534",
     "term": "Don’t take this the wrong way",
     "meaning": "no te lo tomes mal",
-    "example": "During the discussion, she used the expression ?Don’t take this the wrong way? to make her point.",
+    "example": "Don't take this the wrong way, but what you have related doesn't matter.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -13260,7 +13260,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1152",
     "term": "Doubling",
     "meaning": "duplicación",
-    "example": "In her notes, she chose ?Doubling? as the most precise wording for the situation.",
+    "example": "Doubling down is a terrible idea if you already have 20.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13277,7 +13277,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1652",
     "term": "Doubtless",
     "meaning": "sin duda, indudablemente",
-    "example": "In her notes, she chose ?Doubtless? as the most precise wording for the situation.",
+    "example": "You doubtless mean well; but your ideas are unhappily mistaken.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -13329,7 +13329,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0287",
     "term": "Down to a fine art",
     "meaning": "haber perfeccionado una habilidad o tarea hasta el punto de",
-    "example": "During the discussion, she used the expression ?Down to a fine art? to make her point.",
+    "example": "After twenty years on live radio, she has got handling awkward silences down to a fine art.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -13363,7 +13363,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1452",
     "term": "Drainage",
     "meaning": "drenaje, desagüe",
-    "example": "In her notes, she chose ?Drainage? as the most precise wording for the situation.",
+    "example": "The drainage systems are not able to handle the water pressure.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13397,7 +13397,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0098",
     "term": "Draw on",
     "meaning": "usar, utilizar, recurrir, hacer uso de",
-    "example": "During the discussion, she used the expression ?Draw on? to make her point.",
+    "example": "I remember that kids in high school would draw on their jeans with a ballpoint pen.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -13431,7 +13431,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0102",
     "term": "Draw on experience / interview",
     "meaning": "apoyarse en la experiencia",
-    "example": "During the discussion, she used the expression ?Draw on experience? to make her point.",
+    "example": "The mediator drew on her experience of previous border disputes to break the deadlock.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -13466,7 +13466,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1158",
     "term": "Drawback",
     "meaning": "desventaja, inconveniente",
-    "example": "he pointed out all the drawbacks to my plan",
+    "example": "This article analyzes both the benefits and the drawbacks of reducing military spending.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13500,7 +13500,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1247",
     "term": "Drip-feeding",
     "meaning": "alimentación por goteo",
-    "example": "In her notes, she chose ?Drip-feeding? as the most precise wording for the situation.",
+    "example": "Drip-feeding fragments of the policy to the press merely fuelled speculation about its true cost.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13517,7 +13517,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0931",
     "term": "Dubious",
     "meaning": "dudoso, ambiguo, sospechoso",
-    "example": "they admitted the force of my argument but remained dubious",
+    "example": "I'm dubious about claims to speak more than five languages fluently.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13534,7 +13534,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0625",
     "term": "Duck",
     "meaning": "agacharse, esquivar",
-    "example": "In her notes, she chose ?Duck? as the most precise wording for the situation.",
+    "example": "It's duck soup for a girl of easy virtue to find a new man.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13551,7 +13551,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1068",
     "term": "Duly",
     "meaning": "debidamente (properly)",
-    "example": "I met the junior senator from Illinois and I was duly impressed",
+    "example": "He's been duly appointed as the assistant director of the program.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13568,7 +13568,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0249",
     "term": "Dumb down",
     "meaning": "bajar el nivel de, simplificar",
-    "example": "During the discussion, she used the expression ?Dumb down? to make her point.",
+    "example": "The more we dumb down language, the more we dumb down ourselves.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -13621,7 +13621,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0252",
     "term": "Dupe into",
     "meaning": "engañar, embaucar, timar / engañar a alguien para que",
-    "example": "During the discussion, she used the expression ?Dupe into? to make her point.",
+    "example": "Fake recruiters duped applicants into paying for background checks that did not exist.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -13638,7 +13638,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0928",
     "term": "Dwarfed",
     "meaning": "empequeñecido",
-    "example": "In her notes, she chose ?Dwarfed? as the most precise wording for the situation.",
+    "example": "Ziri's house was dwarfed in comparison to the building erected next to it.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13674,7 +13674,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0752",
     "term": "Dwindling",
     "meaning": "decreciente, menguante (adj) / dwindle (v) -> reducirse, disminuirse",
-    "example": "In her notes, she chose ?Dwindling? as the most precise wording for the situation.",
+    "example": "The dwindling supply led to great anxiety in the community.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13691,7 +13691,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0828",
     "term": "Eagerness",
     "meaning": "entusiasmo, ganas, ansias, afán",
-    "example": "they showed no eagerness to spread the gospel",
+    "example": "Tom's excessive talk of his eagerness to risk his life, somehow came to seem cute.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13708,7 +13708,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1785",
     "term": "Earthen",
     "meaning": "de arcilla, de barro",
-    "example": "an earthen pot",
+    "example": "The earthen pizza oven was lined with hot coals.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -13725,7 +13725,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1883",
     "term": "Easterly",
     "meaning": "del este, al este, hacia el este",
-    "example": "the winds blew easterly all night",
+    "example": "For the afternoon, we're expecting light to moderate east or north-easterly winds.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -13742,7 +13742,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1623",
     "term": "Easy on the eye",
     "meaning": "Ser agradable al ojo, visually appealing",
-    "example": "The building is easy on the eye",
+    "example": "The minimalist interface is easy on the eye even after hours of use.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -13759,7 +13759,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1791",
     "term": "Eatable",
     "meaning": "comestible",
-    "example": "In her notes, she chose ?Eatable? as the most precise wording for the situation.",
+    "example": "The berries are technically eatable, but their bitter aftertaste makes them deeply unappealing.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -13776,7 +13776,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1449",
     "term": "Eaves",
     "meaning": "(overhanging roof edge)",
-    "example": "In her notes, she chose ?Eaves? as the most precise wording for the situation.",
+    "example": "Tom put the cardboard next to the wall under the eaves so it wouldn't get wet.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13793,7 +13793,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1116",
     "term": "Eavesdropper",
     "meaning": "cotilla, entrometido (listens to private conversation)",
-    "example": "In her notes, she chose ?Eavesdropper? as the most precise wording for the situation.",
+    "example": "She's a bit of an eavesdropper, innit?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13810,7 +13810,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1797",
     "term": "Eccentricity",
     "meaning": "excentricidad, extravagancia",
-    "example": "In her notes, she chose ?Eccentricity? as the most precise wording for the situation.",
+    "example": "Your eccentricities will lead you to misfortune if you don't give up your habits.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -13827,7 +13827,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1169",
     "term": "Eclectic",
     "meaning": "ecléctico (varied)",
-    "example": "In her notes, she chose ?Eclectic? as the most precise wording for the situation.",
+    "example": "Her eclectic taste was evident from the unusual decor of the room.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13916,7 +13916,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0579",
     "term": "Elegance",
     "meaning": "elegante",
-    "example": "the simplicity and elegance of his invention",
+    "example": "She's wearing plain clothes. However, she cannot hide the elegance that comes from her upbringing.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13933,7 +13933,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1451",
     "term": "Embittered",
     "meaning": "amargado",
-    "example": "In her notes, she chose ?Embittered? as the most precise wording for the situation.",
+    "example": "The inhabitants of the besieged city are embittered by hunger and cold.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -13967,7 +13967,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1404",
     "term": "Embodiment",
     "meaning": "personificación, encarnación",
-    "example": "In her notes, she chose ?Embodiment? as the most precise wording for the situation.",
+    "example": "Burning the national flag is an assault against the embodiment of the republic.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -14004,7 +14004,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1675",
     "term": "Emperor",
     "meaning": "emperador",
-    "example": "In her notes, she chose ?Emperor? as the most precise wording for the situation.",
+    "example": "However, in general, it seems that the Emperors had continued without seeking worldly power.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -14021,7 +14021,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1482",
     "term": "Emphatically",
     "meaning": "enfáticamente",
-    "example": "In her notes, she chose ?Emphatically? as the most precise wording for the situation.",
+    "example": "Algeria needs to emphatically assert its status as a big and modern nation.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14072,7 +14072,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1920",
     "term": "Empower",
     "meaning": "empoderar, fortalecer",
-    "example": "In her notes, she chose ?Empower? as the most precise wording for the situation.",
+    "example": "We should enable children to empower themselves. We can't do it for them.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -14089,7 +14089,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1677",
     "term": "Emptiness",
     "meaning": "vacío",
-    "example": "In her notes, she chose ?Emptiness? as the most precise wording for the situation.",
+    "example": "There is some comfort in the emptiness of the sea, no past, no future.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -14106,7 +14106,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1179",
     "term": "Emulate",
     "meaning": "emular, imitar",
-    "example": "This artist's drawings cannot emulate his water colors",
+    "example": "At this point in time, you need a powerful computer to emulate this game.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14123,7 +14123,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0470",
     "term": "Enactment",
     "meaning": "representación / promulgación (of a law)",
-    "example": "In her notes, she chose ?Enactment? as the most precise wording for the situation.",
+    "example": "Common law is derived from judicial decisions, constitutional law from the constitution of the state or country, and statutory law from the enactments passed by a legislature.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14140,7 +14140,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1822",
     "term": "Enchantment",
     "meaning": "encanto, embeleso",
-    "example": "In her notes, she chose ?Enchantment? as the most precise wording for the situation.",
+    "example": "Enchantments keep humans from ever learning about the hidden cities of the elves.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -14157,7 +14157,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0548",
     "term": "Enclosure",
     "meaning": "recinto, cercado (enclosed area for animals or people)",
-    "example": "In her notes, she chose ?Enclosure? as the most precise wording for the situation.",
+    "example": "Tonight, a young man got into the enclosure and tried to sexually abuse some sheep.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14174,7 +14174,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0639",
     "term": "Encompass",
     "meaning": "abarcar, incluir",
-    "example": "This group encompasses a wide range of people from different backgrounds",
+    "example": "How slowly the time passes here, encompassed as I am by frost and snow!",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14191,7 +14191,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0435",
     "term": "Encouragement",
     "meaning": "ánimo, apoyo",
-    "example": "In her notes, she chose ?Encouragement? as the most precise wording for the situation.",
+    "example": "A word of encouragement during a failure is worth more than an hour of praise after success.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -14228,7 +14228,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1938",
     "term": "Endowment",
     "meaning": "donación / don, talento",
-    "example": "his generous endowment of the laboratory came just in the nick of time",
+    "example": "The university's endowment has decreased steadily over the last ten years.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -14245,7 +14245,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1832",
     "term": "Endurance",
     "meaning": "the ability to continue through difficulty, pain or fatigue",
-    "example": "In her notes, she chose ?Endurance? as the most precise wording for the situation.",
+    "example": "Cardiovascular endurance is one of the six components of physical fitness.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -14279,7 +14279,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1218",
     "term": "Engendered",
     "meaning": "engendrar, generar, ocasionar, suscitar",
-    "example": "In her notes, she chose ?Engendered? as the most precise wording for the situation.",
+    "example": "In the name of Purity what lies are told! What queer morality it has engendered.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14296,7 +14296,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0412",
     "term": "Engrossed",
     "meaning": "concentrado, absorto",
-    "example": "In her notes, she chose ?Engrossed? as the most precise wording for the situation.",
+    "example": "Tom was so engrossed in his book that he didn't hear the front door bell.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14330,7 +14330,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1719",
     "term": "Enlargement",
     "meaning": "ampliación, aumento",
-    "example": "In her notes, she chose ?Enlargement? as the most precise wording for the situation.",
+    "example": "Penis enlargement supplements, as sold on sites and in magazines, have essentially no effect.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -14347,7 +14347,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1480",
     "term": "Enliven",
     "meaning": "avivar, alentar, animar",
-    "example": "In her notes, she chose ?Enliven? as the most precise wording for the situation.",
+    "example": "I shall endeavor to enliven morality with wit, and to temper wit with morality.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14362,9 +14362,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0613",
-    "term": "Enlongation",
+    "term": "Elongation",
     "meaning": "alargamiento, estiramiento",
-    "example": "In her notes, she chose ?Enlongation? as the most precise wording for the situation.",
+    "example": "The elongation of the metal beam under heat must be allowed for in the bridge design.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14381,7 +14381,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1837",
     "term": "Enmity",
     "meaning": "enemistad, odio",
-    "example": "In her notes, she chose ?Enmity? as the most precise wording for the situation.",
+    "example": "The United States and Cuba wish to establish diplomatic relations after a half century of enmity.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -14398,7 +14398,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0767",
     "term": "Enquiry",
     "meaning": "investigación / consulta, pregunta (request for information)",
-    "example": "In her notes, she chose ?Enquiry? as the most precise wording for the situation.",
+    "example": "The minister was caught lying to the corruption enquiry and was forced to resign.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14432,7 +14432,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0471",
     "term": "Ensconced",
     "meaning": "acomodado (make yourself cosy)",
-    "example": "In her notes, she chose ?Ensconced? as the most precise wording for the situation.",
+    "example": "Ensconced in an armchair beside the fire, she ignored the storm raging outside.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14449,7 +14449,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0923",
     "term": "Entice",
     "meaning": "persuadir",
-    "example": "In her notes, she chose ?Entice? as the most precise wording for the situation.",
+    "example": "The bait is called beauty, it does entice - one can never foretell.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14466,7 +14466,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0724",
     "term": "Enticing",
     "meaning": "tentador, seductor (attractive)",
-    "example": "difficult to say no to an enticing advertisement",
+    "example": "Mary scattered some nuts on the ground in the hope of enticing the little squirrel.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14483,7 +14483,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1178",
     "term": "Entitlement",
     "meaning": "derecho, privilegio",
-    "example": "entitlements make up the major part of the federal budget",
+    "example": "You know what your problem is? You have a major sense of entitlement.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14500,7 +14500,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0902",
     "term": "Entrenched",
     "meaning": "atrincherar",
-    "example": "the entrenched power of the nobility",
+    "example": "Resist beginnings. The medicine is prepared too late when the malady has become entrenched.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14517,7 +14517,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1962",
     "term": "Entrust",
     "meaning": "confiar algo a alguien, encargar algo a alguien",
-    "example": "In her notes, she chose ?Entrust? as the most precise wording for the situation.",
+    "example": "She entrusted her baby to her divorced husband.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -14568,7 +14568,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0855",
     "term": "Envisage",
     "meaning": "imaginar, prever, pensar",
-    "example": "In her notes, she chose ?Envisage? as the most precise wording for the situation.",
+    "example": "These industrial parks were envisaged as havens for domestic and foreign investors.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14585,7 +14585,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0885",
     "term": "Epaulet",
     "meaning": "hombrera",
-    "example": "In her notes, she chose ?Epaulet? as the most precise wording for the situation.",
+    "example": "A silver epaulet on each shoulder distinguished the ceremonial uniform from the standard one.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14602,7 +14602,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1486",
     "term": "Equatorial",
     "meaning": "ecuatorial",
-    "example": "equatorial Africa",
+    "example": "In the future, people who live in equatorial regions will probably be climate refugees.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14617,9 +14617,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-1010",
-    "term": "Errrand",
+    "term": "Errand",
     "meaning": "recado, mandado",
-    "example": "In her notes, she chose ?Errrand? as the most precise wording for the situation.",
+    "example": "All the servants were on holiday or erranded out of the house.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14672,7 +14672,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1973",
     "term": "Estrangement",
     "meaning": "alejamiento, distanciamiento",
-    "example": "In her notes, she chose ?Estrangement? as the most precise wording for the situation.",
+    "example": "William is working to rebuild his relationship with his son after a period of estrangement.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -14689,7 +14689,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1244",
     "term": "Ever-increasing",
     "meaning": "creciente, en aumento",
-    "example": "In her notes, she chose ?Ever-increasing? as the most precise wording for the situation.",
+    "example": "He hopes to gain an ever-increasing knowledge of the world throughout his life.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14723,7 +14723,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1867",
     "term": "Evocative",
     "meaning": "evocativo, evocador",
-    "example": "In her notes, she chose ?Evocative? as the most precise wording for the situation.",
+    "example": "The gentle purr of the turtle dove is an evocative sound of summer.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -14740,7 +14740,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1023",
     "term": "Exacerbate",
     "meaning": "complicar, agravar, exacerbar",
-    "example": "In her notes, she chose ?Exacerbate? as the most precise wording for the situation.",
+    "example": "Trump went out of his way to exacerbate the pandemic at every opportunity.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14757,7 +14757,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1879",
     "term": "Excellency",
     "meaning": "Excelencia",
-    "example": "In her notes, she chose ?Excellency? as the most precise wording for the situation.",
+    "example": "Ilham Aliyev sent a letter to His Excellency President Donald Trump, President of the United States.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -14774,7 +14774,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0656",
     "term": "Expanse",
     "meaning": "extensión, amplitud",
-    "example": "In her notes, she chose ?Expanse? as the most precise wording for the situation.",
+    "example": "William looked out the airplane window and saw the vast expanse of clouds below.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14808,7 +14808,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1479",
     "term": "Exploitation",
     "meaning": "Explotación",
-    "example": "capitalistic exploitation of the working class",
+    "example": "Capitalism is the exploitation of man by man. Communism is the exact opposite.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14825,7 +14825,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1384",
     "term": "Expulsion",
     "meaning": "expulsión",
-    "example": "In her notes, she chose ?Expulsion? as the most precise wording for the situation.",
+    "example": "What is to be the fate of the hundreds of thousands of Rohingya after their expulsion from Myanmar?",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -14845,7 +14845,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1917",
     "term": "Extensive",
     "meaning": "amplio, grande, extenso, exhaustivo, minucioso",
-    "example": "producing wheat under extensive conditions",
+    "example": "Twice a year he sends his car in for extensive detailing.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -14862,7 +14862,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0777",
     "term": "Extraneous",
     "meaning": "externo / superfluo, no pertinente (not involved or essential)",
-    "example": "extraneous light in the camera spoiled the photograph",
+    "example": "Tom has a hard time blocking out extraneous information.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14877,9 +14877,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0534",
-    "term": "Eyewatering",
+    "term": "Eye-watering",
     "meaning": "exorbitante, desorbitante / que hacer llorar",
-    "example": "In her notes, she chose ?Eyewatering? as the most precise wording for the situation.",
+    "example": "The eye-watering cost of childcare has pushed many parents out of full-time work.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14896,7 +14896,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1256",
     "term": "Face",
     "meaning": "enfrentar, afrontar",
-    "example": "The building was faced with beautiful stones",
+    "example": "Those selected will have to face extensive medical and psychological tests.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14930,7 +14930,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1009",
     "term": "Factotum",
     "meaning": "(sb employed to do varied tasks)",
-    "example": "In her notes, she chose ?Factotum? as the most precise wording for the situation.",
+    "example": "As the studio’s factotum, Ben answered phones, repaired props and even drove actors to rehearsals.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14947,7 +14947,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0909",
     "term": "Fair-minded",
     "meaning": "justo/a, razonable, equitativo (impartial)",
-    "example": "In her notes, she chose ?Fair-minded? as the most precise wording for the situation.",
+    "example": "A fair-minded chairperson will allow both sides equal time to present their evidence.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14964,7 +14964,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1092",
     "term": "Fall flat",
     "meaning": "fracasar",
-    "example": "During the discussion, she used the expression ?Fall flat? to make her point.",
+    "example": "I like to perform magic tricks for kids, but they sometimes fall flat.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -14981,7 +14981,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0159",
     "term": "Fall on deaf ears",
     "meaning": "hacer oídos sordos, caer en oídos sordos",
-    "example": "During the discussion, she used the expression ?Fall on deaf ears? to make her point.",
+    "example": "He saw his efforts fall on deaf ears.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -14998,7 +14998,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0735",
     "term": "Fall short",
     "meaning": "no estar a la altura, quedarse corto",
-    "example": "In her notes, she chose ?Fall short? as the most precise wording for the situation.",
+    "example": "This year's harvest will fall short of that of last year.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15015,7 +15015,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1689",
     "term": "Falsehood",
     "meaning": "falsedad, mentira, falacia",
-    "example": "In her notes, she chose ?Falsehood? as the most precise wording for the situation.",
+    "example": "He who knows nothing is closer to the truth than he whose mind is filled with falsehoods and errors.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -15032,7 +15032,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0934",
     "term": "Fan",
     "meaning": "abanicar / avivar / alentar, animar",
-    "example": "The speaker ceased to be an amusing little gnat to be fanned away and was kicked off the forum",
+    "example": "I always take my fan with me to sumo tournaments as it gets so hot in the auditorium.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15049,7 +15049,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1708",
     "term": "Fanciful",
     "meaning": "imaginativo, fantástico, elaborado, original",
-    "example": "a fanciful pattern with intertwined vines and flowers",
+    "example": "Over the centuries, Tibetan monks have created mandalas, fanciful images of the universe with complex iconography.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -15066,7 +15066,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0390",
     "term": "Far beyond expectation",
     "meaning": "Muy por encima de las expectativas",
-    "example": "During the discussion, she used the expression ?Far beyond expectation? to make her point.",
+    "example": "Demand for the evening classes was far beyond our expectations, so we added two extra groups.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -15102,7 +15102,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0484",
     "term": "far-flung",
     "meaning": "lejano (distant, remote), en el culo del mundo",
-    "example": "far-flung corners of the Empire",
+    "example": "Yanni traveled to far-flung destinations in search of big game. He was a good hunter.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15136,7 +15136,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0720",
     "term": "Faraway",
     "meaning": "lejano, distante, remoto",
-    "example": "a faraway (or distant) look in her eyes",
+    "example": "Ancient alien ruins in faraway outposts of the Human Space Sphere spooked many generations.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15153,7 +15153,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1948",
     "term": "Farcical",
     "meaning": "ridículo, absurdo",
-    "example": "the wild farcical exuberance of a clown",
+    "example": "He made a farcical attempt to save face during the fallout of his sex scandal.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -15170,7 +15170,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1716",
     "term": "Fateful",
     "meaning": "catastrófico / profético",
-    "example": "In her notes, she chose ?Fateful? as the most precise wording for the situation.",
+    "example": "I wish I had never taken that fateful boat ride.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -15187,7 +15187,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1113",
     "term": "Fathom",
     "meaning": "entender, comprender",
-    "example": "In her notes, she chose ?Fathom? as the most precise wording for the situation.",
+    "example": "I can't begin to fathom how someone could believe that one race is superior to another.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15204,7 +15204,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1088",
     "term": "Faze",
     "meaning": "desconcentrar, perturbar, molestar",
-    "example": "In her notes, she chose ?Faze? as the most precise wording for the situation.",
+    "example": "I told my mom I was gay and it didn't faze her at all.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15221,7 +15221,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1734",
     "term": "Fearsome",
     "meaning": "aterrador, imponente",
-    "example": "In her notes, she chose ?Fearsome? as the most precise wording for the situation.",
+    "example": "Although fearsome, T-rex had comparatively puny, shrunken arms for its size, with only two fingers.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -15238,7 +15238,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0864",
     "term": "Feasible",
     "meaning": "viable, factible, posible",
-    "example": "In her notes, she chose ?Feasible? as the most precise wording for the situation.",
+    "example": "We have come to the conclusion that this plan is not feasible currently.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15255,7 +15255,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0593",
     "term": "Feat",
     "meaning": "logro, hazaña (achievement)",
-    "example": "he performed a great feat",
+    "example": "The houses of Ghardaia are an amazing feat of human engineering.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15293,7 +15293,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0700",
     "term": "Fellow",
     "meaning": "compañero, colega, socio, co (collegue, peer)",
-    "example": "In her notes, she chose ?Fellow? as the most precise wording for the situation.",
+    "example": "He is a good fellow, to be sure, but he isn't reliable.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15310,7 +15310,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1788",
     "term": "Feverishly",
     "meaning": "con fiebre / de manera frenética",
-    "example": "she worked feverishly",
+    "example": "Engineers worked feverishly through the night to restore the hospital’s power supply.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -15327,7 +15327,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1048",
     "term": "Fickle",
     "meaning": "voluble, inconsistente, variable",
-    "example": "fickle weather",
+    "example": "Reputations are volatile. Loyalties are fickle. Management teams are increasingly disconnected from their staff.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15344,7 +15344,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0787",
     "term": "Fiddling",
     "meaning": "jugueteo (playing around with sth) / tocar el violín",
-    "example": "a fiddling sum of money",
+    "example": "Sami was fiddling with the beads of his rosary.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15359,9 +15359,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0713",
-    "term": "Fidgert",
+    "term": "Fidget",
     "meaning": "estar inquieto, moverse nerviosamente",
-    "example": "In her notes, she chose ?Fidgert? as the most precise wording for the situation.",
+    "example": "Stop fidgeting with the microphone cable or the audience will hear it through the speakers.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15378,7 +15378,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0780",
     "term": "Fiendishly",
     "meaning": "endiabladamente / endiabladamente (with ill intent) / terrible,",
-    "example": "In her notes, she chose ?Fiendishly? as the most precise wording for the situation.",
+    "example": "His long, claw-like fingers danced from one part of the machine to another fiendishly, and a hideous grin distorted his features.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15395,7 +15395,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0990",
     "term": "Fierce",
     "meaning": "feroz/ violento / violento (intense, passionate) / extremo",
-    "example": "the fierce thunders roar me their music",
+    "example": "Their dog was so fierce that he kept everyone away.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15412,7 +15412,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0730",
     "term": "Fiercest",
     "meaning": "feroz, violento",
-    "example": "In her notes, she chose ?Fiercest? as the most precise wording for the situation.",
+    "example": "The most inconsequential differences in opinion can often lead to the fiercest arguments.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15429,7 +15429,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1803",
     "term": "Fiery",
     "meaning": "ardiente, con fuego / ardiente, pasional, fogoso",
-    "example": "a fiery temper",
+    "example": "The community pastor wasn't a fiery preacher, but rather a talkative windbag and bore.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -15446,7 +15446,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1288",
     "term": "Fight like a cat and dog",
     "meaning": "llevarse como perro y gato (disagree ferociously)",
-    "example": "During the discussion, she used the expression ?Fight like a cat and dog? to make her point.",
+    "example": "The two department heads fight like cat and dog, yet their joint projects are oddly successful.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15480,7 +15480,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1747",
     "term": "Financier",
     "meaning": "financiero",
-    "example": "In her notes, she chose ?Financier? as the most precise wording for the situation.",
+    "example": "The industrialist found a wealthy financier to help him weather the storm which was inevitable.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -15559,7 +15559,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0977",
     "term": "Fits and starts",
     "meaning": "a trompicones",
-    "example": "they worked in fits and starts",
+    "example": "He isn't very persevering; he only works in fits and starts.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15576,7 +15576,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2188",
     "term": "fits of laughter",
     "meaning": "a sudden strong reaction of laughing",
-    "example": "Everyone collapsed in fits of laughter.",
+    "example": "Tom's kids were in fits of laughter when he was telling them about some of the things he used to get up to as a kid.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -15593,7 +15593,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1827",
     "term": "Fittings",
     "meaning": "small parts or fixtures attached to furniture, equipment or a building",
-    "example": "In her notes, she chose ?Fittings? as the most precise wording for the situation.",
+    "example": "You can use a plumber's wrench to tighten the faucet fittings.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -15610,7 +15610,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1395",
     "term": "Fixation",
     "meaning": "fijación, obsesión",
-    "example": "In her notes, she chose ?Fixation? as the most precise wording for the situation.",
+    "example": "In short, \"kink\" covers diverse unconventional sexual interests, while a \"fetish\" is a specific fixation on something for sexual arousal.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -15649,7 +15649,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0755",
     "term": "Flagging",
     "meaning": "menguante, que flaquea / débil, agotado (person) (=dwindling)",
-    "example": "In her notes, she chose ?Flagging? as the most precise wording for the situation.",
+    "example": "Flagging demand prompted the manufacturer to cut production at two factories.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15666,7 +15666,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0743",
     "term": "Flair",
     "meaning": "estilo, clase (style) / habilidad, capacidad, don, talento (ability)",
-    "example": "In her notes, she chose ?Flair? as the most precise wording for the situation.",
+    "example": "The eye-catching posters depict some of the universe's most mysterious astronomical phenomena with artistic flair.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15702,7 +15702,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0521",
     "term": "Flawless",
     "meaning": "perfecto",
-    "example": "a flawless gemstone",
+    "example": "It's our final dress rehearsal and I want it to be flawless.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15736,7 +15736,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0726",
     "term": "Fleck",
     "meaning": "salpicar (v) / manchita, salpicadura (n)",
-    "example": "In her notes, she chose ?Fleck? as the most precise wording for the situation.",
+    "example": "His long, brown hair and beard were all flecked and dashed with white.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15753,7 +15753,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1057",
     "term": "Fleet",
     "meaning": "flota (vehicles)",
-    "example": "fleet of foot",
+    "example": "It's apparently a metaphor for something uncatchable, light of body and fleet of foot.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15770,7 +15770,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0485",
     "term": "fleeting",
     "meaning": "breve, fugaz, pasajero",
-    "example": "a fleeting glance",
+    "example": "The customers gave him fleeting glances, then returned to their conversations.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15804,7 +15804,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0662",
     "term": "Fleetingly",
     "meaning": "brevemente, fugazmente",
-    "example": "In her notes, she chose ?Fleetingly? as the most precise wording for the situation.",
+    "example": "Fleetingly, the cloud cover parted and revealed the summit above us.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15821,7 +15821,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0054",
     "term": "Flick through",
     "meaning": "hojear, echar un vistazo (book, pages: leaf through)",
-    "example": "During the discussion, she used the expression ?Flick through? to make her point.",
+    "example": "A quick flick through the data shows that there was reckless spending.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -15855,7 +15855,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0905",
     "term": "Flip chart",
     "meaning": "rotafolio (pad of paper on an easel)",
-    "example": "In her notes, she chose ?Flip chart? as the most precise wording for the situation.",
+    "example": "List on a flip chart all the tasks and jobs that have to be accomplished.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15872,7 +15872,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1464",
     "term": "Flippant",
     "meaning": "superficial, poco serio",
-    "example": "In her notes, she chose ?Flippant? as the most precise wording for the situation.",
+    "example": "Her flippant attitude won't get her hired.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15889,7 +15889,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1100",
     "term": "Float",
     "meaning": "carroza",
-    "example": "float data",
+    "example": "The substance is light enough to float on the water.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15906,7 +15906,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0912",
     "term": "Flock",
     "meaning": "rebaño, bandada, multitud / ir en manada",
-    "example": "In her notes, she chose ?Flock? as the most precise wording for the situation.",
+    "example": "I caught sight of a flock of sheep in the forest.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15923,7 +15923,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0311",
     "term": "Flood with",
     "meaning": "inundar con",
-    "example": "During the discussion, she used the expression ?Flood with? to make her point.",
+    "example": "Within minutes of the announcement, the helpline was flooded with calls from anxious passengers.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -15940,7 +15940,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0486",
     "term": "flying (visit)",
     "meaning": "(=short)",
-    "example": "In her notes, she chose ?flying (visit)? as the most precise wording for the situation.",
+    "example": "She paid a flying visit to Brussels between meetings in Paris and Amsterdam.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -15974,7 +15974,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1768",
     "term": "Footing",
     "meaning": "posición",
-    "example": "In her notes, she chose ?Footing? as the most precise wording for the situation.",
+    "example": "The young princess lost her footing and fell into the water.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -16013,7 +16013,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0430",
     "term": "Forage",
     "meaning": "buscar alimento / buscar / rebuscar",
-    "example": "The animals forage in the woods",
+    "example": "Look, today was 'sea harvest' so let's go forage for edible plants tomorrow!",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -16030,7 +16030,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1772",
     "term": "Forcible",
     "meaning": "forzoso, forzudo / contundente",
-    "example": "forcible entry",
+    "example": "He had to take a forcible approach to the stuck window.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -16047,7 +16047,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0894",
     "term": "Forefront",
     "meaning": "vanguardia, frente,",
-    "example": "the Cotswolds were once at the forefront of woollen manufacturing in England",
+    "example": "I would like to see sentences that forefront common, everyday usage.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -16064,7 +16064,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0441",
     "term": "Foregone",
     "meaning": "inevitable, predeterminado, predestinado",
-    "example": "dreams of foregone times",
+    "example": "This match is a foregone conclusion. I'm not even going to watch it.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -16081,7 +16081,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1228",
     "term": "Forerunner",
     "meaning": "predecesor, precursor",
-    "example": "In her notes, she chose ?Forerunner? as the most precise wording for the situation.",
+    "example": "This street is named after the Cheka, the forerunner of the KGB.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -16098,7 +16098,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1776",
     "term": "Formative",
     "meaning": "de formación, formativo",
-    "example": "a formative influence",
+    "example": "It was in Algiers that he spent the formative years of his life.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -16115,7 +16115,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0582",
     "term": "Formidable",
     "meaning": "formidable, fantástico",
-    "example": "the formidable prospect of major surgery",
+    "example": "Some lion Bruce Willis is chasing is a formidable animal, but is not ferocious.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -16149,7 +16149,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0653",
     "term": "Foster",
     "meaning": "fomentar algo, acoger, de acogida",
-    "example": "foster parent",
+    "example": "He adopted a war orphan and is bringing her up as a foster daughter.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -16183,7 +16183,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1786",
     "term": "Fragmentary",
     "meaning": "fragmentado, incompleto",
-    "example": "fragmentary remains",
+    "example": "Data from the many parts of this fragmentary telescope are combined to form a single image.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -16200,7 +16200,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0373",
     "term": "Frame of reference",
     "meaning": "Marco de referncia",
-    "example": "During the discussion, she used the expression ?Frame of reference? to make her point.",
+    "example": "The passage of time depends on the observer's frame of reference.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -16217,7 +16217,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0510",
     "term": "Framework",
     "meaning": "infraestructura / armazón (construcción)",
-    "example": "In her notes, she chose ?Framework? as the most precise wording for the situation.",
+    "example": "Each time you learn something new you must readjust the whole framework of your knowledge.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -16234,7 +16234,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1125",
     "term": "Frayed",
     "meaning": "deshilachado",
-    "example": "frayed cuffs",
+    "example": "The constant noise from the construction site exacerbated Tom's headache and exasperated his already-frayed nerves.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -16271,7 +16271,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0524",
     "term": "Freight",
     "meaning": "cargamento, carga / costos de transporte / fletar, transportar",
-    "example": "In her notes, she chose ?Freight? as the most precise wording for the situation.",
+    "example": "We found that there is no information about freight or insurance in your quote.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -16288,7 +16288,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0967",
     "term": "Frenzy",
     "meaning": "frenesí, histeria, locura (madness or overexcitement)",
-    "example": "In her notes, she chose ?Frenzy? as the most precise wording for the situation.",
+    "example": "The rioters were like animals in the grip of a primitive frenzy.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -16322,7 +16322,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0531",
     "term": "Freshwater",
     "meaning": "de agua dulce",
-    "example": "In her notes, she chose ?Freshwater? as the most precise wording for the situation.",
+    "example": "Salmon are born in freshwater streams, but live most of their lives in the ocean.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -16339,7 +16339,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1712",
     "term": "Friendliness",
     "meaning": "simpatía, amabilidad",
-    "example": "In her notes, she chose ?Friendliness? as the most precise wording for the situation.",
+    "example": "Friendliness is a language the deaf can hear and the blind can read.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -16356,7 +16356,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0296",
     "term": "From my perspective",
     "meaning": "desde mi punto de vista",
-    "example": "During the discussion, she used the expression ?From my perspective? to make her point.",
+    "example": "From my perspective, this sort of approach may not be wise.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -16394,7 +16394,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0689",
     "term": "Frontier",
     "meaning": "frontera, límite (también puede ser “El Salvaje Oeste”)",
-    "example": "he worked at the frontier of brain science",
+    "example": "Bernard Kouchner, who established Medecins Sans Frontieres, did not oppose the Iraq war.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -16411,7 +16411,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1795",
     "term": "Fruitful",
     "meaning": "productivo, fructifico",
-    "example": "be fruitful and multiply",
+    "example": "Their stay in Germany for a year was very fruitful.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -16428,7 +16428,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0688",
     "term": "Fruition",
     "meaning": "fruto de (figurative) (fulfillment)",
-    "example": "In her notes, she chose ?Fruition? as the most precise wording for the situation.",
+    "example": "Your plans will never come to fruition unless you make them more realistic.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -16445,7 +16445,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0763",
     "term": "Fruitless",
     "meaning": "improductivo, ineficaz (f) (unproductive, unsuccessful)",
-    "example": "a fruitless search",
+    "example": "Have nothing to do with the fruitless deeds of darkness, but rather expose them.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -16462,7 +16462,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1800",
     "term": "Fulfilment",
     "meaning": "Cumplimiento, finalización, (accomplisment) / satisfacción, plenitud",
-    "example": "In her notes, she chose ?Fulfilment? as the most precise wording for the situation.",
+    "example": "Everyone needs to achieve professional success and personal fulfilment.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -16479,7 +16479,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0838",
     "term": "Full-blown row",
     "meaning": "una discusión acalorada",
-    "example": "In her notes, she chose ?Full-blown row? as the most precise wording for the situation.",
+    "example": "A minor disagreement over the bill escalated into a full-blown row in the middle of the restaurant.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -16496,7 +16496,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1808",
     "term": "Functional",
     "meaning": "operativo, funcional",
-    "example": "a functional set of brakes",
+    "example": "We have far more to fear from a functional dictatorship than from one in disarray.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -16513,7 +16513,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1928",
     "term": "Gallantry",
     "meaning": "valentía, galantería, cortesía, caballerosidad",
-    "example": "In her notes, she chose ?Gallantry? as the most precise wording for the situation.",
+    "example": "Grandeur and gallantry never appeared with more lustre in France, than in the last years of Henry the Second's reign.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -16549,7 +16549,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1933",
     "term": "Gaseous",
     "meaning": "gaseoso",
-    "example": "steam is water is the gaseous state",
+    "example": "Basic physics tells us that smaller planets must be rocky and larger ones gaseous.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -16566,7 +16566,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1919",
     "term": "Gassy",
     "meaning": "gaseoso / pedorro / charlatán",
-    "example": "In her notes, she chose ?Gassy? as the most precise wording for the situation.",
+    "example": "The sealed mine tunnel was filled with a gassy mixture that could ignite without warning.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -16583,7 +16583,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1347",
     "term": "Gaunt",
     "meaning": "demacrado, flaco, delgado / sombrío",
-    "example": "a nightmare population of gaunt men and skeletal boys",
+    "example": "The gaunt policeman had a bolt-action rifle slung over one shoulder.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -16653,7 +16653,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0203",
     "term": "Get a monkey off your back",
     "meaning": "quitarse un problema",
-    "example": "During the discussion, she used the expression ?Get a monkey off your back? to make her point.",
+    "example": "Paying off the final instalment felt like getting a monkey off my back.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -16670,7 +16670,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0022",
     "term": "Get acquainted with",
     "meaning": "conocerse, presentarse, familiarizarse con",
-    "example": "During the discussion, she used the expression ?Get acquainted with? to make her point.",
+    "example": "I definitely want to get acquainted with Mary. I think she is very likeable.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -16730,7 +16730,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0270",
     "term": "Get out of hand",
     "meaning": "irse de las manos, descontrolarse",
-    "example": "During the discussion, she used the expression ?Get out of hand? to make her point.",
+    "example": "If you are not firm with the children, they will get out of hand.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -16747,7 +16747,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0201",
     "term": "Get something off your chest",
     "meaning": "quitarse un peso de encima",
-    "example": "During the discussion, she used the expression ?Get something off your chest? to make her point.",
+    "example": "I need to get this off my chest: I was the one who recommended cancelling the project.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -16764,7 +16764,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0141",
     "term": "Get the brush off",
     "meaning": "dar la espalda a",
-    "example": "During the discussion, she used the expression ?Get the brush off? to make her point.",
+    "example": "I offered to help with the exhibition but got the brush-off from the new curator.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -16802,7 +16802,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0328",
     "term": "Get through",
     "meaning": "superar, pasar por",
-    "example": "During the discussion, she used the expression ?Get through? to make her point.",
+    "example": "Now that we've got off the mark, we must get through this work.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -16836,7 +16836,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0329",
     "term": "Get to",
     "meaning": "llegar / ponerse a hacer algo / molestar, fastidiar",
-    "example": "During the discussion, she used the expression ?Get to? to make her point.",
+    "example": "I live near the sea, so I often get to go to the beach.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -16870,7 +16870,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0271",
     "term": "Get your back up",
     "meaning": "enfadarse, ofenderse, ponerse a la defensiva",
-    "example": "During the discussion, she used the expression ?Get your back up? to make her point.",
+    "example": "You have to know how to get back up after being knocked down.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -16905,7 +16905,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0372",
     "term": "getting nowhere fast",
     "meaning": "No llegar a ninguna parte.",
-    "example": "During the discussion, she used the expression ?getting nowhere fast? to make her point.",
+    "example": "We’ve held six meetings without agreeing on a budget; we’re getting nowhere fast.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -16922,7 +16922,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1944",
     "term": "Ghostly",
     "meaning": "fantasmal",
-    "example": "a ghostly face at the window",
+    "example": "Vladimir lowered the sheet to see a dark ghostly face staring him in the eye.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -16939,7 +16939,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1117",
     "term": "Gibberish",
     "meaning": "(nonsense) meaningless or unintelligible talk or writing",
-    "example": "In her notes, she chose ?Gibberish? as the most precise wording for the situation.",
+    "example": "After receiving a hefty blow to the head, the man spoke only gibberish.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -16956,7 +16956,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0614",
     "term": "Giggle",
     "meaning": "reirse nerviosamente",
-    "example": "The girls giggled when the rock star came into the classroom",
+    "example": "A cute kitten can make a giggling mess even out of the most severe übermensch.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17029,7 +17029,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0401",
     "term": "give ground",
     "meaning": "ceder terreno, hacer concesiones",
-    "example": "During the discussion, she used the expression ?give ground? to make her point.",
+    "example": "Neither side would give ground on fishing rights, so the talks ended without a deal.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -17046,7 +17046,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1622",
     "term": "Give someone free rein",
     "meaning": "Dar rienda suelta, carta blanca",
-    "example": "They gave the designers free rein",
+    "example": "The director gave the costume designer free rein to reinterpret the period setting.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -17080,7 +17080,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1299",
     "term": "Give them creeps",
     "meaning": "dar repelús a, dar yuyu a, dar escalofríos",
-    "example": "During the discussion, she used the expression ?Give them creeps? to make her point.",
+    "example": "Those wax figures give me the creeps because their eyes seem to follow you.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17097,7 +17097,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1303",
     "term": "Give you the chills",
     "meaning": "poner la piel de gallina, dar escalofríos",
-    "example": "During the discussion, she used the expression ?Give you the chills? to make her point.",
+    "example": "The final scene, in which the empty swing begins to move, always gives me the chills.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17114,7 +17114,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1935",
     "term": "Glazier",
     "meaning": "vidriero, cristalero",
-    "example": "In her notes, she chose ?Glazier? as the most precise wording for the situation.",
+    "example": "Getting cut is one of the occupational hazards of being a glazier.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -17131,7 +17131,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1089",
     "term": "Glean",
     "meaning": "deducir, averiguar",
-    "example": "In her notes, she chose ?Glean? as the most precise wording for the situation.",
+    "example": "From the surviving letters, historians gleaned that the partnership was far from harmonious.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17184,7 +17184,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0459",
     "term": "Gloated",
     "meaning": "regodearse, alardear (show self-satisfaction)",
-    "example": "In her notes, she chose ?Gloated? as the most precise wording for the situation.",
+    "example": "He gloated over his rival’s defeat instead of acknowledging how close the contest had been.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17273,7 +17273,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0039",
     "term": "Go by the board",
     "meaning": "ser rechazado, ignorado, ya no es posible",
-    "example": "During the discussion, she used the expression ?Go by the board? to make her point.",
+    "example": "Once the emergency budget was announced, all plans for a new sports centre went by the board.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -17311,7 +17311,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0293",
     "term": "Go down like a lead balloon",
     "meaning": "caer mal (fail to be popular), sin gracia. Balon de plomo",
-    "example": "During the discussion, she used the expression ?Go down like a lead balloon? to make her point.",
+    "example": "His joke about redundancies went down like a lead balloon at the staff meeting.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -17328,7 +17328,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0305",
     "term": "Go down the rabbit hole",
     "meaning": "meterse en un lío, caer en un pozo sin fondo, adentrarse",
-    "example": "During the discussion, she used the expression ?Go down the rabbit hole? to make her point.",
+    "example": "I went down the rabbit hole of researching my family tree and emerged three hours later.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -17345,7 +17345,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0370",
     "term": "Go in for (activity, i.e. competitions)",
     "meaning": "Participar en",
-    "example": "During the discussion, she used the expression ?Go in for (activity, i.e. competitions)? to make her point.",
+    "example": "She goes in for endurance races rather than short, explosive events.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -17362,7 +17362,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0168",
     "term": "Go off without a hitch",
     "meaning": "Ocurrir sin problemas ni dificultades. hitch = contratiempo",
-    "example": "During the discussion, she used the expression ?Go off without a hitch? to make her point.",
+    "example": "As soon as our manager got off our backs, everything started to go off without a hitch.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -17379,7 +17379,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0246",
     "term": "Go out on a limb",
     "meaning": "jugársela",
-    "example": "During the discussion, she used the expression ?Go out on a limb? to make her point.",
+    "example": "Why not go out on a limb? That's where the fruit is.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -17417,7 +17417,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0818",
     "term": "Go round the bend",
     "meaning": "volverse loco (become insane)",
-    "example": "During the discussion, she used the expression ?Go round the bend? to make her point.",
+    "example": "The constant drilling from the flat upstairs is enough to make me go round the bend.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17451,7 +17451,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0323",
     "term": "Go through with it",
     "meaning": "hacer, llevar a cabo",
-    "example": "During the discussion, she used the expression ?Go through with it? to make her point.",
+    "example": "I'm going to go through with it in spite of her opposition.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -17468,7 +17468,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0192",
     "term": "Go to the dogs",
     "meaning": "irse al garete, irse a pique",
-    "example": "During the discussion, she used the expression ?Go to the dogs? to make her point.",
+    "example": "The weak-willed are prone to go to the dogs; the strong-willed turn failure into success.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -17485,7 +17485,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0394",
     "term": "go unnoticed",
     "meaning": "pasar desapercibidos",
-    "example": "During the discussion, she used the expression ?go unnoticed? to make her point.",
+    "example": "It is often the case that discovered attacks go unnoticed by beginning chess players.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -17502,7 +17502,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1332",
     "term": "Go without",
     "meaning": "vivir sin, prescindir de",
-    "example": "In her notes, she chose ?Go without? as the most precise wording for the situation.",
+    "example": "It looks as though we shall have to go without a holiday this year.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17554,7 +17554,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0068",
     "term": "go-to",
     "meaning": "popular (destination) / de confianza/favorito (people / things)",
-    "example": "During the discussion, she used the expression ?go-to? to make her point.",
+    "example": "Matthew's wool sweater was his go-to attire for casual weekend outings with friends.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -17588,7 +17588,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0649",
     "term": "Goblin mode",
     "meaning": "(modo duende) dejar la vida pasar, centrarse en hobbies",
-    "example": "During the discussion, she used the expression ?Goblin mode? to make her point.",
+    "example": "I've been in constant goblin mode ever since I was laid off.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17605,7 +17605,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0747",
     "term": "Gold dust",
     "meaning": "something rarely found",
-    "example": "During the discussion, she used the expression ?Gold dust? to make her point.",
+    "example": "Tom had several bags of gold dust in the trunk of his car.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17639,7 +17639,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1430",
     "term": "Gracious",
     "meaning": "cortés, gentil, amable, atento / elegante, refinado, lujoso / misericordioso",
-    "example": "thanks to the gracious gods",
+    "example": "The gracious lady seemed like a flower that was rather stiff in the stalk.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -17676,7 +17676,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0145",
     "term": "Grain of truth",
     "meaning": "algo / un poco de verdad",
-    "example": "During the discussion, she used the expression ?Grain of truth? to make her point.",
+    "example": "There isn't a grain of truth in what he says.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -17693,7 +17693,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1702",
     "term": "Grandeur",
     "meaning": "grandeza, majestuosidad, esplendor",
-    "example": "In her notes, she chose ?Grandeur? as the most precise wording for the situation.",
+    "example": "Despite the grandeur of the feast, she is unaware of all fields of knowledge.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -17710,7 +17710,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0819",
     "term": "Grapple",
     "meaning": "luchar, pelear",
-    "example": "the two men grappled with each other for several minutes",
+    "example": "The Esperanto movement has always had to grapple with the problem of 'eternal beginners'.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17727,7 +17727,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0853",
     "term": "Grasp",
     "meaning": "agarrar, sujetar / captar, entender (f)",
-    "example": "In her notes, she chose ?Grasp? as the most precise wording for the situation.",
+    "example": "Some people find it easier to grasp the short-term effects of smoking.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17744,7 +17744,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1204",
     "term": "Grate",
     "meaning": "chirriar, rechinar / rallar (cheese) / ser molesto, irritante (be annoying)",
-    "example": "In her notes, she chose ?Grate? as the most precise wording for the situation.",
+    "example": "Tom's wide-eyed optimism is beginning to grate on my nerves.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17779,7 +17779,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1066",
     "term": "Gridlocked",
     "meaning": "congestionado, paralizado (traffic: standstill)",
-    "example": "In her notes, she chose ?Gridlocked? as the most precise wording for the situation.",
+    "example": "With the ring road gridlocked, ambulances struggled to reach the city centre.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17796,7 +17796,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0903",
     "term": "Grievances",
     "meaning": "queja, reclamación / injusticia",
-    "example": "In her notes, she chose ?Grievances? as the most precise wording for the situation.",
+    "example": "You have a right to petition the government for a redress of grievances.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17813,7 +17813,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0617",
     "term": "Grin",
     "meaning": "sonreir (Mona Lisa)",
-    "example": "In her notes, she chose ?Grin? as the most precise wording for the situation.",
+    "example": "And the Devil did grin, for his darling sin is pride that apes humility.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17830,7 +17830,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0684",
     "term": "Grips",
     "meaning": "have a grip on -> entender, comprender, dominar",
-    "example": "In her notes, she chose ?Grips? as the most precise wording for the situation.",
+    "example": "Don't forget to clean the handles and grips of utensils, especially if they're sticky.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17864,7 +17864,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0414",
     "term": "Grossed",
     "meaning": "dar asco, repugnar",
-    "example": "In her notes, she chose ?Grossed? as the most precise wording for the situation.",
+    "example": "I have nothing more to say, I'm grossed out. Don't call me \"mom\" anymore.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17881,7 +17881,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1969",
     "term": "Groundless",
     "meaning": "sin fundamento",
-    "example": "the allegations proved groundless",
+    "example": "It is not that Johnson's claim is groundless, but that it is misleading.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -17898,7 +17898,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0622",
     "term": "Guffaw",
     "meaning": "carcajada, reirse a carcajadas",
-    "example": "In her notes, she chose ?Guffaw? as the most precise wording for the situation.",
+    "example": "I guffaw until I can laugh no more!",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17932,7 +17932,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0927",
     "term": "Hackneyed",
     "meaning": "estereotipado, gastado (clichéd, overused)",
-    "example": "hackneyed phrases",
+    "example": "It's better not to use rhyme than to use hackneyed rhyme.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17949,7 +17949,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0559",
     "term": "Hailed sth / sb",
     "meaning": "recibir (acknowledge positively)",
-    "example": "In her notes, she chose ?Hailed sth? as the most precise wording for the situation.",
+    "example": "Always predict the worst and you'll be hailed as a prophet.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17966,7 +17966,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0851",
     "term": "Hallmarks",
     "meaning": "contraste, distintivo, contrastar (v)",
-    "example": "In her notes, she chose ?Hallmarks? as the most precise wording for the situation.",
+    "example": "His easy charm and wit were the hallmarks of William's charisma.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -17983,7 +17983,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0852",
     "term": "Halt",
     "meaning": "alto, parada (n) / detenerse, parar (v)",
-    "example": "In her notes, she chose ?Halt? as the most precise wording for the situation.",
+    "example": "As the train came to a halt, all of the passengers wondered what was happening.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -18000,7 +18000,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0392",
     "term": "halt production",
     "meaning": "detener la produccion",
-    "example": "During the discussion, she used the expression ?halt production? to make her point.",
+    "example": "A fault in the cooling system forced the plant to halt production overnight.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -18039,7 +18039,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1317",
     "term": "Haphazardly",
     "meaning": "al azar, a voleo",
-    "example": "In her notes, she chose ?Haphazardly? as the most precise wording for the situation.",
+    "example": "Receipts had been filed haphazardly in boxes, drawers and even old shopping bags.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -18056,7 +18056,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1006",
     "term": "Hard and fast rules",
     "meaning": "norma, regla estricta (unbreakable)",
-    "example": "During the discussion, she used the expression ?Hard and fast rules? to make her point.",
+    "example": "These are just guidelines, not hard and fast rules.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -18110,7 +18110,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0403",
     "term": "Hardly had the meeting begun when",
     "meaning": "Apenas habia empezado la reunion",
-    "example": "During the discussion, she used the expression ?Hardly had the meeting begun when? to make her point.",
+    "example": "Hardly had the meeting begun when it ended.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -18127,7 +18127,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0843",
     "term": "Harness",
     "meaning": "emplear, aprovechar",
-    "example": "In her notes, she chose ?Harness? as the most precise wording for the situation.",
+    "example": "He's gone to harness the sorrel mare to go to Carmody for the doctor.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -18144,7 +18144,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0968",
     "term": "Hassle",
     "meaning": "engorro (sth difficult) / problema, molestia (trouble)",
-    "example": "In her notes, she chose ?Hassle? as the most precise wording for the situation.",
+    "example": "It is a hassle to have to report to my boss two times a day.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -18161,7 +18161,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1403",
     "term": "Hasten",
     "meaning": "apresurarse",
-    "example": "In her notes, she chose ?Hasten? as the most precise wording for the situation.",
+    "example": "I must hasten to add that I do not mean to blame him.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -18181,7 +18181,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1130",
     "term": "Hastened",
     "meaning": "apresurado, apurado",
-    "example": "In her notes, she chose ?Hastened? as the most precise wording for the situation.",
+    "example": "I hastened here to give the dear departed my last, very sad farewell.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -18198,7 +18198,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1348",
     "term": "Hatred",
     "meaning": "odio",
-    "example": "In her notes, she chose ?Hatred? as the most precise wording for the situation.",
+    "example": "The bold man glanced at the gangster with hatred and contempt.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -18215,7 +18215,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1069",
     "term": "Haulier",
     "meaning": "camionero (trucker, lorry driver)",
-    "example": "In her notes, she chose ?Haulier? as the most precise wording for the situation.",
+    "example": "The haulier fitted tracking devices to every lorry in its long-distance fleet.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -18268,7 +18268,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0345",
     "term": "Have a knack of",
     "meaning": "tener facilidad para algo, tener madera para",
-    "example": "During the discussion, she used the expression ?Have a knack of? to make her point.",
+    "example": "Nadia has a knack for explaining complex statistical ideas without oversimplifying them.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -18285,7 +18285,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1351",
     "term": "Have green fingers",
     "meaning": "tener mano para la jardinería, tener buena mano",
-    "example": "During the discussion, she used the expression ?Have green fingers? to make her point.",
+    "example": "People who are good with plants are said to have green fingers.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -18302,7 +18302,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0245",
     "term": "Have sth up your sleeve",
     "meaning": "tener un as bajo la manga",
-    "example": "During the discussion, she used the expression ?Have sth up your sleeve? to make her point.",
+    "example": "The defence lawyer clearly has something up her sleeve; she has not called her key witness yet.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -18319,7 +18319,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1335",
     "term": "Have/give the upper hand",
     "meaning": "tener ventaja, tener el control",
-    "example": "During the discussion, she used the expression ?Have? to make her point.",
+    "example": "Accurate satellite data gave rescue teams the upper hand against the rapidly spreading fire.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -18336,7 +18336,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1072",
     "term": "Havoc",
     "meaning": "caos, lío, confusión (chaos, disturbance)",
-    "example": "In her notes, she chose ?Havoc? as the most precise wording for the situation.",
+    "example": "I'm in difficulties because of the demented old woman next door wreaking havoc in my fields.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -18353,7 +18353,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1453",
     "term": "Hay",
     "meaning": "heno (died grass)",
-    "example": "In her notes, she chose ?Hay? as the most precise wording for the situation.",
+    "example": "We hit the hay early in order to get up at dawn.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -18370,7 +18370,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0958",
     "term": "Hazard",
     "meaning": "riesgo, peligro",
-    "example": "In her notes, she chose ?Hazard? as the most precise wording for the situation.",
+    "example": "Down by the dinghy our cat is being hazarded by an angry pelican.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -18387,7 +18387,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0959",
     "term": "Hazard an opinion",
     "meaning": "formar una opinión arriesgada o que puede ser controversial",
-    "example": "In her notes, she chose ?Hazard an opinion? as the most precise wording for the situation.",
+    "example": "Without seeing the raw figures, I would hesitate to hazard an opinion on the policy’s success.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -18746,7 +18746,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0046",
     "term": "Head over heels in love",
     "meaning": "(besotted) perdidamente enamorado",
-    "example": "During the discussion, she used the expression ?Head over heels in love? to make her point.",
+    "example": "It is true that I was head over heels in love with her.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -18814,9 +18814,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-1664",
-    "term": "Heartly",
+    "term": "Heartily",
     "meaning": "con corazón",
-    "example": "In her notes, she chose ?Heartly? as the most precise wording for the situation.",
+    "example": "I heartily recommend booking the dawn tour, when the temples are almost deserted.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -18833,7 +18833,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0956",
     "term": "Hedge",
     "meaning": "asegurar, cubrir",
-    "example": "diversify your financial portfolio to hedge price risks",
+    "example": "The airline hedged against rising fuel prices by fixing its costs in advance.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -18867,7 +18867,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1680",
     "term": "Hellishly",
     "meaning": "terriblemente, horriblemente",
-    "example": "hellishly dangerous",
+    "example": "Drawing has a reputation for being hellishly difficult, but if you give it a chance, you'll find out it's even harder than you thought.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -18884,7 +18884,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1503",
     "term": "Hem",
     "meaning": "dobladillo, bastilla (sewn edge of a garment)",
-    "example": "In her notes, she chose ?Hem? as the most precise wording for the situation.",
+    "example": "If you can't return those pants, don't roll up the bottoms; just let me hem them.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -18969,7 +18969,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0467",
     "term": "Herald",
     "meaning": "proclamar, pregonar (v) / heraldo, mensajero (n)",
-    "example": "In her notes, she chose ?Herald? as the most precise wording for the situation.",
+    "example": "All the church bells pealed and heralds rode through the town proclaiming the nuptials.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19003,7 +19003,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0986",
     "term": "Here, there and everywhere",
     "meaning": "por todos lados, partes, rincones",
-    "example": "During the discussion, she used the expression ?Here, there and everywhere? to make her point.",
+    "example": "After moving house, I found screws and Allen keys here, there and everywhere.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19020,7 +19020,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1964",
     "term": "Heretical",
     "meaning": "herético, profano (contradicting accepted beliefs)",
-    "example": "In her notes, she chose ?Heretical? as the most precise wording for the situation.",
+    "example": "Tom grew up in a heretical sect.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -19037,7 +19037,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1197",
     "term": "Herring",
     "meaning": "arenque",
-    "example": "In her notes, she chose ?Herring? as the most precise wording for the situation.",
+    "example": "The police followed a red herring while they let the true criminal escape.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19054,7 +19054,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0981",
     "term": "High and dry",
     "meaning": "dejar tirado, abandonar, a la buena de Dios (person: abandoned)",
-    "example": "During the discussion, she used the expression ?High and dry? to make her point.",
+    "example": "When the last bus was cancelled, we were left high and dry at the airport.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19071,7 +19071,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1121",
     "term": "High-Flyer",
     "meaning": "persona con ambición, exitosa",
-    "example": "In her notes, she chose ?High-Flyer? as the most precise wording for the situation.",
+    "example": "Brad had been a high-flyer since his middle school years, excelling in every subject area.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19088,7 +19088,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1094",
     "term": "High-stakes",
     "meaning": "arriesgado",
-    "example": "In her notes, she chose ?High-stakes? as the most precise wording for the situation.",
+    "example": "Officials from the US and Iran hold high-stakes talks in Oman amid rising tensions.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19125,7 +19125,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0961",
     "term": "Hinder",
     "meaning": "dificultar, entorpecer, estorbar, poner trabas",
-    "example": "the hinder part of a carcass",
+    "example": "Nothing could hinder Kate from using all her energy to polish her performances.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19142,7 +19142,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1389",
     "term": "Hindrance",
     "meaning": "obstáculo, impedimento, traba",
-    "example": "In her notes, she chose ?Hindrance? as the most precise wording for the situation.",
+    "example": "Lack of money is a serious hindrance in their fight to conquer cancer.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -19283,7 +19283,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0982",
     "term": "Hit and run",
     "meaning": "atropello con fuga",
-    "example": "In her notes, she chose ?Hit and run? as the most precise wording for the situation.",
+    "example": "Tom was knocked off his bicycle and killed in a hit and run accident.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19300,7 +19300,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0564",
     "term": "Hit upon",
     "meaning": "ocurrirsele algo a (discover: idea, plan)",
-    "example": "In her notes, she chose ?Hit upon? as the most precise wording for the situation.",
+    "example": "I was on the point of giving up when I suddenly hit upon the solution.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19334,7 +19334,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0930",
     "term": "Hoax story",
     "meaning": "bulo, noticia falsa",
-    "example": "In her notes, she chose ?Hoax story? as the most precise wording for the situation.",
+    "example": "The hoax story claimed that the city would fine residents for owning more than two houseplants.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19351,7 +19351,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0095",
     "term": "Hold back",
     "meaning": "contener, reprimir (restrain, keep under control)",
-    "example": "hold back your anger",
+    "example": "The police are going all out just to hold back the crowd.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -19385,7 +19385,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0089",
     "term": "Hold down",
     "meaning": "mantener, retener, aguantar (for things)",
-    "example": "please hold down the noise so that the neighbors can sleep",
+    "example": "Hold down the Ctrl-key and click + to zoom in or - to zoom out.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -19402,7 +19402,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0101",
     "term": "Hold out hope",
     "meaning": "tener esperanza (stay optimistic)",
-    "example": "During the discussion, she used the expression ?Hold out hope? to make her point.",
+    "example": "We'll hold out hope until the end.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -19436,7 +19436,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1446",
     "term": "Holdall",
     "meaning": "bolsa de viaje, bolsa de deporte",
-    "example": "In her notes, she chose ?Holdall? as the most precise wording for the situation.",
+    "example": "A small holdall is sufficient for an overnight trip if you pack carefully.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19453,7 +19453,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1494",
     "term": "Holding",
     "meaning": "propiedad, parcela, terrenos",
-    "example": "In her notes, she chose ?Holding? as the most precise wording for the situation.",
+    "example": "The boy pretended he could read, but he was holding the book upside down.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19470,7 +19470,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0637",
     "term": "Holes",
     "meaning": "agujeros",
-    "example": "In her notes, she chose ?Holes? as the most precise wording for the situation.",
+    "example": "The sudden increase of ultraviolet rays made the researchers believe in the existence of ozone holes.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19487,7 +19487,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1645",
     "term": "Homeward",
     "meaning": "camino a casa, a casa, de vuelta (towards home)",
-    "example": "fought his way homeward through the deep snow",
+    "example": "Jude continued his walk homeward alone, pondering so deeply that he forgot to feel timid.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -19504,7 +19504,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1096",
     "term": "Hone",
     "meaning": "perfeccionar (refine: skills)",
-    "example": "In her notes, she chose ?Hone? as the most precise wording for the situation.",
+    "example": "Andrew's time at St. Alban's School for Boys had left him with many finely-honed abilities.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19521,7 +19521,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0762",
     "term": "Hone sth",
     "meaning": "perfeccionar, pulir, afinar (f) (refine skills)",
-    "example": "In her notes, she chose ?Hone sth? as the most precise wording for the situation.",
+    "example": "To be a good translator, I think Tom needs to hone his skills a bit more.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19557,7 +19557,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0987",
     "term": "Hook, line and sinker",
     "meaning": "de cabo a rabo, de pe a pa, de principio a fin (completely)",
-    "example": "During the discussion, she used the expression ?Hook, line and sinker? to make her point.",
+    "example": "He believed the fake investment adviser hook, line and sinker and transferred his savings.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19574,7 +19574,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0657",
     "term": "Hordes",
     "meaning": "multitud de personas",
-    "example": "In her notes, she chose ?Hordes? as the most precise wording for the situation.",
+    "example": "When you have coins in a bag, the false friends come in hordes.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19591,7 +19591,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0528",
     "term": "Horn",
     "meaning": "cuerno, hasta (animal) / claxon, bocina / trompa",
-    "example": "the rhino horned the explorer",
+    "example": "The deer’s antlers are not true horns because they are shed and regrown each year.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19608,7 +19608,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0609",
     "term": "Hosepipes",
     "meaning": "manguera (=hose)",
-    "example": "In her notes, she chose ?Hosepipes? as the most precise wording for the situation.",
+    "example": "A summer hosepipe ban was introduced after reservoir levels fell to a thirty-year low.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19625,7 +19625,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0839",
     "term": "Hostage crises",
     "meaning": "crisis con rehenes",
-    "example": "In her notes, she chose ?Hostage crises? as the most precise wording for the situation.",
+    "example": "Specially trained negotiators are deployed during hostage crises to keep communication open.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19727,7 +19727,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1172",
     "term": "Hub",
     "meaning": "centro, núcleo, foco (centre of activity)",
-    "example": "the playground is the hub of parental supervision",
+    "example": "If you combine them in this way, you get a 14 port USB hub.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19795,7 +19795,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1715",
     "term": "Humility",
     "meaning": "humildad",
-    "example": "he was filled with humility at the sight of the Pope",
+    "example": "They are proud in humility; proud that they are not proud.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -19812,7 +19812,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1206",
     "term": "Hurdle",
     "meaning": "obstáculo, traba (difficulty)",
-    "example": "In her notes, she chose ?Hurdle? as the most precise wording for the situation.",
+    "example": "One of the greatest hurdles facing middle school students learning English is relative pronouns.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -19829,7 +19829,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1643",
     "term": "Hurriedly",
     "meaning": "de prisa, apresuradamente (hastily)",
-    "example": "the way they buried him so hurriedly was disgraceful",
+    "example": "I got a quick glimpse of Takanohana as he hurriedly left the gymnasium.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -19846,7 +19846,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0712",
     "term": "Hurtle",
     "meaning": "lanzarse, precipitarse, ir a toda velocidad (rush forward)",
-    "example": "In her notes, she chose ?Hurtle? as the most precise wording for the situation.",
+    "example": "The chimp's eyes narrowed, ready to hurtle the stone at the slightest provocation.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -20052,7 +20052,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0021",
     "term": "I’m not averse to",
     "meaning": "no ser contrario, reacio a",
-    "example": "During the discussion, she used the expression ?I’m not averse to? to make her point.",
+    "example": "I'm not averse to a good night out.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -20106,7 +20106,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1742",
     "term": "Icicles",
     "meaning": "(hanging ice)",
-    "example": "In her notes, she chose ?Icicles? as the most precise wording for the situation.",
+    "example": "In 2010, five people died and 150 were injured by falling icicles in St Petersburg, Russia.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -20140,7 +20140,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1825",
     "term": "Idealist",
     "meaning": "a person guided by ideals, sometimes more than by practical considerations",
-    "example": "In her notes, she chose ?Idealist? as the most precise wording for the situation.",
+    "example": "I'm an idealist. I don't know where I'm going, but I'm on my way.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -20157,7 +20157,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1758",
     "term": "Idiocy",
     "meaning": "idiotez, estupidez",
-    "example": "In her notes, she chose ?Idiocy? as the most precise wording for the situation.",
+    "example": "The pillars of the new world are materialism, egoism and idiocy.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -20174,7 +20174,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0696",
     "term": "Idiosyncratic",
     "meaning": "idiosincrásico (characateristic, quirky)",
-    "example": "we all have our own idiosyncratic gestures",
+    "example": "He is known as an author for his idiosyncratic style of writing.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -20191,7 +20191,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0751",
     "term": "Idle",
     "meaning": "vago (people) / mundano, frívolo",
-    "example": "idle carpenters",
+    "example": "It is impossible to enjoy idling thoroughly unless one has plenty of work to do.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -20208,7 +20208,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1324",
     "term": "Idle talk",
     "meaning": "rumores, chismes / charla",
-    "example": "In her notes, she chose ?Idle talk? as the most precise wording for the situation.",
+    "example": "The claim that she planned to resign was dismissed as idle talk by her spokesperson.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -20225,7 +20225,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1668",
     "term": "Idleness",
     "meaning": "pereza, holgazanería, inactividad (laziness)",
-    "example": "In her notes, she chose ?Idleness? as the most precise wording for the situation.",
+    "example": "I cannot put up with his idleness any longer.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -20242,7 +20242,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0766",
     "term": "Idly",
     "meaning": "ociosamente, perezosamente / distraídamente, de manera absorta",
-    "example": "this is what I always imagined myself doing in the south of France, sitting idly, drinking coffee, watching the people",
+    "example": "Don't look away idly; just pay attention to what you're doing.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -20259,7 +20259,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1870",
     "term": "Idolatry",
     "meaning": "idolatría",
-    "example": "In her notes, she chose ?Idolatry? as the most precise wording for the situation.",
+    "example": "The ancient Jews' hatred of idolatry did not endear them to the surrounding pagan empires.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -20293,7 +20293,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0381",
     "term": "If there were no love",
     "meaning": "Se usa were y no was porque es una situacion hipotetica o irreal. Con un if + irreal= were",
-    "example": "During the discussion, she used the expression ?If there were no love? to make her point.",
+    "example": "If there were no love in the world, countless poems, songs and stories would lose their meaning.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -20310,7 +20310,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1779",
     "term": "Ignorance",
     "meaning": "ignorancia",
-    "example": "In her notes, she chose ?Ignorance? as the most precise wording for the situation.",
+    "example": "If you think education is expensive, wait till you see what ignorance costs you.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -20327,7 +20327,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1733",
     "term": "Illusory",
     "meaning": "ilusorio (not real)",
-    "example": "In her notes, she chose ?Illusory? as the most precise wording for the situation.",
+    "example": "From the stuff of dreams, the mind makes egos, fragile and illusory constructions.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -20344,7 +20344,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1703",
     "term": "Imagery",
     "meaning": "imaginario",
-    "example": "In her notes, she chose ?Imagery? as the most precise wording for the situation.",
+    "example": "The careful use of evocative imagery is an important part of building a successful advertising campaign.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -20361,7 +20361,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1769",
     "term": "Imitative",
     "meaning": "imitativo",
-    "example": "In her notes, she chose ?Imitative? as the most precise wording for the situation.",
+    "example": "The child’s imitative behaviour soon had him copying his older brother’s gestures.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -20378,7 +20378,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1852",
     "term": "Immemorial",
     "meaning": "inmemorial (earlier than can be remembered)",
-    "example": "time immemorial",
+    "example": "It is a custom from time immemorial: those who have worries, also have liqueur.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -20395,7 +20395,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1828",
     "term": "Immodest",
     "meaning": "lacking humility or revealing more of the body than is considered appropriate",
-    "example": "In her notes, she chose ?Immodest? as the most precise wording for the situation.",
+    "example": "I don't care if you think these clothes are immodest.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -20429,7 +20429,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1360",
     "term": "Impair",
     "meaning": "alterar, afectar",
-    "example": "In her notes, she chose ?Impair? as the most precise wording for the situation.",
+    "example": "It was proposed that the term \"blind person\" be replaced with the term \"visually impaired person\".",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -20449,7 +20449,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0550",
     "term": "Impairments",
     "meaning": "discapacidad, deficiencia, disfunción",
-    "example": "In her notes, she chose ?Impairments? as the most precise wording for the situation.",
+    "example": "Books written in braille are very important for people with visual impairments.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -20466,7 +20466,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1865",
     "term": "Impartial",
     "meaning": "imparcial",
-    "example": "the impartial eye of a scientist",
+    "example": "The journalists who write for this publisher are not impartial.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -20483,7 +20483,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1378",
     "term": "Impassable",
     "meaning": "intransitable",
-    "example": "In her notes, she chose ?Impassable? as the most precise wording for the situation.",
+    "example": "There were white out conditions in the town; subsequently, the roads were impassable.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -20503,7 +20503,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1880",
     "term": "Impassive",
     "meaning": "impasible, imperturbable",
-    "example": "In her notes, she chose ?Impassive? as the most precise wording for the situation.",
+    "example": "He tried to remain impassive and convince himself that it was none of his business.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -20520,7 +20520,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1745",
     "term": "Impermeable",
     "meaning": "impermeable",
-    "example": "impermeable stone",
+    "example": "He glazed his pottery to make it impermeable to water.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -20537,7 +20537,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1860",
     "term": "Impersonation",
     "meaning": "imitación (performance)",
-    "example": "In her notes, she chose ?Impersonation? as the most precise wording for the situation.",
+    "example": "Now that people can steal passwords, illegal impersonation is becoming a serious problem.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -20554,7 +20554,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1888",
     "term": "Imperturbable",
     "meaning": "imperturbable",
-    "example": "hitherto imperturbable, he now showed signs of alarm",
+    "example": "The world is an unfair place. Instead of trying to change it, you must keep an imperturbable heart.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -20590,7 +20590,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1174",
     "term": "Impoverishment",
     "meaning": "empobrecimiento / agotamiento, degeneración",
-    "example": "In her notes, she chose ?Impoverishment? as the most precise wording for the situation.",
+    "example": "Do you wear those shorts to emphasise the aesthetic impoverishment you've been suffering this past decade?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -20607,7 +20607,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0420",
     "term": "impromptu",
     "meaning": "espontáneo, de manera improvisada (unplanned, spontaneus)",
-    "example": "In her notes, she chose ?impromptu? as the most precise wording for the situation.",
+    "example": "It usually takes me more than three weeks to prepare a good impromptu speech.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -20641,7 +20641,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1858",
     "term": "Impulse",
     "meaning": "impulso",
-    "example": "In her notes, she chose ?Impulse? as the most precise wording for the situation.",
+    "example": "A foolish impulse made me say what I should have left unsaid.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -20658,7 +20658,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0185",
     "term": "In a bid to",
     "meaning": "en un intento de, con la intención de, con el próposito de",
-    "example": "During the discussion, she used the expression ?In a bid to? to make her point.",
+    "example": "Firefighters have started pumping fresh water into some ponds and lakes in a bid to raise oxygen levels.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -20694,7 +20694,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0077",
     "term": "In a nutshell",
     "meaning": "briefly, to cut a long story short, in essence, to sum up",
-    "example": "gave the facts in a nutshell",
+    "example": "Toki Pona is an attempt to interpret the meaning of life in a nutshell.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -20729,7 +20729,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0027",
     "term": "In abeyance",
     "meaning": "suspendido temporalmente, en prórroga (legal)",
-    "example": "During the discussion, she used the expression ?In abeyance? to make her point.",
+    "example": "I'll hold my judgment in abeyance until there is more information available.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -20749,7 +20749,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0379",
     "term": "in absentia",
     "meaning": "en ausencia",
-    "example": "he was sentenced in absentia",
+    "example": "The leader of the terrorist organization was sentenced to death in absentia.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -20785,7 +20785,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0368",
     "term": "In any event",
     "meaning": "En cualquier caso",
-    "example": "I don't know how it started; in any case, there was a brief scuffle",
+    "example": "I'm dying to see you tonight in any event. Please come over by seven.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -20802,7 +20802,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0033",
     "term": "In arrears",
     "meaning": "deber dinero, pendiente de pago",
-    "example": "in arrears with their utility bills",
+    "example": "A few days would have been excusable, but you are in arrears for 10 days.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -20820,9 +20820,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0123",
-    "term": "In awe for",
+    "term": "In awe of",
     "meaning": "impresionado, asombrado por",
-    "example": "During the discussion, she used the expression ?In awe for? to make her point.",
+    "example": "The young violinist was in awe of the soloist’s effortless control and precision.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -20856,7 +20856,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1709",
     "term": "In contention",
     "meaning": "en competencia, compitiendo por",
-    "example": "In her notes, she chose ?In contention? as the most precise wording for the situation.",
+    "example": "Three independent films are still in contention for the festival’s top prize.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -20873,7 +20873,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0193",
     "term": "In despair",
     "meaning": "desesperado",
-    "example": "During the discussion, she used the expression ?In despair? to make her point.",
+    "example": "He was in despair when he spent the last of his money.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -20890,7 +20890,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0279",
     "term": "In essence",
     "meaning": "básicamente, esencialmente (basically)",
-    "example": "During the discussion, she used the expression ?In essence? to make her point.",
+    "example": "Departure is a partial death but death in essence is not only departure.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -20924,7 +20924,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0155",
     "term": "In fits of laughter",
     "meaning": "muerto de risa, a las carcajadas (i) (laughing uncontrollably)",
-    "example": "During the discussion, she used the expression ?In fits of laughter? to make her point.",
+    "example": "We were in fits of laughter when the cat twirled around the room chasing its tail.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -21017,7 +21017,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0371",
     "term": "In no uncertain terms",
     "meaning": "de manera clara.",
-    "example": "During the discussion, she used the expression ?In no uncertain terms? to make her point.",
+    "example": "She told me in no uncertain terms that she would not be coming back.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -21034,7 +21034,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0295",
     "term": "In other words",
     "meaning": "en otras palabras, dicho de otra manera",
-    "example": "in other words, we are broke",
+    "example": "A whale is a mammal; in other words it feeds milk to its young.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -21087,9 +21087,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0369",
-    "term": "In such and event",
+    "term": "In such an event",
     "meaning": "En tal caso",
-    "example": "During the discussion, she used the expression ?In such and event? to make her point.",
+    "example": "The backup generator may fail; in such an event, use the manual release beside the door.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -21106,7 +21106,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0030",
     "term": "In the abstract",
     "meaning": "en teoría",
-    "example": "During the discussion, she used the expression ?In the abstract? to make her point.",
+    "example": "Young people know the disasters of war only in the abstract.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -21126,7 +21126,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0037",
     "term": "In the black",
     "meaning": "no deber nada a nadie (opp-> in the red)",
-    "example": "During the discussion, she used the expression ?In the black? to make her point.",
+    "example": "This ought to bring in enough money to put us back in the black.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -21225,7 +21225,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0349",
     "term": "In two minds about",
     "meaning": "tener dudas, estar indeciso, dudar",
-    "example": "During the discussion, she used the expression ?In two minds about? to make her point.",
+    "example": "I am still in two minds about buying this car.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -21261,7 +21261,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0781",
     "term": "Inadvertently",
     "meaning": "sin querer, involuntariamente (unintentionally)",
-    "example": "In her notes, she chose ?Inadvertently? as the most precise wording for the situation.",
+    "example": "They claimed that my name had been inadvertently eliminated from the voter registration list.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -21278,7 +21278,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1766",
     "term": "Inanimate",
     "meaning": "inanimado",
-    "example": "an inanimate body",
+    "example": "The spirits can be good or evil and can inhabit inanimate objects.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21295,7 +21295,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1725",
     "term": "Inattentive",
     "meaning": "distraído, inatento",
-    "example": "inattentive students",
+    "example": "You might have prevented the accident if you hadn't been so inattentive.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21312,7 +21312,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1739",
     "term": "Inaugural",
     "meaning": "inaugural, de apertura",
-    "example": "the magazine's inaugural issue",
+    "example": "There is also the popular display of inaugural gowns worn by U.S. first ladies.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21329,7 +21329,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1886",
     "term": "Inauthentic",
     "meaning": "falso, de imitación",
-    "example": "In her notes, she chose ?Inauthentic? as the most precise wording for the situation.",
+    "example": "The apology sounded inauthentic because it focused entirely on the damage to his reputation.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21346,7 +21346,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0506",
     "term": "Incivility",
     "meaning": "descortesía (lack of courtesy)",
-    "example": "In her notes, she chose ?Incivility? as the most precise wording for the situation.",
+    "example": "One passenger’s incivility towards the cabin crew delayed the flight for everyone.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -21363,7 +21363,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1743",
     "term": "Inclusive",
     "meaning": "incluido, incluyente, abierto",
-    "example": "an inclusive art form",
+    "example": "Is this amount inclusive of GST, or does it have to be added on?",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21380,7 +21380,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0783",
     "term": "Inconceivable",
     "meaning": "inconcebible / impensable",
-    "example": "In her notes, she chose ?Inconceivable? as the most precise wording for the situation.",
+    "example": "A few years ago it would have been inconceivable for Japan to send troops overseas.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -21417,7 +21417,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0867",
     "term": "Incur",
     "meaning": "sufrir",
-    "example": "In her notes, she chose ?Incur? as the most precise wording for the situation.",
+    "example": "Delaying study incurs the risk of great effort with little success.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -21434,7 +21434,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1910",
     "term": "Indebted",
     "meaning": "endeudado / agradecido con, gratitud para",
-    "example": "In her notes, she chose ?Indebted? as the most precise wording for the situation.",
+    "example": "The politician said he was deeply indebted to everyone for their support in the election.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21449,9 +21449,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-2115",
-    "term": "Indecisive, ineffective, inexplainable, incompetent, intolerant, invisible, incredible.",
+    "term": "Indecisive, ineffective, inexplicable, incompetent, intolerant, invisible, incredible",
     "meaning": "Normalmente, lleva in- si acaba en -ive, -ent, -ant, -ate, -ible, -able (esta ultimo tambien lleva mucho -un)",
-    "example": "In her notes, she chose ?Indecisive, ineffective, inexplainable, incompetent, intolerant, invisible, incredible.? as the most precise wording for the situation.",
+    "example": "The report was indecisive in its conclusions, ineffective as guidance and incomprehensible to most readers.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21468,7 +21468,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1722",
     "term": "Indefensible",
     "meaning": "indefendible",
-    "example": "In her notes, she chose ?Indefensible? as the most precise wording for the situation.",
+    "example": "Cutting emergency food supplies to fund a ceremonial parade is indefensible.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21485,7 +21485,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1661",
     "term": "Indefinitely",
     "meaning": "indefinidamente",
-    "example": "this could go on indefinitely",
+    "example": "The power of population is indefinitely greater than the power in the earth to produce subsistence for man.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21502,7 +21502,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0702",
     "term": "Indulge",
     "meaning": "consentir, satisfacer, mimar a",
-    "example": "In her notes, she chose ?Indulge? as the most precise wording for the situation.",
+    "example": "As these days most parents indulge their children, many children don't know what good manners are.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -21536,7 +21536,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1892",
     "term": "Inexcusable",
     "meaning": "inexcusable, imperdonable",
-    "example": "In her notes, she chose ?Inexcusable? as the most precise wording for the situation.",
+    "example": "When anyone tries to explain the inexplicable, he is getting ready to excuse the inexcusable.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21553,7 +21553,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1379",
     "term": "Inexhaustible",
     "meaning": "incansable, inagotable",
-    "example": "an inexhaustible supply of coal",
+    "example": "The man is an inexhaustible source of energy.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -21573,7 +21573,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1366",
     "term": "Inexplicable",
     "meaning": "inexplicable",
-    "example": "inexplicable errors",
+    "example": "Tom was normally very reliable and his absence from the meeting was inexplicable.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -21593,7 +21593,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1013",
     "term": "Inferred",
     "meaning": "inferir, deducir (deduce)",
-    "example": "In her notes, she chose ?Inferred? as the most precise wording for the situation.",
+    "example": "I inferred from the look on Tom's face that he was in a bad mood.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -21610,7 +21610,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0513",
     "term": "Influx",
     "meaning": "influjo, afluencia (mass arrival) / entrada (flowing in: of money)",
-    "example": "In her notes, she chose ?Influx? as the most precise wording for the situation.",
+    "example": "The influx of foreign workers has caused a serious housing problem in this area.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -21627,7 +21627,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0798",
     "term": "Ingenuity",
     "meaning": "ingenio, habilidad (resourcefulness, cleverness, skill)",
-    "example": "a plot of great ingenuity",
+    "example": "NASA reports that the Ingenuity helicopter has completed its 12th flight over the red planet.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -21644,7 +21644,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0442",
     "term": "Inherent risks",
     "meaning": "riegos inherentes, intrínsecos",
-    "example": "In her notes, she chose ?Inherent risks? as the most precise wording for the situation.",
+    "example": "The consent form explains the inherent risks of surgery, including infection and adverse reactions.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -21661,7 +21661,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1897",
     "term": "Inhuman",
     "meaning": "inhumano, frío, cruel",
-    "example": "something dark and inhuman in form",
+    "example": "The inhuman ideology of racism was widespread in the United States and Great Britain.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21678,7 +21678,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1907",
     "term": "Injurious",
     "meaning": "perjudicial",
-    "example": "In her notes, she chose ?Injurious? as the most precise wording for the situation.",
+    "example": "The report contends the current system is injurious to mental well-being and violates the human rights of patients.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21712,7 +21712,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1916",
     "term": "Innumerate",
     "meaning": "negado para los números",
-    "example": "In her notes, she chose ?Innumerate? as the most precise wording for the situation.",
+    "example": "An innumerate manager may mistake rising revenue for rising profit and overlook escalating costs.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21729,7 +21729,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1412",
     "term": "Inquiry",
     "meaning": "investigación, indagación / consulta, pregunta",
-    "example": "In her notes, she chose ?Inquiry? as the most precise wording for the situation.",
+    "example": "For further inquiries, please feel free to contact us toll-free at 0120-00-0000.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -21749,7 +21749,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0562",
     "term": "Ins and Outs",
     "meaning": "detalles / to know the ins and outs -> conocer con detalle, conocer",
-    "example": "During the discussion, she used the expression ?Ins and Outs? to make her point.",
+    "example": "Tom had to learn the ins and outs of the new computer program.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -21766,7 +21766,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1934",
     "term": "Insistence",
     "meaning": "insistencia",
-    "example": "insistence on grammatical correctness is a conservative position",
+    "example": "His insistence on revisiting old grievances would only fan the flames of anger.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21783,7 +21783,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0739",
     "term": "Insofar",
     "meaning": "hasta la fecha (rare, formal - to such an extent)",
-    "example": "insofar as it can be ascertained, the horse lung is comparable to that of man",
+    "example": "Sami had a good salary insofar as being a policeman.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -21800,7 +21800,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1834",
     "term": "Instantaneous",
     "meaning": "happening immediately, without any noticeable delay",
-    "example": "relief was instantaneous",
+    "example": "Your car's speedometer tells you the car's instantaneous speed, not its average speed.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21817,7 +21817,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0644",
     "term": "Instilled",
     "meaning": "Infundir, inculcar algo",
-    "example": "In her notes, she chose ?Instilled? as the most precise wording for the situation.",
+    "example": "Visiting your grave reminds me of the strength and wisdom you instilled in me.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -21834,7 +21834,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1922",
     "term": "Instrumentalist",
     "meaning": "instrumentista",
-    "example": "In her notes, she chose ?Instrumentalist? as the most precise wording for the situation.",
+    "example": "Dom Flemons is a multi-instrumentalist, he plays banjo, guitar, harmonica, fife, bones, bass drum, snare drum and quills, in addition to singing.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21851,7 +21851,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1419",
     "term": "Insurmountable",
     "meaning": "insuperable, infranqueable, insalvable (that cannot be overcome)",
-    "example": "In her notes, she chose ?Insurmountable? as the most precise wording for the situation.",
+    "example": "This book sees the protagonist conquer insurmountable odds and save the day.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -21871,7 +21871,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1780",
     "term": "Intemperate",
     "meaning": "alcohólico / desmedido, extremo",
-    "example": "In her notes, she chose ?Intemperate? as the most precise wording for the situation.",
+    "example": "His intemperate remarks turned a routine disagreement into a public feud.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21888,7 +21888,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1248",
     "term": "Interplay",
     "meaning": "interacción",
-    "example": "In her notes, she chose ?Interplay? as the most precise wording for the situation.",
+    "example": "My locality is a nexus for occidental and oriental interplay, which is abundant in emotional undulations.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -21905,7 +21905,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1873",
     "term": "Interracial",
     "meaning": "interracial",
-    "example": "interracial schools",
+    "example": "In 1967, the United States Supreme Court ruled that the banning of interracial marriage violated the Constitution.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21922,7 +21922,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0865",
     "term": "Intertwining",
     "meaning": "entrelazarse",
-    "example": "In her notes, she chose ?Intertwining? as the most precise wording for the situation.",
+    "example": "The documentary follows three intertwining stories set on opposite sides of the border.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -21939,7 +21939,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1840",
     "term": "Intervention",
     "meaning": "intervención",
-    "example": "In her notes, she chose ?Intervention? as the most precise wording for the situation.",
+    "example": "My intervention on your behalf is the only reason you still have a job.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21956,7 +21956,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0597",
     "term": "Inventiveness",
     "meaning": "inventiva, creatividad, ingenio",
-    "example": "In her notes, she chose ?Inventiveness? as the most precise wording for the situation.",
+    "example": "The inventiveness of the low-budget stage design compensates for its lack of elaborate scenery.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -21973,7 +21973,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1901",
     "term": "Investiture",
     "meaning": "investidura",
-    "example": "In her notes, she chose ?Investiture? as the most precise wording for the situation.",
+    "example": "Thousands gathered outside the palace to watch the new president’s investiture.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -21990,7 +21990,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0190",
     "term": "Invisible to the naked eye",
     "meaning": "invisible a simple vista",
-    "example": "During the discussion, she used the expression ?Invisible to the naked eye? to make her point.",
+    "example": "She is invisible to the naked eye.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -22007,7 +22007,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1900",
     "term": "Involuntary",
     "meaning": "involuntario",
-    "example": "involuntary muscles",
+    "example": "On appeal, Tom claimed that his original guilty plea was coerced and involuntary.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -22024,7 +22024,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1110",
     "term": "Irk",
     "meaning": "irritar, fastidiar, molestar (irritate, annoy)",
-    "example": "In her notes, she chose ?Irk? as the most precise wording for the situation.",
+    "example": "It was a pleasure to meet you Stella, I am so sorry for whatever I said to irk you the wrong way.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22041,7 +22041,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1111",
     "term": "Irksome",
     "meaning": "irritante, fastidioso",
-    "example": "what an irksome task the writing of long letters is",
+    "example": "Being treated as a minor is irksome.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22058,7 +22058,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0782",
     "term": "Irrepressible",
     "meaning": "irreprimible / incontrolable",
-    "example": "an irrepressible chatterbox",
+    "example": "She leaps with an irrepressible \"Yippee\" from the boat to the shore.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22075,7 +22075,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1410",
     "term": "Irresolute",
     "meaning": "irresoluto (undecided, hesitant)",
-    "example": "the committee was timid and mediocre and irresolute",
+    "example": "Herbie remained irresolute about moving to another country, torn between adventure and the comfort of home.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -22095,7 +22095,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1484",
     "term": "Irritant",
     "meaning": "irritante, molestia",
-    "example": "In her notes, she chose ?Irritant? as the most precise wording for the situation.",
+    "example": "“Police initially launched pepper balls, which contain powder with an irritant that disperses quickly, that were unsuccessful in reducing the crowd size,” university officials said in a statement.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22146,7 +22146,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1519",
     "term": "It goes without saying that",
     "meaning": "por descontado, no es necesario decir/aclarar que",
-    "example": "During the discussion, she used the expression ?It goes without saying that? to make her point.",
+    "example": "It goes without saying that confidential patient records must be stored securely.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -22163,7 +22163,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0195",
     "term": "It is news to me",
     "meaning": "sth one is hearing for the first time",
-    "example": "During the discussion, she used the expression ?It is news to me? to make her point.",
+    "example": "‘They’re replacing the entire finance team.’ ‘That is news to me, and I run the department.’",
     "family": "patterns",
     "families": [
       "patterns"
@@ -22231,7 +22231,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1275",
     "term": "It’s a collector’s item",
     "meaning": "objeto de coleccionista",
-    "example": "In her notes, she chose ?It’s a collector’s item? as the most precise wording for the situation.",
+    "example": "It's a collector's item in mint condition.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22248,7 +22248,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1274",
     "term": "It’s a slow burner",
     "meaning": "algo que se vuelve gradualmente interesante, agradable o",
-    "example": "During the discussion, she used the expression ?It’s a slow burner? to make her point.",
+    "example": "The series is a slow burner: little happens at first, but the characters gradually become compelling.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22282,7 +22282,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0285",
     "term": "It’s back to the drawing board",
     "meaning": "empezar de cero, volver al punto de partida",
-    "example": "During the discussion, she used the expression ?It’s back to the drawing board? to make her point.",
+    "example": "The prototype failed every safety check, so it’s back to the drawing board.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -22316,7 +22316,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1571",
     "term": "it’s news to me",
     "meaning": "used for saying that you didn’t know about something, especially when you are annoyed about this",
-    "example": "‘So Natalia is having a party when you’re away.’ ‘Really? It’s news to me!’",
+    "example": "‘Your landlord is selling the flat.’ ‘Really? It’s news to me; he renewed my lease yesterday.’",
     "family": "idioms",
     "families": [
       "idioms"
@@ -22334,7 +22334,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0191",
     "term": "It’s nothing short of a miracle",
     "meaning": "se necesitaría un milagro, solo un milagro puede …",
-    "example": "During the discussion, she used the expression ?It’s nothing short of a miracle? to make her point.",
+    "example": "Given the wreckage around them, their escape with minor injuries was nothing short of a miracle.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -22368,7 +22368,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0549",
     "term": "Jargon",
     "meaning": "jerga, argot",
-    "example": "In her notes, she chose ?Jargon? as the most precise wording for the situation.",
+    "example": "Please stop using all that medical jargon, I don't understand any of it.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22402,7 +22402,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1500",
     "term": "Jest",
     "meaning": "bromear, burlarse, mofarse",
-    "example": "In her notes, she chose ?Jest? as the most precise wording for the situation.",
+    "example": "The question was a serious one, but he answered half in jest.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22419,7 +22419,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1947",
     "term": "Jester",
     "meaning": "bromista",
-    "example": "In her notes, she chose ?Jester? as the most precise wording for the situation.",
+    "example": "The court jester was the only one allowed to mock the king.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -22436,7 +22436,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1952",
     "term": "Jewellery",
     "meaning": "joyas, joyería",
-    "example": "In her notes, she chose ?Jewellery? as the most precise wording for the situation.",
+    "example": "They went on a cruise and bought jewellery, paid for by Health Canada dollars.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -22470,7 +22470,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0875",
     "term": "Joint",
     "meaning": "articulación / junta, bisagra",
-    "example": "a joint session of Congress",
+    "example": "We can lift the restrictions on imports once the joint agreement is signed.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -22490,7 +22490,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1694",
     "term": "Journalistic",
     "meaning": "periodístico",
-    "example": "journalistic writing",
+    "example": "Her journalistic work was extremely time-consuming, which was unfortunately to the detriment of her literary career.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -22507,7 +22507,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1231",
     "term": "Juggle",
     "meaning": "hacer malabares",
-    "example": "the player juggled the ball",
+    "example": "Tom is pretty good at juggling, but Mary doesn't seem to be impressed.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22524,7 +22524,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0705",
     "term": "Jumble",
     "meaning": "revoltijo, batiburrillo (disordered pile)",
-    "example": "In her notes, she chose ?Jumble? as the most precise wording for the situation.",
+    "example": "She was on her way to the jumble sale when she met Pablo.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22541,7 +22541,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0086",
     "term": "Jump at the chance",
     "meaning": "aprovechar la oportunidad",
-    "example": "During the discussion, she used the expression ?Jump at the chance? to make her point.",
+    "example": "Many would jump at the chance to live in New York.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -22558,7 +22558,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0333",
     "term": "Jump on the bandwagon",
     "meaning": "subirse al carro (do sth because it is popular)",
-    "example": "During the discussion, she used the expression ?Jump on the bandwagon? to make her point.",
+    "example": "The young men of Japan are apt to jump on the bandwagon.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -22648,7 +22648,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1604",
     "term": "keep a straight face",
     "meaning": "not to laugh",
-    "example": "We found it difficult to keep a straight face in",
+    "example": "You need to be able to keep a straight face to be good at poker.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -22701,7 +22701,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0234",
     "term": "Keep something back",
     "meaning": "guardar, reservar, ahorrar (save) / no acercarse,",
-    "example": "During the discussion, she used the expression ?Keep something back? to make her point.",
+    "example": "The misery was too much for the readers to keep back their tears.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -22718,7 +22718,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0258",
     "term": "Keep something under wraps",
     "meaning": "mantener en secreto (not reveal)",
-    "example": "During the discussion, she used the expression ?Keep something under wraps? to make her point.",
+    "example": "The merger was kept under wraps until both boards had formally approved it.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -22735,7 +22735,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0261",
     "term": "Keep something under your hat",
     "meaning": "tener algo escondido (keep sth secret)",
-    "example": "During the discussion, she used the expression ?Keep something under your hat? to make her point.",
+    "example": "I’ll tell you who won the scholarship, but keep it under your hat until Friday.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -22752,7 +22752,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1093",
     "term": "Keep the stakes high",
     "meaning": "mantener el riesgo",
-    "example": "In her notes, she chose ?Keep the stakes high? as the most precise wording for the situation.",
+    "example": "Requiring teams to defend a narrow lead can keep the stakes high until the final whistle.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22790,7 +22790,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0895",
     "term": "Keepsakes",
     "meaning": "recuerdo (souvenir, momento)",
-    "example": "In her notes, she chose ?Keepsakes? as the most precise wording for the situation.",
+    "example": "A box of ticket stubs and postcards contains her most treasured keepsakes from the tour.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22807,7 +22807,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1217",
     "term": "Knack",
     "meaning": "truco",
-    "example": "In her notes, she chose ?Knack? as the most precise wording for the situation.",
+    "example": "To take good pictures there are some knacks to learn and a little trick.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22824,7 +22824,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0107",
     "term": "Knock-on",
     "meaning": "envejecer / crecer (informal) (UK, grow old)",
-    "example": "During the discussion, she used the expression ?Knock-on? to make her point.",
+    "example": "The closure of the factory will have significant knock-on effects for the town's economy.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -22841,7 +22841,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1626",
     "term": "Knowingly",
     "meaning": "a propósito, intencionalmente (intentionally)",
-    "example": "In her notes, she chose ?Knowingly? as the most precise wording for the situation.",
+    "example": "Ziri and Rima looked at each other knowingly.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -22858,7 +22858,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1625",
     "term": "Knowledgeably",
     "meaning": "con conocimiento de causa",
-    "example": "In her notes, she chose ?Knowledgeably? as the most precise wording for the situation.",
+    "example": "Tom is well-read and can talk knowledgeably about almost any topic.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -22875,7 +22875,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0764",
     "term": "Lackadaisical",
     "meaning": "abúlico, lánguido (apathetic)",
-    "example": "she was annoyingly lackadaisical and impractical",
+    "example": "The company's managers had a very lackadaisical attitude towards the safety of their workers.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22892,7 +22892,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1487",
     "term": "Lager",
     "meaning": "cerveza rubia",
-    "example": "In her notes, she chose ?Lager? as the most precise wording for the situation.",
+    "example": "He was here today. He had half a lager.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22909,7 +22909,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0490",
     "term": "landmark",
     "meaning": "monumento, punto de referencia",
-    "example": "In her notes, she chose ?landmark? as the most precise wording for the situation.",
+    "example": "I wish to know a landmark nearby so I can find my way there.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22926,7 +22926,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1502",
     "term": "Lapel",
     "meaning": "solapa (de la camisa)",
-    "example": "In her notes, she chose ?Lapel? as the most precise wording for the situation.",
+    "example": "Did you get a good look at the pin he was wearing on his lapel?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22962,7 +22962,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0516",
     "term": "Launder",
     "meaning": "lavar / blanquear (money)",
-    "example": "In her notes, she chose ?Launder? as the most precise wording for the situation.",
+    "example": "It is possible to launder language to make it more appealing and uplifting.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22979,7 +22979,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0587",
     "term": "Lavish",
     "meaning": "lujoso, magnífico (extravagant)",
-    "example": "a lavish buffet",
+    "example": "Tom and Mary had a lavish wedding with no expense spared.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -22996,7 +22996,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0248",
     "term": "Lay to rest",
     "meaning": "poner fin a. Literalmente es enterrar o dar sepultura. Lay: poner o colocar: lay the book on the table.",
-    "example": "During the discussion, she used the expression ?Lay to rest? to make her point.",
+    "example": "The DNA results finally laid to rest decades of speculation about the painting’s origin.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -23013,7 +23013,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0966",
     "term": "Layout",
     "meaning": "plano (design, arrangement)",
-    "example": "In her notes, she chose ?Layout? as the most precise wording for the situation.",
+    "example": "The only missing feature of Windows for Workgroups 3.11 is Turkish keyboard layout.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23030,7 +23030,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0792",
     "term": "Leaching",
     "meaning": "degradación (loss of soil nutrients)",
-    "example": "In her notes, she chose ?Leaching? as the most precise wording for the situation.",
+    "example": "Heavy rainfall accelerates the leaching of nutrients from shallow, sandy soils.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23047,7 +23047,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1958",
     "term": "Leadership",
     "meaning": "liderazgo",
-    "example": "he believed that leadership can be taught",
+    "example": "It is certain that one important criterion for employment is having 'leadership'.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -23083,7 +23083,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1382",
     "term": "Leakage",
     "meaning": "fuga, derrame, pérdida",
-    "example": "In her notes, she chose ?Leakage? as the most precise wording for the situation.",
+    "example": "It is difficult to determine the state and safety of the radiation leakage.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -23103,7 +23103,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1076",
     "term": "Leaps and bounds",
     "meaning": "rápidamente, velozmente, precipitadamente",
-    "example": "During the discussion, she used the expression ?Leaps and bounds? to make her point.",
+    "example": "This nation's economy is growing by leaps and bounds in recent years.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23158,7 +23158,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0399",
     "term": "leave someone lost for words",
     "meaning": "dejar a alguien sin palabras",
-    "example": "During the discussion, she used the expression ?leave someone lost for words? to make her point.",
+    "example": "The scale model of the ancient city left even the most sceptical visitors lost for words.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -23193,7 +23193,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0286",
     "term": "Leave your mark on the world",
     "meaning": "marcar, dejar huella (make an impact)",
-    "example": "During the discussion, she used the expression ?Leave your mark on the world? to make her point.",
+    "example": "She hopes to leave her mark on the world by making clean water affordable in remote communities.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -23210,7 +23210,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0799",
     "term": "Ledger",
     "meaning": "libro de contabilidad",
-    "example": "In her notes, she chose ?Ledger? as the most precise wording for the situation.",
+    "example": "A blockchain is a decentralized digital ledger where transactions are recorded, verified and become permanent and immutable.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23227,7 +23227,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0421",
     "term": "leisurely",
     "meaning": "sin prisas, pausado (unhurried)",
-    "example": "In her notes, she chose ?leisurely? as the most precise wording for the situation.",
+    "example": "The train is travelling at a very leisurely pace again today.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23259,9 +23259,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-1731",
-    "term": "Lenghty",
+    "term": "Lengthy",
     "meaning": "largo, extenso",
-    "example": "In her notes, she chose ?Lenghty? as the most precise wording for the situation.",
+    "example": "She died last night after a lengthy illness.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -23278,7 +23278,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1646",
     "term": "Lengthwise",
     "meaning": "a lo largo",
-    "example": "He cut the paper lengthwise",
+    "example": "Tom sawed two pieces off the trunk of a fallen birch, splitting them twice lengthwise with his axe.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -23295,7 +23295,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0560",
     "term": "Lesser-known",
     "meaning": "menos conocido (less well known)",
-    "example": "In her notes, she chose ?Lesser-known? as the most precise wording for the situation.",
+    "example": "The exhibition pairs celebrated impressionists with lesser-known artists working beside them.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23312,7 +23312,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1286",
     "term": "Let me put that another way",
     "meaning": "Lo diré de otra manera",
-    "example": "In her notes, she chose ?Let me put that another way? as the most precise wording for the situation.",
+    "example": "Let me put that another way: the problem is not a lack of money, but how we choose to spend it.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23384,7 +23384,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0429",
     "term": "Leverage",
     "meaning": "ventaja / hacer palanca / influencia",
-    "example": "We need to leverage this company",
+    "example": "An investors' group is attempting a leveraged buy-out of the firm.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23401,7 +23401,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0937",
     "term": "Levied",
     "meaning": "tasa, impuesto",
-    "example": "In her notes, she chose ?Levied? as the most precise wording for the situation.",
+    "example": "A 5% consumption tax is levied on purchases of most goods and services.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23418,7 +23418,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0505",
     "term": "Levy",
     "meaning": "(n) tasa / (v) imponer, gravar (taxes) / recluta (n) reclutar (v)",
-    "example": "In her notes, she chose ?Levy? as the most precise wording for the situation.",
+    "example": "The king believed it would be more fitting to levy a tax that was lower than usual.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23452,7 +23452,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1749",
     "term": "Liar",
     "meaning": "mentiroso",
-    "example": "In her notes, she chose ?Liar? as the most precise wording for the situation.",
+    "example": "I'm sorry that I had been viewing you as a liar until just a few minutes ago.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -23484,9 +23484,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0551",
-    "term": "Lies a long bell curve",
-    "meaning": "PREGUNTAR!!!!!!",
-    "example": "In her notes, she chose ?Lies a long bell curve? as the most precise wording for the situation.",
+    "term": "Lies along a bell curve",
+    "meaning": "seguir una distribución normal: la mayoría de los valores se agrupan cerca de la media",
+    "example": "Most observations cluster around the mean because the data lies along a bell curve.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23503,7 +23503,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1381",
     "term": "Lifeless",
     "meaning": "muerto, sin vida / apagado, soso / inmóvil",
-    "example": "a lifeless planet",
+    "example": "The totalitarian era is passing, its old ideas blown away like leaves from an ancient, lifeless tree.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -23541,7 +23541,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1173",
     "term": "Like-minded",
     "meaning": "que son parecidos, piensan parecido, tienen cosas en común",
-    "example": "In her notes, she chose ?Like-minded? as the most precise wording for the situation.",
+    "example": "If you prefer a peaceful life, seek a like-minded spouse.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23558,7 +23558,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1131",
     "term": "Liken",
     "meaning": "comparar, equiparar",
-    "example": "In her notes, she chose ?Liken? as the most precise wording for the situation.",
+    "example": "In the Bible, God is likened, at the same time, to both a fire and a light.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23575,7 +23575,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1357",
     "term": "Likened",
     "meaning": "comparar, asemejar",
-    "example": "In her notes, she chose ?Likened? as the most precise wording for the situation.",
+    "example": "The hum of mating males has been likened to the buzz of a chain saw.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -23595,7 +23595,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1752",
     "term": "Likeness",
     "meaning": "parecido, semejanza, similitud",
-    "example": "In her notes, she chose ?Likeness? as the most precise wording for the situation.",
+    "example": "My child, flee from every evil thing, and from every likeness of it.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -23612,7 +23612,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1648",
     "term": "Likewise",
     "meaning": "igualmente, así mismo",
-    "example": "In her notes, she chose ?Likewise? as the most precise wording for the situation.",
+    "example": "In France, women have gained many rights, likewise, that has happened in the United States.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -23629,7 +23629,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1216",
     "term": "Limb",
     "meaning": "extremidad",
-    "example": "In her notes, she chose ?Limb? as the most precise wording for the situation.",
+    "example": "Some of the photos have been taken at the risk of life and limb.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23646,7 +23646,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1004",
     "term": "Limelight",
     "meaning": "foco (literal) / foco, primer plano (f) (fame, public notice)",
-    "example": "In her notes, she chose ?Limelight? as the most precise wording for the situation.",
+    "example": "The performer, revelling in the limelight, did not notice the audience's shift in attention.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23663,7 +23663,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1770",
     "term": "Limitless",
     "meaning": "sin límites, ilimitado",
-    "example": "a limitless supply of money",
+    "example": "We have used earth's energy resources as if they were limitless.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -23680,7 +23680,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0996",
     "term": "Limping",
     "meaning": "cojera (limp -> cojear)",
-    "example": "In her notes, she chose ?Limping? as the most precise wording for the situation.",
+    "example": "The last time I saw Tom and Mary, they were limping.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23697,7 +23697,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1433",
     "term": "Lineage",
     "meaning": "linaje, ascendencia, estirpe",
-    "example": "In her notes, she chose ?Lineage? as the most precise wording for the situation.",
+    "example": "The one with the sophisticated beret is actually an aristocrat of ancient lineage.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23714,7 +23714,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1090",
     "term": "Lingering",
     "meaning": "persistente, prolongado",
-    "example": "In her notes, she chose ?Lingering? as the most precise wording for the situation.",
+    "example": "The smell of last night's dinner was still lingering in the kitchen.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23731,7 +23731,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1976",
     "term": "Liquefied",
     "meaning": "licuado (turned into liquid)",
-    "example": "In her notes, she chose ?Liquefied? as the most precise wording for the situation.",
+    "example": "Germany is buying expensive liquefied gas from the US and Saudi Arabia.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -23748,7 +23748,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0907",
     "term": "Litany",
     "meaning": "letanía (religious prayer) / (f) list or recitation",
-    "example": "In her notes, she chose ?Litany? as the most precise wording for the situation.",
+    "example": "A litany of taste tests enabled Hugo to distinguish between a variety of pastes.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23763,9 +23763,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0417",
-    "term": "Literally glued",
-    "meaning": "(engrossed) concentrado,absorto",
-    "example": "In her notes, she chose ?Literally glued? as the most precise wording for the situation.",
+    "term": "Glued to",
+    "meaning": "absorto o totalmente concentrado en algo",
+    "example": "For the entire train journey, he was glued to a biography he had found at the station.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23782,7 +23782,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1052",
     "term": "Litter (v)",
     "meaning": "tapar (clutter, cover)",
-    "example": "In her notes, she chose ?Litter (v)? as the most precise wording for the situation.",
+    "example": "Discarded bottles and food wrappers litter the path after busy summer weekends.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23817,7 +23817,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1711",
     "term": "Livelihood",
     "meaning": "sustento",
-    "example": "he could no longer earn his own livelihood",
+    "example": "The two felt the pressing necessity of earning a livelihood.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -23834,7 +23834,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1505",
     "term": "Livid",
     "meaning": "furioso",
-    "example": "livid bruises",
+    "example": "She was livid when she found out all the lies he'd told her.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23851,7 +23851,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0641",
     "term": "Loath",
     "meaning": "ser reacio (loath to admit it = hate to admit it)",
-    "example": "loath to go on such short notice",
+    "example": "Tom and Mary are loath to share any details of their private life.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23868,7 +23868,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0834",
     "term": "Loaves",
     "meaning": "barras, hogazas de pan (plural of loaf)",
-    "example": "In her notes, she chose ?Loaves? as the most precise wording for the situation.",
+    "example": "Tom bought a couple of loaves of bread on his way home from work.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23885,7 +23885,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0090",
     "term": "Lock down",
     "meaning": "sujetar, atar, confinar, encerrar",
-    "example": "During the discussion, she used the expression ?Lock down? to make her point.",
+    "example": "The prime minister decided to lock down Algiers.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -23902,7 +23902,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1341",
     "term": "Locusts",
     "meaning": "langosta / acacia blanca",
-    "example": "In her notes, she chose ?Locusts? as the most precise wording for the situation.",
+    "example": "Tom was not afraid of locusts and planned to enter the unexplored valley fearlessly.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23936,7 +23936,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0832",
     "term": "Loggerhead",
     "meaning": "necio (foolish person) (anticuado)",
-    "example": "In her notes, she chose ?Loggerhead? as the most precise wording for the situation.",
+    "example": "Those two are always at loggerheads with each other.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -23953,7 +23953,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1744",
     "term": "Lonesome",
     "meaning": "solo, solitario",
-    "example": "lonesome when her husband is away",
+    "example": "Lonesome George, the last remaining tortoise of his kind, died of unknown causes.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -23970,7 +23970,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0817",
     "term": "Long shot",
     "meaning": "improbable (i) (f) (sth unlikely)",
-    "example": "During the discussion, she used the expression ?Long shot? to make her point.",
+    "example": "The man was a huge hulking fellow in corduroys, but he did not look the villain by a long shot.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24006,7 +24006,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0663",
     "term": "Long-fostered",
     "meaning": "acogido durante mucho tiempo",
-    "example": "In her notes, she chose ?Long-fostered? as the most precise wording for the situation.",
+    "example": "The agreement reflects a long-fostered ambition to connect the two regional rail networks.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24040,7 +24040,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0519",
     "term": "Loophole",
     "meaning": "vacío legal",
-    "example": "In her notes, she chose ?Loophole? as the most precise wording for the situation.",
+    "example": "The company exploited a tax loophole that legislators had never intended to create.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24112,7 +24112,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1313",
     "term": "Low-emissions zones",
     "meaning": "zona de bajas emisiones",
-    "example": "In her notes, she chose ?Low-emissions zones? as the most precise wording for the situation.",
+    "example": "Low-emission zones can improve urban air quality when cleaner public transport is available.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24146,7 +24146,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1086",
     "term": "Ludicrous",
     "meaning": "ridículo, absurdo",
-    "example": "it is ludicrous to call a cottage a mansion",
+    "example": "Honestly, why does everyone need to self-identify and self-label themselves? It's downright ludicrous.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24163,7 +24163,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0863",
     "term": "Lukewarm",
     "meaning": "tibio, templado",
-    "example": "gave only lukewarm support to the candidate",
+    "example": "Lukewarm Calpis is sweet, but if you add some ice it becomes a bit sour.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24180,7 +24180,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0836",
     "term": "Lumps",
     "meaning": "masa, multitud",
-    "example": "In her notes, she chose ?Lumps? as the most precise wording for the situation.",
+    "example": "Tom scratched at his teeth and peered at the lumps of plaque between his nails.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24197,7 +24197,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0676",
     "term": "Lure",
     "meaning": "atraer, tentar",
-    "example": "He lured me into temptation",
+    "example": "The mouse was lured into the trap by a big piece of cheese.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24214,7 +24214,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0070",
     "term": "Lure sb/sth into sth",
     "meaning": "hacer que alguien haga algo voluntariamente (lure=cebo)",
-    "example": "During the discussion, she used the expression ?Lure sb? to make her point.",
+    "example": "Fraudsters lured investors into transferring money to accounts they secretly controlled.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -24231,7 +24231,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1799",
     "term": "Magnetise",
     "meaning": "magnetizar, imantar, atraer a",
-    "example": "In her notes, she chose ?Magnetise? as the most precise wording for the situation.",
+    "example": "Her calm authority magnetised the audience before she had reached the end of her first sentence.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -24248,7 +24248,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1790",
     "term": "Maintenance",
     "meaning": "mantenimiento",
-    "example": "unlike champerty, criminal maintenance does not necessarily involve personal profit",
+    "example": "Preventive maintenance is cheaper than replacing machinery after a serious breakdown.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -24265,7 +24265,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0588",
     "term": "Majestic",
     "meaning": "majestuoso, esplendoroso",
-    "example": "In her notes, she chose ?Majestic? as the most precise wording for the situation.",
+    "example": "It's easy to see the area's majestic topography from the cockpit of a helicopter.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24300,7 +24300,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0015",
     "term": "Make a beeline for",
     "meaning": "ir directamente, ir derecho",
-    "example": "During the discussion, she used the expression ?Make a beeline for? to make her point.",
+    "example": "As soon as the doors opened, the children made a beeline for the interactive exhibits.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -24317,7 +24317,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0402",
     "term": "make a decision",
     "meaning": "tomar una decision",
-    "example": "During the discussion, she used the expression ?make a decision? to make her point.",
+    "example": "This guy is really wishy-washy. He couldn't make a decision to save his life.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -24351,7 +24351,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1171",
     "term": "Make a leap",
     "meaning": "saltar",
-    "example": "In her notes, she chose ?Make a leap? as the most precise wording for the situation.",
+    "example": "Moving from laboratory trials to mass production requires a considerable leap in scale.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24368,7 +24368,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0025",
     "term": "Make allowances for",
     "meaning": "considerar, contemplar, tener en cuenta",
-    "example": "During the discussion, she used the expression ?Make allowances for? to make her point.",
+    "example": "In judging his work, you should make allowances for his lack of experience.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -24388,7 +24388,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1518",
     "term": "Make amends",
     "meaning": "hacer las paces, arreglar las cosas",
-    "example": "During the discussion, she used the expression ?Make amends? to make her point.",
+    "example": "Tom tried to make amends by giving back all the money he had stolen.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -24405,7 +24405,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1265",
     "term": "Make my blood boil",
     "meaning": "me hierve la sangre - hacer que alguien se enfade mucho",
-    "example": "During the discussion, she used the expression ?Make my blood boil? to make her point.",
+    "example": "Parents who beat their children really make my blood boil.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24461,7 +24461,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0434",
     "term": "Makeshift",
     "meaning": "improvisado, provisional, temporal",
-    "example": "the rock served as a makeshift hammer",
+    "example": "It's just makeshift; it's not meant to stay that way for ever.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24478,7 +24478,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1330",
     "term": "Makeup",
     "meaning": "constitución, composición",
-    "example": "In her notes, she chose ?Makeup? as the most precise wording for the situation.",
+    "example": "I like her sense of style. Her clothes and makeup always look good.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24495,7 +24495,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0561",
     "term": "Malign",
     "meaning": "calumniar, difamar a (say bad things about)",
-    "example": "In her notes, she chose ?Malign? as the most precise wording for the situation.",
+    "example": "Tom's boss is much-maligned, but Tom's always found him reasonable.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24512,7 +24512,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1509",
     "term": "Malingerer",
     "meaning": "enfermo fingido, falso enfermo",
-    "example": "In her notes, she chose ?Malingerer? as the most precise wording for the situation.",
+    "example": "He's not really ill. He's just a malingerer.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24529,7 +24529,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1229",
     "term": "Managerial",
     "meaning": "directivo, de dirección",
-    "example": "In her notes, she chose ?Managerial? as the most precise wording for the situation.",
+    "example": "My boss has been trumpeting the virtues of yet another runaway bestselling managerial strategy guide.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24546,7 +24546,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1818",
     "term": "Manfully",
     "meaning": "valientemente, resueltamente",
-    "example": "having said her say Peggy manfully shouldered her burden and prepared to break up yet another home",
+    "example": "He manfully admitted the calculation error and offered to present the corrected figures himself.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -24563,7 +24563,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0386",
     "term": "many a film has been filmed",
     "meaning": "mas de una pelicula ha sido rodada",
-    "example": "During the discussion, she used the expression ?many a film has been filmed? to make her point.",
+    "example": "Many a film has been shot in this square, although few viewers would recognise it.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -24580,7 +24580,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0357",
     "term": "Many a time (did she think)",
     "meaning": "Muchas veces a",
-    "example": "During the discussion, she used the expression ?Many a time (did she think)? to make her point.",
+    "example": "Many a time did she consider abandoning the manuscript, yet she always returned to it.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -24648,7 +24648,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1238",
     "term": "Marine habitats",
     "meaning": "hábitats marinos",
-    "example": "In her notes, she chose ?Marine habitats? as the most precise wording for the situation.",
+    "example": "Bottom trawling can destroy fragile marine habitats that take centuries to recover.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24665,7 +24665,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0406",
     "term": "marketing/rebranding/cost-cutting exercise",
     "meaning": "labor",
-    "example": "does the weekly marketing at the supermarket",
+    "example": "The rebranding exercise replaced the bank’s formal image with a friendlier visual identity.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -24682,7 +24682,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1065",
     "term": "Master stroke",
     "meaning": "golpe maestro",
-    "example": "During the discussion, she used the expression ?Master stroke? to make her point.",
+    "example": "Moving the concert outdoors was a master stroke that doubled the audience.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24699,7 +24699,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1393",
     "term": "Mastery",
     "meaning": "maestría, dominio",
-    "example": "In her notes, she chose ?Mastery? as the most precise wording for the situation.",
+    "example": "A good mastery of these idiomatic expressions and skillful use of them in writing essays.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -24719,7 +24719,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0969",
     "term": "Mayhem",
     "meaning": "caos, tumulto (disorder, chaos)",
-    "example": "In her notes, she chose ?Mayhem? as the most precise wording for the situation.",
+    "example": "Tom was arrested for aggravated assault and mayhem.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24736,7 +24736,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1417",
     "term": "Meaningless",
     "meaning": "sin sentido, insignificante",
-    "example": "In her notes, she chose ?Meaningless? as the most precise wording for the situation.",
+    "example": "I think that for many people learning the trigonometric functions is meaningless.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -24756,7 +24756,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1398",
     "term": "Meanness",
     "meaning": "tacañería, codicia, avaricia / maldad, mala intención",
-    "example": "In her notes, she chose ?Meanness? as the most precise wording for the situation.",
+    "example": "Whatever faults he may have, meanness is not one of them.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -24776,7 +24776,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0878",
     "term": "Measles",
     "meaning": "sarampión",
-    "example": "In her notes, she chose ?Measles? as the most precise wording for the situation.",
+    "example": "Love is like the measles; we all have to go through it.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24810,7 +24810,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0584",
     "term": "Mediocre",
     "meaning": "mediocre, ordinario, ni fu ni fa",
-    "example": "there have been good and mediocre and bad artists",
+    "example": "The vast majority of North Americans know English only at a mediocre level.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24845,7 +24845,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0142",
     "term": "Meet in the middle",
     "meaning": "punto medio, llegar a un acuerdo",
-    "example": "During the discussion, she used the expression ?Meet in the middle? to make her point.",
+    "example": "We can meet in the middle of the afternoon.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -24860,9 +24860,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0918",
-    "term": "Meet us halfway",
+    "term": "Meet somebody halfway",
     "meaning": "llegar a un punto intermedio",
-    "example": "In her notes, she chose ?Meet us halfway? as the most precise wording for the situation.",
+    "example": "We can reduce the fee if you meet us halfway by signing a two-year contract.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24879,7 +24879,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0099",
     "term": "Meet with",
     "meaning": "recibir, tener (receive a certain reaction, often negative)",
-    "example": "During the discussion, she used the expression ?Meet with? to make her point.",
+    "example": "Would you meet with us at a time that is convenient for you?",
     "family": "patterns",
     "families": [
       "patterns"
@@ -24913,7 +24913,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0104",
     "term": "Meet with criticism / opposition",
     "meaning": "recibir críticas / oposición",
-    "example": "During the discussion, she used the expression ?Meet with criticism? to make her point.",
+    "example": "The proposal met with fierce opposition from residents whose homes would be demolished.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -24930,7 +24930,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1839",
     "term": "Melodious",
     "meaning": "melodioso",
-    "example": "the melodious song of a meadowlark",
+    "example": "Dorottya's voice, soft and melodious, carries the echoes of Hungarian folklore and ancient tales.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -24947,7 +24947,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1833",
     "term": "Memorabilia",
     "meaning": "objects kept because they are connected with memorable people or events",
-    "example": "In her notes, she chose ?Memorabilia? as the most precise wording for the situation.",
+    "example": "Ziri put the ring away with other memorabilia.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -24981,7 +24981,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0714",
     "term": "Merely",
     "meaning": "simplemente",
-    "example": "I was merely asking",
+    "example": "You should never look down on a person merely because he is poor.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -24998,7 +24998,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1889",
     "term": "Merger",
     "meaning": "fusión, unión, incorporación",
-    "example": "In her notes, she chose ?Merger? as the most precise wording for the situation.",
+    "example": "The firm has added 25 new associates to work on mergers and other deals.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -25015,7 +25015,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1862",
     "term": "Meritorious",
     "meaning": "meritorio, merecido",
-    "example": "a lifetime of meritorious service",
+    "example": "To do good to others is a meritorious act; to hurt others is a sin.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -25032,7 +25032,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1876",
     "term": "Meteoric",
     "meaning": "meteórico",
-    "example": "a meteoric rise to fame",
+    "example": "Tebboune has recently seen a meteoric rise in popularity.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -25049,7 +25049,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1642",
     "term": "Methodically",
     "meaning": "metódicamente",
-    "example": "she worked methodically",
+    "example": "I excavated the fossil carefully and methodically so it would arrive elsewhere intact.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -25066,7 +25066,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1124",
     "term": "Metronomically",
     "meaning": "metronomicamente (mechanically regular)",
-    "example": "In her notes, she chose ?Metronomically? as the most precise wording for the situation.",
+    "example": "The lighthouse beam swept metronomically across the harbour every twelve seconds.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25083,7 +25083,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0186",
     "term": "Mike up",
     "meaning": "microfonar",
-    "example": "During the discussion, she used the expression ?Mike up? to make her point.",
+    "example": "A technician miked up each panellist before the live broadcast began.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -25100,7 +25100,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1911",
     "term": "Mileage",
     "meaning": "millaje, kilometraje",
-    "example": "In her notes, she chose ?Mileage? as the most precise wording for the situation.",
+    "example": "A four-by-four will usually have much worse gas mileage than a compact.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -25117,7 +25117,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1163",
     "term": "Milestone",
     "meaning": "hito, meta (in life) / contador, cuentakilómetros",
-    "example": "In her notes, she chose ?Milestone? as the most precise wording for the situation.",
+    "example": "For many African-American movie fans, the film “Black Panther,” released this year, was a milestone.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25134,7 +25134,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1159",
     "term": "Mimic",
     "meaning": "imitar",
-    "example": "the mimic warfare of the opera stage",
+    "example": "Vaccines mimic an infection, which causes the body's immune system to mount a defense.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25151,7 +25151,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1387",
     "term": "Mimicry",
     "meaning": "imitación",
-    "example": "In her notes, she chose ?Mimicry? as the most precise wording for the situation.",
+    "example": "How do I know your ability to speak isn't just an advanced form of mimicry?",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -25171,7 +25171,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0642",
     "term": "Mindset",
     "meaning": "mentalidad, actitud",
-    "example": "In her notes, she chose ?Mindset? as the most precise wording for the situation.",
+    "example": "Everything changes very quickly, which calls for a new mindset among today's employees.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25188,7 +25188,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1176",
     "term": "Mingle",
     "meaning": "relacionarse, mezclarse",
-    "example": "In her notes, she chose ?Mingle? as the most precise wording for the situation.",
+    "example": "Never do we taste perfect joy: our happiest successes are mingled with sadness.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25224,7 +25224,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1257",
     "term": "Minimise",
     "meaning": "minimizar, reducir",
-    "example": "In her notes, she chose ?Minimise? as the most precise wording for the situation.",
+    "example": "Is there some way we can minimise the risk?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25241,7 +25241,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1104",
     "term": "Mischievous",
     "meaning": "travieso, picaro / malvado, malo, travieso / dañino",
-    "example": "mischievous rumors and falsehoods",
+    "example": "When poverty shows itself, even mischievous boys understand what it means.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25275,7 +25275,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1686",
     "term": "Misled",
     "meaning": "engañado, confundido, mal informado",
-    "example": "In her notes, she chose ?Misled? as the most precise wording for the situation.",
+    "example": "The two-fold race Anchises understands, / the double sires, and owns himself misled / by modern error 'twixt two ancient lands.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -25292,7 +25292,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1008",
     "term": "Mite",
     "meaning": "ácaro",
-    "example": "In her notes, she chose ?Mite? as the most precise wording for the situation.",
+    "example": "Dust mites feed on the flakes of skin shed daily by people and pets.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25309,7 +25309,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1443",
     "term": "Mob",
     "meaning": "horda (violent crowd)",
-    "example": "In her notes, she chose ?Mob? as the most precise wording for the situation.",
+    "example": "The show's about a New Jersey mob boss who's in psychotherapy.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25326,7 +25326,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1356",
     "term": "Moist",
     "meaning": "húmedo",
-    "example": "a moist breeze",
+    "example": "When rain's fallen and the soil is moist, it becomes easier to pull out weeds.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25343,7 +25343,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1355",
     "term": "Moisture",
     "meaning": "humedad",
-    "example": "In her notes, she chose ?Moisture? as the most precise wording for the situation.",
+    "example": "In order to grow well, these plants need soil that does not contain too much moisture.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25360,7 +25360,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1392",
     "term": "Momentarily",
     "meaning": "momentáneamente, temporalmente",
-    "example": "In her notes, she chose ?Momentarily? as the most precise wording for the situation.",
+    "example": "She was so pretty that I was momentarily paralyzed by the sight of her.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -25380,7 +25380,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0785",
     "term": "Momentous",
     "meaning": "trascendental, crucial, muy importante (moment)",
-    "example": "a momentous event",
+    "example": "The falling of the Berlin Wall was truly a momentous occasion.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25397,7 +25397,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0219",
     "term": "Money for nothing",
     "meaning": "recibir dinero sin trabajar o hacer esfuerzo",
-    "example": "During the discussion, she used the expression ?Money for nothing? to make her point.",
+    "example": "The advert promised money for nothing, but the effortless returns turned out to be a scam.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -25452,7 +25452,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1427",
     "term": "Monstrous",
     "meaning": "monstruoso, horrendo, horroroso",
-    "example": "twisted into monstrous shapes",
+    "example": "The evil spirit lived in a terrifying world full of bizarre and monstrous creatures.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -25472,7 +25472,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0515",
     "term": "Moonlight",
     "meaning": "tener otro trabajo (work a second job)",
-    "example": "The law student is moonlighting as a taxi driver",
+    "example": "We respond to the delicate beauty of the cherry blossoms in the spring moonlight.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25489,7 +25489,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0255",
     "term": "More to sth/sb than meets the eye",
     "meaning": "no ser lo que parece a simple vista",
-    "example": "During the discussion, she used the expression ?More to sth? to make her point.",
+    "example": "The quiet intern solved the fault overnight; clearly, there is more to her than meets the eye.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -25506,7 +25506,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0592",
     "term": "Morsel",
     "meaning": "bocado, trozo (piece of food) - dato, referencia (figurative - piece of",
-    "example": "In her notes, she chose ?Morsel? as the most precise wording for the situation.",
+    "example": "A dry morsel with a quiet house, is better than plenty of provision with grumbling.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25540,7 +25540,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0671",
     "term": "mould",
     "meaning": "moho",
-    "example": "In her notes, she chose ?mould? as the most precise wording for the situation.",
+    "example": "The aluminium is melted here and then poured into the moulds there.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25595,7 +25595,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1219",
     "term": "Mouthy",
     "meaning": "bocón slang (opinionated, rude)",
-    "example": "In her notes, she chose ?Mouthy? as the most precise wording for the situation.",
+    "example": "The comedian’s mouthy stage persona is quite unlike her reserved manner offstage.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25612,7 +25612,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1667",
     "term": "Movable",
     "meaning": "movible",
-    "example": "In her notes, she chose ?Movable? as the most precise wording for the situation.",
+    "example": "Movable type was invented in 11th-century China.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -25650,7 +25650,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0555",
     "term": "Mugshot",
     "meaning": "foto policial",
-    "example": "In her notes, she chose ?Mugshot? as the most precise wording for the situation.",
+    "example": "Sami saw Layla's mugshot and recognized her.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25684,7 +25684,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0235",
     "term": "Mull something over",
     "meaning": "reflexionar sobre algo",
-    "example": "During the discussion, she used the expression ?Mull something over? to make her point.",
+    "example": "This gives the subconscious mind a chance to mull over the original problem.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -25701,7 +25701,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0224",
     "term": "Mulling over",
     "meaning": "reflexionar sobre algo (ponder, consider)",
-    "example": "During the discussion, she used the expression ?Mulling over? to make her point.",
+    "example": "Marcus spent a long time mulling over the idea of buying himself a new motorbike.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -25718,7 +25718,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0803",
     "term": "Murky",
     "meaning": "turbio (liquid, glass: cloudy)",
-    "example": "a murky dungeon",
+    "example": "We could barely see the riverbed through the murky floodwater.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25735,7 +25735,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1368",
     "term": "Muscular",
     "meaning": "musculoso, cachas",
-    "example": "a muscular boxer",
+    "example": "He would be as muscular as his brother if he had worked out like him.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -25755,7 +25755,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0495",
     "term": "must-see",
     "meaning": "que hay que ver, imperdible, obligatorio",
-    "example": "In her notes, she chose ?must-see? as the most precise wording for the situation.",
+    "example": "Visiting Mont-Saint-Michel is the best way to celebrate Christmas, since it's a must-see destination for big celebrations.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25772,7 +25772,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1226",
     "term": "Muster",
     "meaning": "armarse de, juntar, reunir",
-    "example": "In her notes, she chose ?Muster? as the most precise wording for the situation.",
+    "example": "Tom finally mustered up the courage to ask Mary to go out with him.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25874,7 +25874,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1936",
     "term": "Mystified",
     "meaning": "desconcertado, perplejo",
-    "example": "In her notes, she chose ?Mystified? as the most precise wording for the situation.",
+    "example": "The fine grammar points behind the izāfa have mystified the world to this day.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -25912,7 +25912,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0883",
     "term": "Namely",
     "meaning": "específicamente, concretamente",
-    "example": "In her notes, she chose ?Namely? as the most precise wording for the situation.",
+    "example": "There are two types of pianos, namely the grand piano and the upright piano.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -25929,7 +25929,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0309",
     "term": "Narrow down",
     "meaning": "limitar, reducir",
-    "example": "During the discussion, she used the expression ?Narrow down? to make her point.",
+    "example": "Can we narrow down the ocean area where floating debris is supposed to be?",
     "family": "patterns",
     "families": [
       "patterns"
@@ -25981,7 +25981,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1824",
     "term": "Nationalised",
     "meaning": "brought under the ownership or control of the state",
-    "example": "In her notes, she chose ?Nationalised? as the most precise wording for the situation.",
+    "example": "The railway was nationalised after repeated failures by private operators.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -26015,7 +26015,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0643",
     "term": "Neglect",
     "meaning": "abandonar, descuidar, desatender",
-    "example": "In her notes, she chose ?Neglect? as the most precise wording for the situation.",
+    "example": "Thanks to television, boys and girls are apt to neglect reading books.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26032,7 +26032,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1838",
     "term": "Negotiable",
     "meaning": "negociable",
-    "example": "negotiable bonds",
+    "example": "If you want to learn English, studying English every day is non-negotiable.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -26066,7 +26066,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1081",
     "term": "Nettle",
     "meaning": "ortigar / irritar, molestar",
-    "example": "In her notes, she chose ?Nettle? as the most precise wording for the situation.",
+    "example": "It is better to be stung by a nettle than pricked by a rose.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26083,7 +26083,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1083",
     "term": "Neutered",
     "meaning": "castrado",
-    "example": "In her notes, she chose ?Neutered? as the most precise wording for the situation.",
+    "example": "I spent fifty dollars to get my dog neutered.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26100,7 +26100,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0809",
     "term": "Never the twains shall meet",
     "meaning": "los dos nunca se encontrarán / juntarán",
-    "example": "During the discussion, she used the expression ?Never the twains shall meet? to make her point.",
+    "example": "One approach values speed and the other meticulous accuracy; never the twain shall meet.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26117,7 +26117,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1653",
     "term": "Nevertheless",
     "meaning": "sin embargo",
-    "example": "while we disliked each other, nevertheless we agreed",
+    "example": "Nevertheless, devout conversation on spiritual things helps no little with spiritual progress.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -26134,7 +26134,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0941",
     "term": "Nibble",
     "meaning": "mordisquito, pedacito, trocito (small bite) / aperitivo, tentempié (small",
-    "example": "She never eats a full meal--she just nibbles",
+    "example": "The true danger is when liberty is nibbled away, for expedients, and by parts.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26151,7 +26151,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1272",
     "term": "Nigh",
     "meaning": "cerca, cercano (near)",
-    "example": "talked for nigh onto 2 hours",
+    "example": "In Berlin it's nigh on evening, but the thermometer still shows twenty-seven degrees.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26168,7 +26168,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1687",
     "term": "Nightmarish",
     "meaning": "catastrófico, de pesadilla, horrible, horripilante",
-    "example": "In her notes, she chose ?Nightmarish? as the most precise wording for the situation.",
+    "example": "The nightmarish journey involved two cancelled trains, a lost suitcase and a flooded hotel.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -26185,7 +26185,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0672",
     "term": "nip",
     "meaning": "morder, mordisquear",
-    "example": "nip off the flowers",
+    "example": "I'm going to nip into the post office on the way home.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26257,7 +26257,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1462",
     "term": "Nomadic",
     "meaning": "nómada",
-    "example": "the nomadic habits of the Bedouins",
+    "example": "The Tuaregs are Berber nomadic tribes that live in the Sahara Desert.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26274,7 +26274,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1654",
     "term": "Nonetheless",
     "meaning": "no obstante, sin embargo",
-    "example": "In her notes, she chose ?Nonetheless? as the most precise wording for the situation.",
+    "example": "He doesn't even have a sesame seed at home, but twirls his mustache nonetheless.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -26291,7 +26291,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1450",
     "term": "Nonsensical",
     "meaning": "sin sentido / absurdo, ridículo",
-    "example": "In her notes, she chose ?Nonsensical? as the most precise wording for the situation.",
+    "example": "Tom seems like a liberal, but did you hear his nonsensical opposition to electric vehicles?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26308,7 +26308,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0910",
     "term": "Nook",
     "meaning": "rincón, recoveco, escondrijo, hueco",
-    "example": "In her notes, she chose ?Nook? as the most precise wording for the situation.",
+    "example": "Tom searched every nook and cranny of the house looking for his wallet.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26325,7 +26325,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0229",
     "term": "Nose around",
     "meaning": "meter las narices, husmear, curiosear",
-    "example": "During the discussion, she used the expression ?Nose around? to make her point.",
+    "example": "While Mary was in the bathroom, Tom took the chance to nose around in her computer.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -26397,7 +26397,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0347",
     "term": "Not get a wink of sleep",
     "meaning": "no pegar ojo",
-    "example": "During the discussion, she used the expression ?Not get a wink of sleep? to make her point.",
+    "example": "Last night I did not get a wink of sleep.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -26432,7 +26432,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0358",
     "term": "Not until later (did she think)",
     "meaning": "No hasta despues",
-    "example": "During the discussion, she used the expression ?Not until later (did she think)? to make her point.",
+    "example": "Not until later did she realise that the unsigned note had been intended as a warning.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -26449,7 +26449,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1793",
     "term": "Notoriety",
     "meaning": "mala fama, mala reputación",
-    "example": "In her notes, she chose ?Notoriety? as the most precise wording for the situation.",
+    "example": "I recalled her as an energetic, autocratic personality, somewhat inclined to charitable and social notoriety.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -26466,7 +26466,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1463",
     "term": "Nourishment",
     "meaning": "alimento, comida",
-    "example": "her nourishment of the orphans saved many lives",
+    "example": "The principal cause of death in refugee camps is the lack of nourishment.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26483,7 +26483,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1605",
     "term": "Nowhere near as much",
     "meaning": "not even close, ni de lejos tan.",
-    "example": "Reading a thriller is nowhere near as much fun if you already know the ending",
+    "example": "The sequel is nowhere near as engaging as the tightly plotted original.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -26500,7 +26500,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0813",
     "term": "Nuance",
     "meaning": "matiz, tonalidad (subtle differente)",
-    "example": "without understanding the finer nuances you can't enjoy the humor",
+    "example": "Mr Jones is very sensitive to the nuances of English and American usage.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26517,7 +26517,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1022",
     "term": "Nugget",
     "meaning": "figurative (piece of advice, wisdom)",
-    "example": "In her notes, she chose ?Nugget? as the most precise wording for the situation.",
+    "example": "I went to the supermarket with Leanne and bought chicken nuggets.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26534,7 +26534,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1855",
     "term": "Objectivity",
     "meaning": "objetividad",
-    "example": "In her notes, she chose ?Objectivity? as the most precise wording for the situation.",
+    "example": "The government has questioned the objectivity of one team member and has called for him to be replaced.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -26551,7 +26551,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1456",
     "term": "Oblivion",
     "meaning": "olvido",
-    "example": "he sought the great oblivion of sleep",
+    "example": "Finishing second in the Olympics gets you silver. Finishing second in politics gets you oblivion.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26568,7 +26568,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1455",
     "term": "Oblivious",
     "meaning": "ajeno, sin saber, sin darse cuenta (unaware)",
-    "example": "oblivious old age",
+    "example": "My father is oblivious to the emotional pain his abuse caused me.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26585,7 +26585,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0812",
     "term": "Obnoxious",
     "meaning": "odioso, detestable (person: unpleasant)",
-    "example": "In her notes, she chose ?Obnoxious? as the most precise wording for the situation.",
+    "example": "Tom was drunk and obnoxious at the party and started a brawl.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26602,7 +26602,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1868",
     "term": "Observant",
     "meaning": "observador",
-    "example": "observant of the speed limit",
+    "example": "If you want to be a newspaperman, you have to be observant.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -26619,7 +26619,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1881",
     "term": "Obstinacy",
     "meaning": "obstinación",
-    "example": "In her notes, she chose ?Obstinacy? as the most precise wording for the situation.",
+    "example": "Miss Wang has a trace of obstinacy in her, but she is still a good student.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -26634,9 +26634,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-1893",
-    "term": "Ocurrence",
+    "term": "Occurrence",
     "meaning": "caso, incidente / suceso, acontecimiento, hecho",
-    "example": "In her notes, she chose ?Ocurrence? as the most precise wording for the situation.",
+    "example": "Power cuts are a frequent occurrence in villages beyond the main transmission grid.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -26653,7 +26653,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1898",
     "term": "Oddity",
     "meaning": "rareza, singularidad, peculiaridad",
-    "example": "In her notes, she chose ?Oddity? as the most precise wording for the situation.",
+    "example": "I'll grant you that it's one of the oddities of the French language and that even I get fooled regularly.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -26670,7 +26670,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1472",
     "term": "Odourless",
     "meaning": "sin olor",
-    "example": "In her notes, she chose ?Odourless? as the most precise wording for the situation.",
+    "example": "Mary ordered that the scented bin bags be replaced at once by odourless ones.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26704,7 +26704,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0031",
     "term": "Of its own accord",
     "meaning": "automáticamente (your->por voluntad propia)",
-    "example": "During the discussion, she used the expression ?Of its own accord? to make her point.",
+    "example": "It'll go away of its own accord after a fortnight.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -26724,7 +26724,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0239",
     "term": "Off the wall",
     "meaning": "raro, extraño (unusual, bizarre), disparatado",
-    "example": "During the discussion, she used the expression ?Off the wall? to make her point.",
+    "example": "Herzl pushed off the wall with his shoulder and turned to face the elevator.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -26741,7 +26741,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1064",
     "term": "Off-putting",
     "meaning": "poco atractivo, asqueroso, que repele",
-    "example": "The trappings of upper-class life are off-putting and sterile",
+    "example": "Some people find the greasiness of his hair extremely off-putting.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26758,7 +26758,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1237",
     "term": "Offshore wind farms",
     "meaning": "parques eólicos en alta mar",
-    "example": "In her notes, she chose ?Offshore wind farms? as the most precise wording for the situation.",
+    "example": "Offshore wind farms generate more consistently than many land-based turbines.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26792,7 +26792,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0535",
     "term": "Offspring",
     "meaning": "hijos, retoños, crías",
-    "example": "In her notes, she chose ?Offspring? as the most precise wording for the situation.",
+    "example": "What will become of our offspring if a nuclear war breaks out?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -26809,7 +26809,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1845",
     "term": "Omen",
     "meaning": "presagio, augurio",
-    "example": "In her notes, she chose ?Omen? as the most precise wording for the situation.",
+    "example": "It was the midnight of Friday, 13th; nothing of ill omen was apparent.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -26824,9 +26824,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-1846",
-    "term": "Ominuous",
+    "term": "Ominous",
     "meaning": "amenazante",
-    "example": "In her notes, she chose ?Ominuous? as the most precise wording for the situation.",
+    "example": "An ominous silence fell over the control room as every monitor went blank.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -26860,7 +26860,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0247",
     "term": "On a whim",
     "meaning": "por impulso, por capricho",
-    "example": "During the discussion, she used the expression ?On a whim? to make her point.",
+    "example": "Once you decide to enter a profession, you can't change your mind on a whim.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -26877,7 +26877,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0262",
     "term": "On cue",
     "meaning": "en el momento justo",
-    "example": "During the discussion, she used the expression ?On cue? to make her point.",
+    "example": "\"I've never really been happy,\" Tom admitted. As if on cue, somewhere in the background a baby started to cry.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -26932,7 +26932,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0119",
     "term": "On par with",
     "meaning": "a la par de (equivalent)",
-    "example": "During the discussion, she used the expression ?On par with? to make her point.",
+    "example": "The UAE's per capita GDP is on par with those of leading West European nations.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -26949,7 +26949,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0297",
     "term": "On reflection",
     "meaning": "pensándolo mejor",
-    "example": "During the discussion, she used the expression ?On reflection? to make her point.",
+    "example": "On reflection, he realized he was wrong.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -26966,7 +26966,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0294",
     "term": "On second thoughts",
     "meaning": "pensándolo bien, reconsiderándolo",
-    "example": "During the discussion, she used the expression ?On second thoughts? to make her point.",
+    "example": "On second thoughts, I’ll take the earlier train in case the roads are flooded.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -27001,7 +27001,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0035",
     "term": "On the ball",
     "meaning": "estar alerta",
-    "example": "During the discussion, she used the expression ?On the ball? to make her point.",
+    "example": "Joseph can't play soccer. He trips on the ball and mixes everything up.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -27021,7 +27021,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0038",
     "term": "On the blink",
     "meaning": "Estropeado, roto (slang - used for electrical equipment)",
-    "example": "During the discussion, she used the expression ?On the blink? to make her point.",
+    "example": "It's minus six outside and the heating's on the blink.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -27041,7 +27041,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0091",
     "term": "On the brink of",
     "meaning": "a punto de (very close to sth occurring) (=about to do sth)",
-    "example": "During the discussion, she used the expression ?On the brink of? to make her point.",
+    "example": "What we are seeing now is a country teetering on the brink of civil war.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -27058,7 +27058,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0351",
     "term": "On the face of it",
     "meaning": "a primera vista, a juzgar por las apariencias",
-    "example": "on the face of it the problem seems minor",
+    "example": "In my workplace is a woman who's very strong willed, on the face of it.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -27092,7 +27092,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0361",
     "term": "On the line",
     "meaning": "at risk",
-    "example": "During the discussion, she used the expression ?On the line? to make her point.",
+    "example": "I hope you realize that I'm putting my reputation on the line by helping you.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -27109,7 +27109,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0122",
     "term": "On the lookout for",
     "meaning": "estar buscando a, estar atento a, pendiente de",
-    "example": "During the discussion, she used the expression ?On the lookout for? to make her point.",
+    "example": "Matthew is always on the lookout for new and interesting recipes to try.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -27166,7 +27166,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0169",
     "term": "On the same wavelength",
     "meaning": "en la misma onda (f) (thinking similarly to sb)",
-    "example": "During the discussion, she used the expression ?On the same wavelength? to make her point.",
+    "example": "I guess that Tom and I aren't on the same wavelength.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -27202,7 +27202,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0073",
     "term": "On the verge of",
     "meaning": "al borde de, a punto de (about to)",
-    "example": "During the discussion, she used the expression ?On the verge of? to make her point.",
+    "example": "Our firm is on the verge of bankruptcy, I'm ashamed to say.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -27219,7 +27219,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1050",
     "term": "Onslaught",
     "meaning": "ataque violento, arremetida",
-    "example": "In her notes, she chose ?Onslaught? as the most precise wording for the situation.",
+    "example": "My email feed is a non stop onslaught of programming and language learning content.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27236,7 +27236,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1658",
     "term": "Onward",
     "meaning": "adelante",
-    "example": "moved onward into the forest",
+    "example": "Onward it came, smooth-sliding on the ground, / an, beetling, o'er the midmost city frowned.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -27253,7 +27253,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1927",
     "term": "Operative",
     "meaning": "operativo",
-    "example": "In her notes, she chose ?Operative? as the most precise wording for the situation.",
+    "example": "Mary's post-operative abdominal pain was caused by the surgeon leaving a surgical instrument inside her.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -27270,7 +27270,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1477",
     "term": "Operator",
     "meaning": "operador, operario",
-    "example": "In her notes, she chose ?Operator? as the most precise wording for the situation.",
+    "example": "The telephone operator asked the caller to hold on until a connection was made.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27287,7 +27287,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0396",
     "term": "opposition from environmental groups",
     "meaning": "oposicion de",
-    "example": "During the discussion, she used the expression ?opposition from environmental groups? to make her point.",
+    "example": "Opposition from environmental groups prompted the developer to withdraw its original plans.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -27304,7 +27304,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0638",
     "term": "Ordeal",
     "meaning": "calvario, experiencia dura o difícil",
-    "example": "In her notes, she chose ?Ordeal? as the most precise wording for the situation.",
+    "example": "After ten days of ingesting poison, Fadil's horrible ordeal finally ended with his death.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27357,7 +27357,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1647",
     "term": "Otherwise",
     "meaning": "si no, de lo contrario, de otra manera",
-    "example": "she thought otherwise",
+    "example": "Even if you know the truth, you had better pretend otherwise at present.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -27393,7 +27393,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0029",
     "term": "Out and about",
     "meaning": "de aqui para alla. Se usa muchísimo después de una enfermedad: She's out and about after her operation",
-    "example": "During the discussion, she used the expression ?Out and about? to make her point.",
+    "example": "Whenever Tom and Mary see each other out and about, they always stop to have a chat.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -27413,7 +27413,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0041",
     "term": "Out of bounds",
     "meaning": "fuera del límite (prohibido)",
-    "example": "During the discussion, she used the expression ?Out of bounds? to make her point.",
+    "example": "The ball rolled harmlessly out of bounds.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -27526,7 +27526,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0267",
     "term": "Out of the woods",
     "meaning": "fuera de peligro",
-    "example": "During the discussion, she used the expression ?Out of the woods? to make her point.",
+    "example": "Tom is beginning to recover, but he's not out of the woods yet.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -27543,7 +27543,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0276",
     "term": "Out of touch",
     "meaning": "desactualizado, desfasado / no estar en contacto",
-    "example": "During the discussion, she used the expression ?Out of touch? to make her point.",
+    "example": "Tom and I have been out of touch with each other for a long time.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -27560,7 +27560,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0251",
     "term": "Out of wedlock",
     "meaning": "extramatrimonial / bastardo",
-    "example": "he was born out of wedlock",
+    "example": "Having sex out of wedlock is forbidden in Islam.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -27577,7 +27577,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0542",
     "term": "Outlandish",
     "meaning": "excéntrico, extravagante, raro, extraño",
-    "example": "the outlandish clothes of teenagers",
+    "example": "This is the most outlandish claim I've heard in a long time.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27594,7 +27594,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0868",
     "term": "Outlay",
     "meaning": "gasto, desembolso",
-    "example": "In her notes, she chose ?Outlay? as the most precise wording for the situation.",
+    "example": "The union is prepared to outlay their entire strike fund in these negotiations.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27611,7 +27611,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0665",
     "term": "Outlet",
     "meaning": "algo para desahogarse, válvula de escape",
-    "example": "she had no other outlet for her feelings",
+    "example": "The small retail outlet is only a front for a much larger entity.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27628,7 +27628,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1493",
     "term": "Outnumber",
     "meaning": "superar en cantidad",
-    "example": "In her notes, she chose ?Outnumber? as the most precise wording for the situation.",
+    "example": "In fact, in both San Francisco and New York, wealthy renters outnumber well-to-do buyers.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27645,7 +27645,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1895",
     "term": "Outraged",
     "meaning": "enojado, disgustado, enfadado, ofendido, indignado",
-    "example": "a look of outraged disbelief",
+    "example": "I was outraged at the way she was treated.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -27662,7 +27662,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0732",
     "term": "Outright",
     "meaning": "completamente, totalmente, abiertamente, descaradamente,",
-    "example": "he was killed outright",
+    "example": "But the IOC is also refusing to consider the possibility of outright cancelling the Games.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27679,7 +27679,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0795",
     "term": "Outset",
     "meaning": "comienzo, inicio, principio",
-    "example": "In her notes, she chose ?Outset? as the most precise wording for the situation.",
+    "example": "The new teacher hit it off with the pupils from the outset.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27696,7 +27696,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1220",
     "term": "Outstayed",
     "meaning": "durar más que, estar más tiempo que, aguantar más que (stay longer",
-    "example": "In her notes, she chose ?Outstayed? as the most precise wording for the situation.",
+    "example": "\"We haven't outstayed our welcome, I hope?\" \"No, it's fine. We always go to bed this late.\"",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27713,7 +27713,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1258",
     "term": "Overcome",
     "meaning": "superar, vencer",
-    "example": "In her notes, she chose ?Overcome? as the most precise wording for the situation.",
+    "example": "How to overcome the high value of the yen is a big problem.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27730,7 +27730,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0786",
     "term": "Overreliance",
     "meaning": "sobredependencia",
-    "example": "In her notes, she chose ?Overreliance? as the most precise wording for the situation.",
+    "example": "Algeria's overreliance on oil and gas led it to an economic crisis.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27747,7 +27747,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1232",
     "term": "Overriding",
     "meaning": "principal, predominante, primordial / gran mayoría",
-    "example": "In her notes, she chose ?Overriding? as the most precise wording for the situation.",
+    "example": "The overriding priority is to evacuate patients safely, even if some equipment is left behind.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27764,7 +27764,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0489",
     "term": "overseas",
     "meaning": "extranjero, fuera del país (across the sea)",
-    "example": "In her notes, she chose ?overseas? as the most precise wording for the situation.",
+    "example": "By studying overseas, students can come into contact with other manners and customs.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27798,7 +27798,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0826",
     "term": "Overt",
     "meaning": "evidente, abierto (not concealed)",
-    "example": "an overt lie",
+    "example": "The speaker believes that overt expression of feeling for others helps people tap into their own repressed emotions.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27815,7 +27815,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0933",
     "term": "Overtly",
     "meaning": "abiertamente (openly)",
-    "example": "he did it overtly",
+    "example": "Matoub's songs were overtly critical of the Algerian government of the 1980s and the 1990s.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27832,7 +27832,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1021",
     "term": "Overzealous",
     "meaning": "demasiado entusiasta, apasionado (too enthusiastic)",
-    "example": "In her notes, she chose ?Overzealous? as the most precise wording for the situation.",
+    "example": "I hope you're not going to break anything in an overzealous attempt to clean the house.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27849,7 +27849,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1129",
     "term": "Pace",
     "meaning": "ritmo / paso",
-    "example": "Pace your efforts",
+    "example": "If you need a change of pace, why don't you come for a visit?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27885,7 +27885,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1114",
     "term": "Painstakingly",
     "meaning": "meticulosamente, cuidadosamente, exhaustivamente",
-    "example": "it is almost a waste of time painstakingly to learn the routines of selling",
+    "example": "Do you intend to throw away in one instant what our family has painstakingly built up?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27902,7 +27902,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1951",
     "term": "Palatial",
     "meaning": "palaciego, de palacio",
-    "example": "palatial furnishings",
+    "example": "The centre of the Galactic Empire was a palatial garden planet.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -27953,7 +27953,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0150",
     "term": "Pangs of guilt",
     "meaning": "arrebatos de culpabilidad",
-    "example": "During the discussion, she used the expression ?Pangs of guilt? to make her point.",
+    "example": "Pangs of guilt kept him awake after he took credit for his assistant’s idea.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -27970,7 +27970,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1003",
     "term": "Panic-stricken",
     "meaning": "muerto de miedo, asustado",
-    "example": "In her notes, she chose ?Panic-stricken? as the most precise wording for the situation.",
+    "example": "Liisa and Markku were panic-stricken and took to their heels.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -27987,7 +27987,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1953",
     "term": "Paralytic",
     "meaning": "paralítico",
-    "example": "In her notes, she chose ?Paralytic? as the most precise wording for the situation.",
+    "example": "Researchers have discovered the strongest evidence yet linking the Zika virus to the paralytic illness Guillain-Barre syndrome.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28004,7 +28004,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0993",
     "term": "Paramount",
     "meaning": "primordial, principal, mayor, fundamental, crucial",
-    "example": "In her notes, she chose ?Paramount? as the most precise wording for the situation.",
+    "example": "The paramount question of the day is not political, is not religious, but is economic.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -28021,7 +28021,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1960",
     "term": "Paranoiac",
     "meaning": "paranoico",
-    "example": "In her notes, she chose ?Paranoiac? as the most precise wording for the situation.",
+    "example": "His paranoiac conviction that colleagues were monitoring him made ordinary meetings unbearable.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28038,7 +28038,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1968",
     "term": "Parenthetical",
     "meaning": "entre paréntesis, explicativo",
-    "example": "parenthetical remarks",
+    "example": "His style (if you were to call it that) was excessively (though I run the risk of hypocrisy) parenthetical (pardon the pun).",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28055,7 +28055,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0568",
     "term": "Part and parcel",
     "meaning": "parte integral de (f)(integral part of whole)",
-    "example": "During the discussion, she used the expression ?Part and parcel? to make her point.",
+    "example": "I think being constantly tired is part and parcel of being a student.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -28072,7 +28072,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1735",
     "term": "Passage",
     "meaning": "paso, transcurso / texto fragmento",
-    "example": "In her notes, she chose ?Passage? as the most precise wording for the situation.",
+    "example": "The following passage is a quotation from a well-known fable.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28089,7 +28089,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1759",
     "term": "Passivity",
     "meaning": "pasividad",
-    "example": "In her notes, she chose ?Passivity? as the most precise wording for the situation.",
+    "example": "The difficulty of a task is no reason for passivity and doing nothing.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28106,7 +28106,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1789",
     "term": "Paternity",
     "meaning": "paternidad",
-    "example": "In her notes, she chose ?Paternity? as the most precise wording for the situation.",
+    "example": "We should guarantee paid maternity leave and paid paternity leave, too. That’s how you value families.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28123,7 +28123,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1425",
     "term": "Pathetically",
     "meaning": "patéticamente, penosamente",
-    "example": "they had pathetically little money",
+    "example": "We evolved pathetically from the fucking bacteria we once were!",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -28143,7 +28143,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1426",
     "term": "Pathos",
     "meaning": "patetismo (pitty, compasión)",
-    "example": "In her notes, she chose ?Pathos? as the most precise wording for the situation.",
+    "example": "When I was younger, I liked a lot of pathos in music.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -28163,7 +28163,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1441",
     "term": "Patronage",
     "meaning": "apoyo, patrocinio / asistencia / clientela",
-    "example": "In her notes, she chose ?Patronage? as the most precise wording for the situation.",
+    "example": "Isamu Kobayashi received the patronage of Rohan Koda.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -28197,7 +28197,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1031",
     "term": "Pay a compliment",
     "meaning": "hacer un cumplido",
-    "example": "In her notes, she chose ?Pay a compliment? as the most precise wording for the situation.",
+    "example": "Paying someone a sincere compliment can ease the tension at the start of an interview.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -28214,7 +28214,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1032",
     "term": "pay dividends",
     "meaning": "to bring you a lot of benefit",
-    "example": "Thorough lesson planning always pays dividends.",
+    "example": "Investing time in clear documentation pays dividends when a new colleague joins.",
     "family": "patterns",
     "families": [
       "vocabulary",
@@ -28254,7 +28254,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1034",
     "term": "Pay lip service",
     "meaning": "hablar de boquilla",
-    "example": "In her notes, she chose ?Pay lip service? as the most precise wording for the situation.",
+    "example": "For decades, Algeria did nothing but pay lip service to economic diversification.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -28344,7 +28344,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0209",
     "term": "Pay tribute to",
     "meaning": "alabar, rendir tributo a",
-    "example": "During the discussion, she used the expression ?Pay tribute to? to make her point.",
+    "example": "I pay tribute to my mother who left us a year ago.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -28418,7 +28418,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1091",
     "term": "Pay-off",
     "meaning": "ventaja, recompensa, beneficio",
-    "example": "In her notes, she chose ?Pay-off? as the most precise wording for the situation.",
+    "example": "The immediate pay-off from insulating the roof is a warmer house and a lower energy bill.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -28435,7 +28435,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1806",
     "term": "Peaceable",
     "meaning": "pacífico",
-    "example": "a quiet and peaceable person",
+    "example": "We are all the sons of one man: we are come as peaceable men, neither do thy servants go about any evil.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28452,7 +28452,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1811",
     "term": "Pearly",
     "meaning": "perlado, nacarado",
-    "example": "In her notes, she chose ?Pearly? as the most precise wording for the situation.",
+    "example": "Sweetie, it's time to take care of those pearly whites.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28469,7 +28469,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1812",
     "term": "Pedantic",
     "meaning": "quisquilloso, minucioso",
-    "example": "In her notes, she chose ?Pedantic? as the most precise wording for the situation.",
+    "example": "Tom's boss was a pedantic micro manager, who had to check every single thing Tom did.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28486,7 +28486,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0480",
     "term": "Peer (v)",
     "meaning": "mirar, curiosear",
-    "example": "In her notes, she chose ?Peer (v)? as the most precise wording for the situation.",
+    "example": "She peered through the fogged window, trying to identify the figure at the gate.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -28503,7 +28503,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0664",
     "term": "Peers",
     "meaning": "amigos, colegas",
-    "example": "In her notes, she chose ?Peers? as the most precise wording for the situation.",
+    "example": "I do not understand Tom's ostensible contempt for the sartorial concerns of his peers.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -28520,7 +28520,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0602",
     "term": "Penknife",
     "meaning": "navaja",
-    "example": "In her notes, she chose ?Penknife? as the most precise wording for the situation.",
+    "example": "Roesler pulled his penknife from a coat pocket and began trimming his nails.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -28537,7 +28537,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1850",
     "term": "Pensioners",
     "meaning": "pensionista, jubilado",
-    "example": "In her notes, she chose ?Pensioners? as the most precise wording for the situation.",
+    "example": "The restaurant was full of pensioners taking advantage of the early-bird special.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28572,7 +28572,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1718",
     "term": "Perceptive",
     "meaning": "perceptivo, perspicaz",
-    "example": "a perceptive eye",
+    "example": "Following this class's instruction, you will develop a comprehensive perceptive of Japanese.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28589,7 +28589,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0418",
     "term": "perilous",
     "meaning": "peligroso, arriesgado (dangerous, risky)",
-    "example": "a perilous voyage across the Atlantic in a small boat",
+    "example": "Life is short, and Art long; the crisis fleeting; experience perilous, and decision difficult.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -28623,7 +28623,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1878",
     "term": "Periodic",
     "meaning": "periódico, regular",
-    "example": "periodic feelings of anxiety",
+    "example": "The columns of the periodic table are called groups and the rows are called periods.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28640,7 +28640,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1663",
     "term": "Periodically",
     "meaning": "regularmente",
-    "example": "In her notes, she chose ?Periodically? as the most precise wording for the situation.",
+    "example": "Rabies is probably introduced periodically by polar foxes on drift ice from Siberia.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28657,7 +28657,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0645",
     "term": "Peripheral",
     "meaning": "periférico",
-    "example": "a peripheral interest",
+    "example": "Through his peripheral vision, Leon thought he saw something in the hallway.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -28674,7 +28674,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1885",
     "term": "Perjury",
     "meaning": "perjurio (law: lying under oath)",
-    "example": "In her notes, she chose ?Perjury? as the most precise wording for the situation.",
+    "example": "It is not possible to found a lasting power upon injustice, perjury, and treachery.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28691,7 +28691,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1798",
     "term": "Perpetuity",
     "meaning": "perpetuidad",
-    "example": "In her notes, she chose ?Perpetuity? as the most precise wording for the situation.",
+    "example": "The foundation holds the land in perpetuity, preventing any future commercial development.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28708,7 +28708,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2229",
     "term": "perplex",
     "meaning": "to make someone feel confused",
-    "example": "Doctors were perplexed by her condition.",
+    "example": "What left me perplexed is that the answer was so simple and nobody could guess it.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -28725,7 +28725,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0253",
     "term": "Perplexed by",
     "meaning": "perplejo, sorprendido, desconcertado, confundido",
-    "example": "During the discussion, she used the expression ?Perplexed by? to make her point.",
+    "example": "I'm perplexed by the lack of a clear link between these two things.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -28776,7 +28776,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1882",
     "term": "Persuasive",
     "meaning": "persuasivo, convincente",
-    "example": "persuasive eloquence",
+    "example": "Tom can be persuasive when he wants to be.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28793,7 +28793,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1884",
     "term": "Pertinent",
     "meaning": "pertinente, apropiado, oportuno",
-    "example": "In her notes, she chose ?Pertinent? as the most precise wording for the situation.",
+    "example": "As for the theoretical side, Peterson's claim is pertinent to our discussion.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28810,7 +28810,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1762",
     "term": "Pertinently",
     "meaning": "pertinentemente",
-    "example": "what is singular about his use of them is that no other artist, of his time or any other, has painted them so directly, intimately and pertinently",
+    "example": "The review pertinently asks who benefits when public services are outsourced.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28825,9 +28825,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-1815",
-    "term": "Pesantry",
+    "term": "Peasantry",
     "meaning": "campesinos, gente del campo",
-    "example": "In her notes, she chose ?Pesantry? as the most precise wording for the situation.",
+    "example": "Taxes imposed on the peasantry financed the court’s increasingly lavish celebrations.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28844,7 +28844,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1513",
     "term": "Pestle",
     "meaning": "mortero",
-    "example": "pestle the garlic",
+    "example": "For a more authentic texture, use a mortar and pestle instead of a blender.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -28880,7 +28880,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1807",
     "term": "Pharmaceutical",
     "meaning": "farmacéutico",
-    "example": "In her notes, she chose ?Pharmaceutical? as the most precise wording for the situation.",
+    "example": "The pharmaceutical company is looking for the Elixir of Life to stop the ageing process.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28931,7 +28931,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1830",
     "term": "Physicist",
     "meaning": "a scientist who studies physics",
-    "example": "In her notes, she chose ?Physicist? as the most precise wording for the situation.",
+    "example": "He is a famous physicist not only in Japan, but in the world.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -28948,7 +28948,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1526",
     "term": "pick someone’s brains about",
     "meaning": "obtain information by questioning someone who is better, consultar, pedir consejo",
-    "example": "During the discussion, she used the expression ?pick someone’s brains about? to make her point.",
+    "example": "Before the interview, I picked a former employee’s brains about the company culture.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -28965,7 +28965,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0669",
     "term": "pick-me-up",
     "meaning": "energizante (sth that makes you feel better)",
-    "example": "In her notes, she chose ?pick-me-up? as the most precise wording for the situation.",
+    "example": "A brisk walk in the winter sunshine was exactly the pick-me-up I needed.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -28982,7 +28982,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0721",
     "term": "Picturesque",
     "meaning": "pintoresco",
-    "example": "a picturesque description of the rainforest",
+    "example": "Tom and Mary took a stroll through the picturesque gardens.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -29002,7 +29002,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1471",
     "term": "Pilgrimage",
     "meaning": "peregrinación, peregrinaje",
-    "example": "In her notes, she chose ?Pilgrimage? as the most precise wording for the situation.",
+    "example": "The five pillars of Islam are belief, worship, fasting, almsgiving, and pilgrimage.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29019,7 +29019,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0167",
     "term": "Pin the blame on sb",
     "meaning": "echar la culpa a",
-    "example": "During the discussion, she used the expression ?Pin the blame on sb? to make her point.",
+    "example": "She tried to pin the blame on me and get me fired from my job.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -29036,7 +29036,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0753",
     "term": "Pipeline",
     "meaning": "tubería, oleoducto / pipeline sth -> perfeccionar, hacer más eficiente",
-    "example": "a pipeline runs from the wells to the seaport",
+    "example": "The archaeologists needed to relocate the burial grounds before the pipeline could be built.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29053,7 +29053,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0908",
     "term": "Pitfalls",
     "meaning": "obstáculo, dificultad, inconveniente / trampa",
-    "example": "In her notes, she chose ?Pitfalls? as the most precise wording for the situation.",
+    "example": "Tom's strong character enabled him to avoid the common pitfalls of success and fame.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29070,7 +29070,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1848",
     "term": "Pitying",
     "meaning": "compasivo",
-    "example": "In her notes, she chose ?Pitying? as the most precise wording for the situation.",
+    "example": "Her pitying tone irritated him more than open criticism would have done.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -29087,7 +29087,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0382",
     "term": "Place an order",
     "meaning": "hacer un pedido",
-    "example": "During the discussion, she used the expression ?Place an order? to make her point.",
+    "example": "If we place an order for more than 20 units, would you reduce the price?",
     "family": "patterns",
     "families": [
       "patterns"
@@ -29104,7 +29104,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0363",
     "term": "Place constraints upon/on",
     "meaning": "imponer restricciones a",
-    "example": "During the discussion, she used the expression ?Place constraints upon? to make her point.",
+    "example": "Limited battery life places severe constraints on how far the drone can travel.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -29138,7 +29138,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0775",
     "term": "Plaguing",
     "meaning": "plaga / acosar, molestar a (f) (bother persistently)",
-    "example": "In her notes, she chose ?Plaguing? as the most precise wording for the situation.",
+    "example": "A huge federal budget deficit has been plaguing the American economy for many years.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29155,7 +29155,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0957",
     "term": "Plausible",
     "meaning": "verosímil, creíble (believable)",
-    "example": "a plausible liar",
+    "example": "What is plausible in a certain culture may not be plausible in another culture.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29172,7 +29172,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0746",
     "term": "Play host",
     "meaning": "for countries or places (to be a host = for people)",
-    "example": "In her notes, she chose ?Play host? as the most precise wording for the situation.",
+    "example": "Lisbon will play host to the international ocean summit next spring.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29189,7 +29189,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0599",
     "term": "Playwright",
     "meaning": "dramaturgo, autor teatral",
-    "example": "In her notes, she chose ?Playwright? as the most precise wording for the situation.",
+    "example": "I am determined to make a living as a playwright at all costs.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29206,7 +29206,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1469",
     "term": "Pleaded",
     "meaning": "suplicar, implorar, rogar / defender",
-    "example": "In her notes, she chose ?Pleaded? as the most precise wording for the situation.",
+    "example": "He pleaded with his mother to let him go to the party.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29223,7 +29223,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1483",
     "term": "Pleasantries",
     "meaning": "cumplido",
-    "example": "In her notes, she chose ?Pleasantries? as the most precise wording for the situation.",
+    "example": "Skip the pleasantries and get down to business.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29259,7 +29259,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0736",
     "term": "Plight",
     "meaning": "apuro, aprieto (bad situation)",
-    "example": "In her notes, she chose ?Plight? as the most precise wording for the situation.",
+    "example": "The king was unsympathetic to the plight of the peasants, so he was unpopular.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29276,7 +29276,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0683",
     "term": "Plough",
     "meaning": "arar / arado / salir adelante (f) / invertir en",
-    "example": "In her notes, she chose ?Plough? as the most precise wording for the situation.",
+    "example": "The husbandmen who ploughed those places, shrunk from the great worms abounding there.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29310,7 +29310,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0094",
     "term": "Plough into",
     "meaning": "invertir en (invest money into)",
-    "example": "During the discussion, she used the expression ?Plough into? to make her point.",
+    "example": "They saw the van plough into the crowd.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -29327,7 +29327,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0944",
     "term": "Ploy",
     "meaning": "estrategia (plan, strategy)",
-    "example": "In her notes, she chose ?Ploy? as the most precise wording for the situation.",
+    "example": "The opposition party claimed that approving the bill by a vote late at night was a political ploy.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29344,7 +29344,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0187",
     "term": "Pluck up",
     "meaning": "armarse de valor",
-    "example": "During the discussion, she used the expression ?Pluck up? to make her point.",
+    "example": "Ziri had to pluck up the courage and ask the teacher to let him sit next to Rima.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -29361,7 +29361,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1970",
     "term": "Plumage",
     "meaning": "plumaje",
-    "example": "In her notes, she chose ?Plumage? as the most precise wording for the situation.",
+    "example": "Young Love obeys, and doffs his plumage light, / and, like Iulus, trips forth with delight.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -29416,7 +29416,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0636",
     "term": "Poachers",
     "meaning": "cazador furtivo, escalfador de huevos",
-    "example": "In her notes, she chose ?Poachers? as the most precise wording for the situation.",
+    "example": "Gabon has invested millions of dollars to fight the poachers and protect its unique wildlife.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29433,7 +29433,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0352",
     "term": "Poke fun at",
     "meaning": "burlarse de, meterse con",
-    "example": "During the discussion, she used the expression ?Poke fun at? to make her point.",
+    "example": "I realize you poke fun at me at every opportunity!",
     "family": "patterns",
     "families": [
       "patterns"
@@ -29450,7 +29450,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0526",
     "term": "Pollination",
     "meaning": "polinización",
-    "example": "In her notes, she chose ?Pollination? as the most precise wording for the situation.",
+    "example": "Without pollination, we wouldn't be able to eat fruits and vegetables.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29467,7 +29467,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1394",
     "term": "Pollutants",
     "meaning": "sustancia contaminante, contaminante",
-    "example": "In her notes, she chose ?Pollutants? as the most precise wording for the situation.",
+    "example": "Mangrove swamps can also act as natural filters, helping to clean the water of pollutants.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -29487,7 +29487,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2301",
     "term": "poor circulation",
     "meaning": "when the continuous movement of blood around your body is not efficient and sometimes causes problems",
-    "example": "She’s always suffered from poor circulation.",
+    "example": "Regular movement can alleviate poor circulation during a long-haul flight.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29504,7 +29504,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0222",
     "term": "Pore over",
     "meaning": "leer cuidadosamente, atentamente",
-    "example": "During the discussion, she used the expression ?Pore over? to make her point.",
+    "example": "Experts will now pore over the fine print of the contract.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -29538,7 +29538,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0544",
     "term": "Posit",
     "meaning": "proponer, plantear, sugerir",
-    "example": "He posited three basic laws of nature",
+    "example": "I will posit a guess: the person who ate my sandwich was once again Bob.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29555,7 +29555,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1085",
     "term": "Possum",
     "meaning": "zarigüeya",
-    "example": "In her notes, she chose ?Possum? as the most precise wording for the situation.",
+    "example": "You know Tom. Gay, furry, French speaker. Fursona is a possum. Ring a bell?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29572,7 +29572,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0652",
     "term": "Post-truth",
     "meaning": "(not valuing objective facts - Trump)",
-    "example": "In her notes, she chose ?Post-truth? as the most precise wording for the situation.",
+    "example": "Some commentators have observed that we are living in a post-truth age.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29589,7 +29589,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1437",
     "term": "Postage",
     "meaning": "porte, gastos de envío / sello",
-    "example": "In her notes, she chose ?Postage? as the most precise wording for the situation.",
+    "example": "You have bought more postage stamps than are necessary.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29606,7 +29606,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1714",
     "term": "Postponement",
     "meaning": "aplazamiento, posposición",
-    "example": "In her notes, she chose ?Postponement? as the most precise wording for the situation.",
+    "example": "Are increases in life expectancy accompanied by a concurrent postponement of disability and functional limitations?",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -29623,7 +29623,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0811",
     "term": "Potting soil",
     "meaning": "tierrade macetas",
-    "example": "In her notes, she chose ?Potting soil? as the most precise wording for the situation.",
+    "example": "Mixing sand into the potting soil improves drainage for Mediterranean herbs.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29640,7 +29640,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0744",
     "term": "Practitioner",
     "meaning": "professional - practicante, fiel (religion)",
-    "example": "In her notes, she chose ?Practitioner? as the most precise wording for the situation.",
+    "example": "The meaning of this practice was obfuscated by centuries of the practitioners' subjective interpretations.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29676,7 +29676,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1210",
     "term": "Preach",
     "meaning": "predicar",
-    "example": "In her notes, she chose ?Preach? as the most precise wording for the situation.",
+    "example": "The main duty of a priest is to preach in church.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29710,7 +29710,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0882",
     "term": "Preclude",
     "meaning": "excluir, descartar",
-    "example": "In her notes, she chose ?Preclude? as the most precise wording for the situation.",
+    "example": "You can be both kind and firm. One does not preclude the other.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29727,7 +29727,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1075",
     "term": "Predicament",
     "meaning": "apuro, dilem, aprieto",
-    "example": "finds himself in a most awkward predicament",
+    "example": "So Jerry kept getting deeper and deeper into his predicament, like a man in quicksand.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29744,7 +29744,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1817",
     "term": "Predominance",
     "meaning": "predominancia",
-    "example": "In her notes, she chose ?Predominance? as the most precise wording for the situation.",
+    "example": "Hebden Bridge used to be known as 'Trouser Town', a nickname acquired because of the predominance of factories which made trousers in the town.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -29759,9 +29759,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-1662",
-    "term": "Predominately",
+    "term": "Predominantly",
     "meaning": "predominantemente",
-    "example": "In her notes, she chose ?Predominately? as the most precise wording for the situation.",
+    "example": "The membership is predominantly elderly, 90% are over age 60.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -29778,7 +29778,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0886",
     "term": "Premises",
     "meaning": "instalaciones",
-    "example": "bread is baked on the premises",
+    "example": "Life is the art of drawing sufficient conclusions from insufficient premises.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29795,7 +29795,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1972",
     "term": "Preordained",
     "meaning": "predestinado",
-    "example": "In her notes, she chose ?Preordained? as the most precise wording for the situation.",
+    "example": "My life seems to have followed a preordained path.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -29812,7 +29812,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1485",
     "term": "Preparatory",
     "meaning": "preparatorio, previo, preliminar",
-    "example": "preparatory steps",
+    "example": "Nowadays, the preparatory value of Esperanto for other languages is much emphasized.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29829,7 +29829,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0740",
     "term": "Prerequisite",
     "meaning": "prerequisito, necesario, obligatorio (requierement)",
-    "example": "In her notes, she chose ?Prerequisite? as the most precise wording for the situation.",
+    "example": "The basic prerequisite for every progress is the conviction that the necessary is possible.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29846,7 +29846,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1732",
     "term": "Presentiment",
     "meaning": "presentimiento",
-    "example": "the lawyer had a presentiment that the judge would dismiss the case",
+    "example": "I had a presentiment that you would come this evening.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -29863,7 +29863,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1757",
     "term": "Prevalent",
     "meaning": "prevalente, predominante",
-    "example": "In her notes, she chose ?Prevalent? as the most precise wording for the situation.",
+    "example": "Plastic is the most prevalent type of marine debris found in our ocean and Great Lakes.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -29880,7 +29880,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1773",
     "term": "Priceless",
     "meaning": "invaluable, inestimable",
-    "example": "In her notes, she chose ?Priceless? as the most precise wording for the situation.",
+    "example": "After he bumped into the shelf, the priceless china fell and shattered into fragments.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -29914,7 +29914,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1782",
     "term": "Princely",
     "meaning": "principesco, espléndido, magnífico",
-    "example": "a princely bearing",
+    "example": "The Holy Roman Empire was a confederation of princely states in Germany.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -29931,7 +29931,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1118",
     "term": "Princely (sum)",
     "meaning": "gran suma, enorme cantidad",
-    "example": "In her notes, she chose ?Princely (sum)? as the most precise wording for the situation.",
+    "example": "The club paid a princely sum for a striker who scored only twice that season.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -29948,7 +29948,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1408",
     "term": "Principality",
     "meaning": "principado",
-    "example": "In her notes, she chose ?Principality? as the most precise wording for the situation.",
+    "example": "Andorra is a small principality situated between Spain and France.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -29968,7 +29968,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1690",
     "term": "Proceedings",
     "meaning": "proceso judicial",
-    "example": "In her notes, she chose ?Proceedings? as the most precise wording for the situation.",
+    "example": "The Maltese language is used in official government documents and proceedings.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -29985,7 +29985,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0463",
     "term": "Proffer",
     "meaning": "ofrecer, proponer, presentar",
-    "example": "In her notes, she chose ?Proffer? as the most precise wording for the situation.",
+    "example": "Good sir, we would like to proffer this wonderful item for your consideration.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30002,7 +30002,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0583",
     "term": "Profound",
     "meaning": "profundo, intenso, severo",
-    "example": "the profound depths of the sea",
+    "example": "Freud's insights into human behavior led to him being honored as a profound thinker.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30019,7 +30019,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0498",
     "term": "Promenade",
     "meaning": "dar un paseo, pasear (v) / baile / paseo marítimo",
-    "example": "The ladies promenaded along the beach",
+    "example": "The market on the promenade sells second-hand clothes and bric-a-brac.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30036,7 +30036,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0708",
     "term": "Promptly",
     "meaning": "rápidamente, inmediatamente",
-    "example": "he promptly forgot the address",
+    "example": "He turned on the TV, and promptly fell asleep sitting before the set.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30053,7 +30053,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0557",
     "term": "Proofread",
     "meaning": "corregir, revisar (text: review / check)",
-    "example": "I should proofread my manuscripts",
+    "example": "With oral language there isn't only one language and one can't proofread.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30087,7 +30087,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1145",
     "term": "Prose",
     "meaning": "prosa",
-    "example": "In her notes, she chose ?Prose? as the most precise wording for the situation.",
+    "example": "Please take off your thick adjective glasses and start writing leaner prose.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30104,7 +30104,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1844",
     "term": "Prospective",
     "meaning": "futuro, posible, potencial, esperado",
-    "example": "prospective earnings",
+    "example": "We have several prospective new members. I hope they will join us.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -30121,7 +30121,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1002",
     "term": "Prospectus",
     "meaning": "prospecto, folleto / propuesta",
-    "example": "In her notes, she chose ?Prospectus? as the most precise wording for the situation.",
+    "example": "I picked up a prospectus and some other literature at the open day.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30138,7 +30138,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1854",
     "term": "Proverbial",
     "meaning": "proverbial, notorio, conocido",
-    "example": "her proverbial lateness",
+    "example": "Yanni's loud music was just the proverbial straw that broke the camel's back.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -30155,7 +30155,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1856",
     "term": "Providential",
     "meaning": "fortuito",
-    "example": "providential care",
+    "example": "A providential change in the wind carried the wildfire away from the village.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -30172,7 +30172,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1861",
     "term": "Provocative",
     "meaning": "provocativo",
-    "example": "her gestures and postures became more wanton and provocative",
+    "example": "Trump may be risking a diplomatic crisis by being so provocative.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -30208,7 +30208,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1271",
     "term": "Prowess",
     "meaning": "destreza, habilidad, pericia / valentía, coraje",
-    "example": "In her notes, she chose ?Prowess? as the most precise wording for the situation.",
+    "example": "His martial arts prowess has already reached a level of sublime perfection.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30225,7 +30225,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0263",
     "term": "Pull in",
     "meaning": "atraer",
-    "example": "During the discussion, she used the expression ?Pull in? to make her point.",
+    "example": "Tom grabbed Mary's fishing pole to help her pull in the fish.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -30259,7 +30259,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1077",
     "term": "Pulley",
     "meaning": "polea",
-    "example": "In her notes, she chose ?Pulley? as the most precise wording for the situation.",
+    "example": "The screw, the lever, the wedge, the pulley, etc. are called simple machines.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30276,7 +30276,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1872",
     "term": "Pulsating",
     "meaning": "pulsante, palpitante, vibrante",
-    "example": "In her notes, she chose ?Pulsating? as the most precise wording for the situation.",
+    "example": "All entities are pulsating, from tiny elementary particles to giant galaxies.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -30293,7 +30293,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1160",
     "term": "Pumping",
     "meaning": "bombear, poner algo en (insert)",
-    "example": "In her notes, she chose ?Pumping? as the most precise wording for the situation.",
+    "example": "Yanni is pumping four hundred pounds on the bunch press.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30310,7 +30310,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1628",
     "term": "Purposefully",
     "meaning": "adrede, intencionadamente",
-    "example": "he caught the motorcycles in the full glare of his headlights, braked and slipped purposefully out of the car",
+    "example": "Professionals in many fields write in a style that is purposefully abstruse and unclear.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -30327,7 +30327,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1627",
     "term": "Purposely",
     "meaning": "a propósito, intencionadamente (intentionally)",
-    "example": "In her notes, she chose ?Purposely? as the most precise wording for the situation.",
+    "example": "Tom would often make mistakes purposely just so the teacher would notice him.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -30344,7 +30344,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1337",
     "term": "Pursuit",
     "meaning": "búsqueda, persecución / actividad, ocupación, hobby",
-    "example": "they criticized the boy for his limited pursuits",
+    "example": "It is our national conviction that politics is a dirty and dishonest pursuit.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30361,7 +30361,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0666",
     "term": "Pursuits",
     "meaning": "búsqueda, persecución, hobby",
-    "example": "In her notes, she chose ?Pursuits? as the most precise wording for the situation.",
+    "example": "Outside medicine, her main pursuits are landscape photography and long-distance cycling.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30378,7 +30378,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0772",
     "term": "Put forward",
     "meaning": "(propose, suggest) ofrecerse, postularse",
-    "example": "In her notes, she chose ?Put forward? as the most precise wording for the situation.",
+    "example": "Are you for or against the plan he put forward at the meeting?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30412,7 +30412,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0556",
     "term": "Put forward ideas / proposals",
     "meaning": "proponer ideas",
-    "example": "In her notes, she chose ?Put forward ideas? as the most precise wording for the situation.",
+    "example": "Residents were invited to put forward proposals for improving the neglected square.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30429,7 +30429,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0514",
     "term": "Put her money where her mouth is",
     "meaning": "probar, demostrar (prove sth)",
-    "example": "During the discussion, she used the expression ?Put her money where her mouth is? to make her point.",
+    "example": "If the mayor truly supports cycle lanes, she should put her money where her mouth is and fund them.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30446,7 +30446,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0360",
     "term": "Put in (more hours)",
     "meaning": "Dedicar",
-    "example": "During the discussion, she used the expression ?Put in (more hours)? to make her point.",
+    "example": "The trainees put in extra hours to master the software before the deadline.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -30461,9 +30461,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0257",
-    "term": "Put the fingers on sth",
+    "term": "Put your finger on something",
     "meaning": "dar en el clavo (f) (i) (identify, determine)",
-    "example": "During the discussion, she used the expression ?Put the fingers on sth? to make her point.",
+    "example": "I knew the paragraph was weak, but I couldn’t put my finger on exactly what was wrong.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -30536,7 +30536,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0962",
     "term": "Pylon",
     "meaning": "torre de alta tensión",
-    "example": "power pylons are a favorite target for terrorists",
+    "example": "I wanted to construct additional pylons, but a voice told me, \"You've not enough energy.\"",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30553,7 +30553,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1461",
     "term": "Quarrelsome",
     "meaning": "combativo (argumentativo)",
-    "example": "quarrelsome when drinking",
+    "example": "Although the two rival British generals were quarrelsome and foolish, the ordinary soldiers acquitted themselves bravely, even as they rode to their deaths.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30589,7 +30589,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1342",
     "term": "Quench",
     "meaning": "saciar (sed) / extinguir, apagar, sofocar",
-    "example": "quench steel",
+    "example": "What can you give me to drink so I can quench my thirst?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30606,7 +30606,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0802",
     "term": "Query",
     "meaning": "consulta, pregunta",
-    "example": "In her notes, she chose ?Query? as the most precise wording for the situation.",
+    "example": "Please do not hesitate to contact me if you have any further queries.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30623,7 +30623,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0398",
     "term": "question its validity",
     "meaning": "cuestionar su validez",
-    "example": "During the discussion, she used the expression ?question its validity? to make her point.",
+    "example": "Several unexplained gaps in the records led historians to question the document’s validity.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -30657,7 +30657,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0770",
     "term": "Rack",
     "meaning": "estante",
-    "example": "In her notes, she chose ?Rack? as the most precise wording for the situation.",
+    "example": "When you get into a commuter train, you see the briefcases neatly stacked on the racks.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30674,7 +30674,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0769",
     "term": "Rack your brain",
     "meaning": "romperse la cabeza (f) (try to remember)",
-    "example": "During the discussion, she used the expression ?Rack your brain? to make her point.",
+    "example": "I racked my brain for her surname, but could remember only where we had met.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30691,7 +30691,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0835",
     "term": "Rack your brains",
     "meaning": "romperse la cabeza (f)",
-    "example": "During the discussion, she used the expression ?Rack your brains? to make her point.",
+    "example": "We racked our brains all afternoon before finding a route that avoided the landslide.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30708,7 +30708,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0857",
     "term": "Raft",
     "meaning": "balsa / un montón, una pila de",
-    "example": "raft these logs",
+    "example": "When our ship entered the port, she was no better than a raft.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30725,7 +30725,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0376",
     "term": "Raise a laugh",
     "meaning": "Provocar una risa",
-    "example": "During the discussion, she used the expression ?Raise a laugh? to make her point.",
+    "example": "His impression of the headmaster raised a laugh even among the sternest teachers.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -30742,7 +30742,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0362",
     "term": "Raise any objection to sth/sb + ing",
     "meaning": "oponerse a",
-    "example": "During the discussion, she used the expression ?Raise any objection to sth? to make her point.",
+    "example": "No neighbour raised any objection to our extending the kitchen by two metres.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -30776,7 +30776,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0223",
     "term": "Ramp up",
     "meaning": "intensificarse, aumentar, incrementar",
-    "example": "ramp up security in the airports",
+    "example": "The company was able to ramp up sales by hiring more employees and streamlining working practices.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -30810,7 +30810,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1890",
     "term": "Rapidity",
     "meaning": "rapidez, velocidad",
-    "example": "In her notes, she chose ?Rapidity? as the most precise wording for the situation.",
+    "example": "Something else to be borne in mind here is the rapidity with which the virus can reproduce.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -30827,7 +30827,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1924",
     "term": "Rapture",
     "meaning": "embeleso, éxtasis",
-    "example": "In her notes, she chose ?Rapture? as the most precise wording for the situation.",
+    "example": "According to Tom's calculations, the rapture is set to occur in exactly three years.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -30844,7 +30844,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0728",
     "term": "Rash",
     "meaning": "sarpullido (n) / impulsivo, imprudente, temerario (adj)",
-    "example": "a rash attempt to climb Mount Everest",
+    "example": "We should not be rash now; we should wait for a good chance.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30861,7 +30861,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0055",
     "term": "Rattle off",
     "meaning": "decir del tirón, recitar sin parar",
-    "example": "During the discussion, she used the expression ?Rattle off? to make her point.",
+    "example": "Without consulting her notes, she rattled off the names of all fifty state capitals.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -30878,7 +30878,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0722",
     "term": "Rave",
     "meaning": "elogio, alabanza, crítica positiva",
-    "example": "She raved about that new restaurant",
+    "example": "Critics raved about the lead actor’s restrained and deeply moving performance.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30895,7 +30895,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1490",
     "term": "Ravening",
     "meaning": "voraz (rapacious)",
-    "example": "In her notes, she chose ?Ravening? as the most precise wording for the situation.",
+    "example": "After the overnight hike, the ravening students demolished two enormous pans of pasta.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30912,7 +30912,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1491",
     "term": "Ravenous",
     "meaning": "muerto de hambre, hambriento, voraz",
-    "example": "ravenous as wolves",
+    "example": "Livestock overgrazing can lead to outbreaks of ravenous locusts, according to a new study.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30929,7 +30929,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1136",
     "term": "Ravishing",
     "meaning": "encantador, cautivador",
-    "example": "a ravishing blonde",
+    "example": "The ravishing beauty queen wearing a blue velvet gown with a plunging neckline struck a pose on the red carpet.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -30946,7 +30946,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1903",
     "term": "Reactionary",
     "meaning": "reaccionario, conservador, ultraderechista",
-    "example": "In her notes, she chose ?Reactionary? as the most precise wording for the situation.",
+    "example": "Unbelievable cultural decline, stupendous ignorance, idealistic rubbish, and obscurantism find their strongest support among American reactionaries.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -30963,7 +30963,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1904",
     "term": "Readership",
     "meaning": "número de lectores",
-    "example": "In her notes, she chose ?Readership? as the most precise wording for the situation.",
+    "example": "The readership of print newspapers has been declining steadily in recent years.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -30980,7 +30980,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1961",
     "term": "Readiness",
     "meaning": "presteza, disposición (being ready)",
-    "example": "a happy readiness of conversation",
+    "example": "The maintainability and the operational readiness of a number of these craft are actually suspect.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -30997,7 +30997,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0841",
     "term": "Readouts",
     "meaning": "lector",
-    "example": "In her notes, she chose ?Readouts? as the most precise wording for the situation.",
+    "example": "Digital readouts display the pressure and temperature inside each storage tank.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31014,7 +31014,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0725",
     "term": "Realm",
     "meaning": "reino (kingdom) terreno, reino (figurative) campo, ámbito, terreno (area of",
-    "example": "it was a limited realm of discourse",
+    "example": "Our technologies can record phenomena well outside the realm of human visual abilities.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31031,7 +31031,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0675",
     "term": "Reap",
     "meaning": "cosechar, segar, recoger (harvest)",
-    "example": "In her notes, she chose ?Reap? as the most precise wording for the situation.",
+    "example": "Some day you will have to reap the harvest of your own sowing.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31048,7 +31048,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1438",
     "term": "Reaper",
     "meaning": "cosechadora, segadora",
-    "example": "In her notes, she chose ?Reaper? as the most precise wording for the situation.",
+    "example": "The Grim Reaper slowly extended his right arm towards Yanni.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31065,7 +31065,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1409",
     "term": "Rearwards",
     "meaning": "atrás (located towards the back)",
-    "example": "In her notes, she chose ?Rearwards? as the most precise wording for the situation.",
+    "example": "The force of the collision flung the unrestrained cases rearwards through the cabin.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -31085,7 +31085,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1058",
     "term": "Reassessment",
     "meaning": "revaloración, revaluación, reconsideración",
-    "example": "In her notes, she chose ?Reassessment? as the most precise wording for the situation.",
+    "example": "A reassessment of the archaeological evidence suggests the settlement is far older than assumed.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31102,7 +31102,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1369",
     "term": "Reassurance",
     "meaning": "consuelo, confortación",
-    "example": "In her notes, she chose ?Reassurance? as the most precise wording for the situation.",
+    "example": "Obama came to Japan offering reassurances that the Japanese leadership has been wanting to hear.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -31122,7 +31122,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0758",
     "term": "Reassuring",
     "meaning": "tranquilizador, reconfortante (comforting)",
-    "example": "a very reassuring remark",
+    "example": "The values of a society totally preoccupied with making money are not altogether reassuring.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31139,7 +31139,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0679",
     "term": "Rebate",
     "meaning": "reembolso, devolución",
-    "example": "rebate the pieces of timber and stone",
+    "example": "Once we get our rebate, this dryer will only cost us half of what we paid.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31156,7 +31156,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1046",
     "term": "recede",
     "meaning": "to become less strong or likely",
-    "example": "His pain had receded a little.",
+    "example": "That guy said he had a wide, prominent forehead, but in fact, his hairline is receding.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31175,7 +31175,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1481",
     "term": "Receiver",
     "meaning": "receptor, auricular",
-    "example": "In her notes, she chose ?Receiver? as the most precise wording for the situation.",
+    "example": "The worried housewife heard the telephone ring and quickly picked up the receiver.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31192,7 +31192,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1161",
     "term": "Receptacles",
     "meaning": "contenedor",
-    "example": "In her notes, she chose ?Receptacles? as the most precise wording for the situation.",
+    "example": "Maria Montessori invented the sorting box after observing that children enjoy fitting objects through receptacles of a similar shape.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31209,7 +31209,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1215",
     "term": "Recoil",
     "meaning": "retroceder, echarse atrás",
-    "example": "In her notes, she chose ?Recoil? as the most precise wording for the situation.",
+    "example": "This is a great rifle to snipe with, if you can handle the recoil.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31243,7 +31243,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1259",
     "term": "Rectify",
     "meaning": "rectificar, corregir, enmendar",
-    "example": "rectify alternating current",
+    "example": "Taiwan's absence from the WHA in recent years is something that we have sought to rectify.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31260,7 +31260,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1932",
     "term": "Recuperative",
     "meaning": "recuperable",
-    "example": "recuperative powers",
+    "example": "The doctor was surprised by her recuperative powers after such extensive surgery.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -31277,7 +31277,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1937",
     "term": "Recurrence",
     "meaning": "recurrencia, repetición",
-    "example": "In her notes, she chose ?Recurrence? as the most precise wording for the situation.",
+    "example": "These patients were not responsive to other therapies and had experienced several recurrences of their disease.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -31312,7 +31312,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1201",
     "term": "Red herrings",
     "meaning": "pista falsa (sth deliberately misleading)",
-    "example": "During the discussion, she used the expression ?Red herrings? to make her point.",
+    "example": "If I were to spend more time strictly studying only for myself whilst minimizing red herrings online, I'd be more of the person I want to be.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31329,7 +31329,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1434",
     "term": "Reddish",
     "meaning": "rojizo",
-    "example": "In her notes, she chose ?Reddish? as the most precise wording for the situation.",
+    "example": "What color is your urine: clear, dark yellow, reddish, or brown like beer?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31346,7 +31346,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1105",
     "term": "Redeem",
     "meaning": "redimir (save from disgrace) / canjear (coupon)",
-    "example": "In her notes, she chose ?Redeem? as the most precise wording for the situation.",
+    "example": "The only thing that will redeem mankind is co-operation.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31363,7 +31363,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1607",
     "term": "Reduce to rags",
     "meaning": "Reducir a harapos",
-    "example": "During the discussion, she used the expression ?Reduce to rags? to make her point.",
+    "example": "Years of neglect had reduced the once-elegant curtains to rags.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -31380,7 +31380,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1120",
     "term": "Reek",
     "meaning": "apestar",
-    "example": "Marshes reeking in the sun",
+    "example": "When he came and found me, his whole body reeked of alcohol.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31397,7 +31397,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1492",
     "term": "Refinement",
     "meaning": "refinamiento, finura, sofisticación / mejora, ajuste, perfeccionamiento",
-    "example": "a man of intellectual refinement",
+    "example": "What atrocities do we not perpetrate in the name of culture and refinement!",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31414,7 +31414,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1644",
     "term": "Regardless",
     "meaning": "a pesar de todo, en cualquier caso",
-    "example": "he carried on regardless of the difficulties",
+    "example": "Schools are expected to meet the needs of every child, regardless of ability.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -31431,7 +31431,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0806",
     "term": "Reimburse",
     "meaning": "reembolsar, devolver",
-    "example": "In her notes, she chose ?Reimburse? as the most precise wording for the situation.",
+    "example": "Tom received an overnight accommodation allowance for his trip and was reimbursed his out-of-pocket expenses.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31448,7 +31448,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1801",
     "term": "Reinforced",
     "meaning": "reforzado, fortalecido",
-    "example": "In her notes, she chose ?Reinforced? as the most precise wording for the situation.",
+    "example": "The perpetrator used a sledgehammer to smash his way through reinforced glass doors.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -31483,7 +31483,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0540",
     "term": "Relent",
     "meaning": "ceder, rendirse / suavizarse, ablandarse",
-    "example": "In her notes, she chose ?Relent? as the most precise wording for the situation.",
+    "example": "Yanni finally relented and let Skura in.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31500,7 +31500,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1107",
     "term": "Relentless",
     "meaning": "implacable, incansable, incesante, firme (persistent)",
-    "example": "the relentless beat of the drums",
+    "example": "Rodrigo felt isolated and anxious due to the relentless online bullying he encountered.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31517,7 +31517,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1665",
     "term": "Relentlessly",
     "meaning": "incansablemente, despiadadamente",
-    "example": "he worked relentlessly",
+    "example": "O my people, I will relentlessly punish those who have attacked your Majesty.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -31534,7 +31534,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0598",
     "term": "Relish",
     "meaning": "(n) gusto, deleite, placer / (v) disfrutar / (n) salsa de pepinillos",
-    "example": "She relished her fame and basked in her glory",
+    "example": "Thousand island dressing can be made of mayonnaise, ketchup, and sweet pickle relish.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31551,7 +31551,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0821",
     "term": "Relocate",
     "meaning": "mudarse, trasladarse",
-    "example": "We had to relocate the office because the rent was too high",
+    "example": "The construction of the dam will undoubtedly have the resulting effect of forcing thousands of families to relocate elsewhere.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31568,7 +31568,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1411",
     "term": "Remainder",
     "meaning": "restante",
-    "example": "The publisher remaindered the books",
+    "example": "The remainder of his sentence was drowned out by the sudden noise.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -31588,7 +31588,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1974",
     "term": "Remains",
     "meaning": "restos, sobras",
-    "example": "In her notes, she chose ?Remains? as the most precise wording for the situation.",
+    "example": "Who loves not women, wine and song remains a fool his whole life long.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -31605,7 +31605,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1260",
     "term": "Remedy",
     "meaning": "remediar, corregir, solucionar",
-    "example": "remedy his illness",
+    "example": "Nearly all men die of their remedies, and not of their illness.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31622,7 +31622,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1864",
     "term": "Remembrance",
     "meaning": "recuerdo, rememoración, conmemoración",
-    "example": "In her notes, she chose ?Remembrance? as the most precise wording for the situation.",
+    "example": "Today is a day of remembrance for those who gave the ultimate sacrifice for the good of the United States.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -31639,7 +31639,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1894",
     "term": "Remittance",
     "meaning": "giro, remesa (payment)",
-    "example": "In her notes, she chose ?Remittance? as the most precise wording for the situation.",
+    "example": "Nepal is heavily dependent on remittances, which amount to as much as 30% of GDP.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -31656,7 +31656,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1918",
     "term": "Remnant",
     "meaning": "retal, resto de",
-    "example": "In her notes, she chose ?Remnant? as the most precise wording for the situation.",
+    "example": "The Western Wall is one of the few remnants of the Temple in Jerusalem.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -31673,7 +31673,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1736",
     "term": "Remunerative",
     "meaning": "remunerativo",
-    "example": "a remunerative business",
+    "example": "Specialist translation can be remunerative once you establish a reliable client base.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -31690,7 +31690,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0466",
     "term": "Render",
     "meaning": "dejar, volver / representar, retratar, reproducir (depict in art)",
-    "example": "render fat in a casserole",
+    "example": "The prime purpose of the profession is the rendering of a public service.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31707,7 +31707,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1055",
     "term": "Renown",
     "meaning": "renombre, prestigio",
-    "example": "In her notes, she chose ?Renown? as the most precise wording for the situation.",
+    "example": "Until now the city of Bilbao has been characterized as a place of international renown.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31743,7 +31743,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1740",
     "term": "Renunciation",
     "meaning": "renuncia, desistimiento",
-    "example": "In her notes, she chose ?Renunciation? as the most precise wording for the situation.",
+    "example": "Citizenship in this country does not require the renunciation of other citizenships.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -31760,7 +31760,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0427",
     "term": "Repellent",
     "meaning": "repelente, repulsivo, repugnante",
-    "example": "a water-repellent fabric",
+    "example": "We used insect repellent to keep the midges away during the picnic.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31777,7 +31777,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1101",
     "term": "Repentant",
     "meaning": "arrepentido (penitent, remorseful)",
-    "example": "In her notes, she chose ?Repentant? as the most precise wording for the situation.",
+    "example": "The repentant thief returned the medals anonymously with a handwritten apology.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31792,9 +31792,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-1765",
-    "term": "Repetable",
+    "term": "Repeatable",
     "meaning": "repetible / inofensivo",
-    "example": "In her notes, she chose ?Repetable? as the most precise wording for the situation.",
+    "example": "The researchers published a repeatable method so that other laboratories could verify the result.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -31811,7 +31811,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1245",
     "term": "Replenish",
     "meaning": "reponer",
-    "example": "In her notes, she chose ?Replenish? as the most precise wording for the situation.",
+    "example": "A military veteran shows how his compost business helps to replenish precious topsoil.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31828,7 +31828,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0833",
     "term": "Reproach",
     "meaning": "reproche",
-    "example": "The president reproached the general for his irresponsible behavior",
+    "example": "She reproached me for not answering the letter.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31845,7 +31845,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1783",
     "term": "Reproachful",
     "meaning": "recriminatorio",
-    "example": "In her notes, she chose ?Reproachful? as the most precise wording for the situation.",
+    "example": "The tone, reproachful and irritating, in which this was spoken, was answered in a sweet, calm voice.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -31879,7 +31879,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1651",
     "term": "Reputedly",
     "meaning": "supuestamente, presuntamente, aparentemente",
-    "example": "fish with reputedly poisonous flesh",
+    "example": "In the tenth century, the city of Shiraz already held a library that reputedly featured a copy of every known book at the time.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -31913,7 +31913,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0479",
     "term": "Resent",
     "meaning": "estar resentido con, ofenderse con, molestarse con alguien",
-    "example": "In her notes, she chose ?Resent? as the most precise wording for the situation.",
+    "example": "The youngster resented being treated as a coward.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -31947,7 +31947,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1802",
     "term": "Residence",
     "meaning": "residencia, hogar",
-    "example": "In her notes, she chose ?Residence? as the most precise wording for the situation.",
+    "example": "You are invited to take part in unpaid work at your residence and workplace.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -31964,7 +31964,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0310",
     "term": "Resign yourself to",
     "meaning": "resignarse a",
-    "example": "During the discussion, she used the expression ?Resign yourself to? to make her point.",
+    "example": "Resign yourself to the fact that it's over between us.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -31998,7 +31998,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0825",
     "term": "Resort",
     "meaning": "recurso (n) / recurrir (v)",
-    "example": "In her notes, she chose ?Resort? as the most precise wording for the situation.",
+    "example": "In order to keep his original idea from being copied, Henry resorted to reticence.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -32015,7 +32015,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0308",
     "term": "Resort to",
     "meaning": "recurrir a",
-    "example": "During the discussion, she used the expression ?Resort to? to make her point.",
+    "example": "If you don't listen to us, we will have to resort to coercion.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -32049,7 +32049,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1831",
     "term": "Restful",
     "meaning": "having a quiet and relaxing effect",
-    "example": "she spent a restful night at home",
+    "example": "Nothing a cup of tea and a restful sleep can't fix.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -32066,7 +32066,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1418",
     "term": "Restraint",
     "meaning": "control, represión, restricción, limitación",
-    "example": "the car did not have proper restraints fitted",
+    "example": "From a Pope to a King, everyone drinks without restraint.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -32103,7 +32103,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1354",
     "term": "Resume",
     "meaning": "continuar, seguir, reanudar",
-    "example": "In her notes, she chose ?Resume? as the most precise wording for the situation.",
+    "example": "I have to fix my flat tire before I can resume cycling.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -32120,7 +32120,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1681",
     "term": "Retention",
     "meaning": "retención",
-    "example": "In her notes, she chose ?Retention? as the most precise wording for the situation.",
+    "example": "Uncertainty regarding the company's financial situation will interfere with employee retention.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -32137,7 +32137,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1908",
     "term": "Retort",
     "meaning": "contestar, replicar",
-    "example": "In her notes, she chose ?Retort? as the most precise wording for the situation.",
+    "example": "The laboratory table was full of flasks, retorts, test tubes, and similar equipment.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -32154,7 +32154,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0604",
     "term": "Retreat",
     "meaning": "retirada, aislamiento, retiro / retractarse",
-    "example": "In her notes, she chose ?Retreat? as the most precise wording for the situation.",
+    "example": "The enemy behind us presently exists solely to cut off our retreat.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -32171,7 +32171,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0660",
     "term": "Revel",
     "meaning": "divertirse, disfrutar",
-    "example": "In her notes, she chose ?Revel? as the most precise wording for the situation.",
+    "example": "I am too sick at heart to revel, carouse, and make merry through the night.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -32188,7 +32188,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1359",
     "term": "Revelation",
     "meaning": "revelación",
-    "example": "In her notes, she chose ?Revelation? as the most precise wording for the situation.",
+    "example": "The audit brought the revelation that millions had been transferred to an undisclosed account.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -32208,7 +32208,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1683",
     "term": "Revelatory",
     "meaning": "revelador, que enseña algo",
-    "example": "In her notes, she chose ?Revelatory? as the most precise wording for the situation.",
+    "example": "The leaked correspondence is revelatory, exposing how little the board knew about its own finances.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -32225,7 +32225,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0738",
     "term": "Revered",
     "meaning": "venerado (a person that is much admired)",
-    "example": "revered holy men",
+    "example": "Clark says he'll never forget working on the home of one America's most revered presidents.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -32242,7 +32242,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1695",
     "term": "Reversal",
     "meaning": "cambio, retorno, revés, percance",
-    "example": "In her notes, she chose ?Reversal? as the most precise wording for the situation.",
+    "example": "Here is a look at four Supreme Court decisions that a Roe v. Wade reversal could impact.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -32276,7 +32276,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0314",
     "term": "Revert back to",
     "meaning": "volver a, regresar a, revertir a",
-    "example": "During the discussion, she used the expression ?Revert back to? to make her point.",
+    "example": "Late-stage dementia sufferers whose first language isn't English often revert back to their native language as their condition worsens.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -32293,7 +32293,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1810",
     "term": "Revolution",
     "meaning": "revolución (rotation)",
-    "example": "the revolution of the earth about the sun takes one year",
+    "example": "It looked as if we were on the eve of a revolution.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -32310,7 +32310,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0236",
     "term": "Revolve around",
     "meaning": "girar alrededor de",
-    "example": "The Earth revolves around the Sun",
+    "example": "You know very well the world doesn't revolve around you.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -32327,7 +32327,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1700",
     "term": "Righteous",
     "meaning": "honesto, honrado, recto, justificado",
-    "example": "righteous indignation",
+    "example": "Surely the most honorable of you with Allah is the most righteous of you.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -32365,7 +32365,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1262",
     "term": "Ring hollow",
     "meaning": "suena o parece falso, poco sincero o carente de sustancia",
-    "example": "During the discussion, she used the expression ?Ring hollow? to make her point.",
+    "example": "Promises to protect frontline services ring hollow after another round of clinic closures.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -32382,7 +32382,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1263",
     "term": "Ring true",
     "meaning": "suena o parece sincero",
-    "example": "During the discussion, she used the expression ?Ring true? to make her point.",
+    "example": "The murder suspect's version of events did not ring true to investigating officers.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -32418,9 +32418,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0206",
-    "term": "Rollin in",
-    "meaning": "nadar en (i) (f) (have in abundance)",
-    "example": "During the discussion, she used the expression ?Rollin in? to make her point.",
+    "term": "Rolling in",
+    "meaning": "tener algo, especialmente dinero, en abundancia",
+    "example": "The start-up looked as though it was rolling in money, but nearly everything had been leased.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -32437,7 +32437,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1440",
     "term": "Roomful",
     "meaning": "habitación llena",
-    "example": "In her notes, she chose ?Roomful? as the most precise wording for the situation.",
+    "example": "A roomful of reporters fell silent as the rescued climber entered the press conference.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -32454,7 +32454,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0231",
     "term": "Root out",
     "meaning": "extirpar, erradicar (find and eliminate) / buscar hasta dar con alguien",
-    "example": "root out corruption",
+    "example": "We are going to root out the government.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -32488,7 +32488,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1857",
     "term": "Rosy",
     "meaning": "sonrosado, rosa, rosáceo",
-    "example": "rosy predictions",
+    "example": "And then he kissed her rosy mouth and played with her long waving hair.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -32505,7 +32505,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1704",
     "term": "Roughen",
     "meaning": "poner áspero, rugoso, raspar",
-    "example": "roughen the surfaces so they will stick to each other",
+    "example": "His keen face was bronzed by the sun and roughened by the wind.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -32541,7 +32541,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1318",
     "term": "Rubble",
     "meaning": "escombros",
-    "example": "In her notes, she chose ?Rubble? as the most precise wording for the situation.",
+    "example": "There is a large pile of rubble where the school building used to be.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -32558,7 +32558,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0804",
     "term": "Ruffians",
     "meaning": "criminal, matón, rufián",
-    "example": "In her notes, she chose ?Ruffians? as the most precise wording for the situation.",
+    "example": "I want you to stop hanging around with those ruffians.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -32575,7 +32575,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0594",
     "term": "Ruffle some feathers",
     "meaning": "herir sensibilidades, levantar ampollas (cause controversy)",
-    "example": "During the discussion, she used the expression ?Ruffle some feathers? to make her point.",
+    "example": "Buckle up. We're going to ruffle some feathers today.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -32592,7 +32592,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0250",
     "term": "Rule out",
     "meaning": "descartar",
-    "example": "During the discussion, she used the expression ?Rule out? to make her point.",
+    "example": "Tom couldn't rule out the possibility that someone had lit his house on fire.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -32626,7 +32626,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0307",
     "term": "Run up against",
     "meaning": "enfrentar, afrontar",
-    "example": "During the discussion, she used the expression ?Run up against? to make her point.",
+    "example": "Every day you may run up against a lot of distractions when studying foreign languages.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -32677,7 +32677,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0093",
     "term": "Run up against sb / sth",
     "meaning": "enfrentar, afrontar (face: problems, challenges)",
-    "example": "During the discussion, she used the expression ?Run up against sb? to make her point.",
+    "example": "I've run up against all kinds of people, working as a temporary.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -32694,7 +32694,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0734",
     "term": "Run-down",
     "meaning": "deteriorado, en ruinas, agotado, exhausto, hecho polvo",
-    "example": "a run-down watch",
+    "example": "The shopping precinct, built in the 1960s, is tired and run-down.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -32711,7 +32711,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0793",
     "term": "Run-off",
     "meaning": "vertidos / desempate (election race, deciding round)",
-    "example": "In her notes, she chose ?Run-off? as the most precise wording for the situation.",
+    "example": "Since neither candidate has achieved an overall majority, there'll be a run-off next Sunday.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -32764,7 +32764,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0313",
     "term": "Saddle with",
     "meaning": "endosar a alguien con algo o alguien (burden)",
-    "example": "During the discussion, she used the expression ?Saddle with? to make her point.",
+    "example": "Stand on the left-hand side of the bicycle, and hold the saddle with the right hand.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -32781,7 +32781,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0939",
     "term": "Salacious",
     "meaning": "lascivo (el interés en temas sexuales de manera inapropiada)",
-    "example": "salacious limericks",
+    "example": "Tom filled Mary in on all the salacious gossip.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -32798,7 +32798,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0667",
     "term": "sales/store clerk",
     "meaning": "vendedor, dependiente, empleado (= shop / sales assistant)",
-    "example": "In her notes, she chose ?sales? as the most precise wording for the situation.",
+    "example": "A store clerk checked the stockroom for the jacket in my size.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -32815,7 +32815,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1710",
     "term": "Sameness",
     "meaning": "semejanza, parecido, monotonía",
-    "example": "he hated the sameness of the food the college served",
+    "example": "The sameness of my days is wearing me out.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -32832,7 +32832,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1713",
     "term": "Savagery",
     "meaning": "salvajismo, brutalidad",
-    "example": "In her notes, she chose ?Savagery? as the most precise wording for the situation.",
+    "example": "I don't tolerate savagery, much less in a country that claims to be democratic.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -32849,7 +32849,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0929",
     "term": "Savvy",
     "meaning": "entendido, conocedor, espabilado",
-    "example": "In her notes, she chose ?Savvy? as the most precise wording for the situation.",
+    "example": "Tom is very tech-savvy and often helps members of his family with their computing problems.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -32883,7 +32883,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0469",
     "term": "Scapegoat",
     "meaning": "cabeza de turco (f) (person: blamed for others )",
-    "example": "In her notes, she chose ?Scapegoat? as the most precise wording for the situation.",
+    "example": "Some fascists are unfairly scapegoating Kabyles for any problem Algeria has.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -32900,7 +32900,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0989",
     "term": "Scarce",
     "meaning": "escaso, poco, raro (lacking or rare) / a penas (scarcely)",
-    "example": "he was scarce sixteen years old",
+    "example": "Telephone booths are as scarce as hen's teeth around here.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -32917,7 +32917,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1896",
     "term": "Scarcity",
     "meaning": "escasez, falta de",
-    "example": "In her notes, she chose ?Scarcity? as the most precise wording for the situation.",
+    "example": "The scarcity of some items in supermarkets has raised concerns about the food supply.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -32952,7 +32952,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0042",
     "term": "Scared me out of my wits",
     "meaning": "(terrified) estar muerto de miedo",
-    "example": "During the discussion, she used the expression ?Scared me out of my wits? to make her point.",
+    "example": "A hand suddenly grabbed my shoulder in the dark and scared me out of my wits.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -32986,7 +32986,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0078",
     "term": "Scared the life out of me",
     "meaning": "asustarse muchísimo",
-    "example": "During the discussion, she used the expression ?Scared the life out of me? to make her point.",
+    "example": "That cyclist shot across the junction without looking and scared the life out of me.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -33006,7 +33006,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1156",
     "term": "Scatter",
     "meaning": "desperdigarse, dispersarse, desparramarse",
-    "example": "scatter cards across the table",
+    "example": "Fragments of the mirror were scattered on the floor.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33023,7 +33023,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1510",
     "term": "Scavenger",
     "meaning": "carroñero / chatarrero",
-    "example": "In her notes, she chose ?Scavenger? as the most precise wording for the situation.",
+    "example": "I'm organizing a scavenger hunt for my son's thirteenth birthday party.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33040,7 +33040,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0483",
     "term": "scenic",
     "meaning": "pintoresco (picturesque), espectacular",
-    "example": "scenic design",
+    "example": "Imogen of the Internet, having seen Flickr's entire photo collection, will never take the scenic route again.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -33077,7 +33077,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1073",
     "term": "Scheme",
     "meaning": "plan, estrategia / diseño, proyecto",
-    "example": "In her notes, she chose ?Scheme? as the most precise wording for the situation.",
+    "example": "He retires before the new pension scheme is due to come into effect.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33094,7 +33094,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0964",
     "term": "Schemes",
     "meaning": "plan, estrategia / conspirar, maquinar",
-    "example": "In her notes, she chose ?Schemes? as the most precise wording for the situation.",
+    "example": "Human life is too short when one considers the grand schemes of space exploration.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33130,7 +33130,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1727",
     "term": "Schooling",
     "meaning": "educación, escolarización",
-    "example": "In her notes, she chose ?Schooling? as the most precise wording for the situation.",
+    "example": "Keisuke has always studied in this mansion. That style known as 'home schooling', right?",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -33164,7 +33164,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0940",
     "term": "Scoop",
     "meaning": "exclusiva, primicia (news)",
-    "example": "In her notes, she chose ?Scoop? as the most precise wording for the situation.",
+    "example": "Arguing with a woman is about as fruitful as scooping up water with a sieve.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33181,7 +33181,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0680",
     "term": "Scope",
     "meaning": "rango, alcance (extent)",
-    "example": "In her notes, she chose ?Scope? as the most precise wording for the situation.",
+    "example": "It is beyond the scope of this paper to argue the input theory in detail.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33198,7 +33198,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1905",
     "term": "Scornful",
     "meaning": "despreciativo, desdeñoso",
-    "example": "In her notes, she chose ?Scornful? as the most precise wording for the situation.",
+    "example": "Edy Cohen is a media clown who speaks Arabic like a scornful illiterate old lady.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -33215,7 +33215,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0844",
     "term": "Scour",
     "meaning": "fregar, restregar / registrar, explorar, rastrear",
-    "example": "In her notes, she chose ?Scour? as the most precise wording for the situation.",
+    "example": "Tom scoured the room looking for Mary, but couldn't pick her out in the crowd.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33232,7 +33232,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0693",
     "term": "Scraggly",
     "meaning": "desaliñado (=scruffy)",
-    "example": "In her notes, she chose ?Scraggly? as the most precise wording for the situation.",
+    "example": "Craning his scraggly neck down to him, he asked Nick what he was doing down there.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33287,7 +33287,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0647",
     "term": "Scrapped (plans)",
     "meaning": "(abandon) descartar, desechar, abandonar",
-    "example": "In her notes, she chose ?Scrapped (plans)? as the most precise wording for the situation.",
+    "example": "The council scrapped its plans for an underground car park after costs doubled.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33304,7 +33304,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0749",
     "term": "Scratch the surface",
     "meaning": "arañar la superficie (figurative - examine superficially)",
-    "example": "During the discussion, she used the expression ?Scratch the surface? to make her point.",
+    "example": "Most people don't even scratch the surface of the human mind's capacity for memorization.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33338,7 +33338,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0500",
     "term": "Seafaring",
     "meaning": "marinero, marítimo, marino (sailing) / navegación",
-    "example": "seafaring vessels",
+    "example": "Generations of seafaring families have shaped the island’s customs and vocabulary.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33355,7 +33355,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0497",
     "term": "Seasoned",
     "meaning": "experto, experimentado, veterano (for people - experienced)",
-    "example": "a seasoned traveler",
+    "example": "I think the Thai food at this place is seasoned so Japanese will like it.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33389,7 +33389,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1660",
     "term": "Seaward",
     "meaning": "orientado al mar",
-    "example": "the sailor looked seaward",
+    "example": "At dusk, thousands of migrating birds moved seaward in a single dark cloud.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -33406,7 +33406,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1444",
     "term": "Seclude",
     "meaning": "aislar, recluir",
-    "example": "In her notes, she chose ?Seclude? as the most precise wording for the situation.",
+    "example": "Wolverines make their lair under torn-out roots, in rock crevices and in other secluded spots.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33423,7 +33423,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1445",
     "term": "Seclusion",
     "meaning": "aislamiento, retiro, reclusión, encierro",
-    "example": "In her notes, she chose ?Seclusion? as the most precise wording for the situation.",
+    "example": "Tom lives in seclusion and rarely sees anyone.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33440,7 +33440,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0175",
     "term": "See eye to eye",
     "meaning": "estar de acuerdo",
-    "example": "During the discussion, she used the expression ?See eye to eye? to make her point.",
+    "example": "I don't see eye to eye with him on that matter.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -33457,7 +33457,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0341",
     "term": "See off",
     "meaning": "despedir a (say farewell to)",
-    "example": "During the discussion, she used the expression ?See off? to make her point.",
+    "example": "I've just been to the airport to see off a friend who was leaving for Europe.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -33474,7 +33474,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0808",
     "term": "Seek and ye shall find",
     "meaning": "busca y encontrarás (buscad y hallaréis)",
-    "example": "During the discussion, she used the expression ?Seek and ye shall find? to make her point.",
+    "example": "Search the archive systematically—seek and ye shall find the missing correspondence.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33491,7 +33491,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1730",
     "term": "Seemingly",
     "meaning": "aparentemente, supuestamente",
-    "example": "the child is seemingly healthy but the doctor is concerned",
+    "example": "Cognitive reframing may help you find hope in a seemingly hopeless situation; try it.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -33525,7 +33525,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1447",
     "term": "Seize",
     "meaning": "agarrar, sujetar, coger / aprovechar una oportunidad",
-    "example": "The movie seized my imagination",
+    "example": "The police searched the house and seized 2 kilograms of heroin.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33542,7 +33542,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1448",
     "term": "Seizure",
     "meaning": "convulsión / embargo, confiscación",
-    "example": "In her notes, she chose ?Seizure? as the most precise wording for the situation.",
+    "example": "Layla was the last person to see Sami before he had a seizure.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33557,9 +33557,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0457",
-    "term": "Self-aggrandaisement",
+    "term": "Self-aggrandisement",
     "meaning": "autobombo, autoengrandecimiento",
-    "example": "In her notes, she chose ?Self-aggrandaisement? as the most precise wording for the situation.",
+    "example": "His autobiography slips into self-aggrandisement whenever it describes his role in the negotiations.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33576,7 +33576,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0458",
     "term": "Self-assurance",
     "meaning": "autonconfianza",
-    "example": "In her notes, she chose ?Self-assurance? as the most precise wording for the situation.",
+    "example": "Years of successful public speaking had given her quiet self-assurance.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33593,7 +33593,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0456",
     "term": "Self-deception",
     "meaning": "autoengaño, autodecepción",
-    "example": "In her notes, she chose ?Self-deception? as the most precise wording for the situation.",
+    "example": "His belief that the company could thrive without changing was pure self-deception.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33610,7 +33610,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0464",
     "term": "Self-defeating",
     "meaning": "contraproducente",
-    "example": "it is self-defeating...to ignore the progress of events",
+    "example": "Skipping meals to improve concentration is ultimately a self-defeating strategy.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33627,7 +33627,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0452",
     "term": "Self-delusion",
     "meaning": "autoengaño",
-    "example": "In her notes, she chose ?Self-delusion? as the most precise wording for the situation.",
+    "example": "Believing that talent alone guarantees success is a comforting form of self-delusion.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33661,7 +33661,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0444",
     "term": "Self-deprecating (humour)",
     "meaning": "autocrítico",
-    "example": "In her notes, she chose ?Self-deprecating (humour)? as the most precise wording for the situation.",
+    "example": "Her self-deprecating humour makes her achievements sound almost accidental.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33678,7 +33678,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0453",
     "term": "Self-esteem",
     "meaning": "autoestima",
-    "example": "In her notes, she chose ?Self-esteem? as the most precise wording for the situation.",
+    "example": "Just recently, I've become very lazy. I need to work to restore my self-esteem.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33712,7 +33712,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0449",
     "term": "Self-indulgent (lifestyle)",
     "meaning": "autocomplaciente",
-    "example": "In her notes, she chose ?Self-indulgent (lifestyle)? as the most precise wording for the situation.",
+    "example": "Their self-indulgent lifestyle became impossible to sustain once the inheritance ran out.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33729,7 +33729,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0455",
     "term": "Self-interest",
     "meaning": "egoísmo",
-    "example": "In her notes, she chose ?Self-interest? as the most precise wording for the situation.",
+    "example": "The virtues lose themselves in self-interest, just as rivers in the oceans.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33763,7 +33763,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0448",
     "term": "Self-made (billionaire)",
     "meaning": "hecho a sí mismo, autodidacta",
-    "example": "In her notes, she chose ?Self-made (billionaire)? as the most precise wording for the situation.",
+    "example": "The self-made billionaire began by repairing computers in his parents’ garage.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33778,9 +33778,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0451",
-    "term": "Self-pitty",
+    "term": "Self-pity",
     "meaning": "autocompasión",
-    "example": "In her notes, she chose ?Self-pitty? as the most precise wording for the situation.",
+    "example": "After one evening of self-pity, she rewrote the rejected application and tried again.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33814,7 +33814,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0447",
     "term": "Self-possessed (confidence)",
     "meaning": "sereno, calmado, tranquilo",
-    "example": "In her notes, she chose ?Self-possessed (confidence)? as the most precise wording for the situation.",
+    "example": "Despite hostile questioning, the witness remained poised and self-possessed.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33831,7 +33831,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0450",
     "term": "Self-preservation",
     "meaning": "supervivencia propia",
-    "example": "In her notes, she chose ?Self-preservation? as the most precise wording for the situation.",
+    "example": "When cowardice is conducive to self-preservation, it is called intelligence.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33848,7 +33848,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0461",
     "term": "Self-reliance",
     "meaning": "independiente, autónomo, autosuficiencia",
-    "example": "In her notes, she chose ?Self-reliance? as the most precise wording for the situation.",
+    "example": "Living abroad taught her the self-reliance she had never needed at home.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33882,7 +33882,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0446",
     "term": "Self-respecting (cook)",
     "meaning": "respetable, digno, que se haga respetar",
-    "example": "In her notes, she chose ?Self-respecting (cook)? as the most precise wording for the situation.",
+    "example": "No self-respecting cook would serve frozen peas as a seasonal spring vegetable.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33916,7 +33916,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0445",
     "term": "Self-sacrificing (devotion)",
     "meaning": "altruista (sacrifice)",
-    "example": "In her notes, she chose ?Self-sacrificing (devotion)? as the most precise wording for the situation.",
+    "example": "Her self-sacrificing devotion to the family left almost no time for her own ambitions.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33950,7 +33950,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0443",
     "term": "Self-satisfied (smile)",
     "meaning": "autocomplaciente. satisfecho de sí mismo",
-    "example": "In her notes, she chose ?Self-satisfied (smile)? as the most precise wording for the situation.",
+    "example": "A self-satisfied smile spread across his face when the prediction proved correct.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33967,7 +33967,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0454",
     "term": "Self-worth",
     "meaning": "autoestima, valor propio (similar to self-esteem)",
-    "example": "In her notes, she chose ?Self-worth? as the most precise wording for the situation.",
+    "example": "Narcissists engage in character assassination, attacking others' self-esteem and self-worth to maintain control.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -33984,7 +33984,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0460",
     "term": "Selfless",
     "meaning": "altruista, generoso",
-    "example": "In her notes, she chose ?Selfless? as the most precise wording for the situation.",
+    "example": "We are better off for the service rendered by this brave and selfless leader.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -34001,7 +34001,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1748",
     "term": "Senseless",
     "meaning": "insensato, estúpido, sin sentido",
-    "example": "In her notes, she chose ?Senseless? as the most precise wording for the situation.",
+    "example": "There are sentences whose translation into certain languages is senseless and, therefore, should be avoided.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -34016,9 +34016,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-1137",
-    "term": "Sensous",
+    "term": "Sensuous",
     "meaning": "sensual, sensorial",
-    "example": "In her notes, she chose ?Sensous? as the most precise wording for the situation.",
+    "example": "Although we rarely see Casanova himself on our tour of his sensuous world, we feel his presence as we look at paintings, sculpture, snuff boxes, embroidered vests, silk dresses, silver candy dishes, etc.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -34035,7 +34035,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1755",
     "term": "Sequentially",
     "meaning": "secuencialmente, en orden",
-    "example": "In her notes, she chose ?Sequentially? as the most precise wording for the situation.",
+    "example": "It is more time-efficient to do several tasks sequentially than attempt to do them simultaneously.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -34052,7 +34052,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0344",
     "term": "Set in motion",
     "meaning": "poner en marcha",
-    "example": "Her actions set in motion a complicated judicial process",
+    "example": "Algeria set in motion a plan to develop its remote southern regions.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -34069,7 +34069,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1602",
     "term": "Set someone’s sights on",
     "meaning": "be detetermined to",
-    "example": "their mother had set her sights on visiting",
+    "example": "After her first local race, Elena set her sights on qualifying for the national championships.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -34137,7 +34137,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1763",
     "term": "Sewerage",
     "meaning": "alcantarillado",
-    "example": "In her notes, she chose ?Sewerage? as the most precise wording for the situation.",
+    "example": "Untreated sewerage entering the bay has made swimming unsafe after heavy rain.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -34154,7 +34154,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1671",
     "term": "Shaky",
     "meaning": "tembloroso, inestable",
-    "example": "a shaky marriage",
+    "example": "We're on pretty shaky ground as it is.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -34171,7 +34171,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1726",
     "term": "Shameful",
     "meaning": "vergonzoso, bochornoso",
-    "example": "the wicked rascally shameful conduct of the bankrupt",
+    "example": "There is nothing more shameful than to say what one cannot say for certain.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -34647,7 +34647,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0052",
     "term": "Shed (or throw) light on",
     "meaning": "aclarar",
-    "example": "During the discussion, she used the expression ?Shed (or throw) light on? to make her point.",
+    "example": "Satellite images may shed light on how the fire crossed the river so quickly.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -34664,7 +34664,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1213",
     "term": "Sheepish",
     "meaning": "avergonzado",
-    "example": "In her notes, she chose ?Sheepish? as the most precise wording for the situation.",
+    "example": "Ziri was talking with a sheepish air of apology.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -34681,7 +34681,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1508",
     "term": "Sheepishly",
     "meaning": "tímidamente, de forma avergonzada",
-    "example": "In her notes, she chose ?Sheepishly? as the most precise wording for the situation.",
+    "example": "Yuri and Martha looked at each other and smiled sheepishly.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -34698,7 +34698,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0731",
     "term": "Sheer",
     "meaning": "puro, auténtico, simple / transparente, fino (fabric)",
-    "example": "he fell sheer into the water",
+    "example": "It was sheer coincidence that Mary and I were on the same train.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -34715,7 +34715,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0748",
     "term": "Sheer scale",
     "meaning": "magnitud, gran escala",
-    "example": "In her notes, she chose ?Sheer scale? as the most precise wording for the situation.",
+    "example": "The sheer scale of the archive means that cataloguing it will take several years.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -34749,7 +34749,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1346",
     "term": "Shepherd",
     "meaning": "pastor",
-    "example": "In her notes, she chose ?Shepherd? as the most precise wording for the situation.",
+    "example": "The shepherd, even when he become a gentleman, smells of the lamb.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -34766,7 +34766,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0501",
     "term": "Shirk",
     "meaning": "esquivar (work/duty) - (remolonear, vaguear, holgazanear)",
-    "example": "She shirks her duties",
+    "example": "There isn't a kinder soul in Avonlea and she never shirks her share of work.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -34783,7 +34783,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1063",
     "term": "Shock waves",
     "meaning": "(f) conmoción (violent dsiturbance)",
-    "example": "In her notes, she chose ?Shock waves? as the most precise wording for the situation.",
+    "example": "The bursting of Japan's so-called bubble economy sent shock waves through international markets.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -34800,7 +34800,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0492",
     "term": "shoddy",
     "meaning": "de mala calidad, malo, lamentable, chapucero",
-    "example": "shoddy business practices",
+    "example": "If the tradesmen's workmanship hadn't been so shoddy, there wouldn't have been any water damage.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -34834,7 +34834,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0220",
     "term": "Shoo away",
     "meaning": "ahuyentar",
-    "example": "During the discussion, she used the expression ?Shoo away? to make her point.",
+    "example": "We opened the greenhouse door to shoo away a blackbird trapped inside.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -34868,7 +34868,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0896",
     "term": "Shortcomings",
     "meaning": "deficiencias, faltas, fallos",
-    "example": "In her notes, she chose ?Shortcomings? as the most precise wording for the situation.",
+    "example": "I am not without my shortcomings, but these shortcomings can easily be amended.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -34885,7 +34885,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0378",
     "term": "Shortly afterwards",
     "meaning": "Poco despues",
-    "example": "During the discussion, she used the expression ?Shortly afterwards? to make her point.",
+    "example": "Shortly afterwards, intense flames caused the second floor to collapse.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -34919,7 +34919,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1931",
     "term": "Shrinkage",
     "meaning": "encogimiento",
-    "example": "shrinkage is the retail trade's euphemism for shoplifting",
+    "example": "But the lake's shrinkage is not just a reflection of drier weather and increased water use.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -34953,7 +34953,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0240",
     "term": "Shrouded in sth",
     "meaning": "envuelto, cubierto (f) (often passive) (obscure, cover sth)",
-    "example": "During the discussion, she used the expression ?Shrouded in sth? to make her point.",
+    "example": "The location of the remaining Wollemi Pines is shrouded in mystique.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -34970,7 +34970,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0527",
     "term": "Shrub",
     "meaning": "arbusto, mata (bush)",
-    "example": "In her notes, she chose ?Shrub? as the most precise wording for the situation.",
+    "example": "I have a large shrub in my front lawn that needs to be trimmed.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -34987,7 +34987,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1214",
     "term": "Shrug",
     "meaning": "encogerse de hombros",
-    "example": "In her notes, she chose ?Shrug? as the most precise wording for the situation.",
+    "example": "In North America when a person shrugs his shoulders it means \"I don't know\".",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35004,7 +35004,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1211",
     "term": "Sidestep",
     "meaning": "evitar, esquivar / dar un paso a un lado",
-    "example": "In her notes, she chose ?Sidestep? as the most precise wording for the situation.",
+    "example": "He attempted to sidestep a conflict with his chief.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35021,7 +35021,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1945",
     "term": "Silencer",
     "meaning": "silenciador",
-    "example": "In her notes, she chose ?Silencer? as the most precise wording for the situation.",
+    "example": "The man who shot Tom had a gun with a silencer on it.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -35038,7 +35038,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1809",
     "term": "Silken",
     "meaning": "sedoso, satinado, aterciopelado",
-    "example": "silken eyelashes",
+    "example": "Moderation is the silken string running through the pearl chain of all virtues.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -35055,7 +35055,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0389",
     "term": "Single out",
     "meaning": "destacar especialmente: she singles out the city’s literary festival",
-    "example": "During the discussion, she used the expression ?Single out? to make her point.",
+    "example": "Do you have any idea who we should single out for the position?",
     "family": "patterns",
     "families": [
       "patterns"
@@ -35072,7 +35072,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0230",
     "term": "Size up",
     "meaning": "evaluar, estudiar algo o alguien",
-    "example": "During the discussion, she used the expression ?Size up? to make her point.",
+    "example": "Do you have this one in a size up?",
     "family": "patterns",
     "families": [
       "patterns"
@@ -35106,7 +35106,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1820",
     "term": "Skeletal",
     "meaning": "esquelético",
-    "example": "a nightmare population of gaunt men and skeletal boys",
+    "example": "Furthermore, the frog’s external appearance and skeletal shape add to its distinctiveness.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -35141,7 +35141,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0256",
     "term": "Skeletons in the cupboard/closet",
     "meaning": "tener un secreto oscuro",
-    "example": "During the discussion, she used the expression ?Skeletons in the cupboard? to make her point.",
+    "example": "Tom found some skeletons in the cupboard when he was researching his family history.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -35158,7 +35158,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1899",
     "term": "Skepticism",
     "meaning": "escepticismo",
-    "example": "In her notes, she chose ?Skepticism? as the most precise wording for the situation.",
+    "example": "I've asked myself whether skepticism is the key to greatness. But even petty people doubt.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -35192,9 +35192,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-1460",
-    "term": "Slakened",
+    "term": "Slackened",
     "meaning": "diminuir, aflojar. soltar",
-    "example": "In her notes, she chose ?Slakened? as the most precise wording for the situation.",
+    "example": "As anger and frustration among the flood victims intensify, reports that international aid has slackened raises concerns.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35230,7 +35230,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1496",
     "term": "Slangy",
     "meaning": "coloquial",
-    "example": "a slangy expression",
+    "example": "The novel’s deliberately slangy dialogue gives each teenage character a distinctive voice.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35247,7 +35247,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1836",
     "term": "Slanting",
     "meaning": "inclinado",
-    "example": "In her notes, she chose ?Slanting? as the most precise wording for the situation.",
+    "example": "Then bid my comrades quit the port and shore, / and man the benches. They with rival strain / and slanting oar-blades sweep the levels of the main.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -35284,7 +35284,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0778",
     "term": "Slick",
     "meaning": "resbaladizo, escurridizo / hábil, suave (g) (smooth, easy)",
-    "example": "a slick evasive answer",
+    "example": "If I don't wash my hair for a day, it becomes slick with oil and flat.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35301,7 +35301,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0648",
     "term": "Slim pickings",
     "meaning": "pocas opciones, limitadas",
-    "example": "During the discussion, she used the expression ?Slim pickings? to make her point.",
+    "example": "By the final hour of the sale, there were slim pickings on every rail.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35318,7 +35318,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1847",
     "term": "Slippage",
     "meaning": "deslizamiento, bajada, fracaso",
-    "example": "the knots allowed no slippage",
+    "example": "There was no slippage in the schedule.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -35335,7 +35335,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1851",
     "term": "Sloppily",
     "meaning": "de mala manera, sin cuidado (carelessly)",
-    "example": "this work was done rather sloppily",
+    "example": "You do things too sloppily. Please do things more carefully.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -35352,7 +35352,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0999",
     "term": "Slot",
     "meaning": "ranura / tragaperras / puesto, vacante / hueco, espacio",
-    "example": "slot a television program",
+    "example": "I was hitting the slots, and before I knew it, it's this time already.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35369,7 +35369,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1123",
     "term": "Slouched",
     "meaning": "encorvado",
-    "example": "In her notes, she chose ?Slouched? as the most precise wording for the situation.",
+    "example": "Slouched over the desk, he rubbed his neck and tried to focus.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35386,7 +35386,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0507",
     "term": "slump",
     "meaning": "to be suddenly reduced to a much lower level",
-    "example": "Profits slumped to under $250 million.",
+    "example": "The president held himself responsible for the slump in business, and left his post.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35405,7 +35405,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1293",
     "term": "Sly",
     "meaning": "manipulador, astuto, pícaro, travieso",
-    "example": "sly as a fox",
+    "example": "You're too trusting in your infatuation, Tom. Maria is as sly as a fox.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35443,7 +35443,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1243",
     "term": "Smallholdings",
     "meaning": "parcela, finca",
-    "example": "In her notes, she chose ?Smallholdings? as the most precise wording for the situation.",
+    "example": "Several neighbouring smallholdings share the cost of a tractor and harvesting equipment.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35481,7 +35481,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0619",
     "term": "Smirk",
     "meaning": "sonreir con superioridad, satisfacción (flirting)",
-    "example": "In her notes, she chose ?Smirk? as the most precise wording for the situation.",
+    "example": "What are you smirking at? Did something good happen?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35498,7 +35498,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0776",
     "term": "Smitten",
     "meaning": "afectado por / enamorado de (f)",
-    "example": "In her notes, she chose ?Smitten? as the most precise wording for the situation.",
+    "example": "Gao Dao is usually really suave, but he seems completely smitten in front of his girlfriend.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35532,7 +35532,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0616",
     "term": "Sneer",
     "meaning": "mueca, mirar con desdén, burlarse, desprecio",
-    "example": "she sneered at her little sister's efforts to play the song on the piano",
+    "example": "He never spoke of the softer passions, save with a gibe and a sneer.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35549,7 +35549,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0618",
     "term": "Snigger",
     "meaning": "reir disimuladamente (reirse de alguien)",
-    "example": "In her notes, she chose ?Snigger? as the most precise wording for the situation.",
+    "example": "You're sniggering like a mischievous little brat who's just cooked up a dirty trick.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35566,7 +35566,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1465",
     "term": "Snob",
     "meaning": "arrogante, pedante",
-    "example": "In her notes, she chose ?Snob? as the most precise wording for the situation.",
+    "example": "Many people think Tom is a snob, but I don't think he is.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35583,7 +35583,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1466",
     "term": "Snobbery",
     "meaning": "esnobismo",
-    "example": "In her notes, she chose ?Snobbery? as the most precise wording for the situation.",
+    "example": "The English class system is known for its snobbery.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35617,7 +35617,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1039",
     "term": "Soar (v) / soaring (adj)",
     "meaning": "elevarse, dispararse (f) (go up rapidly) / abusivo,",
-    "example": "In her notes, she chose ?Soar (v)? as the most precise wording for the situation.",
+    "example": "Wholesale coffee prices soared after frost damaged crops across the region.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35634,7 +35634,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1696",
     "term": "Sobriety",
     "meaning": "sobriedad",
-    "example": "In her notes, she chose ?Sobriety? as the most precise wording for the situation.",
+    "example": "Yanni is strongly devoted to his sobriety.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -35651,7 +35651,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1468",
     "term": "Socialite",
     "meaning": "miembro de la alta sociedad",
-    "example": "In her notes, she chose ?Socialite? as the most precise wording for the situation.",
+    "example": "Paris Hilton and Kim Kardashian are some of today's most famous socialites.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35668,7 +35668,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1511",
     "term": "Soften/Cushion the blow",
     "meaning": "amortiguar el golpe",
-    "example": "The bread will soften if you pour some liquid on it",
+    "example": "A generous redundancy package helped cushion the blow of the factory closure.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35704,7 +35704,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0860",
     "term": "Solely",
     "meaning": "solamente, únicamente",
-    "example": "did it solely for money",
+    "example": "Victory and defeat aren't solely decided by the size of your army.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35721,7 +35721,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1965",
     "term": "Solicitude",
     "meaning": "solicitud",
-    "example": "In her notes, she chose ?Solicitude? as the most precise wording for the situation.",
+    "example": "As a stranger in a strange land, the sporadic solicitude from friends can be especially heart-warming.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -35755,7 +35755,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0385",
     "term": "Some time later, …",
     "meaning": "con After seria: some time after that/1728/the +noun. Afterwards es igual pero sin complemento, tambien valdria aqui pero es menos collocation",
-    "example": "During the discussion, she used the expression ?Some time later, …? to make her point.",
+    "example": "Some time later two prostitutes came to the king to have an argument settled.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -35789,7 +35789,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0985",
     "term": "Sooner or later",
     "meaning": "tarde o temprano",
-    "example": "During the discussion, she used the expression ?Sooner or later? to make her point.",
+    "example": "It was obvious to everyone that the marriage would sooner or later end in divorce.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35806,7 +35806,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1135",
     "term": "Soothing",
     "meaning": "reconfortante, relajante",
-    "example": "In her notes, she chose ?Soothing? as the most precise wording for the situation.",
+    "example": "We must not allow ourselves to be influenced by soothing words.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35840,7 +35840,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0437",
     "term": "Sorrow",
     "meaning": "pena, tristeza, melancolía",
-    "example": "In her notes, she chose ?Sorrow? as the most precise wording for the situation.",
+    "example": "It is easier to sympathize with sorrow than to sympathize with joy.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35857,7 +35857,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0499",
     "term": "Sought",
     "meaning": "buscado, deseado (past + participle of seek)",
-    "example": "the most sought-after item was the silver candelabrum",
+    "example": "They sought to punish him for his crime but he escaped.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35874,7 +35874,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1250",
     "term": "Sound",
     "meaning": "sensato, lógico (logical)",
-    "example": "politicians have no sound grasp of technology issues",
+    "example": "Without air there can be no wind or sound on the moon.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35891,7 +35891,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0232",
     "term": "Sound out",
     "meaning": "tantear sobre o acerca de (elicit the opinion of)",
-    "example": "I have to sound out the new professor",
+    "example": "Tom certainly gets a nice sound out of that old bassoon.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -35925,7 +35925,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1634",
     "term": "Spaciously",
     "meaning": "espaciosamente (spacious)",
-    "example": "the furniture was spaciously spread out",
+    "example": "The tables were spaciously arranged so wheelchair users could move between them easily.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -35942,7 +35942,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1138",
     "term": "Span",
     "meaning": "periodo / alcance (distance from end to end)",
-    "example": "The parking lot spans 3 acres",
+    "example": "Thanks to these discoveries, man's life span has become twice as long as before.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -35995,7 +35995,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0889",
     "term": "Spark backlash",
     "meaning": "desatar, desencadenar, provocar oposición",
-    "example": "In her notes, she chose ?Spark backlash? as the most precise wording for the situation.",
+    "example": "Closing the only maternity ward would spark a backlash from surrounding villages.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36012,7 +36012,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0709",
     "term": "Sparsely",
     "meaning": "escasamente (not thickly or densely)",
-    "example": "sparsely inhabited",
+    "example": "Canada is one of the most sparsely populated countries in the world.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36029,7 +36029,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1633",
     "term": "Spatially",
     "meaning": "espacialmente (space)",
-    "example": "spatially limited",
+    "example": "The two outbreaks were spatially separate but occurred within the same week.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -36046,7 +36046,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1082",
     "term": "Spayed",
     "meaning": "esterilizar, castrar (female)",
-    "example": "In her notes, she chose ?Spayed? as the most precise wording for the situation.",
+    "example": "Tom took his cat to the vet to have her spayed.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36080,7 +36080,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1699",
     "term": "Specialization",
     "meaning": "especialidad",
-    "example": "In her notes, she chose ?Specialization? as the most precise wording for the situation.",
+    "example": "Other areas of specialization include toxicology, pharmacology, and physical therapy.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -36097,7 +36097,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1362",
     "term": "Speculative",
     "meaning": "especulativo",
-    "example": "raised a speculative eyebrow",
+    "example": "Take care and try not to speak on speculative things.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -36117,7 +36117,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1971",
     "term": "Speechless",
     "meaning": "sin palabras, mudo",
-    "example": "speechless with shock",
+    "example": "Those simple and direct words finished off the candidate, leaving him speechless.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -36134,7 +36134,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1377",
     "term": "Speedy",
     "meaning": "veloz, rápido",
-    "example": "hoped for a speedy resolution of the problem",
+    "example": "The doctor's careful examination of the patient brought about his speedy recovery.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -36232,7 +36232,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1339",
     "term": "Spirits",
     "meaning": "ánimo, humor",
-    "example": "In her notes, she chose ?Spirits? as the most precise wording for the situation.",
+    "example": "The senior citizens' spirits were high in spite of the bad weather.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36249,7 +36249,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0284",
     "term": "Splash out",
     "meaning": "derrochar dinero, tirar la casa por la ventana",
-    "example": "During the discussion, she used the expression ?Splash out? to make her point.",
+    "example": "Kenny, Aaron, and Paul are so rowdy in the kiddie pool that they can never avoid having water splash out.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -36266,7 +36266,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0502",
     "term": "Splurge",
     "meaning": "derrochar, despilfarrar (spend money lavishly)",
-    "example": "In her notes, she chose ?Splurge? as the most precise wording for the situation.",
+    "example": "I believe in splurging every once in a while.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36283,7 +36283,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0963",
     "term": "Spokesman",
     "meaning": "portavoz",
-    "example": "In her notes, she chose ?Spokesman? as the most precise wording for the situation.",
+    "example": "Tom wasn't sure why he was considered the spokesman for the group.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36300,7 +36300,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0797",
     "term": "Spreadsheets",
     "meaning": "hoja de cálculo (Excel)",
-    "example": "In her notes, she chose ?Spreadsheets? as the most precise wording for the situation.",
+    "example": "Do you have experience working with spreadsheets?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36317,7 +36317,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0532",
     "term": "Spring",
     "meaning": "fuente, manantial, nacimiento",
-    "example": "In her notes, she chose ?Spring? as the most precise wording for the situation.",
+    "example": "A natural spring supplies clear water to the isolated hillside village.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36351,7 +36351,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0050",
     "term": "Springboard to success",
     "meaning": "(starting point) tampolín al éxito",
-    "example": "During the discussion, she used the expression ?Springboard to success? to make her point.",
+    "example": "The regional award became a springboard to success for the previously unknown designer.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -36368,7 +36368,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0048",
     "term": "Sprout up",
     "meaning": "Brotar, crecer (plants) - crecer, estirarse (people)",
-    "example": "During the discussion, she used the expression ?Sprout up? to make her point.",
+    "example": "The weeds began to sprout up along with the seeds.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -36385,7 +36385,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0858",
     "term": "Spurred",
     "meaning": "estimulo, incentivo",
-    "example": "In her notes, she chose ?Spurred? as the most precise wording for the situation.",
+    "example": "During the 1920s and 1930s, advances in mining spurred development and immigration.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36402,7 +36402,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1133",
     "term": "Spurt",
     "meaning": "chorro / incremento repentino",
-    "example": "In her notes, she chose ?Spurt? as the most precise wording for the situation.",
+    "example": "Kilauea volcano began spurting lava Sunday after two years of relative silence.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36419,7 +36419,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1115",
     "term": "Squiggle",
     "meaning": "garabato",
-    "example": "his signature was just a squiggle but only he could make that squiggle",
+    "example": "A nervous squiggle at the bottom of the form hardly counts as a signature.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36436,7 +36436,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1095",
     "term": "Squirm",
     "meaning": "retorcerse",
-    "example": "In her notes, she chose ?Squirm? as the most precise wording for the situation.",
+    "example": "Don't squirm, the doctor told patient before sticking a scary-looking needle into his arm.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36453,7 +36453,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0207",
     "term": "Squirrel away",
     "meaning": "ahorrar, esconder, guardar (f)",
-    "example": "During the discussion, she used the expression ?Squirrel away? to make her point.",
+    "example": "I've managed to squirrel away a small amount of money for emergencies.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -36470,7 +36470,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0715",
     "term": "Stagger",
     "meaning": "tambalearse",
-    "example": "She was staggered with bills after she tried to rebuild her house following the earthquake",
+    "example": "You stand the axis on the base and then proceed to stack up each part, staggering their position.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36487,7 +36487,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0716",
     "term": "Stagger sb",
     "meaning": "dejar atónito, pasmar, asombrar",
-    "example": "In her notes, she chose ?Stagger sb? as the most precise wording for the situation.",
+    "example": "Tom staggered out of the bar with a bottle in his hand.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36504,7 +36504,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0717",
     "term": "Staggeringly",
     "meaning": "sorprendentemente, asombrosamente, increíblemente",
-    "example": "In her notes, she chose ?Staggeringly? as the most precise wording for the situation.",
+    "example": "Straight white cisgender Christian men have been responsible for all but a handful of America's staggeringly large number of mass shootings.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36521,7 +36521,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0533",
     "term": "Stagnating",
     "meaning": "estancarse (water) / (f) be inactive",
-    "example": "In her notes, she chose ?Stagnating? as the most precise wording for the situation.",
+    "example": "The Moon directs the tides and ocean currents on our planet, preventing the water of our seas and oceans from stagnating.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36538,7 +36538,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0228",
     "term": "Stake out",
     "meaning": "mantener algo bajo vigilancia (keep under surveillance)",
-    "example": "During the discussion, she used the expression ?Stake out? to make her point.",
+    "example": "I began to stake out my territorial waters in the sorority house's hot tub.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -36606,7 +36606,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0422",
     "term": "Stakeholder",
     "meaning": "interesado, parte interesada (person/group with an",
-    "example": "In her notes, she chose ?Stakeholder? as the most precise wording for the situation.",
+    "example": "The stakeholder most deeply affected by this decision is the chief executive officer.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36623,7 +36623,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0890",
     "term": "Stalemate",
     "meaning": "punto muerto, callejón sin salida (f) / tablas (chess)",
-    "example": "In her notes, she chose ?Stalemate? as the most precise wording for the situation.",
+    "example": "The world looks at a conflict that has grinded on for decades, and sees a stalemate.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36640,7 +36640,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0920",
     "term": "Stand one’s ground",
     "meaning": "mantenerse firme",
-    "example": "During the discussion, she used the expression ?Stand one’s ground? to make her point.",
+    "example": "She stood her ground when senior colleagues pressured her to alter the findings.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36657,7 +36657,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1391",
     "term": "Standardising",
     "meaning": "estandarizar, normalizar",
-    "example": "In her notes, she chose ?Standardising? as the most precise wording for the situation.",
+    "example": "Standardising the application form made it easier to compare candidates fairly.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -36715,7 +36715,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1386",
     "term": "Stardom",
     "meaning": "estrellato",
-    "example": "stardom meant nothing to her",
+    "example": "Sills' stardom stretched from the highbrow world of the Metropolitan Opera to the playful world of the Muppets on television.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -36735,7 +36735,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1016",
     "term": "Stark",
     "meaning": "escueto, desnudo, inhóspito (bare, desolate) / crudo, duro (harsh)",
-    "example": "stark mad",
+    "example": "There's a stark difference in background and ideology between the two presidential candidates.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36752,7 +36752,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0292",
     "term": "Start with a clean slate",
     "meaning": "empezar de cero",
-    "example": "During the discussion, she used the expression ?Start with a clean slate? to make her point.",
+    "example": "At the beginning of a new year, some people like to start with a clean slate.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -36769,7 +36769,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0842",
     "term": "Startling",
     "meaning": "sorprendente, alarmante, deslumbrante, llamativo",
-    "example": "Sydney's startling new Opera House",
+    "example": "Tom is about to make a startling discovery.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36786,7 +36786,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1396",
     "term": "Starvation",
     "meaning": "hambre, hambruna",
-    "example": "the besiegers used starvation to induce surrender",
+    "example": "The failure of the crops was the major cause of starvation in that region.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -36806,7 +36806,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1926",
     "term": "Stately",
     "meaning": "señorial, majestuoso",
-    "example": "In her notes, she chose ?Stately? as the most precise wording for the situation.",
+    "example": "Laocoon, Neptune's priest, by lot ordained, / a stately bull before the altar slew.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -36823,7 +36823,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1162",
     "term": "Stationary",
     "meaning": "inmóvl, parado",
-    "example": "stationary machinery",
+    "example": "Ziri jumped out of the stationary vehicle and began to flee.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36840,7 +36840,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0518",
     "term": "Statutory",
     "meaning": "reglamentario, legal",
-    "example": "statutory restrictions",
+    "example": "There are no statutory minimum paid vacations or paid public holidays in the United States.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36857,7 +36857,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0682",
     "term": "Staycation",
     "meaning": "vacaciones en casa",
-    "example": "In her notes, she chose ?Staycation? as the most precise wording for the situation.",
+    "example": "San Diego, California, has a staycation campaign aimed at people who live within a day's drive of the city.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36874,7 +36874,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0711",
     "term": "Steadily",
     "meaning": "continuamente, constantemente, con estabilidad",
-    "example": "he could still walk steadily",
+    "example": "There are marked and rapidly, steadily increasing health benefits to giving up.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36891,7 +36891,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0567",
     "term": "Steamroll",
     "meaning": "arrollar figurative (crush sb’s opposition)",
-    "example": "steamroll the roads",
+    "example": "France is going to steamroll Cristiano Ronaldo and Portugal.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36908,7 +36908,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1340",
     "term": "Steep",
     "meaning": "empinado, inclinado",
-    "example": "note the steep incline",
+    "example": "The staircase leading to the rooftop is narrow, steep, and dark.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36925,7 +36925,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0706",
     "term": "Steer",
     "meaning": "conducir (vehicle) - dirigir, encaminar, guiar a",
-    "example": "The teacher steered the gifted students towards the more challenging courses",
+    "example": "Rigid wheels give sufficient stability to a low-speed vehicle steered by outside forces.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -36942,7 +36942,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0226",
     "term": "Steer clear of",
     "meaning": "mantenerse alejado de / evitar",
-    "example": "During the discussion, she used the expression ?Steer clear of? to make her point.",
+    "example": "Hey, steer clear of the boss today, he seems really ticked off about something.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -36959,7 +36959,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0183",
     "term": "Step by step",
     "meaning": "paso a paso, poco a poco",
-    "example": "During the discussion, she used the expression ?Step by step? to make her point.",
+    "example": "You can't master a foreign language in a short time; you have to study it step by step.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -36976,7 +36976,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0332",
     "term": "Step up to the plate",
     "meaning": "dar la cara, asumir responsabilidades. rise to the occasion",
-    "example": "During the discussion, she used the expression ?Step up to the plate? to make her point.",
+    "example": "All major economies must step up to the plate if we are to avoid the dangerous consequences of climate change.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -36993,7 +36993,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0913",
     "term": "Stepping stone",
     "meaning": "camino de piedras / trampolín, peldaño, escalón (f) used to",
-    "example": "the job was just a stepping stone on his way to fame and riches",
+    "example": "Each small success became a stepping stone towards achieving my ultimate goals.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37010,7 +37010,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0861",
     "term": "Stewardship",
     "meaning": "administración",
-    "example": "In her notes, she chose ?Stewardship? as the most precise wording for the situation.",
+    "example": "The board thanked him for his years of faithful stewardship over the charity's finances.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37081,7 +37081,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1692",
     "term": "Stiffen",
     "meaning": "poner rígido, poner tenso",
-    "example": "stiffen the regulations",
+    "example": "A spasm, violent and uncontrollable, stiffened every muscle in his body.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -37098,7 +37098,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1084",
     "term": "Stoat",
     "meaning": "armiño",
-    "example": "In her notes, she chose ?Stoat? as the most precise wording for the situation.",
+    "example": "When I'm in a bad mood, I like to think of stoats to cheer myself up.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37115,7 +37115,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0631",
     "term": "Stock",
     "meaning": "acciones, existencias",
-    "example": "a stock item",
+    "example": "Stock prices soared in active trading as corporations announced good financial results.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37132,7 +37132,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1223",
     "term": "Stocky",
     "meaning": "bajo y fornido (sturdy, thick set)",
-    "example": "stocky legs",
+    "example": "A stocky man with a swarthy complexion snatched Mary's handbag and disappeared into the crowd.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37166,7 +37166,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0364",
     "term": "Stop short of doing something",
     "meaning": "no llegar a hacer algo",
-    "example": "During the discussion, she used the expression ?Stop short of doing something? to make her point.",
+    "example": "The inquiry criticised senior officials but stopped short of accusing them of deliberate wrongdoing.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -37183,7 +37183,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1940",
     "term": "Storage",
     "meaning": "almacenamiento",
-    "example": "my car is in storage",
+    "example": "Please ask the secretary to stock the office supplies in the storage room.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -37198,9 +37198,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0087",
-    "term": "Straight out of the window",
-    "meaning": "directly and clearly",
-    "example": "During the discussion, she used the expression ?Straight out of the window? to make her point.",
+    "term": "Go straight out of the window",
+    "meaning": "quedar abandonado u olvidado de repente",
+    "example": "When panic set in, months of careful planning went straight out of the window.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -37217,7 +37217,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1168",
     "term": "Strain",
     "meaning": "esfuerzo / estrés, presión",
-    "example": "In her notes, she chose ?Strain? as the most precise wording for the situation.",
+    "example": "You'll strain your eyes trying to read in this light.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37234,7 +37234,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1655",
     "term": "Strategically",
     "meaning": "estratégicamente",
-    "example": "strategically important decisions",
+    "example": "The strategically placed mirrors on the walls made the room seem much larger.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -37251,7 +37251,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0640",
     "term": "Stray",
     "meaning": "divagar, desviarse (get lost)",
-    "example": "a stray calf",
+    "example": "Tom came close to being killed by a stray arrow.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37268,7 +37268,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1987",
     "term": "Strengthen, Lengthen",
     "meaning": "siempre th",
-    "example": "In her notes, she chose ?Strengthen, Lengthen? as the most precise wording for the situation.",
+    "example": "Regular resistance training can strengthen muscles, whereas stretching may lengthen them.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -37285,7 +37285,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1363",
     "term": "Stretcher",
     "meaning": "camilla",
-    "example": "In her notes, she chose ?Stretcher? as the most precise wording for the situation.",
+    "example": "The last time I saw Tom and Mary, they were on stretchers.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -37305,7 +37305,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1439",
     "term": "Stricken",
     "meaning": "afectado por, afligido por",
-    "example": "In her notes, she chose ?Stricken? as the most precise wording for the situation.",
+    "example": "Heavy rain throughout the night has hampered efforts to rescue survivors from the stricken ferry.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37322,7 +37322,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1203",
     "term": "Strike a chord",
     "meaning": "tocar la fibra sensible de, calar hondo (resonate with someones",
-    "example": "this writer strikes a chord with young women",
+    "example": "Bernard was hoping he could strike a chord with his new colleagues.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37339,7 +37339,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0590",
     "term": "Striking",
     "meaning": "notable, llamativo, sorprendente",
-    "example": "a striking thing about Picadilly Circus is the statue of Eros in the center",
+    "example": "It was a bright cold day in April, and the clocks were striking thirteen.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37373,7 +37373,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0589",
     "term": "Strikingly",
     "meaning": "impresionantemente",
-    "example": "this was strikingly demonstrated",
+    "example": "The digital revolution is paving the way towards strikingly new forms of social relationships.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37390,7 +37390,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1153",
     "term": "Stringent",
     "meaning": "estricto, severo",
-    "example": "stringent safety measures",
+    "example": "The approach is worthwhile, but there is a serious lack of stringent quantitative evaluation.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37407,7 +37407,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0342",
     "term": "Strive to do sth",
     "meaning": "tartar de, esforzarse por",
-    "example": "During the discussion, she used the expression ?Strive to do sth? to make her point.",
+    "example": "Don't worry about not being noticed; instead, strive to do something remarkable.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -37462,7 +37462,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0049",
     "term": "Stroll down memory lane",
     "meaning": "recordar viejos tiempos",
-    "example": "During the discussion, she used the expression ?Stroll down memory lane? to make her point.",
+    "example": "They opened up their wedding album and had a little stroll down memory lane.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -37479,7 +37479,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1269",
     "term": "Stuck between a rock and a hard place",
     "meaning": "encontrarse en una situación muy difícil en",
-    "example": "During the discussion, she used the expression ?Stuck between a rock and a hard place? to make her point.",
+    "example": "With rents rising and wages frozen, many families are stuck between a rock and a hard place.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37496,7 +37496,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1155",
     "term": "Studded",
     "meaning": "con tachuelas / adornado con",
-    "example": "star-studded heavens",
+    "example": "The night sky was studded with stars on a background of black.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37513,7 +37513,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1495",
     "term": "Stuffing",
     "meaning": "relleno",
-    "example": "In her notes, she chose ?Stuffing? as the most precise wording for the situation.",
+    "example": "When he's hungry, Marco is capable of stuffing himself with a kilogram of baked goods.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37530,7 +37530,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0771",
     "term": "Stumble across",
     "meaning": "encontrar, toparse, tropezarse con (f) (informal)",
-    "example": "In her notes, she chose ?Stumble across? as the most precise wording for the situation.",
+    "example": "While clearing the attic, I stumbled across a bundle of letters from the 1940s.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37564,7 +37564,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1098",
     "term": "Stumble across something",
     "meaning": "encontrarse, toparse por casualidad",
-    "example": "In her notes, she chose ?Stumble across something? as the most precise wording for the situation.",
+    "example": "You sometimes stumble across something remarkable when you stop following the guidebook.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37620,7 +37620,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1112",
     "term": "Stumped",
     "meaning": "dejar boquiabierto, sin palabras",
-    "example": "In her notes, she chose ?Stumped? as the most precise wording for the situation.",
+    "example": "It's not the calculus I'm getting stumped on. It's the algebra.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37637,7 +37637,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0866",
     "term": "Sturdy",
     "meaning": "robusto, fuerte (strong)",
-    "example": "sturdy steel shelves",
+    "example": "The trees had become old and sturdy and could bear the drought better than when fresh-sprouted.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37654,7 +37654,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1959",
     "term": "Subconsciously",
     "meaning": "subconscientemente",
-    "example": "the image came to him subconsciously",
+    "example": "Everything we experience on a daily basis is the result of what we subconsciously believe we deserve.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -37669,9 +37669,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-1966",
-    "term": "Submmersion",
+    "term": "Submersion",
     "meaning": "sumergimiento",
-    "example": "In her notes, she chose ?Submmersion? as the most precise wording for the situation.",
+    "example": "Prolonged submersion damaged the camera despite its water-resistant casing.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -37688,7 +37688,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0425",
     "term": "Subside",
     "meaning": "bajar / hundirse / sosegar, disminuir (f)(emotions, problems: grow less)",
-    "example": "She subsided into the chair",
+    "example": "Public anger began to subside once the missing funds were recovered.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37705,7 +37705,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1914",
     "term": "Subsidise",
     "meaning": "bajar, hundirse, disminuir",
-    "example": "In her notes, she chose ?Subsidise? as the most precise wording for the situation.",
+    "example": "The government also found that if it wanted immigrants it had to subsidise migration.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -37739,7 +37739,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1682",
     "term": "Suddenness",
     "meaning": "lo inesperado, lo repentino",
-    "example": "In her notes, she chose ?Suddenness? as the most precise wording for the situation.",
+    "example": "Here we find that mustang humor of his forever kicking its silver heels with the most upsetting suddenness into the honeyed sweetness of his flowing poetry.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -37756,7 +37756,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0133",
     "term": "Suffice to say",
     "meaning": "basta decir (f) (I will just say)",
-    "example": "During the discussion, she used the expression ?Suffice to say? to make her point.",
+    "example": "For a language to be international, it does not suffice to say that it is so.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -37773,7 +37773,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0686",
     "term": "Summit",
     "meaning": "cima, pico",
-    "example": "Many mountaineers go up Mt. Everest but not all summit",
+    "example": "I awoke this morning to find the summit of the mountain covered with snow.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37790,7 +37790,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1784",
     "term": "Summons",
     "meaning": "citación, orden de comparecencia",
-    "example": "In her notes, she chose ?Summons? as the most precise wording for the situation.",
+    "example": "You know what it is? Yes, jury duty, got a summons in the mail.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -37807,7 +37807,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1650",
     "term": "Supposedly",
     "meaning": "supuestamente, presuntamente, aparentemente",
-    "example": "In her notes, she chose ?Supposedly? as the most precise wording for the situation.",
+    "example": "Supposedly, everyone is connected to everyone else by, at most, six degrees of separation.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -37824,7 +37824,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1978",
     "term": "Surcharge",
     "meaning": "recargo, cargo adicional",
-    "example": "In her notes, she chose ?Surcharge? as the most precise wording for the situation.",
+    "example": "This train has a surcharge of three euros.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -37841,7 +37841,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1775",
     "term": "Surety",
     "meaning": "fianza, garantía",
-    "example": "In her notes, she chose ?Surety? as the most precise wording for the situation.",
+    "example": "Loan on deeds needed the joint surety.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -37858,7 +37858,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0673",
     "term": "surge",
     "meaning": "to increase a lot very quickly",
-    "example": "The value of exports surged last year, recording an all- time high.",
+    "example": "Exports surged last year and reached an all-time high of €4.2 billion.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37894,7 +37894,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1192",
     "term": "Surmise",
     "meaning": "suponer, conjeturar (guess, deduce that)",
-    "example": "I surmised that the butler did it",
+    "example": "Those are the main facts of the case, stripped of all surmise, and stated as baldly as possible.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37911,7 +37911,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1012",
     "term": "Surmised",
     "meaning": "suponer que, conjurar que, prseumir que (guess, deduce that)",
-    "example": "In her notes, she chose ?Surmised? as the most precise wording for the situation.",
+    "example": "The police surmised that the victim told them the truth.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -37928,7 +37928,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1367",
     "term": "Suspiciously",
     "meaning": "sospechosamente, con desconfianza",
-    "example": "she regarded the food suspiciously",
+    "example": "Each pancake comes with a dollop of suspiciously soft butter in a tiny plastic cup.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -37948,7 +37948,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1504",
     "term": "Sustain",
     "meaning": "sufrir, padecer (una lesión)",
-    "example": "In her notes, she chose ?Sustain? as the most precise wording for the situation.",
+    "example": "The bridge couldn't sustain the force of the strong current and collapsed.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38001,7 +38001,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1685",
     "term": "Sustenance",
     "meaning": "sustento, alimento",
-    "example": "they were in want of sustenance",
+    "example": "Throughout history, the ocean has been a vital source of sustenance, transport, commerce, growth, and inspiration.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -38018,7 +38018,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1458",
     "term": "Swampy",
     "meaning": "pantanoso, cenagoso",
-    "example": "swampy bayous",
+    "example": "The Algerian region of El Tarf is known for its swampy forests.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38054,7 +38054,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0694",
     "term": "Swatches",
     "meaning": "muestra (fabric / colour sample)",
-    "example": "In her notes, she chose ?Swatches? as the most precise wording for the situation.",
+    "example": "The designer pinned fabric swatches beside the sketches to compare colour and texture.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38071,7 +38071,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0627",
     "term": "Sway",
     "meaning": "mecerse, balancearse, oscilar, bambolear",
-    "example": "the wind swayed the trees gently",
+    "example": "Though he is no longer president, he still holds considerable sway among the political elite.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38088,7 +38088,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0377",
     "term": "Sweep past",
     "meaning": "Pasar velozmente junto a nosotros",
-    "example": "During the discussion, she used the expression ?Sweep past? to make her point.",
+    "example": "Two police motorcycles swept past us, followed by the president’s motorcade.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -38105,7 +38105,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1821",
     "term": "Sweeten",
     "meaning": "endulzar",
-    "example": "sweeten a deal",
+    "example": "Tom sweetened his tea with honey; Mary didn't sweeten hers at all.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -38139,9 +38139,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0208",
-    "term": "Swell to (over than 1 M€)",
+    "term": "Swell to (more than €1m)",
     "meaning": "aumentar, crecer",
-    "example": "During the discussion, she used the expression ?Swell to (over than 1 M€)? to make her point.",
+    "example": "The restoration budget has swollen to more than one million euros.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -38158,7 +38158,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0600",
     "term": "Swindle",
     "meaning": "timar, estafar, defraudar, engañar (cheat, deceive)",
-    "example": "In her notes, she chose ?Swindle? as the most precise wording for the situation.",
+    "example": "Con artists take advantage of the credulity of inexperienced investors and swindle them out of their money.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38192,7 +38192,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0845",
     "term": "Swirl",
     "meaning": "girar, arremolinarse (flow in circle)",
-    "example": "In her notes, she chose ?Swirl? as the most precise wording for the situation.",
+    "example": "When a cartoon bumps his head, there are all those things swirling around his head.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38209,7 +38209,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0634",
     "term": "Swollen",
     "meaning": "hinchado",
-    "example": "so swollen by victory that he was unfit for normal duty",
+    "example": "I went to see the river, which I found greatly swollen.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38226,7 +38226,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1841",
     "term": "Symbolic",
     "meaning": "simbólico",
-    "example": "symbolic art",
+    "example": "The dismissal of foreign minister Tanaka is symbolic of the continuing political turmoil.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -38243,7 +38243,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1140",
     "term": "Sympathetically",
     "meaning": "compasivamente",
-    "example": "she listened to him sympathetically",
+    "example": "Ziri petted Rima sympathetically on the shoulder.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38260,7 +38260,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0674",
     "term": "Synergy",
     "meaning": "Sinergia (combined effect/ success / power )",
-    "example": "In her notes, she chose ?Synergy? as the most precise wording for the situation.",
+    "example": "Those actors play off each other so well that it makes a kind of synergy.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38275,9 +38275,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-1843",
-    "term": "Synonimous",
+    "term": "Synonymous",
     "meaning": "sinónimo",
-    "example": "In her notes, she chose ?Synonimous? as the most precise wording for the situation.",
+    "example": "In public debate, economic growth is too often treated as synonymous with social progress.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -38294,7 +38294,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0995",
     "term": "Tack",
     "meaning": "chincheta / pegar, fijar, clavar",
-    "example": "In her notes, she chose ?Tack? as the most precise wording for the situation.",
+    "example": "I think it's about time we got down to brass tacks.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38311,7 +38311,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1261",
     "term": "Tackle",
     "meaning": "abordar, afrontar, encarar",
-    "example": "In her notes, she chose ?Tackle? as the most precise wording for the situation.",
+    "example": "Tom appears to be too tired to tackle that problem right now.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38328,7 +38328,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1370",
     "term": "Tactfully",
     "meaning": "con tacto, discretamente",
-    "example": "he stepped tactfully in to prevent trouble",
+    "example": "Mark tactfully removed himself from any conversation involving backbiting.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -38366,7 +38366,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0346",
     "term": "Take pleasure in",
     "meaning": "disfrutar con",
-    "example": "During the discussion, she used the expression ?Take pleasure in? to make her point.",
+    "example": "Some people take pleasure in the suffering of others.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -38383,7 +38383,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0338",
     "term": "Take sth on the chin",
     "meaning": "aceptar sin quejarse",
-    "example": "During the discussion, she used the expression ?Take sth on the chin? to make her point.",
+    "example": "The goalkeeper took the criticism on the chin and trained harder the following week.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -38400,7 +38400,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0165",
     "term": "Take the world by storm",
     "meaning": "arrasar (f) (be a sudden success)",
-    "example": "During the discussion, she used the expression ?Take the world by storm? to make her point.",
+    "example": "This song is set to take the world by storm.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -38417,7 +38417,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0512",
     "term": "Takeover",
     "meaning": "adquisición, absorción, compra (of a company)",
-    "example": "In her notes, she chose ?Takeover? as the most precise wording for the situation.",
+    "example": "Elon Musk's far-right takeover of Twitter has been a bigger disaster than anyone anticipated.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38486,7 +38486,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0315",
     "term": "Talk sb out of sth",
     "meaning": "convencer a alguien de que NO haga algo",
-    "example": "During the discussion, she used the expression ?Talk sb out of sth? to make her point.",
+    "example": "Politicians talk out of both sides of their mouth.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -38545,7 +38545,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0318",
     "term": "Talk to a brick wall",
     "meaning": "hablar con la pared",
-    "example": "During the discussion, she used the expression ?Talk to a brick wall? to make her point.",
+    "example": "He won't listen. I might as well talk to a brick wall.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -38562,7 +38562,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0316",
     "term": "talk to the hand",
     "meaning": "used for saying in a slightly angry way that you do not want to listen to what someone is saying",
-    "example": "‘That dress looks terrible on you!’ ‘Talk to the hand! You’ve got no idea about fashion.’",
+    "example": "When I criticised her extravagant shoes, she laughed and said, ‘Talk to the hand.’",
     "family": "idioms",
     "families": [
       "patterns",
@@ -38583,7 +38583,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0319",
     "term": "Talk your ear off",
     "meaning": "hablar por los codos, comer el coco",
-    "example": "During the discussion, she used the expression ?Talk your ear off? to make her point.",
+    "example": "My new neighbour talked my ear off about parking permits before I reached the front door.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -38600,7 +38600,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1233",
     "term": "Tantamount",
     "meaning": "equivaler a algo",
-    "example": "his statement was tantamount to an admission of guilt",
+    "example": "Victory attained by violence is tantamount to a defeat, for it is momentary.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38617,7 +38617,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0424",
     "term": "Tapered",
     "meaning": "ahusado, afilado (gradually narrowing)",
-    "example": "In her notes, she chose ?Tapered? as the most precise wording for the situation.",
+    "example": "In the tumbler, the cylinder form is tapered.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38634,7 +38634,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1067",
     "term": "Tarmac",
     "meaning": "asfalto",
-    "example": "In her notes, she chose ?Tarmac? as the most precise wording for the situation.",
+    "example": "The sun was beating down, and the tarmac on the roads was blistering in the heat.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38651,7 +38651,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1849",
     "term": "Tasteful",
     "meaning": "de buen gusto",
-    "example": "In her notes, she chose ?Tasteful? as the most precise wording for the situation.",
+    "example": "The theater company's characterization of Anne Frank was very emotional, but tasteful.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -38704,7 +38704,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0438",
     "term": "Tedious",
     "meaning": "tedioso, aburrido, pesado",
-    "example": "In her notes, she chose ?Tedious? as the most precise wording for the situation.",
+    "example": "It is absurd to divide people into good and bad. People are either charming or tedious.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38721,7 +38721,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0856",
     "term": "Teeming",
     "meaning": "repleto, lleno",
-    "example": "the Third World's teeming millions",
+    "example": "The thunder's rumbling, and it's teeming with rain.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38816,7 +38816,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1322",
     "term": "tell me about it",
     "meaning": "used for saying that you already know about something unpleasant that someone has just described because you have experienced it yourself",
-    "example": "‘We’ve spent hours on the phone to the insurance company.’ ‘Tell me about it!’",
+    "example": "‘I’ve had three hours’ sleep all week.’ ‘Tell me about it—I have newborn twins.’",
     "family": "idioms",
     "families": [
       "vocabulary",
@@ -38837,7 +38837,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1595",
     "term": "tell me something I don’t know",
     "meaning": "used for saying in a slightly angry way that you already know about something that a person is talking to you about, often because it is obvious",
-    "example": "‘But Jack hasn’t finished this.’ ‘Tell me something I don’t know, I’ve been trying to sort his mess out all morning!’",
+    "example": "‘This printer is unreliable.’ ‘Tell me something I don’t know; I’ve fixed it four times today.’",
     "family": "idioms",
     "families": [
       "idioms"
@@ -38855,7 +38855,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0586",
     "term": "Tell me sth I don’t know",
     "meaning": "dime algo que no sepa",
-    "example": "In her notes, she chose ?Tell me sth I don’t know? as the most precise wording for the situation.",
+    "example": "‘The committee has postponed its decision again.’ ‘Tell me something I don’t know.’",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38872,7 +38872,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0317",
     "term": "Tell somebody where to get off",
     "meaning": "ponerle los puntos sobre las íes, cantarle las",
-    "example": "During the discussion, she used the expression ?Tell somebody where to get off? to make her point.",
+    "example": "After his third late arrival, the director told him where to get off.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -38889,7 +38889,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1326",
     "term": "Tell someone a thing or two",
     "meaning": "decir un par de cosas",
-    "example": "During the discussion, she used the expression ?Tell someone a thing or two? to make her point.",
+    "example": "When the courier finally appeared, Priya told him a thing or two about wasting customers’ time.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38906,7 +38906,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0922",
     "term": "Tell-tale",
     "meaning": "chivato",
-    "example": "In her notes, she chose ?Tell-tale? as the most precise wording for the situation.",
+    "example": "I read the article \"Cosmic wabi-sabi: Tell-tale morphological imperfections in impact crater shapes revealed by numerical analysis.\"",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -38923,7 +38923,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1859",
     "term": "Tempestuous",
     "meaning": "tempestuoso, borrascoso",
-    "example": "In her notes, she chose ?Tempestuous? as the most precise wording for the situation.",
+    "example": "Tatoeba is just Twitter for language nerds. I eagerly await tempestuous floods of snarky hashtags in every sentence.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -39008,7 +39008,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1011",
     "term": "That’s all well and good but",
     "meaning": "está todo bien, pero (i)(nevertheless, even so)",
-    "example": "During the discussion, she used the expression ?That’s all well and good but? to make her point.",
+    "example": "That’s all well and good, but who will maintain the equipment once the grant ends?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -39076,7 +39076,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1007",
     "term": "The be all and end all",
     "meaning": "lo más importante, lo principal, lo fundamental",
-    "example": "During the discussion, she used the expression ?The be all and end all? to make her point.",
+    "example": "Exam results matter, but they are not the be-all and end-all of a child’s education.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -39284,7 +39284,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0348",
     "term": "The dead of night",
     "meaning": "mitad de la noche, de madrugada",
-    "example": "During the discussion, she used the expression ?The dead of night? to make her point.",
+    "example": "Where on earth do you suppose she is going in the dead of night?",
     "family": "patterns",
     "families": [
       "patterns"
@@ -39985,7 +39985,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1532",
     "term": "The same old story",
     "meaning": "la misma historia de siempre",
-    "example": "During the discussion, she used the expression ?The same old story? to make her point.",
+    "example": "Mary complained about her husband again - the same old story.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -40277,7 +40277,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0605",
     "term": "Theatrical",
     "meaning": "teatral / exagerado, melodramático",
-    "example": "a theatrical pose",
+    "example": "The theatrical troupe’s skits were often quirky, but their comedic instincts were unquestionably brilliant.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -40294,7 +40294,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1657",
     "term": "Thematically",
     "meaning": "tematicamente",
-    "example": "thematically related",
+    "example": "Although written decades apart, the three essays are thematically linked by exile.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -40311,7 +40311,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1902",
     "term": "Therapeutic",
     "meaning": "terapéutico",
-    "example": "therapeutic approach to criminality",
+    "example": "When you feel something, put it into words. It has a therapeutic effect.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -40380,7 +40380,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0083",
     "term": "There’s a lot to be said for it",
     "meaning": "hay mucho que decir sobre / al respeto",
-    "example": "During the discussion, she used the expression ?There’s a lot to be said for it? to make her point.",
+    "example": "There’s a lot to be said for renting before committing to life in a new city.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -40434,7 +40434,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1640",
     "term": "Thereafter",
     "meaning": "a partir de ahí (from then)",
-    "example": "thereafter he never called again",
+    "example": "It is better to prevent evil than punish it by another evil thereafter.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -40451,7 +40451,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1639",
     "term": "Thereby",
     "meaning": "así, de esa manera, por consiguiente, por ende",
-    "example": "He knocked over the red wine, thereby ruining the table cloth",
+    "example": "Over time, wave action undercuts sea cliffs and thereby causes them to fall into the ocean.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -40536,7 +40536,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0366",
     "term": "Think long and hard about something",
     "meaning": "pensar detenidamente sobre algo",
-    "example": "During the discussion, she used the expression ?Think long and hard about something? to make her point.",
+    "example": "Think long and hard about what anonymity would mean before publishing the allegations.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -40574,7 +40574,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0365",
     "term": "Think very highly of someone/something",
     "meaning": "Tener en muy alta estima",
-    "example": "During the discussion, she used the expression ?Think very highly of someone? to make her point.",
+    "example": "I don't think very highly of him, personally.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -40625,7 +40625,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0810",
     "term": "This too shall pass",
     "meaning": "esto también pasará",
-    "example": "During the discussion, she used the expression ?This too shall pass? to make her point.",
+    "example": "During the worst weeks of treatment, she reminded herself that this too shall pass.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -40642,7 +40642,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1669",
     "term": "Thoughtless",
     "meaning": "desconsiderado",
-    "example": "the thoughtless saying of a great princess on being informed that the people had no bread; `Let them eat cake'",
+    "example": "He's not the kind of person to act without thinking. He's not a thoughtless person.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -40659,7 +40659,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1180",
     "term": "Thrill-seeker",
     "meaning": "amante de la adrenalina, de las emociones fuertes",
-    "example": "In her notes, she chose ?Thrill-seeker? as the most precise wording for the situation.",
+    "example": "Benedito's date was a thrill-seeker, so they went skydiving.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -40676,7 +40676,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0737",
     "term": "Thrive",
     "meaning": "crecer bien, desarrollarse (grow healthily) / prosperar, progresar",
-    "example": "The new student is thriving",
+    "example": "I'm afraid of losing my obscurity. Genuineness only thrives in the dark. Like celery.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -40693,7 +40693,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0654",
     "term": "Throng",
     "meaning": "multitud",
-    "example": "In her notes, she chose ?Throng? as the most precise wording for the situation.",
+    "example": "Even the popular senator was surprised that thousands of people would throng to his political rallies.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -40710,7 +40710,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0655",
     "term": "Thronging",
     "meaning": "amontonarse",
-    "example": "In her notes, she chose ?Thronging? as the most precise wording for the situation.",
+    "example": "Reporters were thronging the courthouse steps long before the verdict was announced.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -40748,7 +40748,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0100",
     "term": "Throw out",
     "meaning": "tirar, rechazar (f) (reject or dismiss)",
-    "example": "During the discussion, she used the expression ?Throw out? to make her point.",
+    "example": "They wanted to throw out the computer whose software hasn't yet been updated.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -40765,7 +40765,7 @@ const VOCABULARY_SEED = [
     "id": "notion-2179",
     "term": "throw out (charges / claims / a suggestion)",
     "meaning": "if someone in authority throws out a plan, proposal etc, they refuse to accept it",
-    "example": "The judge threw out their claim.",
+    "example": "The judge threw out the claim after discovering that key evidence had been fabricated.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -40782,7 +40782,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0105",
     "term": "Throw out charges / claims",
     "meaning": "retirar cargos / demanda",
-    "example": "During the discussion, she used the expression ?Throw out charges? to make her point.",
+    "example": "The judge threw out the charges because the search had been conducted unlawfully.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -40799,7 +40799,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0334",
     "term": "Throw your hat in the ring",
     "meaning": "presentarse voluntariamente como candidato",
-    "example": "During the discussion, she used the expression ?Throw your hat in the ring? to make her point.",
+    "example": "After years behind the scenes, she has finally thrown her hat in the ring for party leader.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -40816,7 +40816,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1157",
     "term": "Thwart",
     "meaning": "frustrar, impedir, boicotear",
-    "example": "In her notes, she chose ?Thwart? as the most precise wording for the situation.",
+    "example": "The town managed to thwart plans to build a nuclear power plant nearby.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -40833,7 +40833,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1030",
     "term": "Tick along",
     "meaning": "avanzar, funcionar (f) (continue steadily)",
-    "example": "In her notes, she chose ?Tick along? as the most precise wording for the situation.",
+    "example": "The family business ticked along steadily until online orders transformed its fortunes.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -40850,7 +40850,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1475",
     "term": "Ticklish",
     "meaning": "cosquilloso / sensible / rasposo, irritado / delicado",
-    "example": "hesitates to be explicit on so ticklish a matter",
+    "example": "Tom tried to tickle Mary, but found out she was much less ticklish than he was.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -40870,7 +40870,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1977",
     "term": "Tidal",
     "meaning": "de la marea (relativo a la marea)",
-    "example": "tidal wave",
+    "example": "The conservationist is against the building of a tidal barrage across the Severn estuary.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -40887,7 +40887,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1308",
     "term": "Tight-knit communities",
     "meaning": "comunidades unidas",
-    "example": "In her notes, she chose ?Tight-knit communities? as the most precise wording for the situation.",
+    "example": "Tight-knit communities often organise support before official assistance arrives.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -40957,7 +40957,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1154",
     "term": "Tinker",
     "meaning": "juguetear con / trastear con",
-    "example": "Can you tinker with the T.V. set--it's not working right",
+    "example": "Tom likes to tinker with things because he believes there's always a better way.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -40974,7 +40974,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0761",
     "term": "Tinkerer",
     "meaning": "reparador (person who fixes things)",
-    "example": "In her notes, she chose ?Tinkerer? as the most precise wording for the situation.",
+    "example": "Evolution is a tinkerer and not an engineer.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -40991,7 +40991,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1005",
     "term": "Tip the scales",
     "meaning": "inclinar la balanza (cause [sth] to be more likely)",
-    "example": "During the discussion, she used the expression ?Tip the scales? to make her point.",
+    "example": "Her detailed costings tipped the scales in favour of the more ambitious proposal.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -41008,7 +41008,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1909",
     "term": "Tiresome",
     "meaning": "tedioso, fatigante",
-    "example": "the tiresome chirping of a cricket",
+    "example": "Succeeding years became more tiresome and uneventful than the nymph's joyous spirit loved.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -41025,7 +41025,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0621",
     "term": "Titter",
     "meaning": "reir nerviosamente",
-    "example": "In her notes, she chose ?Titter? as the most precise wording for the situation.",
+    "example": "The titter that rippled around the room appeared to abash the boy.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -41042,7 +41042,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0354",
     "term": "To all intents and purposes",
     "meaning": "A efectos prácticos",
-    "example": "to all intents and purposes the case is closed",
+    "example": "He was to all intents and purposes deceived.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41059,7 +41059,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0288",
     "term": "To be a breath of fresh air",
     "meaning": "bocanada de aire fresco (sth new)",
-    "example": "During the discussion, she used the expression ?To be a breath of fresh air? to make her point.",
+    "example": "The new science teacher is a breath of fresh air after years of rigid textbook lessons.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41076,7 +41076,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0064",
     "term": "to be a go-getter",
     "meaning": "ambicioso, con iniciativa, luchador (achiever)",
-    "example": "During the discussion, she used the expression ?to be a go-getter? to make her point.",
+    "example": "You need to be a real go-getter to build a client base from scratch.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -41096,7 +41096,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0067",
     "term": "to be a high flyer",
     "meaning": "persona ambiciosa, exitosa (successful)",
-    "example": "During the discussion, she used the expression ?to be a high flyer? to make her point.",
+    "example": "As a high flyer in the diplomatic service, she was appointed ambassador before turning forty.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -41116,7 +41116,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0056",
     "term": "to be a nasty piece of work",
     "meaning": "ser una joyita (malicious / unpleasant person)",
-    "example": "During the discussion, she used the expression ?to be a nasty piece of work? to make her point.",
+    "example": "The landlord seemed charming at first, but anyone who challenged him discovered he was a nasty piece of work.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -41134,9 +41134,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0074",
-    "term": "to be a nut of sth",
-    "meaning": "fan, loco, enfermo de (fan, enthusiast) - loco, chalado (crazy=",
-    "example": "During the discussion, she used the expression ?to be a nut of sth? to make her point.",
+    "term": "Be a … nut",
+    "meaning": "ser un fanático o entusiasta de algo",
+    "example": "My brother is a fitness nut who starts every day with a five-kilometre run.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41153,7 +41153,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0065",
     "term": "to be a party pooper",
     "meaning": "aguafiestas (childish)",
-    "example": "During the discussion, she used the expression ?to be a party pooper? to make her point.",
+    "example": "Don’t be a party pooper—stay for one dance before you head home.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -41173,7 +41173,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0062",
     "term": "to be a people person",
     "meaning": "persona sociable",
-    "example": "During the discussion, she used the expression ?to be a people person? to make her point.",
+    "example": "A natural people person, Rosa remembers every customer’s name and favourite order.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -41193,7 +41193,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0066",
     "term": "to be a people pleaser",
     "meaning": "complaciente, que quiere gustar a los demás",
-    "example": "During the discussion, she used the expression ?to be a people pleaser? to make her point.",
+    "example": "Rodrigo's tendency to be a people pleaser often leads to him feeling overwhelmed and exhausted.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -41213,7 +41213,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0063",
     "term": "to be a wet blanket",
     "meaning": "aguafiestas",
-    "example": "During the discussion, she used the expression ?to be a wet blanket? to make her point.",
+    "example": "We wanted to swim at midnight, but Dan was a wet blanket and insisted everyone go home.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -41233,7 +41233,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0143",
     "term": "To be at loggerheads",
     "meaning": "estar a matar / estar picado con alguien",
-    "example": "During the discussion, she used the expression ?To be at loggerheads? to make her point.",
+    "example": "The transport ministry and the mayor are at loggerheads over who should fund the extension.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41250,7 +41250,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0060",
     "term": "to be full of himself",
     "meaning": "ser egocéntrico, no tener abuela",
-    "example": "During the discussion, she used the expression ?to be full of himself? to make her point.",
+    "example": "Ever since his article won a prize, he has been completely full of himself.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -41270,7 +41270,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0177",
     "term": "To be in the know",
     "meaning": "estar al tanto",
-    "example": "During the discussion, she used the expression ?To be in the know? to make her point.",
+    "example": "Ask Lena if you want the latest schedule; she’s always in the know.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41287,7 +41287,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0085",
     "term": "To be no mean feat",
     "meaning": "no ser cosa fácil, no ser poca cosa…",
-    "example": "During the discussion, she used the expression ?To be no mean feat? to make her point.",
+    "example": "Coordinating three rescue teams in worsening weather was no mean feat.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41321,7 +41321,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0211",
     "term": "To be your bread and butter",
     "meaning": "ser la fuente principal de ingresos",
-    "example": "During the discussion, she used the expression ?To be your bread and butter? to make her point.",
+    "example": "Wedding photography is her bread and butter, although she prefers documentary work.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41338,7 +41338,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0289",
     "term": "To bear no resemblance to something",
     "meaning": "no parecerse en nada",
-    "example": "During the discussion, she used the expression ?To bear no resemblance to something? to make her point.",
+    "example": "The glossy advertisement bears no resemblance to the cramped apartment we actually viewed.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41372,7 +41372,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0058",
     "term": "to come out of her shell",
     "meaning": "salir del caparazón (lose shyness)",
-    "example": "During the discussion, she used the expression ?to come out of her shell? to make her point.",
+    "example": "Tom tried to get Mary to come out of her shell.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -41392,7 +41392,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0359",
     "term": "To cover up for someone",
     "meaning": "encubrir a alguien",
-    "example": "During the discussion, she used the expression ?To cover up for someone? to make her point.",
+    "example": "By deleting the security footage, the supervisor tried to cover up for his colleague.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41409,7 +41409,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0057",
     "term": "to do things by the book",
     "meaning": "hacer todo según las reglas, a rajatabla, al pie de la letra",
-    "example": "During the discussion, she used the expression ?to do things by the book? to make her point.",
+    "example": "The inspector does everything by the book and will not overlook a missing certificate.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -41429,7 +41429,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0076",
     "term": "To fall short",
     "meaning": "quedarse corto, no estar a la altura",
-    "example": "During the discussion, she used the expression ?To fall short? to make her point.",
+    "example": "The new accessibility measures fall short of what disabled passengers were promised.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41446,7 +41446,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0196",
     "term": "To get your wires crossed",
     "meaning": "confundirse (f) (i) (missunderstand)",
-    "example": "During the discussion, she used the expression ?To get your wires crossed? to make her point.",
+    "example": "We got our wires crossed: I waited at the theatre while Maya waited at the cinema.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41463,7 +41463,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0290",
     "term": "To go down a storm",
     "meaning": "ser toda una sensación, causar furor (be enthusiastically",
-    "example": "During the discussion, she used the expression ?To go down a storm? to make her point.",
+    "example": "The chef’s improvised dessert went down a storm and became a permanent menu item.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41514,7 +41514,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1617",
     "term": "To go to sb’s head",
     "meaning": "Subirsele a la cabeza. Become really self-important",
-    "example": "Getting a promotion has gone to Penny’s head",
+    "example": "The sudden promotion went to his head, and he stopped listening to experienced colleagues.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -41531,7 +41531,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0061",
     "term": "to have a chip on your shoulder",
     "meaning": "ser rencoroso, resentido",
-    "example": "During the discussion, she used the expression ?to have a chip on your shoulder? to make her point.",
+    "example": "He has a chip on his shoulder about not attending university and assumes graduates look down on him.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41548,7 +41548,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1527",
     "term": "to have a chip on your shoulder about/when",
     "meaning": "tener una espina clava, ponerse a la defensiva cuando",
-    "example": "During the discussion, she used the expression ?to have a chip on your shoulder about? to make her point.",
+    "example": "She has a chip on her shoulder whenever promotions are discussed because she was overlooked twice.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -41565,7 +41565,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0331",
     "term": "To have a head start",
     "meaning": "tener ventaja",
-    "example": "During the discussion, she used the expression ?To have a head start? to make her point.",
+    "example": "Learning to code at school gave her a head start when she began the engineering course.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41616,7 +41616,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0059",
     "term": "to live and breathe something",
     "meaning": "vivir para, ser tu mundo (be passionately interested)",
-    "example": "During the discussion, she used the expression ?to live and breathe something? to make her point.",
+    "example": "He lives and breathes jazz, spending weekends performing and weekdays hunting for rare recordings.",
     "family": "patterns",
     "families": [
       "patterns",
@@ -41636,7 +41636,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0298",
     "term": "To my mind",
     "meaning": "en mi opinión",
-    "example": "During the discussion, she used the expression ?To my mind? to make her point.",
+    "example": "I've been trying to write something for hours, but nothing comes to my mind.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41653,7 +41653,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0300",
     "term": "To put it differently",
     "meaning": "Lo diré de otra manera",
-    "example": "During the discussion, she used the expression ?To put it differently? to make her point.",
+    "example": "To put it differently, we are borrowing from next year’s budget to pay this year’s bills.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41692,7 +41692,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0291",
     "term": "To reinvent the wheel",
     "meaning": "perder tiempo y esfuerzo intentando crear algo que ya existe",
-    "example": "During the discussion, she used the expression ?To reinvent the wheel? to make her point.",
+    "example": "We have the solution. There's no need to reinvent the wheel with dangerous elements.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41743,7 +41743,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1678",
     "term": "Tobacconist’s",
     "meaning": "tabaquero",
-    "example": "In her notes, she chose ?Tobacconist’s? as the most precise wording for the situation.",
+    "example": "The old tobacconist’s still has its mahogany counter, although it now sells stationery.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -41760,7 +41760,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1177",
     "term": "Toil",
     "meaning": "trabajo duro / esforzarse (v)",
-    "example": "In her notes, she chose ?Toil? as the most precise wording for the situation.",
+    "example": "What does man gain from all his work at which he toils under the sun?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -41777,7 +41777,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0496",
     "term": "Toll",
     "meaning": "peaje (road fee) - daño, pérdida, estrago (figurative) (extent of damage)",
-    "example": "Toll the bridges into New York City",
+    "example": "You need to have exact change to pay the toll of the expressway.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -41794,7 +41794,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1497",
     "term": "Tonnage",
     "meaning": "tonelaje",
-    "example": "In her notes, she chose ?Tonnage? as the most precise wording for the situation.",
+    "example": "Mary loved green eye shadow and she applied more than anyone in sheer tonnage.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -41849,7 +41849,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0198",
     "term": "Touch base with someone",
     "meaning": "ponerse en contacto (f) (i)",
-    "example": "During the discussion, she used the expression ?Touch base with someone? to make her point.",
+    "example": "I just wanted to quickly touch base with you about this.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41866,7 +41866,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1428",
     "term": "Touching",
     "meaning": "emocionante, conmovedor",
-    "example": "his gratitude was simple and touching",
+    "example": "Blind people read by touching, using a system of raised dots called Braille.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -41905,7 +41905,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0690",
     "term": "Towering",
     "meaning": "imponente, altísimo, elevado (very tall)",
-    "example": "towering icebergs",
+    "example": "Towering high above, there are tall buildings that seem out of place in this countryside.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -41922,7 +41922,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0651",
     "term": "Toxic",
     "meaning": "(harmaful) tóxico",
-    "example": "suffering from exposure to toxic substances",
+    "example": "Daffodils contain a toxic alkaloid that may even be lethal when ingested in high quantities.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -41939,7 +41939,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0227",
     "term": "Track down",
     "meaning": "rastrear, localizar, ubicar",
-    "example": "During the discussion, she used the expression ?Track down? to make her point.",
+    "example": "He's a brilliant lawyer and decided to do everything to track down his brother.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -41990,7 +41990,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1925",
     "term": "Trafficker",
     "meaning": "traficante",
-    "example": "In her notes, she chose ?Trafficker? as the most precise wording for the situation.",
+    "example": "What was the exact relationship between Elon Musk and child sex trafficker Ghislaine Maxwell?",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -42007,7 +42007,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0698",
     "term": "Trawl",
     "meaning": "buscar, rastrear, examinar",
-    "example": "In her notes, she chose ?Trawl? as the most precise wording for the situation.",
+    "example": "Our experienced travel consultants can help you to trawl through the best deals around.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42024,7 +42024,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1019",
     "term": "Treacherous",
     "meaning": "traidor, desleal, engañoso (person: disloyal) / peligroso, movedizo (f)",
-    "example": "the fiercest and most treacherous of foes",
+    "example": "The Southern Ocean is considered the world's most treacherous ocean.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42041,7 +42041,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1212",
     "term": "Tread",
     "meaning": "pisar, caminar por, andar por",
-    "example": "male birds tread the females",
+    "example": "When a tire loses its tread, it's time to buy a new one.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42058,7 +42058,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1957",
     "term": "Treasonable",
     "meaning": "traidor, traicionero",
-    "example": "In her notes, she chose ?Treasonable? as the most precise wording for the situation.",
+    "example": "Passing military plans to an enemy state would constitute a treasonable offence.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -42075,7 +42075,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0595",
     "term": "Treaties",
     "meaning": "tratado, acuerdo, pacto",
-    "example": "In her notes, she chose ?Treaties? as the most precise wording for the situation.",
+    "example": "The West doesn't respect international treaties signed with non-Western countries.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42092,7 +42092,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1954",
     "term": "Treatise",
     "meaning": "tratado",
-    "example": "In her notes, she chose ?Treatise? as the most precise wording for the situation.",
+    "example": "The definitive treatise was written by someone with no formal education in the subject.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -42126,7 +42126,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1309",
     "term": "Tree-lined streets",
     "meaning": "calles bordeadas de árboles",
-    "example": "In her notes, she chose ?Tree-lined streets? as the most precise wording for the situation.",
+    "example": "Tree-lined streets remain noticeably cooler than neighbouring roads during a heatwave.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42143,7 +42143,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1338",
     "term": "Tremble",
     "meaning": "temblar, estremecerse",
-    "example": "His hands were trembling when he signed the document",
+    "example": "The mere idea of swimming across the river made me tremble.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42200,7 +42200,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0801",
     "term": "Troubleshoot",
     "meaning": "identificar un problema y encontrar la solución",
-    "example": "In her notes, she chose ?Troubleshoot? as the most precise wording for the situation.",
+    "example": "My colleague Carlos is very skilled at troubleshooting technical issues.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42217,7 +42217,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1109",
     "term": "Troublesome",
     "meaning": "problemático, molesto",
-    "example": "a troublesome infection",
+    "example": "What is most troublesome is the corruption of the best.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42234,7 +42234,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0873",
     "term": "Trout / troutlet / troutling",
     "meaning": "trucha",
-    "example": "In her notes, she chose ?Trout? as the most precise wording for the situation.",
+    "example": "So now there are at least 20 rainbow trout in this area.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42251,7 +42251,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1949",
     "term": "Truancy",
     "meaning": "ausentismo escolar",
-    "example": "In her notes, she chose ?Truancy? as the most precise wording for the situation.",
+    "example": "Research revealed that the same high truancy levels were to be found in every inner city district.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -42268,7 +42268,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1967",
     "term": "Trumpeter",
     "meaning": "trompetista",
-    "example": "In her notes, she chose ?Trumpeter? as the most precise wording for the situation.",
+    "example": "I didn't know Tom was a trumpeter.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -42285,7 +42285,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1489",
     "term": "Trustee",
     "meaning": "administrador, fiduciario",
-    "example": "In her notes, she chose ?Trustee? as the most precise wording for the situation.",
+    "example": "She is the only trustee of the university who never attended it as a student.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42302,7 +42302,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0189",
     "term": "Try as I might, (I couldn’t fall asleep)",
     "meaning": "por mucho que lo intente, por más que lo intente",
-    "example": "During the discussion, she used the expression ?Try as I might, (I couldn’t fall asleep)? to make her point.",
+    "example": "Try as I might, I couldn’t reproduce the strange noise once the mechanic arrived.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -42319,7 +42319,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0760",
     "term": "Tumble",
     "meaning": "caer (fall) / dar una voltereta, rodar (roll)",
-    "example": "In her notes, she chose ?Tumble? as the most precise wording for the situation.",
+    "example": "I saw a girl tumble and ran to her in spite of myself.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42336,7 +42336,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1498",
     "term": "Tumultuous",
     "meaning": "tumultuoso (turbulent)",
-    "example": "the tumultuous years of his administration",
+    "example": "Tom and Mary have a very tumultuous relationship.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42353,7 +42353,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1060",
     "term": "Turn a blind eye",
     "meaning": "hacer la vista gorda",
-    "example": "During the discussion, she used the expression ?Turn a blind eye? to make her point.",
+    "example": "They despise foreigners, but turn a blind eye to the failings of their fellow countrymen.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42370,7 +42370,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0170",
     "term": "Turn over",
     "meaning": "dar la vuelta / entregar / ganar, facturar",
-    "example": "During the discussion, she used the expression ?Turn over? to make her point.",
+    "example": "If he keeps drifting aimlessly, his late father will turn over in his grave.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -42387,7 +42387,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0367",
     "term": "Turn right round",
     "meaning": "darse la vuelta, 180 grados.",
-    "example": "During the discussion, she used the expression ?Turn right round? to make her point.",
+    "example": "Hearing her name, she turned right round and scanned the crowded platform.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -42404,7 +42404,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1251",
     "term": "Tweaks",
     "meaning": "modificación, alteración",
-    "example": "In her notes, she chose ?Tweaks? as the most precise wording for the situation.",
+    "example": "This sentence is - apart from a few small tweaks - a sentence that you can find on Tatoeba.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42421,7 +42421,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0880",
     "term": "Tweezers",
     "meaning": "pinzas (cejas)",
-    "example": "In her notes, she chose ?Tweezers? as the most precise wording for the situation.",
+    "example": "Can you lend me tweezers? I have a splinter in my foot.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42438,7 +42438,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1080",
     "term": "Twofold",
     "meaning": "doble, de dos partes / por dos (aumentar, multiplicar…)",
-    "example": "the price increased twofold last year",
+    "example": "This change in the design brings with it a twofold improvement in the performance of the device.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42455,7 +42455,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1373",
     "term": "Typist",
     "meaning": "mecanógrafo",
-    "example": "In her notes, she chose ?Typist? as the most precise wording for the situation.",
+    "example": "The office manager will explain to the new typist where she should work and what she should do.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -42475,7 +42475,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1684",
     "term": "Tyrannical",
     "meaning": "tiránico (despotic, authoritarian)",
-    "example": "a tyrannical government",
+    "example": "This is the only way to incentivize the fight against the tyrannical regime in Ethiopia.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -42492,7 +42492,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0475",
     "term": "Ubiquitous",
     "meaning": "ubicuo (omnipresent, everywhere) / entendido, amplio",
-    "example": "In her notes, she chose ?Ubiquitous? as the most precise wording for the situation.",
+    "example": "In Animism, there is credence in ubiquitous spirit entities pervading the totality of Nature.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42562,7 +42562,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1796",
     "term": "Unbecoming",
     "meaning": "impropio",
-    "example": "language unbecoming to a lady",
+    "example": "Eating yoghurt with your fingers, I should point out, is unbecoming of a young gentleman.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -42596,7 +42596,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1365",
     "term": "Uncontrollable",
     "meaning": "incontrolable",
-    "example": "uncontrollable laughter",
+    "example": "If that's how matters stand, the next parliament will be uncontrollable.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -42616,7 +42616,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0428",
     "term": "Undaunted",
     "meaning": "impávido (not feeling fear or dread)",
-    "example": "undaunted in the face of death",
+    "example": "I remained undaunted as soon as I heard the news.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42747,7 +42747,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0552",
     "term": "Underlying",
     "meaning": "subyacente, latente (below the surface)",
-    "example": "underlying principles",
+    "example": "What are the underlying causes of Algeria's economic crisis?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42764,7 +42764,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0900",
     "term": "Undermining",
     "meaning": "minar, socavar / debilitar, gastar / desautorizar",
-    "example": "In her notes, she chose ?Undermining? as the most precise wording for the situation.",
+    "example": "Online bullies targeted Rodrigo's achievements and talents, belittling his accomplishments and undermining his confidence.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42781,7 +42781,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1207",
     "term": "Underpin",
     "meaning": "apoyar, respaldar",
-    "example": "In her notes, she chose ?Underpin? as the most precise wording for the situation.",
+    "example": "Biology is a fundamental science that underpins many other fields of study.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42798,7 +42798,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0840",
     "term": "Underpinned",
     "meaning": "apoyar, respaldar",
-    "example": "In her notes, she chose ?Underpinned? as the most precise wording for the situation.",
+    "example": "The court’s conclusion was underpinned by testimony from three independent experts.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42815,7 +42815,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0572",
     "term": "understated",
     "meaning": "not trying to impress people or to attract their attention, and therefore attractive or effective",
-    "example": "She dressed with understated elegance.",
+    "example": "Her understated performance conveys grief through pauses rather than dramatic speeches.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42834,7 +42834,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0553",
     "term": "Unearth",
     "meaning": "desenterrar, exhumar / descubrir, sacar a la luz",
-    "example": "In her notes, she chose ?Unearth? as the most precise wording for the situation.",
+    "example": "The anthropologist is piecing together pottery shards she unearthed at the excavation site.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42851,7 +42851,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1942",
     "term": "Unearthly",
     "meaning": "sobrenatural, de otro mundo",
-    "example": "an unearthly light",
+    "example": "The swoop of bats in the darkness over her was as the wings of unearthly creatures.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -42868,7 +42868,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1150",
     "term": "Uneasy",
     "meaning": "incómodo, molesto / intranquilo, inquieto",
-    "example": "In her notes, she chose ?Uneasy? as the most precise wording for the situation.",
+    "example": "My doctor told me to lay off the liquor so I have this uneasy impatient feeling.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42885,7 +42885,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0482",
     "term": "uneventful",
     "meaning": "tranquilo, sin novedad / incidentes (dull)",
-    "example": "an uneventful life",
+    "example": "I thought it would be an uneventful weekend, but I was mistaken.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42919,7 +42919,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1119",
     "term": "Unfathomable",
     "meaning": "incomprensible, indescifrable / immedible",
-    "example": "In her notes, she chose ?Unfathomable? as the most precise wording for the situation.",
+    "example": "We are all so simple at heart that become unfathomable to one another.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42936,7 +42936,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1165",
     "term": "Unfazed",
     "meaning": "sin inmutarse",
-    "example": "In her notes, she chose ?Unfazed? as the most precise wording for the situation.",
+    "example": "The child remained unfazed, even after being laughed at by his classmates.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -42953,7 +42953,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0487",
     "term": "unforeseen",
     "meaning": "inesperado, imprevisto (unexpected)",
-    "example": "unforeseen circumstances",
+    "example": "Due to unforeseen circumstances, our trip to the mountains this weekend will be cancelled.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43021,7 +43021,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0741",
     "term": "Unpalatable",
     "meaning": "desagradable, difícil de aceptar, intragable, incomible, de mal sabor",
-    "example": "an unpalatable meal",
+    "example": "Politics is not the art of the possible. It consists in choosing between the disastrous and the unpalatable.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43038,7 +43038,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0718",
     "term": "Unprecedented",
     "meaning": "sin precedentes (not seen before)",
-    "example": "an unprecedented expansion in population and industry",
+    "example": "Mexico is experiencing unprecedented violence as drug cartels are battling over distribution routes.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43053,9 +43053,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-1923",
-    "term": "Unprecendented",
+    "term": "Unprecedented",
     "meaning": "sin precedentes, sin aviso",
-    "example": "In her notes, she chose ?Unprecendented? as the most precise wording for the situation.",
+    "example": "An unprecedented number of postal votes delayed the final count until the following morning.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -43072,7 +43072,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0563",
     "term": "Unravel",
     "meaning": "desenredar (string, yarn, sweater) / resolver, descifrar (f) (explain, solve)",
-    "example": "the sweater unraveled",
+    "example": "Today, we are going to unravel the mystery of the English subjunctive.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43089,7 +43089,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0805",
     "term": "Unscathed",
     "meaning": "ileso, indemne (person: not harmed)",
-    "example": "In her notes, she chose ?Unscathed? as the most precise wording for the situation.",
+    "example": "Though my house was in the path of the tornado it came through unscathed.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43106,7 +43106,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1020",
     "term": "Unscrupulous",
     "meaning": "inmoral, sin principios",
-    "example": "unscrupulous politicos who would be happy to sell...their country in order to gain power",
+    "example": "What percentage of all taxi drivers make unscrupulous detours, do you think?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43123,7 +43123,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1476",
     "term": "Untimely",
     "meaning": "prematuro, temprano / inoportuno",
-    "example": "In her notes, she chose ?Untimely? as the most precise wording for the situation.",
+    "example": "Those loved by many are liable to untimely death.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43139,8 +43139,8 @@ const VOCABULARY_SEED = [
   {
     "id": "notion-0356",
     "term": "Untold stress",
-    "meaning": "gran esfuerzo",
-    "example": "During the discussion, she used the expression ?Untold stress? to make her point.",
+    "meaning": "una cantidad enorme o incalculable de estrés",
+    "example": "Caring for a relative while working nights placed untold stress on the whole family.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -43157,7 +43157,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0768",
     "term": "Unveil",
     "meaning": "descubrir, revelar, desvelar (f) (reveal for first time)",
-    "example": "unveil a painting",
+    "example": "In order to unveil the international language, each lexical item should be written separately.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43191,7 +43191,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0936",
     "term": "Unwittingly",
     "meaning": "involuntariamente",
-    "example": "he unwittingly deleted the references",
+    "example": "The company has been infiltrated by people working—wittingly or unwittingly—for China.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43208,7 +43208,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1874",
     "term": "Unworthy",
     "meaning": "indigno, no merecedor",
-    "example": "In her notes, she chose ?Unworthy? as the most precise wording for the situation.",
+    "example": "An idea that is not dangerous is unworthy of being called an idea at all.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -43225,7 +43225,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0264",
     "term": "Up (upping)",
     "meaning": "subir",
-    "example": "During the discussion, she used the expression ?Up (upping)? to make her point.",
+    "example": "The airline is upping the number of flights to meet demand during the festival.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -43242,7 +43242,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1406",
     "term": "Upheaval",
     "meaning": "agitación (violent unrest)",
-    "example": "In her notes, she chose ?Upheaval? as the most precise wording for the situation.",
+    "example": "The country was in a state of upheaval.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -43262,7 +43262,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1405",
     "term": "Upheave",
     "meaning": "levantar, empujar hacia delante",
-    "example": "In her notes, she chose ?Upheave? as the most precise wording for the situation.",
+    "example": "Frost can upheave paving stones as water beneath them freezes and expands.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -43282,7 +43282,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0710",
     "term": "Uphill",
     "meaning": "cuesta arriba",
-    "example": "this street lay uphill",
+    "example": "When I was your age, we had to walk uphill to school, both ways.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43299,7 +43299,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1273",
     "term": "Upholstery",
     "meaning": "tapizado, relleno",
-    "example": "In her notes, she chose ?Upholstery? as the most precise wording for the situation.",
+    "example": "She buys antique chair frames, gives them a new finish, and adds her custom-designed, hand-painted upholstery.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43316,7 +43316,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0935",
     "term": "Uproar",
     "meaning": "alboroto, griterío / protesta (loud protest)",
-    "example": "In her notes, she chose ?Uproar? as the most precise wording for the situation.",
+    "example": "The archbishop caused an uproar with his dismissive comments about the nuns' concerns.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43333,7 +43333,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1267",
     "term": "Upset the apple cart",
     "meaning": "interrumpir un plan, un acuerdo o una situación, a menudo",
-    "example": "During the discussion, she used the expression ?Upset the apple cart? to make her point.",
+    "example": "Sometimes being overcautious in planning could upset the apple cart.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43367,7 +43367,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0322",
     "term": "Urge sb on",
     "meaning": "alentar, animar, instar",
-    "example": "During the discussion, she used the expression ?Urge sb on? to make her point.",
+    "example": "Spectators urged the exhausted runner on through the final hundred metres.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -43403,7 +43403,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0862",
     "term": "Utmost",
     "meaning": "máximo esfuerzo, lo máximo posible",
-    "example": "the utmost tip of the peninsula",
+    "example": "As a politician, he makes utmost use of his acting ability.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43420,7 +43420,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1350",
     "term": "Valiantly",
     "meaning": "valientemente",
-    "example": "he fought valiantly until the end",
+    "example": "In spite of the tyrant’s persecution, the hero valiantly carried on the struggle.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43454,7 +43454,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1061",
     "term": "Vastly",
     "meaning": "enormemente, infinitamente",
-    "example": "He had vastly overestimated his resources",
+    "example": "Yanni said that his marriage is vastly different from what he had hoped for.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43471,7 +43471,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0650",
     "term": "Vax",
     "meaning": "(vaccine) vacuna / (anti-vax-> antivacunas)",
-    "example": "In her notes, she chose ?Vax? as the most precise wording for the situation.",
+    "example": "The clinic offers a free flu vax to staff working directly with vulnerable patients.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43488,7 +43488,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0942",
     "term": "Vehemently",
     "meaning": "intensamente, apasionadamente, vehementemente (intensely)",
-    "example": "he vehemently denied the accusations against him",
+    "example": "We are vehemently opposed to political correctness.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43505,7 +43505,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1826",
     "term": "Vengeful",
     "meaning": "showing a strong desire for revenge",
-    "example": "In her notes, she chose ?Vengeful? as the most precise wording for the situation.",
+    "example": "The god of the Old Testament is a blood-thirsty tyrant — petty and vengeful.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -43522,7 +43522,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1053",
     "term": "Venture",
     "meaning": "aventurarse, arriesgarse, atreverse",
-    "example": "In her notes, she chose ?Venture? as the most precise wording for the situation.",
+    "example": "They came to terms with each other on how to start a joint venture.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43539,7 +43539,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1027",
     "term": "Vessel",
     "meaning": "embarcación",
-    "example": "In her notes, she chose ?Vessel? as the most precise wording for the situation.",
+    "example": "A child is not a vessel for filling, but a fire to light.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43556,7 +43556,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0874",
     "term": "Vested",
     "meaning": "establecido",
-    "example": "a vested right",
+    "example": "Executive power is vested in the Prime Minister.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43573,7 +43573,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0757",
     "term": "Vexing",
     "meaning": "problemático, fastidioso, molesto (troubling)",
-    "example": "it is vexing to have to admit you are wrong",
+    "example": "A vexing software fault causes saved changes to disappear without warning.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43590,7 +43590,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1420",
     "term": "Victorious",
     "meaning": "victorioso, ganador, vencedor",
-    "example": "In her notes, she chose ?Victorious? as the most precise wording for the situation.",
+    "example": "The victorious country dictated the terms of peace to the defeated country.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -43627,7 +43627,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1764",
     "term": "Vivacious",
     "meaning": "vivaz, vivo",
-    "example": "a charming and vivacious hostess",
+    "example": "She was a bright, vivacious, dark-eyed lady, more French than English in her type.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -43644,7 +43644,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0685",
     "term": "Vividly",
     "meaning": "vívidamente, claramente (clearly)",
-    "example": "he described his adventures vividly",
+    "example": "The stock market crash of October 1987 in New York is still vividly remembered.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43661,7 +43661,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0670",
     "term": "voucher",
     "meaning": "cupón, vale",
-    "example": "In her notes, she chose ?voucher? as the most precise wording for the situation.",
+    "example": "With the travel voucher, trips are cheaper and I can make free transfers.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43714,9 +43714,9 @@ const VOCABULARY_SEED = [
   },
   {
     "id": "notion-0051",
-    "term": "Wallow in self-pitty",
+    "term": "Wallow in self-pity",
     "meaning": "ahogarse en tu propia desgracia",
-    "example": "During the discussion, she used the expression ?Wallow in self-pitty? to make her point.",
+    "example": "You can acknowledge the setback without wallowing in self-pity for the rest of the week.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -43767,7 +43767,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1038",
     "term": "Wane (v) / waning (adj)",
     "meaning": "declinar / menguante (diminishing)",
-    "example": "In her notes, she chose ?Wane (v)? as the most precise wording for the situation.",
+    "example": "Public enthusiasm for the scheme began to wane once the hidden costs emerged.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43784,7 +43784,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0635",
     "term": "Warden",
     "meaning": "(head officer of prison) alcaide, guardabosques",
-    "example": "In her notes, she chose ?Warden? as the most precise wording for the situation.",
+    "example": "It surprises most people to find out that the prison warden is a woman.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43801,7 +43801,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0632",
     "term": "Ware",
     "meaning": "mercancías (cantidad total de mercancías en conjunto)",
-    "example": "In her notes, she chose ?Ware? as the most precise wording for the situation.",
+    "example": "The shopowner did not realise that many of his wares had already expired.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43818,7 +43818,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1224",
     "term": "Warren",
     "meaning": "madriguera, conejera / laberinto",
-    "example": "In her notes, she chose ?Warren? as the most precise wording for the situation.",
+    "example": "Warren Buffett complained that he has a lower tax rate than his secretary.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43835,7 +43835,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0794",
     "term": "Wary",
     "meaning": "precavido / cauteloso / no fiarse (not trusting)",
-    "example": "In her notes, she chose ?Wary? as the most precise wording for the situation.",
+    "example": "If you're a musical genius, be wary of the political implications of your statements.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43852,7 +43852,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1737",
     "term": "Wastage",
     "meaning": "desperdicio",
-    "example": "In her notes, she chose ?Wastage? as the most precise wording for the situation.",
+    "example": "The farmers upgraded their irrigation system to reduce water wastage and increase crop productivity.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -43922,7 +43922,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1287",
     "term": "Watch like a hawk",
     "meaning": "no quitar el ojo de encima",
-    "example": "During the discussion, she used the expression ?Watch like a hawk? to make her point.",
+    "example": "The invigilator watched us like a hawk throughout the three-hour examination.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43939,7 +43939,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0541",
     "term": "Waterfront",
     "meaning": "ribera (de río) / litoral (de mar)",
-    "example": "In her notes, she chose ?Waterfront? as the most precise wording for the situation.",
+    "example": "On Monday night, around one hundred rebels came to the city's waterfront.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43956,7 +43956,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0536",
     "term": "Watershed",
     "meaning": "punto de inflexión (f) / cuenca (agua)",
-    "example": "the agreement was a watershed in the history of both nations",
+    "example": "This is a watershed moment for the whole industry.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -43993,7 +43993,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0543",
     "term": "Watertight",
     "meaning": "hermético, sellado / indisputable, indiscutible (alibi)",
-    "example": "a watertight alibi",
+    "example": "We still don’t have a watertight definition of what a country is.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44010,7 +44010,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0887",
     "term": "Wavelength",
     "meaning": "longitud de onda (physics : distance between waves)",
-    "example": "they are on the same wavelength",
+    "example": "In that word is included the meaning of matching up to somebody's particular wavelength.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44027,7 +44027,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0820",
     "term": "Wayside",
     "meaning": "arcén",
-    "example": "flowers along the wayside",
+    "example": "After I started working full-time, a lot of my hobbies fell by the wayside.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44078,7 +44078,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1416",
     "term": "Weariness",
     "meaning": "cansancio, agotamiento, fatiga",
-    "example": "weariness overcame her after twelve hours and she fell asleep",
+    "example": "That film fills me with a feeling that is summed up well by the phrase 'world-weariness'.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -44115,7 +44115,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0436",
     "term": "Weary",
     "meaning": "cansado, agotado",
-    "example": "In her notes, she chose ?Weary? as the most precise wording for the situation.",
+    "example": "I was weary of doing the same thing over and over again.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -44152,7 +44152,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0538",
     "term": "Weathered",
     "meaning": "erosionado",
-    "example": "a house of weathered shingles",
+    "example": "A weathered wooden stile marked the boundary between the meadow and the forest.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44169,7 +44169,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1175",
     "term": "Wedlock",
     "meaning": "casamiento, boda (antiguo)",
-    "example": "In her notes, she chose ?Wedlock? as the most precise wording for the situation.",
+    "example": "Sex out of wedlock is a major sin in Islam.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44205,7 +44205,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0629",
     "term": "Well-off",
     "meaning": "rico, adinerado, pudiente (for people - not millionaire)",
-    "example": "doesn't know when he's well-off",
+    "example": "You don't need to be born into a well-off family to do great things.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44222,7 +44222,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1144",
     "term": "Well-turned",
     "meaning": "elegante",
-    "example": "a well-turned phrase",
+    "example": "A well-turned phrase can make a complex argument both memorable and precise.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44239,7 +44239,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0405",
     "term": "Were it not for",
     "meaning": "de no ser por",
-    "example": "During the discussion, she used the expression ?Were it not for? to make her point.",
+    "example": "Were it not for the map, we could not have found our way.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -44256,7 +44256,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0393",
     "term": "Were it not for his (intervention)…",
     "meaning": "Si no fuera por su intervencion",
-    "example": "During the discussion, she used the expression ?Were it not for his (intervention)…? to make her point.",
+    "example": "Were it not for her intervention, the two sides would probably still be refusing to meet.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -44291,7 +44291,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0380",
     "term": "What + be + like?",
     "meaning": "What would life be like without music? . No how",
-    "example": "During the discussion, she used the expression ?What + be + like?? to make her point.",
+    "example": "What was the village like before tourism transformed the local economy?",
     "family": "patterns",
     "families": [
       "patterns"
@@ -44308,7 +44308,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0601",
     "term": "Wheezy",
     "meaning": "jadeante (breathing hoarsely)",
-    "example": "In her notes, she chose ?Wheezy? as the most precise wording for the situation.",
+    "example": "The patient sounded wheezy after climbing just one flight of stairs.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44325,7 +44325,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1637",
     "term": "Whereby",
     "meaning": "por el que, a través del cual (through which)",
-    "example": "In her notes, she chose ?Whereby? as the most precise wording for the situation.",
+    "example": "But he said: Lord God, whereby may I know that I shall possess it?",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -44342,7 +44342,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1638",
     "term": "Wherever",
     "meaning": "donde sea",
-    "example": "In her notes, she chose ?Wherever? as the most precise wording for the situation.",
+    "example": "Wherever you go, you see a lot of bicycles left on sidewalks near stations.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -44359,7 +44359,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0612",
     "term": "Whet",
     "meaning": "abrir el apetito (whet somebody’s appetite)",
-    "example": "In her notes, she chose ?Whet? as the most precise wording for the situation.",
+    "example": "Tom usually has a glass of wine before dinner to whet his appetite.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44376,7 +44376,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1517",
     "term": "Whetted my appetite",
     "meaning": "abrir el apetito, tentar",
-    "example": "During the discussion, she used the expression ?Whetted my appetite? to make her point.",
+    "example": "The opening chapter whetted my appetite for the author’s full account of the expedition.",
     "family": "idioms",
     "families": [
       "idioms"
@@ -44393,7 +44393,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0697",
     "term": "Whim",
     "meaning": "capricho, antojo (sudden desire)",
-    "example": "he had a whimsy about flying to the moon",
+    "example": "She threatened to translate his works and, thus, exposing him to the whims of the police state.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44429,7 +44429,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0069",
     "term": "whipped by",
     "meaning": "(whip=, lagito, azotar, fustigar), sobrepasado por los coches rápidamente",
-    "example": "During the discussion, she used the expression ?whipped by? to make her point.",
+    "example": "Karl was repeatedly whipped by an unseen force.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -44446,7 +44446,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0846",
     "term": "Whizz",
     "meaning": "zumbar, zumbido / genio, as (f) (i) (expert)",
-    "example": "In her notes, she chose ?Whizz? as the most precise wording for the situation.",
+    "example": "The clouds are whizzing past the moon.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44463,7 +44463,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0707",
     "term": "Wholeheartedly",
     "meaning": "con todo el corazón, totalmente, sinceramente",
-    "example": "he adopted wholeheartedly some of the policies that he had previously criticized",
+    "example": "Frenetic applause showed him that the majority understood him and wholeheartedly agreed.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44480,7 +44480,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0733",
     "term": "Wholesale",
     "meaning": "venta al por mayor, mayorista, al por mayor",
-    "example": "I buy food wholesale",
+    "example": "What was supposed to be a targeted military operation deteriorated into wholesale slaughter of civilians.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44497,7 +44497,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1108",
     "term": "Wholesome",
     "meaning": "sano, saludable / integro, honesto",
-    "example": "exercise develops wholesome appetites",
+    "example": "All people shall have the right to maintain the minimum standards of wholesome and cultured living.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44514,7 +44514,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1442",
     "term": "Wholly",
     "meaning": "completamente, totalmente",
-    "example": "he was wholly convinced",
+    "example": "Due to severe educational influence the child became a wholly different person.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44531,7 +44531,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0691",
     "term": "Wide-brimmed",
     "meaning": "de ala grande/ ancha (used for hats)",
-    "example": "In her notes, she chose ?Wide-brimmed? as the most precise wording for the situation.",
+    "example": "Mary wore long sleeves and a wide-brimmed hat.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44548,7 +44548,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1975",
     "term": "Widths",
     "meaning": "ancho",
-    "example": "In her notes, she chose ?Widths? as the most precise wording for the situation.",
+    "example": "The fabric is available in three widths, so measure the window before ordering.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -44600,7 +44600,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0807",
     "term": "Willingness",
     "meaning": "voluntad, buena disposición",
-    "example": "he expressed his willingness to help",
+    "example": "The impairment cannot bring them to lose their willingness to live.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44617,7 +44617,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0897",
     "term": "Willpower",
     "meaning": "fuerza de voluntad",
-    "example": "In her notes, she chose ?Willpower? as the most precise wording for the situation.",
+    "example": "I don't think Tom and Mary have the willpower to do that.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44651,7 +44651,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0503",
     "term": "Windfall",
     "meaning": "ganancia inesperada, dinero caído del cielo (unexpected money) / fruta",
-    "example": "In her notes, she chose ?Windfall? as the most precise wording for the situation.",
+    "example": "The unexpected windfall has put my brother and his wife on easy street.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44668,7 +44668,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0646",
     "term": "Winning streak",
     "meaning": "buena racha, racha ganadora",
-    "example": "In her notes, she chose ?Winning streak? as the most precise wording for the situation.",
+    "example": "They have lost 10 games in a row since their winning streak ended.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44685,7 +44685,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0791",
     "term": "Wishful",
     "meaning": "esperanzado / deseoso",
-    "example": "In her notes, she chose ?Wishful? as the most precise wording for the situation.",
+    "example": "What if it was all nothing but wishful thinking? Would it make everything unreal?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44702,7 +44702,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0884",
     "term": "Wit",
     "meaning": "ingenio, sentido común, sensatez",
-    "example": "In her notes, she chose ?Wit? as the most precise wording for the situation.",
+    "example": "I'm at my wit's end. I can't think of any solution to this problem.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44719,7 +44719,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0350",
     "term": "With a pinch of salt",
     "meaning": "coger con pinzas (be slightly skeptical)",
-    "example": "During the discussion, she used the expression ?With a pinch of salt? to make her point.",
+    "example": "When you hear her stories you really must take them with a pinch of salt.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -44770,7 +44770,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1049",
     "term": "Withstand",
     "meaning": "resistir, aguantar",
-    "example": "In her notes, she chose ?Withstand? as the most precise wording for the situation.",
+    "example": "One withstands the invasion of armies; one does not withstand the invasion of ideas.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44787,7 +44787,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1164",
     "term": "Witty",
     "meaning": "ingenioso, ocurrente",
-    "example": "his sermons were unpredictably witty and satirical as well as eloquent",
+    "example": "My brother is so smart and witty that I cannot beat him in an argument.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -44807,7 +44807,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1724",
     "term": "Wizardry",
     "meaning": "magía, hechizería",
-    "example": "In her notes, she chose ?Wizardry? as the most precise wording for the situation.",
+    "example": "The first video game to feature slimes was Wizardry.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -44824,7 +44824,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0545",
     "term": "Woodland",
     "meaning": "bosque",
-    "example": "In her notes, she chose ?Woodland? as the most precise wording for the situation.",
+    "example": "On the edge of the forest, the woodland animals played Nickleback loudly to discourage humans.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44858,7 +44858,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0546",
     "term": "Woodland habitats",
     "meaning": "hábitats forestales",
-    "example": "In her notes, she chose ?Woodland habitats? as the most precise wording for the situation.",
+    "example": "Ancient woodland habitats support fungi and insects that cannot survive in new plantations.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44875,7 +44875,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0176",
     "term": "Word-of-mouth",
     "meaning": "boca a boca",
-    "example": "the film had good word-of-mouth publicity",
+    "example": "The success or failure of this company is going to hinge on word-of-mouth marketing.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -44892,7 +44892,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1720",
     "term": "Workable",
     "meaning": "factible, practicable",
-    "example": "In her notes, she chose ?Workable? as the most precise wording for the situation.",
+    "example": "Well, if you want my tuppence worth, I don't think this plan is really workable.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -44909,7 +44909,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0462",
     "term": "world-class",
     "meaning": "de primera categoría (of highest quality)",
-    "example": "In her notes, she chose ?world-class? as the most precise wording for the situation.",
+    "example": "One must practice every day in order to become a world-class athlete.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44943,7 +44943,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1813",
     "term": "Worshippers",
     "meaning": "fiel, devoto",
-    "example": "In her notes, she chose ?Worshippers? as the most precise wording for the situation.",
+    "example": "Muslim worshippers were savagely attacked and beaten by Israeli police inside the al-Aqsa Mosque.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -44960,7 +44960,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1413",
     "term": "Worthwhile",
     "meaning": "que vale la pena",
-    "example": "a worthwhile book",
+    "example": "It is worthwhile to read the book.",
     "family": "vocabulary",
     "families": [
       "vocabulary",
@@ -44980,7 +44980,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1431",
     "term": "Wreck",
     "meaning": "restos (remains of a ship) / ruina, despojos",
-    "example": "In her notes, she chose ?Wreck? as the most precise wording for the situation.",
+    "example": "He used all his strength to crawl out of the wrecked car.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -44997,7 +44997,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1222",
     "term": "Wretch",
     "meaning": "desdichado, desgraciado",
-    "example": "In her notes, she chose ?Wretch? as the most precise wording for the situation.",
+    "example": "One should never deride the wretch, for who can be sure of always being happy?",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -45014,7 +45014,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1717",
     "term": "Wretchedness",
     "meaning": "desgracia, miseria, desdicha",
-    "example": "he has compiled a record second to none in its wretchedness",
+    "example": "The very manner in which the greedy miser carried himself was mired in foul wretchedness.",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -45048,7 +45048,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0943",
     "term": "Wrongdoing",
     "meaning": "delito, crimen, ofensa (criminal behaviour) / pecado",
-    "example": "he denied any wrongdoing",
+    "example": "Those guys are ruthless, covering up their tracks like that after all their wrongdoing.",
     "family": "vocabulary",
     "families": [
       "vocabulary"
@@ -45065,7 +45065,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1676",
     "term": "Wrongly",
     "meaning": "erróneamente, equivocadamente, injustamente, falsamente",
-    "example": "In her notes, she chose ?Wrongly? as the most precise wording for the situation.",
+    "example": "I still haven't received your e-mail. Maybe you wrote down my e-mail address wrongly?",
     "family": "wordFormation",
     "families": [
       "wordFormation"
@@ -45082,7 +45082,7 @@ const VOCABULARY_SEED = [
     "id": "notion-0391",
     "term": "yield to someone’s demands",
     "meaning": "ceder antes las exigencias de alguien",
-    "example": "During the discussion, she used the expression ?yield to someone’s demands? to make her point.",
+    "example": "The university refused to yield to the protesters’ demands for the speaker to be banned.",
     "family": "patterns",
     "families": [
       "patterns"
@@ -45133,7 +45133,7 @@ const VOCABULARY_SEED = [
     "id": "notion-1432",
     "term": "Youngster",
     "meaning": "joven, chaval",
-    "example": "`tiddler' is a British term for youngster",
+    "example": "The mere sight of an official-looking person seals men's lips. These youngsters, however, go everywhere and hear everything.",
     "family": "vocabulary",
     "families": [
       "vocabulary"

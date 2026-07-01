@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "check": "node --check app.js && node --check vocabulary-data.js && node --check scripts/build-vocabulary-data.js && node --check scripts/enrich-vocabulary.js && node --check api/login.js && node --check api/logout.js && node --check api/me.js && node --check api/history.js && node --check api/_auth.js && node --check api/_githubStore.js"
+    "check": "node --check app.js && node --check vocabulary-data.js && node --check scripts/build-vocabulary-data.js && node --check scripts/enrich-vocabulary.js && node --check scripts/fill-dictionary-examples.js && node --check scripts/apply-manual-examples.js && node --check scripts/audit-vocabulary.js && node --check api/login.js && node --check api/logout.js && node --check api/me.js && node --check api/history.js && node --check api/_auth.js && node --check api/_githubStore.js && node scripts/audit-vocabulary.js",
+    "audit:vocabulary": "node scripts/audit-vocabulary.js"
   },
   "engines": {
     "node": ">=18"

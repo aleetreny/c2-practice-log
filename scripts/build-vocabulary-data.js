@@ -208,7 +208,7 @@ const entries = mergeEntries(rawEntries).map(entry => {
   const override = enrichment[entry.id] || {};
   return {
     id: entry.id,
-    term: entry.term,
+    term: override.term || entry.term,
     meaning: override.meaning || entry.meaning || "",
     example: override.example || entry.example || "",
     family: entry.family,
