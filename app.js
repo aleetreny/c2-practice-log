@@ -3766,7 +3766,7 @@ function openHistoryDetailModal(sessionId, editMode = false) {
         <button class="modal-close" onclick="closeModal()">&times;</button>
       </div>
       <div class="modal-body ${item.section === "useOfEnglish" && !editMode ? "history-review-scroll-body" : ""}">
-        <div style="display:flex; justify-content:space-between; align-items:center; background-color:#f9fafb; border:1px solid var(--border-color); border-radius:6px; padding:0.75rem 1rem; margin-bottom:1.5rem;">
+        <div class="history-review-summary">
           <div>
             <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase;">Scale score</div>
             <div id="history-review-scale" class="history-review-scale">${item.scaleScore} pts <span>(${getCambridgeGrade(item.scaleScore)})</span></div>
@@ -3777,7 +3777,7 @@ function openHistoryDetailModal(sessionId, editMode = false) {
           </div>
         </div>
 
-        <div style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.75rem;">
+        <div class="history-review-saved">
           Saved: <b>${dateFormatted}</b>${durationText ? ` - Time: <b>${durationText}</b>` : ""}
         </div>
 
