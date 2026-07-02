@@ -40,6 +40,7 @@ const STATE = {
   writingSituationGroup: "all",
   writingLabQuery: "",
   writingGenre: "report",
+  writingToolkitTab: "situations",
   writingToolkitGroup: "compare",
   timer: {
     elapsedSeconds: 0,
@@ -2248,28 +2249,39 @@ function renderWritingLanguageHTML() {
   return `
     <section class="writing-lab-section">
       <div class="writing-section-heading"><div><span class="eyebrow">Precision bank</span><h2>Choose language by function</h2><p>Patterns and examples prevent impressive words from being used in the wrong construction.</p></div></div>
-      <div class="writing-language-grid">
-        ${WRITING_LANGUAGE_GROUPS.map(group => `
-          <article class="writing-language-card">
-            <div><span class="eyebrow">${escapeHTML(group.id.replace(/-/g, " "))}</span><h3>${escapeHTML(group.title)}</h3><p>${escapeHTML(group.note)}</p></div>
-            <div class="writing-language-table">
-              ${group.items.map(([term, pattern, example]) => `<div><strong>${escapeHTML(term)}</strong><code>${escapeHTML(pattern)}</code><span>${escapeHTML(example)}</span></div>`).join("")}
-            </div>
-          </article>
-        `).join("")}
-      </div>
-
-      <div class="writing-resource-split">
-        <article class="writing-upgrade-panel">
-          <div class="writing-section-heading compact"><div><span class="eyebrow">Upgrade carefully</span><h2>Replace vague words</h2></div></div>
-          ${WRITING_UPGRADES.map(item => `<div class="writing-upgrade-row"><strong>${escapeHTML(item.plain)}</strong><span>${escapeHTML(item.options)}</span><small>${escapeHTML(item.collocation)}</small></div>`).join("")}
-        </article>
-        <article class="writing-safe-panel">
-          <div class="writing-section-heading compact"><div><span class="eyebrow">Formal-safe expressions</span><h2>Useful, not decorative</h2></div></div>
-          ${WRITING_SAFE_EXPRESSIONS.map(([phrase, use]) => `<div><strong>${escapeHTML(phrase)}</strong><span>${escapeHTML(use)}</span></div>`).join("")}
-        </article>
-      </div>
+      ${renderWritingLanguageGroupsHTML()}
+      ${renderWritingLanguageResourcesHTML()}
     </section>
+  `;
+}
+
+function renderWritingLanguageGroupsHTML() {
+  return `
+    <div class="writing-language-grid">
+      ${WRITING_LANGUAGE_GROUPS.map(group => `
+        <article class="writing-language-card">
+          <div><span class="eyebrow">${escapeHTML(group.id.replace(/-/g, " "))}</span><h3>${escapeHTML(group.title)}</h3><p>${escapeHTML(group.note)}</p></div>
+          <div class="writing-language-table">
+            ${group.items.map(([term, pattern, example]) => `<div><strong>${escapeHTML(term)}</strong><code>${escapeHTML(pattern)}</code><span>${escapeHTML(example)}</span></div>`).join("")}
+          </div>
+        </article>
+      `).join("")}
+    </div>
+  `;
+}
+
+function renderWritingLanguageResourcesHTML() {
+  return `
+    <div class="writing-resource-split">
+      <article class="writing-upgrade-panel">
+        <div class="writing-section-heading compact"><div><span class="eyebrow">Upgrade carefully</span><h2>Replace vague words</h2></div></div>
+        ${WRITING_UPGRADES.map(item => `<div class="writing-upgrade-row"><strong>${escapeHTML(item.plain)}</strong><span>${escapeHTML(item.options)}</span><small>${escapeHTML(item.collocation)}</small></div>`).join("")}
+      </article>
+      <article class="writing-safe-panel">
+        <div class="writing-section-heading compact"><div><span class="eyebrow writing-safe-eyebrow">Formal-safe<br>expressions</span><h2>Useful, not decorative</h2></div></div>
+        ${WRITING_SAFE_EXPRESSIONS.map(([phrase, use]) => `<div><strong>${escapeHTML(phrase)}</strong><span>${escapeHTML(use)}</span></div>`).join("")}
+      </article>
+    </div>
   `;
 }
 
@@ -2314,18 +2326,40 @@ function openWritingToolkit() {
         <div><span class="eyebrow">Keep your draft open</span><h3 class="modal-title" id="writing-toolkit-title">Essay quick rescue</h3><p>Choose the job your next sentence must perform.</p></div>
         <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
       </div>
-      <div class="writing-toolkit-tabs">
-        ${Object.entries(WRITING_SITUATION_GROUPS).filter(([key]) => key !== "all").map(([key, label]) => `<button class="${STATE.writingToolkitGroup === key ? "active" : ""}" data-toolkit-group="${key}" onclick="setWritingToolkitGroup('${key}')">${label}</button>`).join("")}
+      <div class="writing-toolkit-mode-tabs" aria-label="Writing toolkit sections">
+        <button class="${STATE.writingToolkitTab === "situations" ? "active" : ""}" data-toolkit-tab="situations" onclick="setWritingToolkitTab('situations')">Situations</button>
+        <button class="${STATE.writingToolkitTab === "language" ? "active" : ""}" data-toolkit-tab="language" onclick="setWritingToolkitTab('language')">Language</button>
       </div>
+      <div id="writing-toolkit-controls">${renderWritingToolkitControlsHTML()}</div>
       <div class="modal-body writing-toolkit-body" id="writing-toolkit-body">${renderWritingToolkitBodyHTML()}</div>
     </div>
   `;
   mountModal(modal);
 }
 
+function renderWritingToolkitControlsHTML() {
+  if (STATE.writingToolkitTab !== "situations") return "";
+  return `<div class="writing-toolkit-tabs">${Object.entries(WRITING_SITUATION_GROUPS).filter(([key]) => key !== "all").map(([key, label]) => `<button class="${STATE.writingToolkitGroup === key ? "active" : ""}" data-toolkit-group="${key}" onclick="setWritingToolkitGroup('${key}')">${label}</button>`).join("")}</div>`;
+}
+
 function renderWritingToolkitBodyHTML() {
+  if (STATE.writingToolkitTab === "language") {
+    return `<div class="writing-toolkit-note"><strong>Choose by function.</strong><span>Use the pattern and example to keep each expression natural.</span></div><div class="writing-toolkit-language">${renderWritingLanguageGroupsHTML()}${renderWritingLanguageResourcesHTML()}</div>`;
+  }
   const situations = WRITING_ESSAY_SITUATIONS.filter(item => item.group === STATE.writingToolkitGroup);
   return `<div class="writing-toolkit-note"><strong>Use the position tag.</strong><span>It stops a good phrase appearing in the wrong paragraph.</span></div><div class="writing-toolkit-list">${situations.map(item => renderWritingSituationCardHTML(item, true)).join("")}</div>`;
+}
+
+function setWritingToolkitTab(tab) {
+  STATE.writingToolkitTab = tab;
+  document.querySelectorAll("[data-toolkit-tab]").forEach(button => button.classList.toggle("active", button.dataset.toolkitTab === tab));
+  const controls = document.getElementById("writing-toolkit-controls");
+  if (controls) controls.innerHTML = renderWritingToolkitControlsHTML();
+  const body = document.getElementById("writing-toolkit-body");
+  if (body) {
+    body.scrollTop = 0;
+    body.innerHTML = renderWritingToolkitBodyHTML();
+  }
 }
 
 function setWritingToolkitGroup(group) {
