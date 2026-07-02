@@ -6178,9 +6178,14 @@ kbd {
   border-top: 1px solid #e8edf0;
 }
 
-.writing-safe-panel span {
+.writing-safe-panel > div:not(.writing-section-heading) > span {
   max-width: 55%;
   text-align: right;
+}
+
+.writing-safe-eyebrow {
+  max-width: none;
+  text-align: left;
 }
 
 .writing-genre-picker {
@@ -6389,6 +6394,32 @@ kbd {
   font-size: 0.72rem;
 }
 
+.writing-toolkit-mode-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.writing-toolkit-mode-tabs button {
+  min-width: 0;
+  padding: 9px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 9px;
+  background: #fff;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 0.7rem;
+  font-weight: 800;
+}
+
+.writing-toolkit-mode-tabs button:hover,
+.writing-toolkit-mode-tabs button.active {
+  border-color: #86b8b1;
+  background: var(--accent-soft);
+  color: var(--accent-color);
+}
+
 .writing-toolkit-tabs {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -6429,6 +6460,11 @@ kbd {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
+}
+
+.writing-toolkit-language .writing-language-grid,
+.writing-toolkit-language .writing-resource-split {
+  grid-template-columns: 1fr;
 }
 
 @media (max-width: 980px) {
