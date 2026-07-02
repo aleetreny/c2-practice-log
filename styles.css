@@ -996,12 +996,21 @@ button {
 }
 
 .modal-content.ue-all-errors-modal {
-  width: min(1180px, 100%);
-  max-height: 90vh;
+  width: min(1220px, calc(100vw - 16px));
+  height: calc(100dvh - 16px);
+  max-height: none;
+  padding: 14px 16px;
+}
+
+.ue-all-errors-modal .modal-header {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 .ue-all-errors-workspace {
-  height: min(68vh, 700px);
+  min-height: 0;
+  flex: 1 1 auto;
+  height: auto;
   overflow: hidden;
 }
 
@@ -1018,6 +1027,38 @@ button {
 .ue-all-errors-workspace .ue-part-text-panel {
   position: static;
   height: 100%;
+  padding: 12px;
+}
+
+.ue-all-errors-modal .ue-part-text-panel-head,
+.history-review-modal.text-open .ue-part-text-panel-head {
+  padding-bottom: 8px;
+}
+
+.ue-all-errors-modal .ue-part-text-panel-meta,
+.history-review-modal.text-open .ue-part-text-panel-meta {
+  margin-top: 7px;
+}
+
+.ue-all-errors-modal .ue-part-text-content,
+.history-review-modal.text-open .ue-part-text-content {
+  margin-top: 8px;
+  padding: 10px;
+  line-height: 1.55;
+}
+
+.ue-all-errors-modal .ue-part-text-open-review {
+  min-height: 36px;
+  margin-top: 8px;
+}
+
+.ue-all-errors-modal .history-review-actions {
+  margin-top: 8px;
+  padding-top: 8px;
+}
+
+.ue-all-errors-modal .history-review-actions .btn {
+  min-height: 38px;
 }
 
 .panel-title {
@@ -2805,8 +2846,78 @@ input.sheet-text-input:disabled,
 
 .modal-content.history-review-modal[data-history-section="useOfEnglish"].text-open,
 .modal-content.history-review-modal[data-history-section="reading"].text-open {
-  width: min(1180px, 100%);
-  max-width: 1180px !important;
+  width: min(1220px, calc(100vw - 16px)) !important;
+  max-width: 1220px !important;
+}
+
+.modal-content.history-review-modal[data-history-section="useOfEnglish"],
+.modal-content.history-review-modal[data-history-section="reading"] {
+  max-height: calc(100dvh - 16px) !important;
+  padding: 14px 16px;
+}
+
+.history-review-modal[data-history-section="useOfEnglish"] .modal-header,
+.history-review-modal[data-history-section="reading"] .modal-header {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.history-review-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 0 0 auto;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: #f9fafb;
+}
+
+.history-review-saved {
+  flex: 0 0 auto;
+  margin-bottom: 0.75rem;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.history-review-modal[data-history-section="useOfEnglish"] .history-review-summary,
+.history-review-modal[data-history-section="reading"] .history-review-summary {
+  margin-bottom: 10px;
+  padding: 8px 12px;
+}
+
+.history-review-modal[data-history-section="useOfEnglish"] .history-review-saved,
+.history-review-modal[data-history-section="reading"] .history-review-saved {
+  margin-bottom: 7px;
+}
+
+.history-review-modal.text-open > .modal-body {
+  min-height: 0;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.history-review-modal.text-open .history-review-workspace {
+  min-height: 0;
+  flex: 1 1 auto;
+  height: auto;
+  overflow: hidden;
+}
+
+.history-review-modal.text-open .history-review-workspace > div {
+  min-height: 0;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.history-review-modal.text-open .history-review-part-text-panel {
+  align-self: stretch;
+  position: static;
+  height: 100%;
+  padding: 12px;
 }
 
 .history-review-scroll-body {
@@ -2970,6 +3081,17 @@ input.sheet-text-input:disabled,
   margin-top: 1rem;
   padding-top: 12px;
   border-top: 1px solid var(--border-color);
+}
+
+.history-review-modal[data-history-section="useOfEnglish"] > .history-review-actions,
+.history-review-modal[data-history-section="reading"] > .history-review-actions {
+  margin-top: 8px;
+  padding-top: 8px;
+}
+
+.history-review-modal[data-history-section="useOfEnglish"] > .history-review-actions .btn,
+.history-review-modal[data-history-section="reading"] > .history-review-actions .btn {
+  min-height: 38px;
 }
 
 .history-review-delete {
@@ -3804,6 +3926,33 @@ input.sheet-text-input:disabled,
     grid-template-columns: 1fr;
   }
 
+  .ue-all-errors-workspace {
+    overflow-y: auto;
+  }
+
+  .ue-all-errors-workspace.text-open .ue-all-errors-list {
+    max-height: 42vh;
+  }
+
+  .ue-all-errors-workspace .ue-part-text-panel {
+    height: min(52vh, 600px);
+  }
+
+  .history-review-modal.text-open > .modal-body {
+    display: block;
+    overflow-y: auto;
+  }
+
+  .history-review-modal.text-open .history-review-workspace {
+    height: auto;
+    overflow: visible;
+  }
+
+  .history-review-modal.text-open .history-review-workspace > div {
+    overflow: visible;
+    padding-right: 0;
+  }
+
   .history-review-part-text-panel {
     height: min(58vh, 620px);
   }
@@ -3814,6 +3963,15 @@ input.sheet-text-input:disabled,
 }
 
 @media (max-width: 760px) {
+  .modal-content.ue-all-errors-modal,
+  .modal-content.history-review-modal[data-history-section="useOfEnglish"],
+  .modal-content.history-review-modal[data-history-section="reading"] {
+    width: min(100%, calc(100vw - 12px));
+    height: calc(100dvh - 12px);
+    max-height: calc(100dvh - 12px) !important;
+    padding: 12px;
+  }
+
   .app-shell {
     width: min(100% - 20px, 1180px);
   }
