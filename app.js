@@ -4,7 +4,7 @@ const STATE = {
   activeSection: null, // "useOfEnglish" | "reading" | "listening" | "writing"
   answers: {}, // Q-num -> string
   gradedStates: {}, // Q-num -> "correct" | "incorrect" | score (0|1|2)
-  errorNotes: {}, // Tracked error Q-num -> correction note
+  errorNotes: {}, // Tracked answer Q-num -> study comment
   useOfEnglishPartTexts: {}, // part2 | part3 | part4 -> reference text
   readingPartTexts: {}, // part1 -> shared Reading reference text
   isCorrecting: false,
@@ -675,6 +675,14 @@ function isObjectiveError(partData, gradeState) {
   return gradeState === "incorrect";
 }
 
+function hasObjectiveGrade(partData, gradeState) {
+  if (!partData) return false;
+  if (partData.type === "partial") {
+    return typeof gradeState === "number" && Number.isFinite(gradeState);
+  }
+  return gradeState === "correct" || gradeState === "incorrect";
+}
+
 function isTrackedErrorPart(section, partKey) {
   return section === "useOfEnglish" || (section === "reading" && partKey === "part1");
 }
@@ -715,7 +723,6 @@ function getTrackedErrorEntries() {
         if (!isTrackedErrorPart(item.section, partKey)) return;
         for (let q = partData.startQ; q <= partData.endQ; q++) {
           const gradeState = gradedStates[q];
-          if (!isObjectiveError(partData, gradeState)) continue;
           const note = typeof notes[q] === "string" ? notes[q].trim() : "";
           if (!note) continue;
 
@@ -729,6 +736,8 @@ function getTrackedErrorEntries() {
             question: q,
             answer: answers[q] || "",
             gradeState,
+            maxPoints: partData.weight,
+            isMissed: isObjectiveError(partData, gradeState),
             note
           });
         }
@@ -2480,13 +2489,13 @@ const VISIBLE_ERRORS_PER_LOG_COLUMN = 3;
 function renderTrackedErrorItemHTML(error, compact = false, textPanelId = "ue-dashboard-part-text-panel") {
   const partLabel = getUseOfEnglishPartShortLabel(error.partKey);
   const gradeLabel = typeof error.gradeState === "number"
-    ? `${error.gradeState}/2 pts`
-    : "Missed";
+    ? `${error.gradeState}/${error.maxPoints || 2} pts`
+    : error.gradeState === "correct" ? "Correct" : error.gradeState === "incorrect" ? "Missed" : "Not graded";
   const answer = error.answer ? escapeHTML(error.answer) : "No answer";
   const note = error.note.trim();
 
   return `
-    <article class="ue-error-item ${compact ? "compact" : ""}">
+    <article class="ue-error-item ${compact ? "compact" : ""} ${error.isMissed ? "" : "noted-correct"}">
       <div class="ue-error-item-head">
         <div>
           <span class="ue-error-part">${partLabel}</span>
@@ -2556,7 +2565,7 @@ function openTrackedPartErrorsModal(section, partKey) {
       <div class="modal-header">
         <div>
           <span class="eyebrow">${C2_EXAM_METADATA[section].name} · ${getUseOfEnglishPartShortLabel(partKey)}</span>
-          <h3 class="modal-title">${partData.name.replace(/^Part \d+ - /, "")} errors</h3>
+          <h3 class="modal-title">${partData.name.replace(/^Part \d+ - /, "")} notes</h3>
         </div>
         <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
       </div>
@@ -2582,10 +2591,10 @@ function renderErrorLogDashboardHTML() {
     <section class="dash-panel ue-errors-panel" aria-label="Error log">
       <div class="panel-title">
         <span>Error log</span>
-        <small>${errors.length} noted ${errors.length === 1 ? "error" : "errors"}</small>
+        <small>${errors.length} ${errors.length === 1 ? "noted answer" : "noted answers"}</small>
       </div>
       ${errors.length === 0 ? `
-        <div class="empty-state ue-errors-empty">Errors with notes from Reading Part 1 and Use of English will appear here.</div>
+        <div class="empty-state ue-errors-empty">Answers with notes from Reading Part 1 and Use of English will appear here.</div>
       ` : `
         <div class="ue-text-workspace ue-errors-workspace">
           <section class="ue-part-register">
@@ -2608,10 +2617,10 @@ function renderErrorLogDashboardHTML() {
                       </div>
                       ${partErrors.length > visibleErrors.length ? `
                         <button class="btn btn-secondary btn-full ue-view-all-errors" onclick="openTrackedPartErrorsModal('${section}', '${partKey}')">
-                          View all ${partErrors.length} errors
+                          View all ${partErrors.length} notes
                         </button>
                       ` : ""}
-                    ` : `<p class="ue-part-empty">No noted errors.</p>`}
+                    ` : `<p class="ue-part-empty">No notes yet.</p>`}
                   </article>
                 `;
               }).join("")}
@@ -3378,7 +3387,7 @@ function renderWritingHistoryPartHTML(item, partKey, editMode = false) {
       ${!editMode && correctionText ? `
         <div class="history-writing-correction">
           <strong>Correction feedback</strong>
-          <p>${escapeHTML(correctionText)}</p>
+          <div class="history-writing-markdown">${renderWritingFeedbackMarkdown(correctionText)}</div>
         </div>
       ` : ""}
     </div>
@@ -3411,17 +3420,16 @@ function renderHistoryGradeEditorHTML(q, partData, gradeState) {
   `;
 }
 
-function renderHistoryErrorNoteEditorHTML(item, q, partKey, partData, gradeState) {
+function renderHistoryErrorNoteEditorHTML(item, q, partKey) {
   if (!isTrackedErrorPart(item.section, partKey)) return "";
 
   const note = getErrorNotes(item)[q] || "";
-  const isError = isObjectiveError(partData, gradeState);
 
   return `
-    <div class="history-error-note-editor" id="history-error-note-editor-${q}" ${isError ? "" : "hidden"}>
-      <label for="history-error-note-${q}">Error note</label>
+    <div class="history-error-note-editor" id="history-error-note-editor-${q}">
+      <label for="history-error-note-${q}">Comment (optional)</label>
       <textarea id="history-error-note-${q}" rows="2"
-                placeholder="Add the rule, correction or reminder.">${escapeHTML(note)}</textarea>
+                placeholder="Add a rule, useful nuance, correction or reminder.">${escapeHTML(note)}</textarea>
     </div>
   `;
 }
@@ -3437,7 +3445,7 @@ function renderPartReferenceTextEditorHTML(section, partKey, value = "", context
     : "";
   const helperText = isSheetEditor
     ? "Optional - saved with this attempt for future review"
-    : "One text for this part and attempt - shared by every error in the part";
+    : "One text for this part and attempt - shared by every noted answer in the part";
 
   return `
     <div class="ue-part-text-editor ${isSheetEditor ? "sheet-part-text-editor" : "history-part-text-editor"}">
@@ -3466,13 +3474,6 @@ function setHistoryReviewGrade(qNum, value) {
   const activeButton = document.getElementById(`history-grade-${qNum}-${normalizedValue}`);
   if (activeButton) {
     activeButton.classList.add(isPartial ? `active-${normalizedValue}` : "active");
-  }
-
-  const noteEditor = document.getElementById(`history-error-note-editor-${qNum}`);
-  if (noteEditor) {
-    const weight = Number(control.dataset.weight) || 1;
-    const isError = isPartial ? normalizedValue < weight : normalizedValue === "incorrect";
-    noteEditor.hidden = !isError;
   }
 
   updateHistoryReviewPreview();
@@ -3620,7 +3621,6 @@ async function saveHistoryReviewEdits(sessionId) {
       Object.entries(sectionParts).forEach(([partKey, partData]) => {
         if (!isTrackedErrorPart(item.section, partKey)) return;
         for (let q = partData.startQ; q <= partData.endQ; q++) {
-          if (!isObjectiveError(partData, snapshot.gradedStates[q])) continue;
           const note = document.getElementById(`history-error-note-${q}`)?.value.trim() || "";
           if (note) errorNotes[q] = note;
         }
@@ -3696,7 +3696,7 @@ function openHistoryDetailModal(sessionId, editMode = false) {
         const uAns = escapeHTML(getPlainObject(item.answers)[q] || "--");
         const gradeState = item.gradedStates[q];
         const isError = isTrackedErrorPart(item.section, partKey) && isObjectiveError(partData, gradeState);
-        const errorNote = isError ? (getErrorNotes(item)[q] || "").trim() : "";
+        const errorNote = isTrackedErrorPart(item.section, partKey) ? (getErrorNotes(item)[q] || "").trim() : "";
         
         let gradeLabel = "";
         if (editMode) {
@@ -3717,9 +3717,9 @@ function openHistoryDetailModal(sessionId, editMode = false) {
               <span>${gradeLabel}</span>
             </div>
             ${editMode
-              ? renderHistoryErrorNoteEditorHTML(item, q, partKey, partData, gradeState)
-              : errorNote ? `<div class="history-error-note"><strong>Error note</strong>${escapeHTML(errorNote)}</div>` : ""}
-            ${!editMode && isError ? `
+              ? renderHistoryErrorNoteEditorHTML(item, q, partKey)
+              : errorNote ? `<div class="history-error-note ${isError ? "" : "noted-correct"}"><strong>${isError ? "Error note" : "Comment"}</strong>${escapeHTML(errorNote)}</div>` : ""}
+            ${!editMode && (isError || errorNote) ? `
               <button class="history-question-text-button" onclick="showPartReferenceText('${escapeJS(item.id)}', '${item.section}', '${partKey}', 'history-review-part-text-panel')">
                 View ${getUseOfEnglishPartShortLabel(partKey)} text
               </button>
@@ -3753,11 +3753,13 @@ function openHistoryDetailModal(sessionId, editMode = false) {
     </div>
   ` : sheetHTML;
 
-  const reviewMaxWidth = editMode ? "760px" : "600px";
+  const reviewMaxWidth = item.section === "writing"
+    ? editMode ? "980px" : "920px"
+    : editMode ? "760px" : "600px";
 
   modal.innerHTML = `
     <div class="modal-content history-review-modal ${editMode ? "editing" : ""}"
-         data-history-section="${item.section}" style="max-width: ${reviewMaxWidth}; max-height: 90vh;">
+         data-history-section="${item.section}" style="width: min(${reviewMaxWidth}, 100%); max-width: ${reviewMaxWidth}; max-height: 90vh;">
       <div class="modal-header">
         <div>
           <h3 class="modal-title">Review: ${sectionMeta.name}</h3>
@@ -4105,7 +4107,6 @@ function markBinaryGrade(qNum, state) {
   if (state === "correct") {
     cBtn.classList.add("active");
     iBtn.classList.remove("active");
-    delete STATE.errorNotes[qNum];
   } else {
     iBtn.classList.add("active");
     cBtn.classList.remove("active");
@@ -4128,7 +4129,6 @@ function markPartialGrade(qNum, pts) {
   const activeBtn = document.getElementById(`pts-btn-${qNum}-${pts}`);
   activeBtn.classList.add(`active-${pts}`);
 
-  if (pts === 2) delete STATE.errorNotes[qNum];
   updateErrorNoteArea(qNum);
 }
 
@@ -4140,7 +4140,7 @@ function updateErrorNoteArea(qNum) {
   const partKey = partEntry?.[0];
   const partData = partEntry?.[1];
   const shouldShow = isTrackedErrorPart(STATE.activeSection, partKey)
-    && isObjectiveError(partData, STATE.gradedStates[qNum]);
+    && hasObjectiveGrade(partData, STATE.gradedStates[qNum]);
 
   if (!shouldShow) {
     noteArea.innerHTML = "";
@@ -4149,10 +4149,10 @@ function updateErrorNoteArea(qNum) {
 
   noteArea.innerHTML = `
     <div class="sheet-error-note-box">
-      <label for="error-note-${qNum}">Error note (optional)</label>
+      <label for="error-note-${qNum}">Comment (optional)</label>
       <textarea class="sheet-error-note-input" id="error-note-${qNum}" rows="2"
                 oninput="storeErrorNote(${qNum}, this.value)"
-                placeholder="Why was this wrong? Add the rule, correction or reminder.">${escapeHTML(STATE.errorNotes[qNum] || "")}</textarea>
+                placeholder="Add a rule, useful nuance, correction or reminder.">${escapeHTML(STATE.errorNotes[qNum] || "")}</textarea>
     </div>
   `;
 }
@@ -4873,6 +4873,137 @@ function escapeHTML(value) {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+}
+
+function renderWritingMarkdownInline(value) {
+  const codeTokens = [];
+  let html = escapeHTML(value).replace(/`([^`]+)`/g, (_, code) => {
+    const token = `\u0000CODE${codeTokens.length}\u0000`;
+    codeTokens.push(`<code>${code}</code>`);
+    return token;
+  });
+
+  html = html
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/__([^_]+)__/g, "<strong>$1</strong>")
+    .replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, "$1<em>$2</em>")
+    .replace(/(^|[^_])_([^_\n]+)_(?!_)/g, "$1<em>$2</em>");
+
+  return html.replace(/\u0000CODE(\d+)\u0000/g, (_, index) => codeTokens[Number(index)] || "");
+}
+
+function getWritingMarkdownTableCells(line) {
+  return line.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map(cell => cell.trim());
+}
+
+function renderWritingFeedbackMarkdown(value) {
+  const lines = String(value || "").replace(/\r\n?/g, "\n").split("\n");
+  const output = [];
+  let paragraph = [];
+  let list = null;
+
+  const flushParagraph = () => {
+    if (paragraph.length === 0) return;
+    output.push(`<p>${paragraph.map(renderWritingMarkdownInline).join("<br>")}</p>`);
+    paragraph = [];
+  };
+  const flushList = () => {
+    if (!list) return;
+    output.push(`<${list.tag}>${list.items.map(item => `<li>${item.map(renderWritingMarkdownInline).join("<br>")}</li>`).join("")}</${list.tag}>`);
+    list = null;
+  };
+  const flushBlocks = () => {
+    flushParagraph();
+    flushList();
+  };
+
+  for (let index = 0; index < lines.length; index++) {
+    const line = lines[index];
+    const trimmed = line.trim();
+
+    if (!trimmed) {
+      flushBlocks();
+      continue;
+    }
+
+    if (/^```/.test(trimmed)) {
+      flushBlocks();
+      const codeLines = [];
+      index += 1;
+      while (index < lines.length && !/^```/.test(lines[index].trim())) {
+        codeLines.push(lines[index]);
+        index += 1;
+      }
+      output.push(`<pre><code>${escapeHTML(codeLines.join("\n"))}</code></pre>`);
+      continue;
+    }
+
+    const nextLine = lines[index + 1] || "";
+    const isTable = trimmed.includes("|") && /^\s*\|?\s*:?-{3,}:?(\s*\|\s*:?-{3,}:?)+\s*\|?\s*$/.test(nextLine);
+    if (isTable) {
+      flushBlocks();
+      const headers = getWritingMarkdownTableCells(line);
+      const rows = [];
+      index += 2;
+      while (index < lines.length && lines[index].trim() && lines[index].includes("|")) {
+        rows.push(getWritingMarkdownTableCells(lines[index]));
+        index += 1;
+      }
+      index -= 1;
+      output.push(`
+        <div class="markdown-table-wrap">
+          <table>
+            <thead><tr>${headers.map(cell => `<th>${renderWritingMarkdownInline(cell)}</th>`).join("")}</tr></thead>
+            <tbody>${rows.map(row => `<tr>${row.map(cell => `<td>${renderWritingMarkdownInline(cell)}</td>`).join("")}</tr>`).join("")}</tbody>
+          </table>
+        </div>
+      `);
+      continue;
+    }
+
+    const heading = trimmed.match(/^(#{1,6})\s+(.+)$/);
+    if (heading) {
+      flushBlocks();
+      const level = Math.min(6, heading[1].length + 1);
+      output.push(`<h${level}>${renderWritingMarkdownInline(heading[2])}</h${level}>`);
+      continue;
+    }
+
+    if (/^([-*_])(?:\s*\1){2,}$/.test(trimmed)) {
+      flushBlocks();
+      output.push("<hr>");
+      continue;
+    }
+
+    const orderedItem = line.match(/^\s*\d+[.)]\s+(.+)$/);
+    const unorderedItem = line.match(/^\s*[-+*]\s+(.+)$/);
+    if (orderedItem || unorderedItem) {
+      flushParagraph();
+      const tag = orderedItem ? "ol" : "ul";
+      if (list && list.tag !== tag) flushList();
+      if (!list) list = { tag, items: [] };
+      list.items.push([orderedItem?.[1] || unorderedItem[1]]);
+      continue;
+    }
+
+    if (list && /^\s{2,}\S/.test(line)) {
+      list.items[list.items.length - 1].push(trimmed);
+      continue;
+    }
+
+    const quote = trimmed.match(/^>\s?(.*)$/);
+    if (quote) {
+      flushBlocks();
+      output.push(`<blockquote>${renderWritingMarkdownInline(quote[1])}</blockquote>`);
+      continue;
+    }
+
+    flushList();
+    paragraph.push(trimmed);
+  }
+
+  flushBlocks();
+  return output.join("");
 }
 
 function calculateAverageScaleScore() {
