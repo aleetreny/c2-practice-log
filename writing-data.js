@@ -349,7 +349,14 @@ const WRITING_GENRES = {
   report: {
     label: "Report",
     meta: "Formal · factual · headings · evaluate and recommend",
-    structure: ["Aim", "Overall findings", "Strengths", "Weaknesses", "Recommendations", "Conclusion"],
+    structure: [
+      ["Aim", "State exactly what the report examines and which areas it covers."],
+      ["Overall findings", "Give the reader the main pattern before moving into detail."],
+      ["Strengths", "Identify what works and support it with a concrete finding."],
+      ["Weaknesses", "Explain the most relevant limitation and its practical effect."],
+      ["Recommendations", "Propose realistic action that follows from the evidence."],
+      ["Conclusion", "Close with the likely outcome if the action is implemented."]
+    ],
     phrases: [
       ["Purpose", "The aim of this report is to assess [subject], with particular reference to [areas]."],
       ["Overview", "On the whole, [subject] proved broadly successful, despite a number of practical limitations."],
@@ -358,12 +365,25 @@ const WRITING_GENRES = {
       ["Recommendation", "Priority should therefore be given to [measure]."],
       ["Conditional close", "Should these recommendations be implemented, the programme is likely to become more effective and accessible."]
     ],
-    avoid: ["Long narrative", "Personal anecdotes", "Recommendation without evidence"]
+    language: [
+      ["assess", "assess the effectiveness / suitability of"],
+      ["findings", "the findings indicate / reveal that"],
+      ["shortcoming", "a significant practical shortcoming"],
+      ["feasible", "a feasible and cost-effective measure"],
+      ["allocate", "allocate additional resources to"],
+      ["implementation", "successful implementation would require"]
+    ]
   },
   review: {
     label: "Review",
     meta: "Semi-formal · critical voice · describe briefly, then evaluate",
-    structure: ["Hook", "Brief context", "Main strength", "Qualified criticism", "Recommendation"],
+    structure: [
+      ["Hook", "Open with a confident judgement that gives the review a clear voice."],
+      ["Brief context", "Introduce the work and its focus without retelling the whole plot."],
+      ["Main strength", "Evaluate the feature that most shapes the audience's experience."],
+      ["Qualified criticism", "Balance the praise with one precise and justified limitation."],
+      ["Recommendation", "Name the audience and explain why the work suits them."]
+    ],
     phrases: [
       ["Hook", "Few [works] manage to combine [quality] with [quality], yet [title] does so with remarkable assurance."],
       ["Focus", "The plot revolves around [surface story], though the real focus is arguably on [theme]."],
@@ -372,12 +392,26 @@ const WRITING_GENRES = {
       ["Relevance", "Far from feeling dated, it still resonates because [reason]."],
       ["Verdict", "For [audience], this is a thought-provoking choice that more than justifies the time invested."]
     ],
-    avoid: ["Retelling the whole plot", "Only positive adjectives", "A recommendation with no target audience"]
+    language: [
+      ["compelling", "a compelling performance / narrative"],
+      ["thought-provoking", "a thought-provoking exploration of"],
+      ["evocative", "evocative imagery / setting"],
+      ["pace", "the pace occasionally begins to drag"],
+      ["nuanced", "a nuanced portrayal / interpretation"],
+      ["resonate", "it will resonate particularly with"]
+    ]
   },
   article: {
     label: "Article",
     meta: "Semi-formal · engaging · reader-aware · memorable ending",
-    structure: ["Engaging title", "Hook", "Point A", "Shift/example", "Action", "Impactful close"],
+    structure: [
+      ["Engaging title", "Signal the subject while giving the reader a reason to continue."],
+      ["Hook", "Create curiosity through a contrast, observation or brief question."],
+      ["Point A", "Develop the first idea in a direct, reader-friendly paragraph."],
+      ["Shift or example", "Change perspective and make the issue tangible."],
+      ["Action", "Offer a useful response the reader can realistically imagine."],
+      ["Impactful close", "Finish with a memorable implication rather than a formal summary."]
+    ],
     phrases: [
       ["Title", "Why [X] matters more than ever"],
       ["Hook", "At first glance, [idea] may seem reasonable, but the reality is rather more complex."],
@@ -386,12 +420,25 @@ const WRITING_GENRES = {
       ["Action", "A sensible starting point would be to [measure]."],
       ["Close", "The real question is not whether [X] matters, but whether we are prepared to act."]
     ],
-    avoid: ["Essay-style academic opening", "Too many rhetorical questions", "Formal report headings", "A long anecdote"]
+    language: [
+      ["widespread", "a widespread but often overlooked problem"],
+      ["foster", "foster a greater sense of"],
+      ["counterproductive", "prove ultimately counterproductive"],
+      ["a sensible starting point", "a natural way to introduce practical action"],
+      ["far from", "far from being a minor concern"],
+      ["make a tangible difference", "describe visible, practical impact"]
+    ]
   },
   formalLetter: {
     label: "Formal letter",
     meta: "Formal · diplomatic · purpose-led · no title or headings",
-    structure: ["Reason for writing", "Point 1", "Point 2", "Request/recommendation", "Courteous close"],
+    structure: [
+      ["Reason for writing", "Make the purpose and the relevant issue immediately clear."],
+      ["Point 1", "Explain the first concern with a calm, factual justification."],
+      ["Point 2", "Develop a second consequence or acknowledge the other side."],
+      ["Request", "State precisely what response or remedy you would like."],
+      ["Courteous close", "End firmly while preserving a professional tone."]
+    ],
     phrases: [
       ["Purpose", "I am writing in connection with [issue], and more specifically to [purpose]."],
       ["Acknowledge", "While I recognise the practical difficulties involved, [concern]."],
@@ -400,12 +447,25 @@ const WRITING_GENRES = {
       ["Request", "I would therefore urge you to consider [measure]."],
       ["Close", "I trust that these concerns will be given due consideration."]
     ],
-    avoid: ["Essay thesis", "Overly emotional accusation", "Wrong Yours faithfully/sincerely pairing"]
+    language: [
+      ["raise a concern", "raise a concern regarding"],
+      ["adverse consequences", "have adverse consequences for"],
+      ["remedy", "take steps to remedy the situation"],
+      ["urge", "urge you to consider / reconsider"],
+      ["due consideration", "be given due consideration"],
+      ["at your earliest convenience", "request a timely response politely"]
+    ]
   },
   informalLetter: {
     label: "Informal letter",
     meta: "Natural · personal · supportive · rich but not formal",
-    structure: ["React", "Point A/advice", "Point B/experience", "Practical recommendation", "Friendly close"],
+    structure: [
+      ["React", "Respond naturally to the news or question in the original message."],
+      ["Advice", "Give a clear suggestion and explain why it may help."],
+      ["Experience", "Add a short personal example only when it supports the advice."],
+      ["Practical recommendation", "Offer a specific next step rather than vague encouragement."],
+      ["Friendly close", "Invite an update and end on a warm, personal note."]
+    ],
     phrases: [
       ["Open", "It was great to hear from you. You asked me about [X], so I thought I would share a few ideas."],
       ["Empathise", "I can completely understand why you are unsure."],
@@ -414,7 +474,14 @@ const WRITING_GENRES = {
       ["Reassure", "It may seem daunting at first, but [reassurance]."],
       ["Close", "Whatever you decide, let me know how it goes and do keep me posted."]
     ],
-    avoid: ["Formal report language", "Generic advice with no reason", "An abrupt ending"]
+    language: [
+      ["worth a try", "it is definitely worth a try"],
+      ["come in handy", "this may come in handy when"],
+      ["bear in mind", "one thing to bear in mind is"],
+      ["go for it", "encourage a decision naturally"],
+      ["feel free to", "feel free to get in touch if"],
+      ["keep me posted", "ask for an update in the closing"]
+    ]
   }
 };
 

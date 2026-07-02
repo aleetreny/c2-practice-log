@@ -2140,7 +2140,6 @@ function renderWritingEssayMapHTML() {
     <section class="writing-lab-section essay-map-section">
       <div class="writing-section-heading">
         <div><span class="eyebrow">Part 1 · 240–280 words</span><h2>One argument, four jobs</h2><p>Every paragraph must compare, evaluate or decide. Summary alone is never enough.</p></div>
-        <button class="btn btn-primary" onclick="openWritingToolkit()">Open quick rescue</button>
       </div>
 
       <div class="essay-brief-strip">
@@ -2150,8 +2149,8 @@ function renderWritingEssayMapHTML() {
       </div>
 
       <div class="essay-stage-grid">
-        ${WRITING_ESSAY_STAGES.map((stage, index) => `
-          <article class="essay-stage-card stage-${index + 1}">
+        ${WRITING_ESSAY_STAGES.map(stage => `
+          <article class="essay-stage-card">
             <div class="essay-stage-head"><span>${stage.paragraph}</span><div><h3>${escapeHTML(stage.title)}</h3><small>${escapeHTML(stage.target)}</small></div></div>
             <p>${escapeHTML(stage.role)}</p>
             <div class="essay-move-row">${stage.moves.map(move => `<span>${escapeHTML(move)}</span>`).join("")}</div>
@@ -2159,18 +2158,6 @@ function renderWritingEssayMapHTML() {
           </article>
         `).join("")}
       </div>
-
-      <div class="essay-position-demo">
-        <div class="writing-section-heading compact"><div><span class="eyebrow">Worked comparison</span><h2>How the paragraphs connect</h2><p>The example keeps one thread: autonomy versus collaboration in remote work.</p></div></div>
-        <div class="essay-position-rail">
-          ${WRITING_ESSAY_STAGES.map((stage, index) => `<article><span class="position-number">${index + 1}</span><div><strong>${stage.paragraph} · ${escapeHTML(stage.title)}</strong><p>${escapeHTML(stage.example)}</p></div></article>`).join("")}
-        </div>
-      </div>
-
-      <aside class="writing-principle-card">
-        <strong>The anti-template rule</strong>
-        <p>Memorise the <em>move</em>, not the completed sentence. Replace every bracket with a precise idea from the texts and vary the reporting verb, evaluation and consequence.</p>
-      </aside>
     </section>
   `;
 }
@@ -2295,14 +2282,18 @@ function renderWritingFormatsHTML() {
         ${Object.entries(WRITING_GENRES).map(([key, item]) => `<button class="${STATE.writingGenre === key ? "active" : ""}" onclick="setWritingGenre('${key}')"><strong>${escapeHTML(item.label)}</strong><span>${escapeHTML(item.meta)}</span></button>`).join("")}
       </div>
       <article class="writing-genre-workspace">
-        <div class="writing-genre-title"><div><span class="eyebrow">${escapeHTML(genre.label)}</span><h2>${escapeHTML(genre.meta)}</h2></div></div>
-        <div class="writing-genre-structure">${genre.structure.map((step, index) => `<div><span>${index + 1}</span><strong>${escapeHTML(step)}</strong></div>`).join("")}</div>
+        <div class="writing-genre-title">
+          <span class="eyebrow">Format guide</span>
+          <h2>${escapeHTML(genre.label)}</h2>
+          <div class="writing-genre-meta">${genre.meta.split("·").map(item => `<span>${escapeHTML(item.trim())}</span>`).join("")}</div>
+        </div>
+        <div class="writing-genre-structure">${genre.structure.map(([step, objective], index) => `<div><span>${index + 1}</span><div><strong>${escapeHTML(step)}</strong><p>${escapeHTML(objective)}</p></div></div>`).join("")}</div>
         <div class="writing-genre-grid">
           <div class="writing-genre-phrases">
             <h3>High-value moves</h3>
             ${genre.phrases.map(([label, phrase]) => `<div><span>${escapeHTML(label)}</span>${renderWritingPhraseButtonHTML(phrase)}</div>`).join("")}
           </div>
-          <aside class="writing-avoid-card"><span class="eyebrow">Avoid</span><h3>Genre drift</h3><ul>${genre.avoid.map(item => `<li>${escapeHTML(item)}</li>`).join("")}</ul></aside>
+          <aside class="writing-genre-language"><span class="eyebrow">Genre vocabulary</span><h3>Useful language</h3>${genre.language.map(([term, use]) => `<div><strong>${escapeHTML(term)}</strong><span>${escapeHTML(use)}</span></div>`).join("")}</aside>
         </div>
       </article>
     </section>
