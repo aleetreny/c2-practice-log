@@ -6251,9 +6251,13 @@ kbd {
 
 .writing-genre-structure {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
-  gap: 7px;
-  margin: 17px 0;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0;
+  margin: 17px 0 19px;
+  overflow: hidden;
+  border: 1px solid #dce9e7;
+  border-radius: 9px;
+  background: #f7fbfa;
 }
 
 .writing-genre-structure div {
@@ -6262,23 +6266,30 @@ kbd {
 }
 
 .writing-genre-structure > div {
-  align-items: center;
-  flex-direction: column;
-  gap: 9px;
-  min-height: 132px;
-  justify-content: flex-start;
-  padding: 13px 11px;
-  border: 1px solid #dce9e7;
-  border-radius: 9px;
-  background: #f7fbfa;
+  align-items: flex-start;
+  flex-direction: row;
+  gap: 10px;
+  min-height: 94px;
+  padding: 14px;
+  border-right: 1px solid #dce9e7;
   color: var(--text-main);
-  text-align: center;
+  text-align: left;
+}
+
+.writing-genre-structure > div:last-child {
+  border-right: 0;
+}
+
+.writing-genre-structure > div > div {
+  display: block;
+  flex: 1;
 }
 
 .writing-genre-structure > div > span {
   display: grid;
-  width: 26px;
-  height: 26px;
+  flex: 0 0 23px;
+  width: 23px;
+  height: 23px;
   place-items: center;
   border: 1px solid #abd1cc;
   border-radius: 50%;
@@ -6290,11 +6301,12 @@ kbd {
 
 .writing-genre-structure strong {
   display: block;
-  font-size: 0.69rem;
+  font-size: 0.7rem;
+  line-height: 1.25;
 }
 
 .writing-genre-structure p {
-  margin-top: 4px;
+  margin-top: 5px;
   color: var(--text-muted);
   font-size: 0.62rem;
   line-height: 1.42;
@@ -6302,7 +6314,7 @@ kbd {
 
 .writing-genre-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(240px, 0.5fr);
+  grid-template-columns: minmax(0, 3fr) minmax(360px, 2fr);
   gap: 12px;
 }
 
@@ -6341,8 +6353,10 @@ kbd {
 
 .writing-genre-language > div {
   display: grid;
-  gap: 3px;
-  padding: 9px 0;
+  grid-template-columns: minmax(135px, 0.9fr) minmax(0, 1.1fr);
+  gap: 10px;
+  align-items: baseline;
+  padding: 8px 0;
   border-top: 1px solid #dce9e7;
 }
 
@@ -6428,6 +6442,18 @@ kbd {
 
   .writing-genre-structure {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    overflow: visible;
+    border: 0;
+    background: transparent;
+  }
+
+  .writing-genre-structure > div,
+  .writing-genre-structure > div:last-child {
+    min-height: 88px;
+    border: 1px solid #dce9e7;
+    border-radius: 8px;
+    background: #f7fbfa;
   }
 }
 
@@ -6553,6 +6579,11 @@ kbd {
 
   .writing-genre-phrases > div > span {
     padding-top: 4px;
+  }
+
+  .writing-genre-language > div {
+    grid-template-columns: 1fr;
+    gap: 3px;
   }
 
   .writing-toolkit-overlay {
