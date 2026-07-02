@@ -57,7 +57,14 @@ expect(Object.keys(data.WRITING_GENRES).length === 5, "Format guide must contain
 Object.entries(data.WRITING_GENRES).forEach(([key, genre]) => {
   expect(present(genre.label), `${key} is missing a label.`);
   expect(Array.isArray(genre.structure) && genre.structure.length >= 4, `${key} needs a complete structure.`);
+  (genre.structure || []).forEach((step, index) => {
+    expect(Array.isArray(step) && present(step[0]) && present(step[1]), `${key} structure step ${index + 1} needs a title and objective.`);
+  });
   expect(Array.isArray(genre.phrases) && genre.phrases.length >= 6, `${key} needs at least six useful phrases.`);
+  expect(Array.isArray(genre.language) && genre.language.length >= 6, `${key} needs at least six vocabulary entries.`);
+  (genre.language || []).forEach((entry, index) => {
+    expect(Array.isArray(entry) && present(entry[0]) && present(entry[1]), `${key} vocabulary entry ${index + 1} is incomplete.`);
+  });
 });
 expect(data.WRITING_SAFE_EXPRESSIONS.length === 10, "Safe-expression bank must contain ten entries.");
 
