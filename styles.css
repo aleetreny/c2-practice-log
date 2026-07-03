@@ -2723,6 +2723,15 @@ button {
   font-weight: 900;
 }
 
+.attempt-score .partial {
+  color: var(--accent-color);
+  font-size: 0.9rem;
+}
+
+.attempt-score .partial-practice-caption {
+  color: var(--accent-hover);
+}
+
 .delete-hist-btn {
   width: 26px;
   height: 26px;
@@ -3514,6 +3523,18 @@ input.sheet-text-input:disabled,
   line-height: 1.45;
 }
 
+.history-partial-notice {
+  margin: -2px 0 10px;
+  padding: 9px 12px;
+  border: 1px solid #a7d8ce;
+  border-radius: 7px;
+  background: var(--accent-soft);
+  color: var(--accent-hover);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
 .history-review-actions {
   display: flex;
   justify-content: flex-end;
@@ -4084,6 +4105,36 @@ input.sheet-text-input:disabled,
 
 .attempt-result-modal.risk {
   --result-accent: var(--color-warning);
+}
+
+.attempt-result-modal.partial-practice-result {
+  --result-accent: var(--accent-color);
+}
+
+.partial-practice-status {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-top: 20px;
+  padding: 18px;
+  border: 1px solid #a7d8ce;
+  border-radius: 12px;
+  background: var(--accent-soft);
+}
+
+.partial-practice-status strong {
+  color: var(--accent-hover);
+  font-size: 1.15rem;
+}
+
+.partial-practice-status span {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.45;
+}
+
+.result-stat-grid.partial-practice-stats {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .result-modal-close {
