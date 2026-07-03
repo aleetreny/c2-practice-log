@@ -1,10 +1,11 @@
 // STATE MANAGEMENT
 const STATE = {
-  currentView: "home", // "home" | "dashboard" | "writingLab" | "vocabulary" | "vocabularyReview" | "sheet"
+  currentView: "home", // "home" | "dashboard" | "errorReview" | "writingLab" | "vocabulary" | "vocabularyReview" | "sheet"
   activeSection: null, // "useOfEnglish" | "reading" | "listening" | "writing"
   answers: {}, // Q-num -> string
   gradedStates: {}, // Q-num -> "correct" | "incorrect" | score (0|1|2)
-  errorNotes: {}, // Tracked answer Q-num -> study comment
+  correctAnswers: {}, // Tracked answer Q-num -> model answer
+  errorNotes: {}, // Tracked answer Q-num -> optional study note
   useOfEnglishPartTexts: {}, // part2 | part3 | part4 -> reference text
   readingPartTexts: {}, // part1 -> shared Reading reference text
   isCorrecting: false,
@@ -36,6 +37,12 @@ const STATE = {
     size: 5
   },
   vocabularyReviewSession: null,
+  errorReviewSetup: {
+    parts: C2_STUDY_REVIEW.TRACKED_PARTS.map(part => part.id),
+    scope: "missed",
+    size: 10
+  },
+  errorReviewSession: null,
   writingLabTab: "essay",
   writingSituationGroup: "all",
   writingLabQuery: "",
@@ -119,7 +126,12 @@ function loadLocalStorage() {
       parseStoredHistory(localStorage.getItem("c2_history_Candidate_C2"))
     ];
 
-    STATE.history = mergeHistoryCollections(...localHistories);
+    const localMigration = C2_STUDY_REVIEW.migrateHistoryStudyData(
+      mergeHistoryCollections(...localHistories),
+      C2_EXAM_METADATA
+    );
+    STATE.history = localMigration.history;
+    if (localMigration.changed) saveLocalStorage();
     const storedVocabulary = JSON.parse(localStorage.getItem(LOCAL_VOCABULARY_KEY) || "{}");
     STATE.vocabularyEntries = Array.isArray(storedVocabulary.entries) ? storedVocabulary.entries.map(stripVocabularyCategory) : [];
     STATE.vocabularyArchivedIds = Array.isArray(storedVocabulary.archivedIds) ? storedVocabulary.archivedIds : [];
@@ -501,7 +513,11 @@ async function hydrateRemoteHistory() {
       fetchSupabaseHistory(),
       fetchSupabaseVocabularyState()
     ]);
-    const mergedHistory = mergeHistoryCollections(remoteHistory, STATE.history);
+    const migration = C2_STUDY_REVIEW.migrateHistoryStudyData(
+      mergeHistoryCollections(remoteHistory, STATE.history),
+      C2_EXAM_METADATA
+    );
+    const mergedHistory = migration.history;
     STATE.history = mergedHistory;
     saveLocalStorage();
 
@@ -512,7 +528,7 @@ async function hydrateRemoteHistory() {
       await saveRemoteVocabularyState();
     }
 
-    if (mergedHistory.length !== remoteHistory.length) {
+    if (mergedHistory.length !== remoteHistory.length || migration.changed) {
       await saveRemoteHistory("merge");
     }
 
@@ -665,6 +681,12 @@ function getErrorNotes(item = {}) {
   return getPlainObject(meta.errorNotes);
 }
 
+function getCorrectAnswers(item = {}) {
+  const answers = getPlainObject(item.answers);
+  const meta = getPlainObject(answers.meta);
+  return getPlainObject(meta.correctAnswers);
+}
+
 function getUseOfEnglishPartTexts(item = {}) {
   const answers = getPlainObject(item.answers);
   const meta = getPlainObject(answers.meta);
@@ -743,13 +765,16 @@ function getTrackedErrorEntries() {
       const answers = getPlainObject(item.answers);
       const gradedStates = getPlainObject(item.gradedStates);
       const notes = getErrorNotes(item);
+      const correctAnswers = getCorrectAnswers(item);
+      const partTexts = getPartReferenceTexts(item);
 
       Object.entries(C2_EXAM_METADATA[item.section].parts).forEach(([partKey, partData]) => {
         if (!isTrackedErrorPart(item.section, partKey)) return;
         for (let q = partData.startQ; q <= partData.endQ; q++) {
           const gradeState = gradedStates[q];
           const note = typeof notes[q] === "string" ? notes[q].trim() : "";
-          if (!note) continue;
+          const correctAnswer = typeof correctAnswers[q] === "string" ? correctAnswers[q].trim() : "";
+          if (!note && !correctAnswer) continue;
 
           entries.push({
             attemptId: item.id,
@@ -760,10 +785,12 @@ function getTrackedErrorEntries() {
             partName: partData.name,
             question: q,
             answer: answers[q] || "",
+            correctAnswer,
             gradeState,
             maxPoints: partData.weight,
             isMissed: isObjectiveError(partData, gradeState),
-            note
+            note,
+            hasReferenceText: Boolean(String(partTexts[partKey] || "").trim())
           });
         }
       });
@@ -2217,6 +2244,323 @@ function handleVocabularyReviewKeyboard(event) {
 
 window.addEventListener("keydown", handleVocabularyReviewKeyboard);
 
+function getStudyReviewPartLabel(partId) {
+  const part = C2_STUDY_REVIEW.TRACKED_PARTS.find(entry => entry.id === partId);
+  if (!part) return "Practice part";
+  const partData = C2_EXAM_METADATA[part.section]?.parts?.[part.partKey];
+  return partData?.name || `${C2_EXAM_METADATA[part.section]?.name || "Practice"} ${getUseOfEnglishPartShortLabel(part.partKey)}`;
+}
+
+function getStudyReviewCandidates(setup = STATE.errorReviewSetup) {
+  const selectedParts = new Set(Array.isArray(setup.parts) ? setup.parts : []);
+  const candidates = [];
+
+  STATE.history.forEach(item => {
+    if (!item || !["reading", "useOfEnglish"].includes(item.section)) return;
+    const answers = getPlainObject(item.answers);
+    const gradedStates = getPlainObject(item.gradedStates);
+    const notes = getErrorNotes(item);
+    const correctAnswers = getCorrectAnswers(item);
+    const partTexts = getPartReferenceTexts(item);
+
+    C2_STUDY_REVIEW.TRACKED_PARTS.filter(part => part.section === item.section).forEach(part => {
+      if (!selectedParts.has(part.id)) return;
+      const partData = C2_EXAM_METADATA[part.section]?.parts?.[part.partKey];
+      if (!partData) return;
+      const referenceText = String(partTexts[part.partKey] || "").trim();
+      if (!referenceText) return;
+
+      for (let question = part.startQ; question <= part.endQ; question += 1) {
+        const gradeState = gradedStates[question];
+        if (!hasObjectiveGrade(partData, gradeState)) continue;
+        const isMissed = isObjectiveError(partData, gradeState);
+        if (setup.scope === "missed" && !isMissed) continue;
+        const correctAnswer = String(correctAnswers[question] || "").trim();
+        if (!correctAnswer) continue;
+        const prompt = C2_STUDY_REVIEW.extractStudyReviewPrompt(referenceText, question, part.startQ, part.endQ);
+
+        candidates.push({
+          key: `${item.id}:${part.id}:${question}`,
+          attemptId: item.id,
+          date: Number(item.date) || 0,
+          section: part.section,
+          partKey: part.partKey,
+          partId: part.id,
+          partLabel: getStudyReviewPartLabel(part.id),
+          question,
+          prompt: prompt.text,
+          promptMode: prompt.mode,
+          answer: String(answers[question] || "").trim(),
+          correctAnswer,
+          note: String(notes[question] || "").trim(),
+          isMissed,
+          gradeState,
+          maxPoints: partData.weight
+        });
+      }
+    });
+  });
+
+  return candidates;
+}
+
+function getStudyReviewCandidateByKey(key) {
+  return getStudyReviewCandidates({
+    ...STATE.errorReviewSetup,
+    scope: "all",
+    parts: C2_STUDY_REVIEW.TRACKED_PARTS.map(part => part.id)
+  }).find(candidate => candidate.key === key) || null;
+}
+
+function getStudyReviewAudit() {
+  return C2_STUDY_REVIEW.migrateHistoryStudyData(STATE.history, C2_EXAM_METADATA).audit;
+}
+
+function openErrorReview() {
+  STATE.errorReviewSession = null;
+  renderErrorReview();
+  window.scrollTo({ top: 0 });
+}
+
+function renderErrorReview() {
+  if (STATE.currentView === "sheet") clearPracticeTimerInterval();
+  STATE.currentView = "errorReview";
+  const appContainer = document.getElementById("app-container");
+  appContainer.innerHTML = `
+    <div class="vocabulary-container review-container study-review-container app-shell">
+      <header class="app-topbar">
+        <button class="brand-button" onclick="renderHome()" aria-label="Practice home" style="text-align:left">
+          <span style="text-align:left;display:block">
+            <span class="brand-title">Practice Log</span>
+            <span class="brand-subtitle">Cambridge C2</span>
+          </span>
+        </button>
+        ${renderMainNavigation("dashboard")}
+      </header>
+      <main class="review-main">
+        ${STATE.errorReviewSession ? renderErrorReviewSessionHTML() : renderErrorReviewSetupHTML()}
+      </main>
+    </div>
+  `;
+}
+
+function renderErrorReviewSetupHTML() {
+  const setup = STATE.errorReviewSetup;
+  const selectedParts = new Set(setup.parts);
+  const eligible = getStudyReviewCandidates(setup);
+  const audit = getStudyReviewAudit();
+  const readyCount = Math.min(Number(setup.size), eligible.length);
+
+  return `
+    <section class="review-setup-hero study-review-hero">
+      <div>
+        <button class="study-review-back" onclick="renderDashboard()">&larr; Back to Error log</button>
+        <span class="eyebrow">Exercise review</span>
+        <h1>Turn corrections into recall.</h1>
+        <p>Random questions from Reading Part 1 and Use of English Parts 2–4, built from your saved exercises.</p>
+      </div>
+      <div class="review-setup-count"><strong>${eligible.length.toLocaleString("en-GB")}</strong><span>cards available</span></div>
+    </section>
+
+    <section class="review-setup-panel study-review-setup-panel">
+      <div class="review-setup-step">
+        <span class="review-step-number">1</span>
+        <div>
+          <h2>Which parts should appear?</h2>
+          <div class="study-review-part-grid">
+            ${C2_STUDY_REVIEW.TRACKED_PARTS.map(part => {
+              const count = getStudyReviewCandidates({ ...setup, scope: "all", parts: [part.id] }).length;
+              return `<button class="study-review-part ${selectedParts.has(part.id) ? "active" : ""}" onclick="toggleErrorReviewPart('${part.id}')">
+                <span>${part.section === "reading" ? "Reading" : "Use of English"}</span>
+                <strong>${getUseOfEnglishPartShortLabel(part.partKey)}</strong>
+                <small>${count} ready</small>
+              </button>`;
+            }).join("")}
+          </div>
+        </div>
+      </div>
+
+      <div class="review-setup-step">
+        <span class="review-step-number">2</span>
+        <div>
+          <h2>What should the deck include?</h2>
+          <div class="review-mode-grid">
+            ${[
+              ["missed", "Mistakes only", "Focus only on answers that lost marks."],
+              ["all", "Correct + missed", "Mix successful answers with mistakes for stronger recall."]
+            ].map(([key, title, detail]) => `<button class="review-mode-card ${setup.scope === key ? "active" : ""}" onclick="setErrorReviewOption('scope','${key}')"><strong>${title}</strong><span>${detail}</span></button>`).join("")}
+          </div>
+        </div>
+      </div>
+
+      <div class="review-setup-step">
+        <span class="review-step-number">3</span>
+        <div>
+          <h2>Choose a round size.</h2>
+          <div class="review-size-row">
+            ${[5, 10, 20].map(size => `<button class="review-size-button ${Number(setup.size) === size ? "active" : ""}" onclick="setErrorReviewOption('size',${size})"><strong>${size}</strong><span>cards</span></button>`).join("")}
+          </div>
+        </div>
+      </div>
+
+      <div class="study-data-audit ${audit.unresolvedAnswers || audit.missingPartTexts ? "attention" : "ready"}">
+        <div>
+          <strong>${audit.unresolvedAnswers ? `${audit.unresolvedAnswers} answers need a correction` : "Correction format ready"}</strong>
+          <span>${Math.max(0, audit.gradedAnswers - audit.unresolvedAnswers)} saved answers follow the separate answer + notes structure.</span>
+        </div>
+        ${audit.unresolvedAnswers || audit.missingPartTexts ? `<small>Cards without a correct answer or exercise text are kept safely in history but excluded until you edit them.</small>` : `<small>Every available correction follows the new answer + notes structure.</small>`}
+      </div>
+
+      <div class="review-launch-row">
+        <div><strong>${eligible.length && selectedParts.size ? `${readyCount} ${readyCount === 1 ? "card" : "cards"} ready` : "No cards for this selection"}</strong><span>Randomised on every round. Your saved data is never changed by reviewing.</span></div>
+        <button class="btn btn-primary review-launch-button" onclick="startErrorReviewSession()" ${eligible.length && selectedParts.size ? "" : "disabled"}>Start review</button>
+      </div>
+    </section>
+  `;
+}
+
+function toggleErrorReviewPart(partId) {
+  const parts = new Set(STATE.errorReviewSetup.parts);
+  if (parts.has(partId)) parts.delete(partId);
+  else parts.add(partId);
+  STATE.errorReviewSetup.parts = [...parts];
+  renderErrorReview();
+}
+
+function setErrorReviewOption(key, value) {
+  STATE.errorReviewSetup[key] = key === "size" ? Number(value) : value;
+  renderErrorReview();
+}
+
+function startErrorReviewSession() {
+  const eligible = getStudyReviewCandidates();
+  if (!eligible.length) return;
+  const items = shuffleVocabularyEntries(eligible).slice(0, Math.min(Number(STATE.errorReviewSetup.size), eligible.length));
+  STATE.errorReviewSession = {
+    itemKeys: items.map(item => item.key),
+    index: 0,
+    revealed: false,
+    complete: false,
+    ratings: { again: 0, unsure: 0, known: 0 }
+  };
+  renderErrorReview();
+  window.scrollTo({ top: 0 });
+}
+
+function renderErrorReviewSessionHTML() {
+  const session = STATE.errorReviewSession;
+  if (session.complete) return renderErrorReviewCompleteHTML(session);
+  const card = getStudyReviewCandidateByKey(session.itemKeys[session.index]);
+  if (!card) {
+    session.index += 1;
+    if (session.index >= session.itemKeys.length) session.complete = true;
+    return renderErrorReviewSessionHTML();
+  }
+  const progress = Math.round((session.index / session.itemKeys.length) * 100);
+  const gradeLabel = typeof card.gradeState === "number"
+    ? `${card.gradeState}/${card.maxPoints} pts`
+    : card.isMissed ? "Missed" : "Correct";
+
+  return `
+    <section class="review-session-shell study-review-session">
+      <div class="review-session-topbar">
+        <button class="btn btn-secondary" onclick="exitErrorReviewSession()">End round</button>
+        <div class="review-progress-copy"><strong>${session.index + 1} / ${session.itemKeys.length}</strong><span>${escapeHTML(card.partLabel)}</span></div>
+        <div class="review-progress-track" aria-label="${progress}% complete"><span style="width:${progress}%"></span></div>
+      </div>
+      <article class="review-flashcard study-review-card ${session.revealed ? "revealed" : ""}">
+        <div class="review-card-prompt study-review-prompt">
+          <div class="study-review-card-meta">
+            <span>${card.section === "reading" ? "Reading" : "Use of English"} · ${getUseOfEnglishPartShortLabel(card.partKey)}</span>
+            <strong>Question ${card.question}</strong>
+          </div>
+          <div class="study-review-source ${card.promptMode === "part" ? "full-part" : "question-excerpt"}">${escapeHTML(card.prompt)}</div>
+          ${card.promptMode === "part" ? `<small>Full exercise shown because no isolated Q.${card.question} marker was found.</small>` : ""}
+          <p class="study-review-instruction">Retrieve the answer before revealing the correction.</p>
+        </div>
+        ${session.revealed ? `
+          <div class="review-card-answer study-review-answer">
+            <span>Correct answer</span>
+            <h2>${escapeHTML(card.correctAnswer)}</h2>
+            <div class="study-review-answer-comparison">
+              <div><small>Your saved answer</small><strong>${escapeHTML(card.answer || "No answer")}</strong></div>
+              <div class="${card.isMissed ? "missed" : "correct"}"><small>Original result</small><strong>${gradeLabel}</strong></div>
+            </div>
+            ${card.note ? `<blockquote>${escapeHTML(card.note)}</blockquote>` : `<p class="muted">No additional note was saved.</p>`}
+            <small>Attempt from ${formatCompactDateTime(card.date)}</small>
+          </div>` : ""}
+      </article>
+      ${session.revealed ? `
+        <div class="review-rating-row">
+          <button class="review-rating again" onclick="rateErrorReviewCard('again')"><kbd>1</kbd><span><strong>Again</strong><small>I did not retrieve it</small></span></button>
+          <button class="review-rating unsure" onclick="rateErrorReviewCard('unsure')"><kbd>2</kbd><span><strong>Unsure</strong><small>Slow or incomplete</small></span></button>
+          <button class="review-rating known" onclick="rateErrorReviewCard('known')"><kbd>3</kbd><span><strong>Got it</strong><small>Quick and accurate</small></span></button>
+        </div>` : `
+        <button class="btn btn-primary review-reveal-button" onclick="revealErrorReviewCard()">Reveal correction <kbd>Space</kbd></button>`}
+    </section>
+  `;
+}
+
+function revealErrorReviewCard() {
+  if (!STATE.errorReviewSession || STATE.errorReviewSession.complete) return;
+  STATE.errorReviewSession.revealed = true;
+  renderErrorReview();
+}
+
+function rateErrorReviewCard(rating) {
+  const session = STATE.errorReviewSession;
+  if (!session || !session.revealed || session.complete) return;
+  session.ratings[rating] += 1;
+  session.index += 1;
+  session.revealed = false;
+  if (session.index >= session.itemKeys.length) session.complete = true;
+  renderErrorReview();
+}
+
+function renderErrorReviewCompleteHTML(session) {
+  const confidentPct = Math.round((session.ratings.known / session.itemKeys.length) * 100);
+  return `
+    <section class="review-complete-panel">
+      <span class="review-complete-mark">✓</span>
+      <span class="eyebrow">Exercise round complete</span>
+      <h1>${session.itemKeys.length} ${session.itemKeys.length === 1 ? "card" : "cards"}, done.</h1>
+      <p>${confidentPct}% came back quickly. Repeat the uncertain cards until the pattern feels automatic.</p>
+      <div class="review-complete-stats">
+        <div class="again"><strong>${session.ratings.again}</strong><span>Again</span></div>
+        <div class="unsure"><strong>${session.ratings.unsure}</strong><span>Unsure</span></div>
+        <div class="known"><strong>${session.ratings.known}</strong><span>Got it</span></div>
+      </div>
+      <div class="review-complete-actions">
+        <button class="btn btn-primary" onclick="startErrorReviewSession()">Another random round</button>
+        <button class="btn btn-secondary" onclick="exitErrorReviewSession()">Change setup</button>
+        <button class="btn btn-secondary" onclick="renderDashboard()">Back to Error log</button>
+      </div>
+    </section>
+  `;
+}
+
+function exitErrorReviewSession() {
+  STATE.errorReviewSession = null;
+  renderErrorReview();
+  window.scrollTo({ top: 0 });
+}
+
+function handleErrorReviewKeyboard(event) {
+  if (STATE.currentView !== "errorReview" || !STATE.errorReviewSession) return;
+  if (["INPUT", "TEXTAREA", "SELECT"].includes(document.activeElement?.tagName)) return;
+  if (event.code === "Space" && !STATE.errorReviewSession.revealed) {
+    event.preventDefault();
+    revealErrorReviewCard();
+    return;
+  }
+  if (!STATE.errorReviewSession.revealed) return;
+  if (event.key === "1") rateErrorReviewCard("again");
+  if (event.key === "2") rateErrorReviewCard("unsure");
+  if (event.key === "3") rateErrorReviewCard("known");
+}
+
+window.addEventListener("keydown", handleErrorReviewKeyboard);
+
 // ==========================================================================
 // WRITING LAB
 // ==========================================================================
@@ -2675,6 +3019,7 @@ function renderTrackedErrorItemHTML(error, compact = false, textPanelId = "ue-da
     ? `${error.gradeState}/${error.maxPoints || 2} pts`
     : error.gradeState === "correct" ? "Correct" : error.gradeState === "incorrect" ? "Missed" : "Not graded";
   const answer = error.answer ? escapeHTML(error.answer) : "No answer";
+  const correctAnswer = error.correctAnswer ? escapeHTML(error.correctAnswer) : "Correction pending";
   const note = error.note.trim();
 
   return `
@@ -2688,7 +3033,9 @@ function renderTrackedErrorItemHTML(error, compact = false, textPanelId = "ue-da
       </div>
       <span class="error-answer-label">Your answer</span>
       <div class="ue-error-answer">${answer}</div>
-      <p class="ue-error-note">${escapeHTML(note)}</p>
+      <span class="error-answer-label">Correct answer</span>
+      <div class="ue-error-correct-answer">${correctAnswer}</div>
+      ${note ? `<p class="ue-error-note">${escapeHTML(note)}</p>` : ""}
       <div class="ue-error-actions">
         <button class="ue-error-text-button" onclick="showPartReferenceText('${escapeJS(error.attemptId)}', '${error.section}', '${error.partKey}', '${textPanelId}')">View part text</button>
         <button class="ue-error-review" onclick="openHistoryDetailModal('${escapeJS(error.attemptId)}')">${formatCompactDateTime(error.date)}</button>
@@ -2748,7 +3095,7 @@ function openTrackedPartErrorsModal(section, partKey) {
       <div class="modal-header">
         <div>
           <span class="eyebrow">${C2_EXAM_METADATA[section].name} · ${getUseOfEnglishPartShortLabel(partKey)}</span>
-          <h3 class="modal-title">${partData.name.replace(/^Part \d+ - /, "")} notes</h3>
+          <h3 class="modal-title">${partData.name.replace(/^Part \d+ - /, "")} corrections</h3>
         </div>
         <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
       </div>
@@ -2773,11 +3120,14 @@ function renderErrorLogDashboardHTML() {
   return `
     <section class="dash-panel ue-errors-panel" aria-label="Error log">
       <div class="panel-title">
-        <span>Error log</span>
-        <small>${errors.length} ${errors.length === 1 ? "noted answer" : "noted answers"}</small>
+        <div>
+          <span>Error log</span>
+          <small>${errors.length} ${errors.length === 1 ? "saved correction" : "saved corrections"}</small>
+        </div>
+        <button class="btn btn-primary ue-start-review" onclick="openErrorReview()" ${getStudyReviewCandidates({ ...STATE.errorReviewSetup, scope: "all" }).length ? "" : "disabled"}>Review exercises</button>
       </div>
       ${errors.length === 0 ? `
-        <div class="empty-state ue-errors-empty">Answers with notes from Reading Part 1 and Use of English will appear here.</div>
+        <div class="empty-state ue-errors-empty">Corrections from Reading Part 1 and Use of English Parts 2–4 will appear here.</div>
       ` : `
         <div class="ue-text-workspace ue-errors-workspace">
           <section class="ue-part-register">
@@ -2800,10 +3150,10 @@ function renderErrorLogDashboardHTML() {
                       </div>
                       ${partErrors.length > visibleErrors.length ? `
                         <button class="btn btn-secondary btn-full ue-view-all-errors" onclick="openTrackedPartErrorsModal('${section}', '${partKey}')">
-                          View all ${partErrors.length} notes
+                          View all ${partErrors.length} corrections
                         </button>
                       ` : ""}
-                    ` : `<p class="ue-part-empty">No notes yet.</p>`}
+                    ` : `<p class="ue-part-empty">No corrections yet.</p>`}
                   </article>
                 `;
               }).join("")}
@@ -3607,12 +3957,16 @@ function renderHistoryErrorNoteEditorHTML(item, q, partKey) {
   if (!isTrackedErrorPart(item.section, partKey)) return "";
 
   const note = getErrorNotes(item)[q] || "";
+  const correctAnswer = getCorrectAnswers(item)[q] || "";
 
   return `
     <div class="history-error-note-editor" id="history-error-note-editor-${q}">
-      <label for="history-error-note-${q}">Comment (optional)</label>
+      <label for="history-correct-answer-${q}">Correct answer</label>
+      <input id="history-correct-answer-${q}" value="${escapeHTML(correctAnswer)}"
+             placeholder="Only the correct answer, without explanation">
+      <label for="history-error-note-${q}">Notes and observations (optional)</label>
       <textarea id="history-error-note-${q}" rows="2"
-                placeholder="Add a rule, useful nuance, correction or reminder.">${escapeHTML(note)}</textarea>
+                placeholder="Rule, nuance, explanation or reminder.">${escapeHTML(note)}</textarea>
     </div>
   `;
 }
@@ -3798,13 +4152,16 @@ async function saveHistoryReviewEdits(sessionId) {
       const answers = { ...getPlainObject(item.answers) };
       const meta = { ...getPlainObject(answers.meta) };
       const errorNotes = {};
+      const correctAnswers = {};
       const partTexts = {};
       const sectionParts = C2_EXAM_METADATA[item.section].parts;
 
       Object.entries(sectionParts).forEach(([partKey, partData]) => {
         if (!isTrackedErrorPart(item.section, partKey)) return;
         for (let q = partData.startQ; q <= partData.endQ; q++) {
+          const correctAnswer = document.getElementById(`history-correct-answer-${q}`)?.value.trim() || "";
           const note = document.getElementById(`history-error-note-${q}`)?.value.trim() || "";
+          if (correctAnswer) correctAnswers[q] = correctAnswer;
           if (note) errorNotes[q] = note;
         }
 
@@ -3817,6 +4174,13 @@ async function saveHistoryReviewEdits(sessionId) {
       } else {
         delete meta.errorNotes;
       }
+
+      if (Object.keys(correctAnswers).length > 0) {
+        meta.correctAnswers = correctAnswers;
+      } else {
+        delete meta.correctAnswers;
+      }
+      meta.studyDataVersion = C2_STUDY_REVIEW.STUDY_DATA_VERSION;
 
       if (item.section === "reading") {
         if (Object.keys(partTexts).length > 0) {
@@ -3880,6 +4244,7 @@ function openHistoryDetailModal(sessionId, editMode = false) {
         const gradeState = item.gradedStates[q];
         const isError = isTrackedErrorPart(item.section, partKey) && isObjectiveError(partData, gradeState);
         const errorNote = isTrackedErrorPart(item.section, partKey) ? (getErrorNotes(item)[q] || "").trim() : "";
+        const correctAnswer = isTrackedErrorPart(item.section, partKey) ? (getCorrectAnswers(item)[q] || "").trim() : "";
         
         let gradeLabel = "";
         if (editMode) {
@@ -3901,8 +4266,9 @@ function openHistoryDetailModal(sessionId, editMode = false) {
             </div>
             ${editMode
               ? renderHistoryErrorNoteEditorHTML(item, q, partKey)
-              : errorNote ? `<div class="history-error-note ${isError ? "" : "noted-correct"}"><strong>${isError ? "Error note" : "Comment"}</strong>${escapeHTML(errorNote)}</div>` : ""}
-            ${!editMode && (isError || errorNote) ? `
+              : `${correctAnswer ? `<div class="history-correct-answer"><strong>Correct answer</strong>${escapeHTML(correctAnswer)}</div>` : ""}
+                 ${errorNote ? `<div class="history-error-note ${isError ? "" : "noted-correct"}"><strong>Notes</strong>${escapeHTML(errorNote)}</div>` : ""}`}
+            ${!editMode && (isError || errorNote || correctAnswer) ? `
               <button class="history-question-text-button" onclick="showPartReferenceText('${escapeJS(item.id)}', '${item.section}', '${partKey}', 'history-review-part-text-panel')">
                 View ${getUseOfEnglishPartShortLabel(partKey)} text
               </button>
@@ -3993,6 +4359,7 @@ function openAnswerSheet(section) {
   STATE.activeSection = section;
   STATE.answers = {};
   STATE.gradedStates = {};
+  STATE.correctAnswers = {};
   STATE.errorNotes = {};
   STATE.useOfEnglishPartTexts = {};
   STATE.readingPartTexts = {};
@@ -4213,6 +4580,7 @@ function clearSheetInputs() {
   if (confirm("Reset all answers on the current sheet?")) {
     STATE.answers = {};
     STATE.gradedStates = {};
+    STATE.correctAnswers = {};
     STATE.errorNotes = {};
     STATE.useOfEnglishPartTexts = {};
     STATE.readingPartTexts = {};
@@ -4283,6 +4651,7 @@ function lockAnswersAndStartCorrection() {
 
 function markBinaryGrade(qNum, state) {
   STATE.gradedStates[qNum] = state;
+  seedCorrectAnswerFromFullCredit(qNum, state === "correct");
   
   const cBtn = document.getElementById(`correct-btn-${qNum}`);
   const iBtn = document.getElementById(`incorrect-btn-${qNum}`);
@@ -4300,6 +4669,7 @@ function markBinaryGrade(qNum, state) {
 
 function markPartialGrade(qNum, pts) {
   STATE.gradedStates[qNum] = pts;
+  seedCorrectAnswerFromFullCredit(qNum, pts === 2);
   
   const btn0 = document.getElementById(`pts-btn-${qNum}-0`);
   const btn1 = document.getElementById(`pts-btn-${qNum}-1`);
@@ -4313,6 +4683,17 @@ function markPartialGrade(qNum, pts) {
   activeBtn.classList.add(`active-${pts}`);
 
   updateErrorNoteArea(qNum);
+}
+
+function seedCorrectAnswerFromFullCredit(qNum, hasFullCredit) {
+  const submittedAnswer = String(STATE.answers[qNum] || "").trim();
+  const currentCorrectAnswer = String(STATE.correctAnswers[qNum] || "").trim();
+
+  if (hasFullCredit && !currentCorrectAnswer && submittedAnswer) {
+    STATE.correctAnswers[qNum] = submittedAnswer;
+  } else if (!hasFullCredit && currentCorrectAnswer === submittedAnswer) {
+    delete STATE.correctAnswers[qNum];
+  }
 }
 
 function updateErrorNoteArea(qNum) {
@@ -4332,12 +4713,23 @@ function updateErrorNoteArea(qNum) {
 
   noteArea.innerHTML = `
     <div class="sheet-error-note-box">
-      <label for="error-note-${qNum}">Comment (optional)</label>
+      <label for="correct-answer-${qNum}">Correct answer</label>
+      <input class="sheet-correct-answer-input" id="correct-answer-${qNum}"
+             value="${escapeHTML(STATE.correctAnswers[qNum] || "")}"
+             oninput="storeCorrectAnswer(${qNum}, this.value)"
+             placeholder="Only the correct answer, without explanation">
+      <label for="error-note-${qNum}">Notes and observations (optional)</label>
       <textarea class="sheet-error-note-input" id="error-note-${qNum}" rows="2"
                 oninput="storeErrorNote(${qNum}, this.value)"
-                placeholder="Add a rule, useful nuance, correction or reminder.">${escapeHTML(STATE.errorNotes[qNum] || "")}</textarea>
+                placeholder="Rule, nuance, explanation or reminder — do not repeat the answer.">${escapeHTML(STATE.errorNotes[qNum] || "")}</textarea>
     </div>
   `;
+}
+
+function storeCorrectAnswer(qNum, value) {
+  const partEntry = getPartEntryForQuestion(STATE.activeSection, qNum);
+  if (!partEntry || !isTrackedErrorPart(STATE.activeSection, partEntry[0])) return;
+  STATE.correctAnswers[qNum] = value;
 }
 
 function storeErrorNote(qNum, value) {
@@ -4374,6 +4766,20 @@ async function saveGradedSheetResult() {
     return;
   }
 
+  if (STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") {
+    const missingCorrectAnswers = [];
+    Object.entries(sectionMeta.parts).forEach(([partKey, partData]) => {
+      if (!isTrackedErrorPart(STATE.activeSection, partKey)) return;
+      for (let q = partData.startQ; q <= partData.endQ; q++) {
+        if (!String(STATE.correctAnswers[q] || "").trim()) missingCorrectAnswers.push(q);
+      }
+    });
+    if (missingCorrectAnswers.length > 0) {
+      alert(`Add the correct answer before saving (Q.${missingCorrectAnswers.join(', Q.')}). Notes remain optional.`);
+      return;
+    }
+  }
+
   let rawScoreTotal = 0;
   
   for (const [partKey, partData] of Object.entries(sectionMeta.parts)) {
@@ -4400,6 +4806,11 @@ async function saveGradedSheetResult() {
       .map(([q, note]) => [q, typeof note === "string" ? note.trim() : ""])
       .filter(([, note]) => note.length > 0)
   );
+  const correctAnswers = Object.fromEntries(
+    Object.entries(STATE.correctAnswers)
+      .map(([q, answer]) => [q, typeof answer === "string" ? answer.trim() : ""])
+      .filter(([, answer]) => answer.length > 0)
+  );
   const activePartTexts = STATE.activeSection === "useOfEnglish"
     ? STATE.useOfEnglishPartTexts
     : STATE.activeSection === "reading"
@@ -4413,12 +4824,17 @@ async function saveGradedSheetResult() {
 
   if (
     durationSeconds > 0
+    || ((STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") && Object.keys(correctAnswers).length > 0)
     || ((STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") && Object.keys(errorNotes).length > 0)
     || ((STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") && Object.keys(partTexts).length > 0)
   ) {
     answers.meta = {
       ...getPlainObject(answers.meta),
       ...(durationSeconds > 0 ? { durationSeconds } : {}),
+      ...((STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") && Object.keys(correctAnswers).length > 0 ? {
+        correctAnswers,
+        studyDataVersion: C2_STUDY_REVIEW.STUDY_DATA_VERSION
+      } : {}),
       ...((STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") && Object.keys(errorNotes).length > 0 ? { errorNotes } : {}),
       ...(STATE.activeSection === "reading" && Object.keys(partTexts).length > 0 ? { readingPartTexts: partTexts } : {}),
       ...(STATE.activeSection === "useOfEnglish" && Object.keys(partTexts).length > 0 ? { useOfEnglishPartTexts: partTexts } : {})
@@ -5253,6 +5669,8 @@ function storeInputAnswer(qNum, value) {
 function refreshCurrentView() {
   if (STATE.currentView === "dashboard") {
     renderDashboard();
+  } else if (STATE.currentView === "errorReview") {
+    renderErrorReview();
   } else if (STATE.currentView === "writingLab") {
     renderWritingLab();
   } else if (STATE.currentView === "vocabulary") {
