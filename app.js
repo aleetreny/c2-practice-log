@@ -645,7 +645,39 @@ function getPlainObject(value) {
   return value && typeof value === "object" && !Array.isArray(value) ? value : {};
 }
 
+function isPartialPracticeAttempt(item) {
+  return C2_ATTEMPT_DATA.isPartialPracticeAttempt(item);
+}
+
+function getScoredHistory(section = null) {
+  return C2_ATTEMPT_DATA.getScoredAttempts(STATE.history, section);
+}
+
+function getPartialPracticeHistory() {
+  return STATE.history.filter(isPartialPracticeAttempt);
+}
+
+function getAttemptedQuestionNumbers(item) {
+  return C2_ATTEMPT_DATA.getAttemptedQuestionNumbers(item, C2_EXAM_METADATA[item?.section]);
+}
+
+function getAttemptedPartKeys(item) {
+  return C2_ATTEMPT_DATA.getAttemptedPartKeys(item, C2_EXAM_METADATA[item?.section]);
+}
+
+function getPartialPracticeScopeLabel(item) {
+  const sectionMeta = C2_EXAM_METADATA[item?.section];
+  if (!sectionMeta) return "Selected questions";
+  const partKeys = getAttemptedPartKeys(item);
+  if (partKeys.length === 0) return "Selected questions";
+  return partKeys.map(partKey => {
+    const match = String(sectionMeta.parts[partKey]?.name || partKey).match(/^Part\s+\d+/i);
+    return match ? match[0] : String(sectionMeta.parts[partKey]?.name || partKey);
+  }).join(" · ");
+}
+
 function getAttemptDurationSeconds(item = {}) {
+  if (isPartialPracticeAttempt(item)) return 0;
   const answers = getPlainObject(item.answers);
   const meta = getPlainObject(answers.meta);
   const candidates = [
@@ -663,6 +695,13 @@ function getAttemptDurationSeconds(item = {}) {
 
 function getHistoryAnswersForStorage(item = {}) {
   const answers = { ...getPlainObject(item.answers) };
+  if (isPartialPracticeAttempt(item)) {
+    const meta = { ...getPlainObject(answers.meta) };
+    delete meta.durationSeconds;
+    delete answers.durationSeconds;
+    answers.meta = meta;
+    return answers;
+  }
   const durationSeconds = getAttemptDurationSeconds(item);
 
   if (durationSeconds > 0) {
@@ -930,11 +969,12 @@ function formatCompactDateTime(timestamp) {
 }
 
 function getLatestAttempt() {
-  return STATE.history.length > 0 ? STATE.history[STATE.history.length - 1] : null;
+  const scoredHistory = getScoredHistory();
+  return scoredHistory.length > 0 ? scoredHistory[scoredHistory.length - 1] : null;
 }
 
 function getSectionStats(section) {
-  const logs = STATE.history.filter(item => item.section === section);
+  const logs = getScoredHistory(section);
 
   if (logs.length === 0) {
     return {
@@ -1001,7 +1041,7 @@ function getPartScoreForSession(session, partKey, partData) {
 
 function getSectionPartStats(section) {
   const sectionMeta = C2_EXAM_METADATA[section];
-  const logs = STATE.history.filter(item => item.section === section);
+  const logs = getScoredHistory(section);
 
   return Object.entries(sectionMeta.parts).map(([partKey, partData]) => {
     const scores = logs.map(session => getPartScoreForSession(session, partKey, partData));
@@ -1041,11 +1081,12 @@ function getGlobalWeakestPart() {
 }
 
 function calculateRecentTrend() {
-  if (STATE.history.length < 2) return 0;
+  const scoredHistory = getScoredHistory();
+  if (scoredHistory.length < 2) return 0;
 
-  const recent = STATE.history.slice(-3);
-  const previous = STATE.history.slice(Math.max(0, STATE.history.length - 6), STATE.history.length - 3);
-  const previousSet = previous.length > 0 ? previous : STATE.history.slice(0, -recent.length);
+  const recent = scoredHistory.slice(-3);
+  const previous = scoredHistory.slice(Math.max(0, scoredHistory.length - 6), scoredHistory.length - 3);
+  const previousSet = previous.length > 0 ? previous : scoredHistory.slice(0, -recent.length);
 
   if (previousSet.length === 0) return 0;
 
@@ -1055,9 +1096,10 @@ function calculateRecentTrend() {
 }
 
 function calculatePassRate() {
-  if (STATE.history.length === 0) return 0;
-  const passed = STATE.history.filter(item => item.scaleScore >= 200).length;
-  return Math.round((passed / STATE.history.length) * 100);
+  const scoredHistory = getScoredHistory();
+  if (scoredHistory.length === 0) return 0;
+  const passed = scoredHistory.filter(item => item.scaleScore >= 200).length;
+  return Math.round((passed / scoredHistory.length) * 100);
 }
 
 function getScorePosition(scaleScore) {
@@ -1162,7 +1204,7 @@ function renderHome() {
 
   STATE.currentView = "home";
   const appContainer = document.getElementById("app-container");
-  const totalCompleted = STATE.history.length;
+  const totalCompleted = getScoredHistory().length;
   const avgScaleScore = calculateAverageScaleScore();
   const latest = getLatestAttempt();
   const scorePosition = getScorePosition(avgScaleScore);
@@ -2923,7 +2965,7 @@ function renderDashboardView() {
   STATE.currentView = "dashboard";
   const appContainer = document.getElementById("app-container");
 
-  const totalCompleted = STATE.history.length;
+  const totalCompleted = getScoredHistory().length;
   const avgScaleScore = calculateAverageScaleScore();
   const avgGrade = getCambridgeGrade(avgScaleScore);
   const overallAccuracy = calculateOverallAccuracy();
@@ -2995,7 +3037,7 @@ function renderDashboardView() {
 
           <section class="dash-panel attempts-panel">
             <div class="panel-title">
-              <span>Recent attempts</span>
+              <span>Recent saved work</span>
               ${STATE.history.length > 0 ? `<button class="btn-danger-link" onclick="clearHistory()">Clear all</button>` : ""}
             </div>
             <div class="panel-body-scroll">
@@ -3004,7 +3046,7 @@ function renderDashboardView() {
             ${STATE.history.length > 6 ? `
               <div style="margin-top: auto; padding-top: 12px; border-top: 1px dashed var(--border-color); display: flex; justify-content: center;">
                 <button class="btn btn-secondary btn-full" onclick="openAllAttemptsModal()" style="font-size: 0.8rem; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 800; width: 100%;">
-                  View all attempts
+                  View all saved work
                 </button>
               </div>
             ` : ""}
@@ -3178,10 +3220,11 @@ function renderErrorLogDashboardHTML() {
 }
 
 function calculateOverallAccuracy() {
-  if (STATE.history.length === 0) return 0;
-  const correctSum = STATE.history.reduce((acc, curr) => acc + curr.correct, 0);
-  const totalSum = STATE.history.reduce((acc, curr) => acc + curr.total, 0);
-  return Math.round((correctSum / totalSum) * 100);
+  const scoredHistory = getScoredHistory();
+  if (scoredHistory.length === 0) return 0;
+  const correctSum = scoredHistory.reduce((acc, curr) => acc + curr.correct, 0);
+  const totalSum = scoredHistory.reduce((acc, curr) => acc + curr.total, 0);
+  return totalSum > 0 ? Math.round((correctSum / totalSum) * 100) : 0;
 }
 
 function getAccuracyTone(value) {
@@ -3207,28 +3250,35 @@ function renderHistoryListV2HTML(limit = 4) {
   return `
     <div class="attempt-list">
       ${itemsToShow.slice().reverse().map(item => {
-        const isStrong = item.scaleScore >= 220;
-        const isPass = item.scaleScore >= 200;
-        const scoreClass = isStrong ? "excellent" : isPass ? "pass" : "risk";
+        const isPartial = isPartialPracticeAttempt(item);
+        const isStrong = !isPartial && item.scaleScore >= 220;
+        const isPass = !isPartial && item.scaleScore >= 200;
+        const scoreClass = isPartial ? "partial" : isStrong ? "excellent" : isPass ? "pass" : "risk";
         const sectionName = C2_EXAM_METADATA[item.section].name;
         const dateFormatted = formatCompactDateTime(item.date);
         const durationText = formatAttemptDuration(getAttemptDurationSeconds(item));
+        const scopeLabel = isPartial ? getPartialPracticeScopeLabel(item) : "";
 
         return `
           <div class="attempt-item" role="button" tabindex="0"
                onclick="openHistoryDetailModal('${escapeJS(item.id)}')"
                onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openHistoryDetailModal('${escapeJS(item.id)}'); }"
-               title="Ver detalle del intento">
+               title="Open saved review">
             <div class="attempt-main">
               <span class="section-code">${getSectionIconSVG(item.section)}</span>
               <div class="attempt-copy">
                 <strong>${sectionName}</strong>
-                <span>${dateFormatted}${durationText ? ` - ${durationText}` : ""}</span>
+                <span>${dateFormatted}${scopeLabel ? ` · ${escapeHTML(scopeLabel)}` : ""}${durationText ? ` - ${durationText}` : ""}</span>
               </div>
             </div>
             <div class="attempt-score">
-              <strong class="${scoreClass}">${item.scaleScore}</strong>
-              <span class="accuracy-value ${getAccuracyTone(item.percentage)}">${item.correct}/${item.total} - ${item.percentage}%</span>
+              ${isPartial ? `
+                <strong class="${scoreClass}">Partial</strong>
+                <span class="partial-practice-caption">Not scored</span>
+              ` : `
+                <strong class="${scoreClass}">${item.scaleScore}</strong>
+                <span class="accuracy-value ${getAccuracyTone(item.percentage)}">${item.correct}/${item.total} - ${item.percentage}%</span>
+              `}
             </div>
             <button class="delete-hist-btn" onclick="event.stopPropagation(); deleteHistoryItem('${escapeJS(item.id)}')" title="Delete attempt">x</button>
           </div>
@@ -3282,7 +3332,7 @@ function renderSectionAnalyticsV2HTML(sectionStats = getAllSectionStats()) {
 }
 
 function renderProgressMapHTML(sectionStats = getAllSectionStats()) {
-  if (STATE.history.length === 0) {
+  if (getScoredHistory().length === 0) {
     return `
       <section class="dash-panel progress-panel">
         <div class="panel-title">
@@ -3302,7 +3352,7 @@ function renderProgressMapHTML(sectionStats = getAllSectionStats()) {
       </div>
       <div class="progress-map">
         ${sectionStats.map(stats => {
-          const sectionLogs = STATE.history.filter(item => item.section === stats.section);
+          const sectionLogs = getScoredHistory(stats.section);
           const latest = sectionLogs[sectionLogs.length - 1];
           const weakestPart = getWeakestPart(stats.section);
 
@@ -3360,8 +3410,7 @@ function renderProgressMapHTML(sectionStats = getAllSectionStats()) {
 }
 
 function getSectionEvolutionMetrics(section) {
-  const logs = STATE.history
-    .filter(item => item.section === section)
+  const logs = getScoredHistory(section)
     .slice()
     .sort((a, b) => (a.date || 0) - (b.date || 0));
 
@@ -3703,7 +3752,7 @@ function openProfileModalView() {
         <div class="user-list">
           <div class="user-item-btn active">
             <span>${accountState}</span>
-            <span>${STATE.history.length} attempts</span>
+            <span>${getScoredHistory().length} scored · ${getPartialPracticeHistory().length} partial</span>
           </div>
         </div>
 
@@ -3862,6 +3911,10 @@ function getWritingAttemptMeta(item) {
 }
 
 function getHistoryRawSummaryText(item) {
+  if (isPartialPracticeAttempt(item)) {
+    const gradedCount = getAttemptedQuestionNumbers(item).length;
+    return `${gradedCount} graded ${gradedCount === 1 ? "question" : "questions"} · not scored`;
+  }
   if (item.section !== "writing") {
     return `${item.correct} / ${item.total} pts (${item.percentage}%)`;
   }
@@ -4096,6 +4149,13 @@ function updateHistoryReviewPreview() {
   if (!modal || !scaleElement || !rawElement) return;
 
   const section = modal.dataset.historySection;
+  if (modal.dataset.historyPartial === "true") {
+    const snapshot = getHistoryObjectiveEditSnapshot(section);
+    const gradedCount = Object.keys(snapshot.gradedStates).length;
+    scaleElement.textContent = "Partial practice";
+    rawElement.textContent = `${gradedCount} graded ${gradedCount === 1 ? "question" : "questions"} · not scored`;
+    return;
+  }
   if (section === "writing") {
     const snapshot = getHistoryWritingEditSnapshot();
     scaleElement.innerHTML = `${snapshot.scaleScore} pts <span>(${getCambridgeGrade(snapshot.scaleScore)})</span>`;
@@ -4153,11 +4213,12 @@ async function saveHistoryReviewEdits(sessionId) {
     item.scaleScore = snapshot.scaleScore;
   } else {
     const snapshot = getHistoryObjectiveEditSnapshot(item.section);
+    const isPartial = isPartialPracticeAttempt(item);
     item.gradedStates = snapshot.gradedStates;
-    item.correct = snapshot.rawScore;
-    item.total = snapshot.total;
-    item.percentage = snapshot.percentage;
-    item.scaleScore = snapshot.scaleScore;
+    item.correct = isPartial ? 0 : snapshot.rawScore;
+    item.total = isPartial ? 0 : snapshot.total;
+    item.percentage = isPartial ? 0 : snapshot.percentage;
+    item.scaleScore = isPartial ? 0 : snapshot.scaleScore;
 
     if (item.section === "useOfEnglish" || item.section === "reading") {
       const answers = { ...getPlainObject(item.answers) };
@@ -4166,6 +4227,15 @@ async function saveHistoryReviewEdits(sessionId) {
       const correctAnswers = {};
       const partTexts = {};
       const sectionParts = C2_EXAM_METADATA[item.section].parts;
+
+      if (isPartial) {
+        meta.attemptType = C2_ATTEMPT_DATA.PARTIAL_PRACTICE_TYPE;
+        meta.gradedQuestions = Object.keys(snapshot.gradedStates).map(Number).sort((a, b) => a - b);
+        meta.attemptedParts = Object.entries(sectionParts)
+          .filter(([, partData]) => meta.gradedQuestions.some(q => q >= partData.startQ && q <= partData.endQ))
+          .map(([partKey]) => partKey);
+        delete meta.durationSeconds;
+      }
 
       Object.entries(sectionParts).forEach(([partKey, partData]) => {
         if (!isTrackedErrorPart(item.section, partKey)) return;
@@ -4234,6 +4304,8 @@ function openHistoryDetailModal(sessionId, editMode = false) {
   
   const dateFormatted = new Date(item.date).toLocaleString();
   const sectionMeta = C2_EXAM_METADATA[item.section];
+  const isPartialPractice = isPartialPracticeAttempt(item);
+  const attemptedQuestions = new Set(isPartialPractice ? getAttemptedQuestionNumbers(item) : []);
   const durationText = formatAttemptDuration(getAttemptDurationSeconds(item));
   
   let sheetHTML = "";
@@ -4248,9 +4320,14 @@ function openHistoryDetailModal(sessionId, editMode = false) {
     let questionsHTML = "";
     
     for (const [partKey, partData] of Object.entries(sectionMeta.parts)) {
+      if (isPartialPractice) {
+        const partWasAttempted = [...attemptedQuestions].some(q => q >= partData.startQ && q <= partData.endQ);
+        if (!partWasAttempted) continue;
+      }
       let rowsHTML = "";
       
       for (let q = partData.startQ; q <= partData.endQ; q++) {
+        if (isPartialPractice && !attemptedQuestions.has(q)) continue;
         const uAns = escapeHTML(getPlainObject(item.answers)[q] || "--");
         const gradeState = item.gradedStates[q];
         const isError = isTrackedErrorPart(item.section, partKey) && isObjectiveError(partData, gradeState);
@@ -4319,7 +4396,7 @@ function openHistoryDetailModal(sessionId, editMode = false) {
 
   modal.innerHTML = `
     <div class="modal-content history-review-modal ${editMode ? "editing" : ""}"
-         data-history-section="${item.section}" style="width: min(${reviewMaxWidth}, 100%); max-width: ${reviewMaxWidth}; max-height: 90vh;">
+         data-history-section="${item.section}" data-history-partial="${isPartialPractice}" style="width: min(${reviewMaxWidth}, 100%); max-width: ${reviewMaxWidth}; max-height: 90vh;">
       <div class="modal-header">
         <div>
           <h3 class="modal-title">Review: ${sectionMeta.name}</h3>
@@ -4330,20 +4407,22 @@ function openHistoryDetailModal(sessionId, editMode = false) {
       <div class="modal-body ${item.section === "useOfEnglish" && !editMode ? "history-review-scroll-body" : ""}">
         <div class="history-review-summary">
           <div>
-            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase;">Scale score</div>
-            <div id="history-review-scale" class="history-review-scale">${item.scaleScore} pts <span>(${getCambridgeGrade(item.scaleScore)})</span></div>
+            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase;">${isPartialPractice ? "Practice type" : "Scale score"}</div>
+            <div id="history-review-scale" class="history-review-scale">${isPartialPractice ? "Partial practice" : `${item.scaleScore} pts <span>(${getCambridgeGrade(item.scaleScore)})</span>`}</div>
           </div>
           <div style="text-align:right;">
-            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase;">Raw marks</div>
-            <div id="history-review-raw" class="history-review-raw">${getHistoryRawSummaryText(item)}</div>
+            <div style="font-size:0.75rem; color:var(--text-muted); text-transform:uppercase;">${isPartialPractice ? "Scope" : "Raw marks"}</div>
+            <div id="history-review-raw" class="history-review-raw">${isPartialPractice ? escapeHTML(getPartialPracticeScopeLabel(item)) : getHistoryRawSummaryText(item)}</div>
           </div>
         </div>
+
+        ${isPartialPractice ? `<div class="history-partial-notice">No score or time was recorded. This review does not affect any progress metric.</div>` : ""}
 
         <div class="history-review-saved">
           Saved: <b>${dateFormatted}</b>${durationText ? ` - Time: <b>${durationText}</b>` : ""}
         </div>
 
-        ${editMode ? `<div class="history-review-edit-notice">Change the correction below. Scores and scale are recalculated automatically; original answers stay unchanged.</div>` : ""}
+        ${editMode ? `<div class="history-review-edit-notice">${isPartialPractice ? "Change the saved correction below. This practice remains unscored and excluded from metrics." : "Change the correction below. Scores and scale are recalculated automatically; original answers stay unchanged."}</div>` : ""}
         
         ${reviewSheetHTML}
       </div>
@@ -4420,9 +4499,14 @@ function renderAnswerSheetHTML() {
       <div id="writing-grading-area"></div>
     `;
   } else {
+    const partialPracticeHint = STATE.activeSection === "useOfEnglish"
+      ? "You can also complete one or more individual parts. An incomplete paper is saved as unscored partial practice."
+      : STATE.activeSection === "reading"
+        ? "You can also complete Reading Part 1 on its own. It will be saved as unscored partial practice."
+        : "";
     sheetContent = `
       <div class="sheet-notice">
-        Enter your answers. When you finish, lock the sheet and grade each item.
+        <strong>Enter, lock and grade.</strong> ${partialPracticeHint || "Complete the whole paper to save a scored attempt."}
       </div>
       
       <div class="sheet-questions-list">
@@ -4615,8 +4699,32 @@ function lockAnswersAndStartCorrection() {
   
   STATE.isCorrecting = true;
 
+  const answeredPartKeys = C2_ATTEMPT_DATA.getAnsweredPartKeys(sectionMeta, STATE.answers);
+  const isFocusedUseOfEnglish = STATE.activeSection === "useOfEnglish"
+    && answeredPartKeys.length > 0
+    && answeredPartKeys.length < Object.keys(sectionMeta.parts).length;
+  const isFocusedReadingPart1 = STATE.activeSection === "reading"
+    && answeredPartKeys.length === 1
+    && answeredPartKeys[0] === "part1";
+  const focusedPartKeys = isFocusedUseOfEnglish || isFocusedReadingPart1
+    ? new Set(answeredPartKeys)
+    : null;
+
+  if (focusedPartKeys) {
+    Object.keys(sectionMeta.parts).forEach(partKey => {
+      const partCard = document.getElementById(`sheet-part-${partKey}`);
+      if (partCard) partCard.hidden = !focusedPartKeys.has(partKey);
+    });
+    const notice = document.querySelector(".sheet-notice");
+    if (notice) {
+      notice.innerHTML = `<strong>Partial correction: ${answeredPartKeys.map(getUseOfEnglishPartShortLabel).join(" · ")}.</strong> Grade the visible questions and paste their reference text. This save will not affect scores, attempts or time metrics.`;
+    }
+  }
+
   if (STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") {
-    Object.keys(sectionMeta.parts).filter(partKey => isTrackedErrorPart(STATE.activeSection, partKey)).forEach(partKey => {
+    Object.keys(sectionMeta.parts).filter(partKey => {
+      return isTrackedErrorPart(STATE.activeSection, partKey) && (!focusedPartKeys || focusedPartKeys.has(partKey));
+    }).forEach(partKey => {
       const partTextArea = document.getElementById(`part-text-area-${partKey}`);
       if (partTextArea) {
         const storedTexts = STATE.activeSection === "useOfEnglish"
@@ -4633,6 +4741,7 @@ function lockAnswersAndStartCorrection() {
   }
   
   for (const [partKey, partData] of Object.entries(sectionMeta.parts)) {
+    if (focusedPartKeys && !focusedPartKeys.has(partKey)) continue;
     for (let q = partData.startQ; q <= partData.endQ; q++) {
       const controls = document.getElementById(`correction-controls-${q}`);
       
@@ -4762,66 +4871,29 @@ async function saveGradedSheetResult() {
   if (STATE.isSavingAttempt) return;
 
   const sectionMeta = C2_EXAM_METADATA[STATE.activeSection];
-  
-  let missingGrades = [];
-  for (const [partKey, partData] of Object.entries(sectionMeta.parts)) {
-    for (let q = partData.startQ; q <= partData.endQ; q++) {
-      if (STATE.gradedStates[q] === undefined) {
-        missingGrades.push(q);
-      }
-    }
-  }
+  const completion = C2_ATTEMPT_DATA.getObjectiveAttemptCompletion(
+    sectionMeta,
+    STATE.answers,
+    STATE.gradedStates
+  );
+  const isPartialPractice = !completion.isComplete;
+  const supportsPartialPractice = STATE.activeSection === "useOfEnglish"
+    || (STATE.activeSection === "reading" && completion.attemptedParts.every(partKey => partKey === "part1"));
 
-  if (missingGrades.length > 0) {
-    alert(`Grade every question before saving (Q.${missingGrades.join(', Q.')})`);
+  if (completion.gradedQuestions.length === 0) {
+    alert("Grade at least one question before saving a partial practice.");
     return;
   }
 
-  if (STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") {
-    const missingCorrectAnswers = [];
-    Object.entries(sectionMeta.parts).forEach(([partKey, partData]) => {
-      if (!isTrackedErrorPart(STATE.activeSection, partKey)) return;
-      for (let q = partData.startQ; q <= partData.endQ; q++) {
-        if (!String(STATE.correctAnswers[q] || "").trim()) missingCorrectAnswers.push(q);
-      }
-    });
-    if (missingCorrectAnswers.length > 0) {
-      alert(`Add the correct answer before saving (Q.${missingCorrectAnswers.join(', Q.')}). Notes remain optional.`);
-      return;
-    }
+  if (isPartialPractice && !supportsPartialPractice) {
+    const missingGrades = completion.missingGrades;
+    const detail = missingGrades.length > 0 ? ` (Q.${missingGrades.join(', Q.')})` : "";
+    alert(`Grade and answer every question before saving this paper${detail}. Partial Reading practice is available for Part 1.`);
+    return;
   }
 
-  let rawScoreTotal = 0;
-  
-  for (const [partKey, partData] of Object.entries(sectionMeta.parts)) {
-    for (let q = partData.startQ; q <= partData.endQ; q++) {
-      const state = STATE.gradedStates[q];
-      
-      if (partData.type === "partial") {
-        rawScoreTotal += state;
-      } else {
-        if (state === "correct") {
-          rawScoreTotal += partData.weight;
-        }
-      }
-    }
-  }
-
-  const maxPossibleMarks = sectionMeta.maxMarks;
-  const accuracyPct = Math.round((rawScoreTotal / maxPossibleMarks) * 100);
-  const scaleScore = calculateScaleScore(STATE.activeSection, rawScoreTotal);
-  const durationSeconds = getCurrentPracticeDurationSeconds();
-  const answers = { ...STATE.answers };
-  const errorNotes = Object.fromEntries(
-    Object.entries(STATE.errorNotes)
-      .map(([q, note]) => [q, typeof note === "string" ? note.trim() : ""])
-      .filter(([, note]) => note.length > 0)
-  );
-  const correctAnswers = Object.fromEntries(
-    Object.entries(STATE.correctAnswers)
-      .map(([q, answer]) => [q, typeof answer === "string" ? answer.trim() : ""])
-      .filter(([, answer]) => answer.length > 0)
-  );
+  const gradedQuestionSet = new Set(completion.gradedQuestions);
+  const attemptedPartSet = new Set(completion.attemptedParts);
   const activePartTexts = STATE.activeSection === "useOfEnglish"
     ? STATE.useOfEnglishPartTexts
     : STATE.activeSection === "reading"
@@ -4829,18 +4901,84 @@ async function saveGradedSheetResult() {
       : {};
   const partTexts = Object.fromEntries(
     Object.entries(activePartTexts)
+      .filter(([partKey]) => !isPartialPractice || attemptedPartSet.has(partKey))
       .map(([partKey, text]) => [partKey, typeof text === "string" ? text.trim() : ""])
       .filter(([, text]) => text.length > 0)
   );
 
+  if (STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") {
+    const missingCorrectAnswers = [];
+    Object.entries(sectionMeta.parts).forEach(([partKey, partData]) => {
+      if (!isTrackedErrorPart(STATE.activeSection, partKey)) return;
+      for (let q = partData.startQ; q <= partData.endQ; q++) {
+        if (!gradedQuestionSet.has(q)) continue;
+        if (!String(STATE.correctAnswers[q] || "").trim()) missingCorrectAnswers.push(q);
+      }
+    });
+    if (missingCorrectAnswers.length > 0) {
+      alert(`Add the correct answer before saving (Q.${missingCorrectAnswers.join(', Q.')}). Notes remain optional.`);
+      return;
+    }
+
+    if (isPartialPractice) {
+      const missingReferenceParts = completion.attemptedParts.filter(partKey => {
+        return isTrackedErrorPart(STATE.activeSection, partKey) && !partTexts[partKey];
+      });
+      if (missingReferenceParts.length > 0) {
+        alert(`Paste the reference text before saving (${missingReferenceParts.map(getUseOfEnglishPartShortLabel).join(", ")}). This keeps the exercise available in Error Log and review.`);
+        return;
+      }
+    }
+  }
+
+  let rawScoreTotal = 0;
+  if (!isPartialPractice) {
+    for (const partData of Object.values(sectionMeta.parts)) {
+      for (let q = partData.startQ; q <= partData.endQ; q++) {
+        const state = STATE.gradedStates[q];
+        if (partData.type === "partial") {
+          rawScoreTotal += state;
+        } else if (state === "correct") {
+          rawScoreTotal += partData.weight;
+        }
+      }
+    }
+  }
+
+  const maxPossibleMarks = isPartialPractice ? 0 : sectionMeta.maxMarks;
+  const accuracyPct = isPartialPractice ? 0 : Math.round((rawScoreTotal / maxPossibleMarks) * 100);
+  const scaleScore = isPartialPractice ? 0 : calculateScaleScore(STATE.activeSection, rawScoreTotal);
+  const durationSeconds = isPartialPractice ? 0 : getCurrentPracticeDurationSeconds();
+  const answers = isPartialPractice
+    ? Object.fromEntries(completion.gradedQuestions.map(q => [q, STATE.answers[q] ?? ""]))
+    : { ...STATE.answers };
+  const errorNotes = Object.fromEntries(
+    Object.entries(STATE.errorNotes)
+      .filter(([q]) => gradedQuestionSet.has(Number(q)))
+      .map(([q, note]) => [q, typeof note === "string" ? note.trim() : ""])
+      .filter(([, note]) => note.length > 0)
+  );
+  const correctAnswers = Object.fromEntries(
+    Object.entries(STATE.correctAnswers)
+      .filter(([q]) => gradedQuestionSet.has(Number(q)))
+      .map(([q, answer]) => [q, typeof answer === "string" ? answer.trim() : ""])
+      .filter(([, answer]) => answer.length > 0)
+  );
+
   if (
-    durationSeconds > 0
+    isPartialPractice
+    || durationSeconds > 0
     || ((STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") && Object.keys(correctAnswers).length > 0)
     || ((STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") && Object.keys(errorNotes).length > 0)
     || ((STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") && Object.keys(partTexts).length > 0)
   ) {
     answers.meta = {
       ...getPlainObject(answers.meta),
+      ...(isPartialPractice ? {
+        attemptType: C2_ATTEMPT_DATA.PARTIAL_PRACTICE_TYPE,
+        attemptedParts: completion.attemptedParts,
+        gradedQuestions: completion.gradedQuestions
+      } : {}),
       ...(durationSeconds > 0 ? { durationSeconds } : {}),
       ...((STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") && Object.keys(correctAnswers).length > 0 ? {
         correctAnswers,
@@ -4868,7 +5006,9 @@ async function saveGradedSheetResult() {
     percentage: accuracyPct,
     scaleScore: scaleScore,
     answers,
-    gradedStates: { ...STATE.gradedStates },
+    gradedStates: isPartialPractice
+      ? Object.fromEntries(completion.gradedQuestions.map(q => [q, STATE.gradedStates[q]]))
+      : { ...STATE.gradedStates },
     date: savedAt,
     durationSeconds
   };
@@ -4959,11 +5099,46 @@ function animateAttemptResultScore(targetScore) {
   requestAnimationFrame(update);
 }
 
+function openPartialPracticeResultModal(item) {
+  const gradedCount = getAttemptedQuestionNumbers(item).length;
+  const correctionCount = getTrackedErrorEntries().filter(entry => entry.attemptId === item.id).length;
+  const modal = document.createElement("div");
+  modal.className = "modal-overlay result-modal-overlay";
+  modal.innerHTML = `
+    <div class="modal-content attempt-result-modal partial-practice-result" role="dialog" aria-modal="true" aria-labelledby="attempt-result-title">
+      <button class="modal-close result-modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+      <div class="result-mascot" aria-hidden="true">&#128209;</div>
+      <span class="eyebrow">${escapeHTML(C2_EXAM_METADATA[item.section].name)} · ${escapeHTML(getPartialPracticeScopeLabel(item))}</span>
+      <h2 id="attempt-result-title">Partial practice saved</h2>
+      <p class="result-message">The correction is ready to revisit, without turning an incomplete exercise into an exam result.</p>
+      <div class="partial-practice-status">
+        <strong>No score recorded</strong>
+        <span>Attempts, averages, accuracy, progress and time metrics are unchanged.</span>
+      </div>
+      <div class="result-stat-grid partial-practice-stats">
+        <article><span>Graded</span><strong>${gradedCount}</strong></article>
+        <article><span>Error Log cards</span><strong>${correctionCount}</strong></article>
+        <article><span>Scope</span><strong>${escapeHTML(getPartialPracticeScopeLabel(item))}</strong></article>
+      </div>
+      <div class="result-actions">
+        <button class="btn btn-secondary" onclick="closeModal(); openHistoryDetailModal('${escapeJS(item.id)}')">Review corrections</button>
+        <button class="btn btn-primary" autofocus onclick="closeModal()">Back to progress</button>
+      </div>
+    </div>
+  `;
+  mountModal(modal);
+}
+
 function openAttemptResultModal(attemptId) {
   const item = STATE.history.find(attempt => attempt.id === attemptId);
   if (!item) return;
 
-  const previousAttempts = STATE.history.filter(attempt => attempt.section === item.section && attempt.id !== item.id);
+  if (isPartialPracticeAttempt(item)) {
+    openPartialPracticeResultModal(item);
+    return;
+  }
+
+  const previousAttempts = getScoredHistory(item.section).filter(attempt => attempt.id !== item.id);
   const previousBest = previousAttempts.length > 0
     ? Math.max(...previousAttempts.map(attempt => attempt.scaleScore))
     : null;
@@ -5633,9 +5808,10 @@ function renderWritingFeedbackMarkdown(value) {
 }
 
 function calculateAverageScaleScore() {
-  if (STATE.history.length === 0) return 0;
+  const scoredHistory = getScoredHistory();
+  if (scoredHistory.length === 0) return 0;
   const sectionAverages = SECTION_ORDER.map(section => {
-    const attempts = STATE.history.filter(item => item.section === section);
+    const attempts = scoredHistory.filter(item => item.section === section);
     if (attempts.length === 0) return null;
     return attempts.reduce((sum, item) => sum + item.scaleScore, 0) / attempts.length;
   }).filter(average => average !== null);
@@ -5701,7 +5877,7 @@ function openAllAttemptsModal() {
   modal.innerHTML = `
     <div class="modal-content" style="max-width: 600px; max-height: 85vh; display: flex; flex-direction: column;">
       <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border-color);">
-        <h3 class="modal-title">All Attempts</h3>
+        <h3 class="modal-title">All Saved Work</h3>
         <button class="modal-close" onclick="closeModal()" aria-label="Close" style="background: transparent; border: 0; font-size: 1.5rem; cursor: pointer; color: var(--text-muted);">&times;</button>
       </div>
       <div class="modal-body" style="flex: 1; overflow-y: auto; padding: 16px 0; min-height: 0;">
