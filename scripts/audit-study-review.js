@@ -1,0 +1,109 @@
+const assert = require("node:assert/strict");
+const {
+  parseLegacyCorrectAnswerLine,
+  splitLegacyStudyNote,
+  migrateHistoryStudyData,
+  extractStudyReviewPrompt
+} = require("../study-review-data.js");
+
+const metadata = {
+  reading: { parts: { part1: { weight: 1 } } },
+  useOfEnglish: {
+    parts: {
+      part2: { weight: 1 },
+      part3: { weight: 1 },
+      part4: { weight: 2 }
+    }
+  }
+};
+
+const split = splitLegacyStudyNote(
+  "HAD I KNOWN\nInversion after a negative conditional.",
+  "if I knew",
+  0,
+  2
+);
+assert.equal(split.correctAnswer, "HAD I KNOWN");
+assert.equal(split.note, "Inversion after a negative conditional.");
+assert.equal(split.matchedLegacy, true);
+
+const inlineCorrection = parseLegacyCorrectAnswerLine("UNPRECEDENTED, no existe unprecedent");
+assert.equal(inlineCorrection.answer, "UNPRECEDENTED");
+assert.equal(inlineCorrection.remainder, "no existe unprecedent");
+const inlineSplit = splitLegacyStudyNote("DUE / OWING - Given va sin to.", "given", "incorrect", 1);
+assert.equal(inlineSplit.correctAnswer, "DUE / OWING");
+assert.equal(inlineSplit.note, "Given va sin to.");
+
+const history = [
+  {
+    id: "legacy-use-of-english",
+    section: "useOfEnglish",
+    answers: {
+      9: "despite",
+      25: "if I knew",
+      meta: {
+        errorNotes: {
+          9: "DESPITE\nPreposition followed by a noun phrase.",
+          25: "HAD I KNOWN\nUse inversion and omit if."
+        },
+        useOfEnglishPartTexts: {
+          part2: "9. ______ the weather, the event continued.\n10. Another item.",
+          part4: "25. I did not know, so I did not call.\n_____ I would have called.\n26. Next transformation."
+        }
+      }
+    },
+    gradedStates: { 9: "incorrect", 25: 1 }
+  },
+  {
+    id: "correct-reading",
+    section: "reading",
+    answers: {
+      1: "B",
+      meta: {
+        errorNotes: { 1: "The collocation rules out option A." },
+        readingPartTexts: { part1: "1) A option B option C option D option" }
+      }
+    },
+    gradedStates: { 1: "correct" }
+  },
+  {
+    id: "unresolved",
+    section: "useOfEnglish",
+    answers: { 17: "creation", meta: { errorNotes: { 17: "Check the suffix." } } },
+    gradedStates: { 17: "incorrect" }
+  }
+];
+
+const migrated = migrateHistoryStudyData(history, metadata);
+assert.equal(migrated.changed, true);
+assert.equal(migrated.audit.migratedAnswers, 2);
+assert.equal(migrated.audit.inferredCorrectAnswers, 1);
+assert.equal(migrated.audit.unresolvedAnswers, 1);
+assert.equal(migrated.history[0].answers.meta.correctAnswers[9], "DESPITE");
+assert.equal(migrated.history[0].answers.meta.correctAnswers[25], "HAD I KNOWN");
+assert.equal(migrated.history[0].answers.meta.errorNotes[9], "Preposition followed by a noun phrase.");
+assert.equal(migrated.history[0].answers.meta.legacyErrorNotes[9], "DESPITE\nPreposition followed by a noun phrase.");
+assert.equal(migrated.history[1].answers.meta.correctAnswers[1], "B");
+assert.equal(migrated.history[1].answers.meta.errorNotes[1], "The collocation rules out option A.");
+
+const secondPass = migrateHistoryStudyData(migrated.history, metadata);
+assert.equal(secondPass.changed, false, "migration must be idempotent");
+
+const questionPrompt = extractStudyReviewPrompt(
+  "24. Previous item.\n25. I did not know.\n_____ I would have called.\n26. Next item.",
+  25,
+  25,
+  30
+);
+assert.equal(questionPrompt.mode, "question");
+assert.match(questionPrompt.text, /^25\./);
+assert.doesNotMatch(questionPrompt.text, /26\./);
+
+const partPrompt = extractStudyReviewPrompt("A complete cloze passage with (9) in context.", 9, 9, 16);
+assert.equal(partPrompt.mode, "part");
+assert.match(partPrompt.text, /complete cloze passage/);
+
+console.log(
+  `Study review audit passed: ${migrated.audit.migratedAnswers} legacy answers split, ` +
+  `${migrated.audit.inferredCorrectAnswers} correct answers inferred and migration is idempotent.`
+);
