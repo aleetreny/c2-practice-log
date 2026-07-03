@@ -1,0 +1,15 @@
+{
+  "name": "c2-practice-log",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "check": "node --check app.js && node --check vocabulary-data.js && node --check writing-data.js && node --check study-review-data.js && node --check attempt-data.js && node --check scripts/build-vocabulary-data.js && node --check scripts/enrich-vocabulary.js && node --check scripts/fill-dictionary-examples.js && node --check scripts/apply-manual-examples.js && node --check scripts/audit-vocabulary.js && node --check scripts/audit-writing-data.js && node --check scripts/audit-study-review.js && node --check scripts/audit-partial-practice.js && node --check api/login.js && node --check api/logout.js && node --check api/me.js && node --check api/history.js && node --check api/_auth.js && node --check api/_githubStore.js && node scripts/audit-vocabulary.js && node scripts/audit-writing-data.js && node scripts/audit-study-review.js && node scripts/audit-partial-practice.js",
+    "audit:vocabulary": "node scripts/audit-vocabulary.js",
+    "audit:writing": "node scripts/audit-writing-data.js",
+    "audit:study-review": "node scripts/audit-study-review.js",
+    "audit:partial-practice": "node scripts/audit-partial-practice.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
