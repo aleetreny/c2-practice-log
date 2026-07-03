@@ -5789,6 +5789,79 @@ kbd {
   color: var(--accent-color);
 }
 
+.vocabulary-listen-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid #d5e4e1;
+  background: #ffffff;
+  color: var(--accent-color);
+  cursor: pointer;
+}
+
+.vocabulary-listen-button svg {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.vocabulary-listen-button svg path:last-child {
+  fill: none;
+}
+
+.vocabulary-listen-button:hover,
+.vocabulary-listen-button.is-speaking {
+  border-color: #9bcfc5;
+  background: var(--accent-soft);
+  color: var(--accent-hover);
+}
+
+.vocabulary-listen-button.is-speaking svg {
+  transform: scale(1.08);
+}
+
+.vocabulary-listen-button.speech-error {
+  border-color: #e8bdc1;
+  background: var(--color-error-bg);
+  color: var(--color-error);
+}
+
+.vocabulary-listen-button:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.table-row-actions .vocabulary-listen-button {
+  min-width: 25px;
+  padding-inline: 4px;
+}
+
+.review-answer-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.review-answer-heading h2 {
+  min-width: 0;
+}
+
+.review-answer-heading .vocabulary-listen-button {
+  flex: 0 0 auto;
+  min-height: 38px;
+  padding: 7px 11px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
 .table-row-actions .delete-action:hover {
   background: var(--color-error-bg);
   color: var(--color-error);

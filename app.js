@@ -63,6 +63,31 @@ const SUPABASE_CONFIG = {
   anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlyc3VnZHRkcW52bHJjYm90dmZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0Nzk4MjgsImV4cCI6MjA5ODA1NTgyOH0.MMJwed40u5tszDUYeS_Tx0BMo0PLWdY-eEp6Qs4XC9o"
 };
 let vocabularySyncTimeoutId = null;
+let cachedPreferredVocabularyVoice = null;
+let activeVocabularyUtterance = null;
+let activeVocabularySpeechButton = null;
+let vocabularySpeechSequence = 0;
+
+const VOCABULARY_VOICE_NAME_PREFERENCES = [
+  ["sonia", 165],
+  ["libby", 160],
+  ["martha", 155],
+  ["serena", 150],
+  ["google uk english female", 145],
+  ["daniel", 130],
+  ["arthur", 125],
+  ["samantha", 115],
+  ["ava", 110],
+  ["karen", 100],
+  ["moira", 95]
+];
+
+if ("speechSynthesis" in window && typeof window.speechSynthesis.addEventListener === "function") {
+  window.speechSynthesis.addEventListener("voiceschanged", () => {
+    cachedPreferredVocabularyVoice = null;
+  });
+  window.speechSynthesis.getVoices();
+}
 
 // INITIALIZE APP
 window.addEventListener("DOMContentLoaded", async () => {
@@ -1346,6 +1371,125 @@ function getVocabularyMastery(entryId) {
   return Math.round((stat.known / stat.views) * 100);
 }
 
+function supportsVocabularySpeech() {
+  return "speechSynthesis" in window && "SpeechSynthesisUtterance" in window;
+}
+
+function scoreVocabularyVoice(voice) {
+  const name = String(voice?.name || "").toLocaleLowerCase("en");
+  const language = String(voice?.lang || "").toLocaleLowerCase("en");
+  if (!language.startsWith("en")) return -Infinity;
+
+  let score = language.startsWith("en-gb") ? 220
+    : language.startsWith("en-ie") || language.startsWith("en-au") || language.startsWith("en-nz") ? 150
+      : language.startsWith("en-us") ? 110 : 80;
+
+  if (/natural|premium|enhanced|neural/.test(name)) score += 420;
+  if (/compact|eloquence|espeak/.test(name)) score -= 140;
+  if (voice.default) score += 12;
+  if (voice.localService) score += 8;
+
+  VOCABULARY_VOICE_NAME_PREFERENCES.forEach(([preferredName, weight]) => {
+    if (name.includes(preferredName)) score += weight;
+  });
+
+  return score;
+}
+
+function getPreferredVocabularyVoice() {
+  if (!supportsVocabularySpeech()) return null;
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices.length) return null;
+
+  if (cachedPreferredVocabularyVoice && voices.some(voice => voice.voiceURI === cachedPreferredVocabularyVoice.voiceURI)) {
+    return cachedPreferredVocabularyVoice;
+  }
+
+  cachedPreferredVocabularyVoice = voices
+    .filter(voice => String(voice.lang || "").toLocaleLowerCase("en").startsWith("en"))
+    .sort((a, b) => scoreVocabularyVoice(b) - scoreVocabularyVoice(a))[0]
+    || voices.find(voice => voice.default)
+    || null;
+  return cachedPreferredVocabularyVoice;
+}
+
+function renderVocabularyListenButtonHTML(term, variant = "table") {
+  const safeTerm = escapeHTML(term);
+  const isReview = variant === "review";
+  const supported = supportsVocabularySpeech();
+  return `<button type="button" class="vocabulary-listen-button ${variant}"
+    data-speech-text="${safeTerm}" onclick="speakVocabularyTerm(this.dataset.speechText, this)"
+    aria-label="Listen to ${safeTerm}" aria-pressed="false"
+    title="${supported ? "Listen to pronunciation" : "Speech is not supported by this browser"}" ${supported ? "" : "disabled"}>
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M5 9v6h4l5 4V5L9 9H5Z"></path>
+      <path d="M17 8.5a5 5 0 0 1 0 7M19.5 6a8.5 8.5 0 0 1 0 12"></path>
+    </svg>
+    ${isReview ? "<span>Listen</span>" : ""}
+  </button>`;
+}
+
+function resetVocabularySpeechButton(button) {
+  if (!button?.isConnected) return;
+  button.classList.remove("is-speaking", "speech-error");
+  button.setAttribute("aria-pressed", "false");
+  button.title = "Listen to pronunciation";
+  delete button.dataset.voice;
+}
+
+function speakVocabularyTerm(term, button) {
+  const text = String(term || "").trim();
+  if (!text || !supportsVocabularySpeech()) {
+    if (button) {
+      button.classList.add("speech-error");
+      button.title = "Speech is not available in this browser";
+    }
+    return;
+  }
+
+  const speech = window.speechSynthesis;
+  if (speech.speaking || speech.pending) speech.cancel();
+  resetVocabularySpeechButton(activeVocabularySpeechButton);
+
+  const sequence = ++vocabularySpeechSequence;
+  const utterance = new SpeechSynthesisUtterance(text);
+  const voice = getPreferredVocabularyVoice();
+  utterance.lang = voice?.lang || "en-GB";
+  utterance.voice = voice;
+  utterance.rate = 0.9;
+  utterance.pitch = 1;
+  utterance.volume = 1;
+
+  activeVocabularyUtterance = utterance;
+  activeVocabularySpeechButton = button || null;
+  if (button) {
+    button.classList.add("is-speaking");
+    button.setAttribute("aria-pressed", "true");
+    button.title = voice ? `Playing with ${voice.name}` : "Playing pronunciation";
+    if (voice) button.dataset.voice = voice.name;
+  }
+
+  const finish = () => {
+    if (sequence !== vocabularySpeechSequence) return;
+    resetVocabularySpeechButton(button);
+    activeVocabularyUtterance = null;
+    activeVocabularySpeechButton = null;
+  };
+
+  utterance.onend = finish;
+  utterance.onerror = event => {
+    const isPlaybackError = event.error !== "canceled" && event.error !== "interrupted";
+    finish();
+    if (isPlaybackError && sequence === vocabularySpeechSequence && button?.isConnected) {
+      button.classList.add("speech-error");
+      button.title = "Could not play this pronunciation";
+      window.setTimeout(() => resetVocabularySpeechButton(button), 1800);
+    }
+  };
+
+  speech.speak(utterance);
+}
+
 function openVocabulary() {
   STATE.vocabularyEditingId = null;
   STATE.vocabularyEntryType = null;
@@ -1501,6 +1645,7 @@ function renderVocabularyEntryCardLegacy(entry) {
       <div class="vocabulary-entry-topline">
         <span class="vocabulary-family-tag">${family.shortLabel}</span>
         <div class="vocabulary-card-actions">
+          ${renderVocabularyListenButtonHTML(entry.term, "card")}
           ${mastery !== null ? `<span class="mastery-chip ${mastery >= 70 ? "good" : mastery < 40 ? "risk" : ""}">${mastery}% familiar</span>` : ""}
           <button onclick="startVocabularyEdit('${entry.id}')" aria-label="Edit ${escapeHTML(entry.term)}">Edit</button>
           <button onclick="deleteVocabularyEntry('${entry.id}')" aria-label="Delete ${escapeHTML(entry.term)}">Delete</button>
@@ -1646,7 +1791,7 @@ function renderVocabularyTableRowHTML(entry, columns, collectionKey) {
   return `<tr>${columns.map(column => {
     const rawValue = entry[column.key] || "";
     const fallback = collectionKey === "personal" && column.key === "meaning" ? "No notes" : "—";
-    return `<td class="col-${column.className}" title="${escapeHTML(rawValue)}">${column.key === "term" ? `<div class="table-term-layout"><span class="table-term-label"><strong>${escapeHTML(rawValue)}</strong>${mastery !== null ? `<small class="table-mastery">${mastery}% familiar</small>` : ""}</span><span class="table-row-actions"><button onclick="startVocabularyEdit('${entry.id}')" aria-label="Edit ${escapeHTML(entry.term)}">Edit</button><button class="delete-action" onclick="deleteVocabularyEntry('${entry.id}')" aria-label="Delete ${escapeHTML(entry.term)}">Delete</button></span></div>` : `<span class="table-cell-copy ${rawValue ? "" : "empty"}">${escapeHTML(rawValue || fallback)}</span>`}</td>`;
+    return `<td class="col-${column.className}" title="${escapeHTML(rawValue)}">${column.key === "term" ? `<div class="table-term-layout"><span class="table-term-label"><strong>${escapeHTML(rawValue)}</strong>${mastery !== null ? `<small class="table-mastery">${mastery}% familiar</small>` : ""}</span><span class="table-row-actions">${renderVocabularyListenButtonHTML(entry.term)}<button onclick="startVocabularyEdit('${entry.id}')" aria-label="Edit ${escapeHTML(entry.term)}">Edit</button><button class="delete-action" onclick="deleteVocabularyEntry('${entry.id}')" aria-label="Delete ${escapeHTML(entry.term)}">Delete</button></span></div>` : `<span class="table-cell-copy ${rawValue ? "" : "empty"}">${escapeHTML(rawValue || fallback)}</span>`}</td>`;
   }).join("")}</tr>`;
 }
 
@@ -1979,7 +2124,10 @@ function renderVocabularyReviewSessionHTML() {
         ${session.revealed ? `
           <div class="review-card-answer">
             <span>Answer</span>
-            <h2>${escapeHTML(entry.term)}</h2>
+            <div class="review-answer-heading">
+              <h2>${escapeHTML(entry.term)}</h2>
+              ${renderVocabularyListenButtonHTML(entry.term, "review")}
+            </div>
             ${entry.meaning ? `<p>${escapeHTML(entry.meaning)}</p>` : `<p class="muted">No definition saved — assess whether you recognised how to use it.</p>`}
             ${entry.example ? `<blockquote>${escapeHTML(entry.example)}</blockquote>` : ""}
             <small>${escapeHTML((entry.sources || []).join(" · "))}</small>
