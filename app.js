@@ -772,9 +772,11 @@ function getTrackedErrorEntries() {
         if (!isTrackedErrorPart(item.section, partKey)) return;
         for (let q = partData.startQ; q <= partData.endQ; q++) {
           const gradeState = gradedStates[q];
+          if (!hasObjectiveGrade(partData, gradeState)) continue;
           const note = typeof notes[q] === "string" ? notes[q].trim() : "";
           const correctAnswer = typeof correctAnswers[q] === "string" ? correctAnswers[q].trim() : "";
-          if (!note && !correctAnswer) continue;
+          const isMissed = isObjectiveError(partData, gradeState);
+          if (!C2_STUDY_REVIEW.shouldIncludeInErrorLog(gradeState, partData.weight, note)) continue;
 
           entries.push({
             attemptId: item.id,
@@ -788,7 +790,7 @@ function getTrackedErrorEntries() {
             correctAnswer,
             gradeState,
             maxPoints: partData.weight,
-            isMissed: isObjectiveError(partData, gradeState),
+            isMissed,
             note,
             hasReferenceText: Boolean(String(partTexts[partKey] || "").trim())
           });
@@ -2277,7 +2279,13 @@ function getStudyReviewCandidates(setup = STATE.errorReviewSetup) {
         if (setup.scope === "missed" && !isMissed) continue;
         const correctAnswer = String(correctAnswers[question] || "").trim();
         if (!correctAnswer) continue;
-        const prompt = C2_STUDY_REVIEW.extractStudyReviewPrompt(referenceText, question, part.startQ, part.endQ);
+        const prompt = C2_STUDY_REVIEW.getStudyReviewPrompt(
+          referenceText,
+          part.partKey,
+          question,
+          part.startQ,
+          part.endQ
+        );
 
         candidates.push({
           key: `${item.id}:${part.id}:${question}`,
@@ -2312,10 +2320,6 @@ function getStudyReviewCandidateByKey(key) {
   }).find(candidate => candidate.key === key) || null;
 }
 
-function getStudyReviewAudit() {
-  return C2_STUDY_REVIEW.migrateHistoryStudyData(STATE.history, C2_EXAM_METADATA).audit;
-}
-
 function openErrorReview() {
   STATE.errorReviewSession = null;
   renderErrorReview();
@@ -2348,7 +2352,6 @@ function renderErrorReviewSetupHTML() {
   const setup = STATE.errorReviewSetup;
   const selectedParts = new Set(setup.parts);
   const eligible = getStudyReviewCandidates(setup);
-  const audit = getStudyReviewAudit();
   const readyCount = Math.min(Number(setup.size), eligible.length);
 
   return `
@@ -2401,14 +2404,6 @@ function renderErrorReviewSetupHTML() {
             ${[5, 10, 20].map(size => `<button class="review-size-button ${Number(setup.size) === size ? "active" : ""}" onclick="setErrorReviewOption('size',${size})"><strong>${size}</strong><span>cards</span></button>`).join("")}
           </div>
         </div>
-      </div>
-
-      <div class="study-data-audit ${audit.unresolvedAnswers || audit.missingPartTexts ? "attention" : "ready"}">
-        <div>
-          <strong>${audit.unresolvedAnswers ? `${audit.unresolvedAnswers} answers need a correction` : "Correction format ready"}</strong>
-          <span>${Math.max(0, audit.gradedAnswers - audit.unresolvedAnswers)} saved answers follow the separate answer + notes structure.</span>
-        </div>
-        ${audit.unresolvedAnswers || audit.missingPartTexts ? `<small>Cards without a correct answer or exercise text are kept safely in history but excluded until you edit them.</small>` : `<small>Every available correction follows the new answer + notes structure.</small>`}
       </div>
 
       <div class="review-launch-row">
@@ -2472,21 +2467,32 @@ function renderErrorReviewSessionHTML() {
         <div class="review-card-prompt study-review-prompt">
           <div class="study-review-card-meta">
             <span>${card.section === "reading" ? "Reading" : "Use of English"} · ${getUseOfEnglishPartShortLabel(card.partKey)}</span>
-            <strong>Question ${card.question}</strong>
+          </div>
+          <div class="study-review-question-focus">
+            <span>Target question</span>
+            <strong>Q.${card.question}</strong>
+            <p>Answer this numbered item using the exercise context below.</p>
           </div>
           <div class="study-review-source ${card.promptMode === "part" ? "full-part" : "question-excerpt"}">${escapeHTML(card.prompt)}</div>
-          ${card.promptMode === "part" ? `<small>Full exercise shown because no isolated Q.${card.question} marker was found.</small>` : ""}
+          ${card.partKey === "part4" && card.promptMode === "part" ? `<small>The full Part 4 exercise is shown because Q.${card.question} could not be isolated safely.</small>` : ""}
           <p class="study-review-instruction">Retrieve the answer before revealing the correction.</p>
         </div>
         ${session.revealed ? `
           <div class="review-card-answer study-review-answer">
-            <span>Correct answer</span>
-            <h2>${escapeHTML(card.correctAnswer)}</h2>
-            <div class="study-review-answer-comparison">
-              <div><small>Your saved answer</small><strong>${escapeHTML(card.answer || "No answer")}</strong></div>
-              <div class="${card.isMissed ? "missed" : "correct"}"><small>Original result</small><strong>${gradeLabel}</strong></div>
-            </div>
-            ${card.note ? `<blockquote>${escapeHTML(card.note)}</blockquote>` : `<p class="muted">No additional note was saved.</p>`}
+            <span>${card.isMissed ? "Correct answer" : "Your answer"}</span>
+            <h2>${escapeHTML(card.isMissed ? card.correctAnswer : card.answer || card.correctAnswer)}</h2>
+            ${card.isMissed ? `
+              <div class="study-review-answer-comparison">
+                <div><small>Your saved answer</small><strong>${escapeHTML(card.answer || "No answer")}</strong></div>
+                <div class="missed"><small>Original result</small><strong>${gradeLabel}</strong></div>
+              </div>` : `
+              <div class="study-review-result-pill correct"><small>Original result</small><strong>${gradeLabel}</strong></div>`}
+            ${card.note ? `
+              <div class="study-review-note-wrap">
+                <span>Notes</span>
+                <blockquote class="study-review-note" tabindex="0">${escapeHTML(card.note)}</blockquote>
+                <small>Long notes scroll inside the box; drag its lower edge to resize it.</small>
+              </div>` : ""}
             <small>Attempt from ${formatCompactDateTime(card.date)}</small>
           </div>` : ""}
       </article>
@@ -3033,9 +3039,14 @@ function renderTrackedErrorItemHTML(error, compact = false, textPanelId = "ue-da
       </div>
       <span class="error-answer-label">Your answer</span>
       <div class="ue-error-answer">${answer}</div>
-      <span class="error-answer-label">Correct answer</span>
-      <div class="ue-error-correct-answer">${correctAnswer}</div>
-      ${note ? `<p class="ue-error-note">${escapeHTML(note)}</p>` : ""}
+      ${error.isMissed ? `
+        <span class="error-answer-label">Correct answer</span>
+        <div class="ue-error-correct-answer">${correctAnswer}</div>` : ""}
+      ${note ? `
+        <div class="ue-error-note-wrap">
+          <span class="error-answer-label">Notes</span>
+          <p class="ue-error-note" tabindex="0">${escapeHTML(note)}</p>
+        </div>` : ""}
       <div class="ue-error-actions">
         <button class="ue-error-text-button" onclick="showPartReferenceText('${escapeJS(error.attemptId)}', '${error.section}', '${error.partKey}', '${textPanelId}')">View part text</button>
         <button class="ue-error-review" onclick="openHistoryDetailModal('${escapeJS(error.attemptId)}')">${formatCompactDateTime(error.date)}</button>
@@ -4266,9 +4277,9 @@ function openHistoryDetailModal(sessionId, editMode = false) {
             </div>
             ${editMode
               ? renderHistoryErrorNoteEditorHTML(item, q, partKey)
-              : `${correctAnswer ? `<div class="history-correct-answer"><strong>Correct answer</strong>${escapeHTML(correctAnswer)}</div>` : ""}
+              : `${isError && correctAnswer ? `<div class="history-correct-answer"><strong>Correct answer</strong>${escapeHTML(correctAnswer)}</div>` : ""}
                  ${errorNote ? `<div class="history-error-note ${isError ? "" : "noted-correct"}"><strong>Notes</strong>${escapeHTML(errorNote)}</div>` : ""}`}
-            ${!editMode && (isError || errorNote || correctAnswer) ? `
+            ${!editMode && (isError || errorNote) ? `
               <button class="history-question-text-button" onclick="showPartReferenceText('${escapeJS(item.id)}', '${item.section}', '${partKey}', 'history-review-part-text-panel')">
                 View ${getUseOfEnglishPartShortLabel(partKey)} text
               </button>

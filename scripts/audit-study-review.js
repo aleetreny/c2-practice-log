@@ -3,7 +3,9 @@ const {
   parseLegacyCorrectAnswerLine,
   splitLegacyStudyNote,
   migrateHistoryStudyData,
-  extractStudyReviewPrompt
+  extractStudyReviewPrompt,
+  getStudyReviewPrompt,
+  shouldIncludeInErrorLog
 } = require("../study-review-data.js");
 
 const metadata = {
@@ -102,6 +104,32 @@ assert.doesNotMatch(questionPrompt.text, /26\./);
 const partPrompt = extractStudyReviewPrompt("A complete cloze passage with (9) in context.", 9, 9, 16);
 assert.equal(partPrompt.mode, "part");
 assert.match(partPrompt.text, /complete cloze passage/);
+
+const fullPartPrompt = getStudyReviewPrompt(
+  "9. First gap.\n10. Second gap.",
+  "part2",
+  9,
+  9,
+  16
+);
+assert.equal(fullPartPrompt.mode, "part");
+assert.match(fullPartPrompt.text, /10\. Second gap/);
+
+const isolatedPart4Prompt = getStudyReviewPrompt(
+  "25. First transformation.\n26. Second transformation.",
+  "part4",
+  25,
+  25,
+  30
+);
+assert.equal(isolatedPart4Prompt.mode, "question");
+assert.doesNotMatch(isolatedPart4Prompt.text, /26\. Second transformation/);
+
+assert.equal(shouldIncludeInErrorLog("incorrect", 1, ""), true);
+assert.equal(shouldIncludeInErrorLog("correct", 1, "Useful note"), true);
+assert.equal(shouldIncludeInErrorLog("correct", 1, ""), false);
+assert.equal(shouldIncludeInErrorLog(1, 2, ""), true);
+assert.equal(shouldIncludeInErrorLog(2, 2, ""), false);
 
 console.log(
   `Study review audit passed: ${migrated.audit.migratedAnswers} legacy answers split, ` +

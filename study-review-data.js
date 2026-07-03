@@ -19,6 +19,14 @@
     return gradeState === "correct" || (typeof gradeState === "number" && gradeState >= maxPoints);
   }
 
+  function isMissedAnswer(gradeState, maxPoints) {
+    return gradeState === "incorrect" || (typeof gradeState === "number" && gradeState < maxPoints);
+  }
+
+  function shouldIncludeInErrorLog(gradeState, maxPoints, note) {
+    return isMissedAnswer(gradeState, maxPoints) || Boolean(String(note || "").trim());
+  }
+
   function cleanCorrectAnswerLine(line) {
     return String(line || "")
       .replace(/^\s*(?:correct(?:\s+answer)?|answer|respuesta(?:\s+correcta)?|soluci[oó]n)\s*[:\-–—]\s*/i, "")
@@ -214,17 +222,27 @@
     return { text: fullText, mode: "part" };
   }
 
+  function getStudyReviewPrompt(referenceText, partKey, question, startQ, endQ) {
+    const fullText = String(referenceText || "").replace(/\r\n?/g, "\n").trim();
+    if (!fullText) return { text: "", mode: "missing" };
+    if (partKey !== "part4") return { text: fullText, mode: "part" };
+    return extractStudyReviewPrompt(fullText, question, startQ, endQ);
+  }
+
   const api = {
     STUDY_DATA_VERSION,
     TRACKED_PARTS,
     getTrackedPart,
     isFullCredit,
+    isMissedAnswer,
+    shouldIncludeInErrorLog,
     parseLegacyCorrectAnswerLine,
     isLegacyCorrectAnswerLine,
     splitLegacyStudyNote,
     getCorrectAnswers,
     migrateHistoryStudyData,
-    extractStudyReviewPrompt
+    extractStudyReviewPrompt,
+    getStudyReviewPrompt
   };
 
   root.C2_STUDY_REVIEW = api;
