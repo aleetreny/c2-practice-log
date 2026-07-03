@@ -5301,14 +5301,21 @@ kbd {
   }
 
   .nav-group {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr) minmax(0, 1.25fr) minmax(0, 0.85fr);
+    gap: 2px;
     width: 100%;
-    overflow-x: auto;
+    overflow: visible;
+    padding: 3px;
   }
 
   .nav-group .nav-pill {
-    flex: 1 0 auto;
-    padding: 0 10px;
-    font-size: 0.78rem;
+    min-width: 0;
+    width: 100%;
+    padding: 0 3px;
+    font-size: clamp(0.64rem, 3vw, 0.72rem);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
   }
 
   .vocabulary-hero,
