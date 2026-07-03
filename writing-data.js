@@ -439,6 +439,90 @@ const WRITING_GENRES = {
       ["Request", "State precisely what response or remedy you would like."],
       ["Courteous close", "End firmly while preserving a professional tone."]
     ],
+    letterGuide: {
+      title: "Match the salutation to the sign-off",
+      note: "In a British English exam, the safest formal pairing depends on whether you know the recipient's name.",
+      situations: [
+        {
+          situation: "Named recipient",
+          reader: "You know the person's surname",
+          opening: "Dear Ms Patel, / Dear Mr Hughes, / Dear Dr Evans,",
+          closing: "Yours sincerely,",
+          tip: "Use a title and surname, not the person's first name. Ms is the safest neutral title when no preference is given."
+        },
+        {
+          situation: "Name unknown",
+          reader: "You are writing to an individual whose name is not given",
+          opening: "Dear Sir or Madam,",
+          closing: "Yours faithfully,",
+          tip: "This is the standard formal exam pairing when the task gives no name."
+        },
+        {
+          situation: "Role or department",
+          reader: "A manager, admissions office or customer services team",
+          opening: "Dear Admissions Officer, / Dear Customer Services Team,",
+          closing: "Yours faithfully,",
+          tip: "Address the role or team named in the task; keep the purpose explicit in the first sentence."
+        },
+        {
+          situation: "Committee or known group",
+          reader: "A board, committee or group of members",
+          opening: "Dear Members of the Committee, / Dear Board Members,",
+          closing: "Yours faithfully, / Kind regards,",
+          tip: "Yours faithfully is safest when no individual is named; Kind regards suits an established professional relationship."
+        }
+      ],
+      addressees: [
+        {
+          organisation: "Magazine or newspaper",
+          role: "Editor",
+          opening: "Dear Editor,",
+          context: "Responding to an article, suggesting a feature or commenting on an issue raised by the publication."
+        },
+        {
+          organisation: "School or university",
+          role: "Admissions Officer / Course Director / Headteacher",
+          opening: "Dear Admissions Officer, / Dear Course Director, / Dear Headteacher,",
+          context: "Enquiring about admission or a course, or writing about a school policy or educational matter."
+        },
+        {
+          organisation: "Company or service provider",
+          role: "Customer Services Manager / Store Manager",
+          opening: "Dear Customer Services Manager, / Dear Store Manager,",
+          context: "Making a complaint, requesting a refund or suggesting an improvement to a product or service."
+        },
+        {
+          organisation: "Council or public authority",
+          role: "Council Officer / Head of [Department]",
+          opening: "Dear Council Officer, / Dear Head of Environmental Services,",
+          context: "Raising a local concern about transport, facilities, the environment or another public service."
+        },
+        {
+          organisation: "Charity or non-profit organisation",
+          role: "Charity Director / Volunteer Coordinator",
+          opening: "Dear Charity Director, / Dear Volunteer Coordinator,",
+          context: "Offering support, applying to volunteer or proposing a fundraising or community initiative."
+        },
+        {
+          organisation: "Club, association or committee",
+          role: "Chair / Membership Secretary / Committee Members",
+          opening: "Dear Chair, / Dear Membership Secretary, / Dear Members of the Committee,",
+          context: "Writing about membership, a club decision, an event or a proposal for the organisation."
+        },
+        {
+          organisation: "Hotel, venue or event organiser",
+          role: "Hotel Manager / Events Manager / Event Organiser",
+          opening: "Dear Hotel Manager, / Dear Events Manager, / Dear Event Organiser,",
+          context: "Enquiring about arrangements, reporting a problem or giving feedback after a stay or event."
+        },
+        {
+          organisation: "Employer or recruitment team",
+          role: "Hiring Manager / Human Resources Manager",
+          opening: "Dear Hiring Manager, / Dear Human Resources Manager,",
+          context: "Applying for a position, requesting work experience or contacting an employer when no name is supplied."
+        }
+      ]
+    },
     phrases: [
       ["Purpose", "I am writing in connection with [issue], and more specifically to [purpose]."],
       ["Acknowledge", "While I recognise the practical difficulties involved, [concern]."],
@@ -466,6 +550,40 @@ const WRITING_GENRES = {
       ["Practical recommendation", "Offer a specific next step rather than vague encouragement."],
       ["Friendly close", "Invite an update and end on a warm, personal note."]
     ],
+    letterGuide: {
+      title: "Let the relationship set the tone",
+      note: "Informal letters normally use a first name. Choose a warmer or more neutral ending according to how well you know the reader.",
+      situations: [
+        {
+          situation: "Close friend or relative",
+          reader: "Someone you know very well",
+          opening: "Dear Maya, / Hi Leo,",
+          closing: "Love, / Take care, / See you soon,",
+          tip: "Love is appropriate only for a genuinely close relationship; sign with your first name."
+        },
+        {
+          situation: "Friend or acquaintance",
+          reader: "Someone you know, but not intimately",
+          opening: "Hi Sam, / Hello Alex,",
+          closing: "All the best, / Best wishes,",
+          tip: "This is a safe, friendly register when the task does not imply a very close bond."
+        },
+        {
+          situation: "Several people",
+          reader: "Friends, classmates or members of a familiar group",
+          opening: "Hi everyone, / Hello all,",
+          closing: "Best wishes, / See you all soon,",
+          tip: "Address the whole group naturally and avoid a singular greeting such as Dear Sir or Madam."
+        },
+        {
+          situation: "Name not supplied",
+          reader: "A friendly online contact or informal audience",
+          opening: "Hi there, / Hello,",
+          closing: "Best wishes, / All the best,",
+          tip: "Use this only if the context is genuinely informal; an unknown official recipient requires a formal letter instead."
+        }
+      ]
+    },
     phrases: [
       ["Open", "It was great to hear from you. You asked me about [X], so I thought I would share a few ideas."],
       ["Empathise", "I can completely understand why you are unsure."],

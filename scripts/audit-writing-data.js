@@ -65,6 +65,22 @@ Object.entries(data.WRITING_GENRES).forEach(([key, genre]) => {
   (genre.language || []).forEach((entry, index) => {
     expect(Array.isArray(entry) && present(entry[0]) && present(entry[1]), `${key} vocabulary entry ${index + 1} is incomplete.`);
   });
+  if (key === "formalLetter" || key === "informalLetter") {
+    expect(genre.letterGuide && present(genre.letterGuide.title), `${key} needs an opening and closing guide.`);
+    expect(Array.isArray(genre.letterGuide?.situations) && genre.letterGuide.situations.length >= 4, `${key} needs at least four reader situations.`);
+    (genre.letterGuide?.situations || []).forEach((item, index) => {
+      expect(present(item.situation) && present(item.reader), `${key} letter situation ${index + 1} needs its context and reader.`);
+      expect(present(item.opening) && present(item.closing), `${key} letter situation ${index + 1} needs an opening and closing.`);
+      expect(present(item.tip), `${key} letter situation ${index + 1} needs usage guidance.`);
+    });
+    if (key === "formalLetter") {
+      expect(Array.isArray(genre.letterGuide?.addressees) && genre.letterGuide.addressees.length >= 8, "formalLetter needs a broad organisation addressee reference.");
+      (genre.letterGuide?.addressees || []).forEach((item, index) => {
+        expect(present(item.organisation) && present(item.role), `formalLetter addressee ${index + 1} needs its organisation and role.`);
+        expect(present(item.opening) && present(item.context), `formalLetter addressee ${index + 1} needs a salutation and context.`);
+      });
+    }
+  }
 });
 expect(data.WRITING_SAFE_EXPRESSIONS.length === 10, "Safe-expression bank must contain ten entries.");
 

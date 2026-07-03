@@ -2444,6 +2444,7 @@ function renderWritingLanguageResourcesHTML() {
 
 function renderWritingFormatsHTML() {
   const genre = WRITING_GENRES[STATE.writingGenre] || WRITING_GENRES.report;
+  const letterGuide = genre.letterGuide;
   return `
     <section class="writing-lab-section">
       <div class="writing-section-heading"><div><span class="eyebrow">Part 2 compass</span><h2>Change the genre, change the writing</h2><p>Purpose, reader and structure come before advanced vocabulary.</p></div></div>
@@ -2457,6 +2458,40 @@ function renderWritingFormatsHTML() {
           <div class="writing-genre-meta">${genre.meta.split("·").map(item => `<span>${escapeHTML(item.trim())}</span>`).join("")}</div>
         </div>
         <div class="writing-genre-structure">${genre.structure.map(([step, objective], index) => `<div><span>${index + 1}</span><div><strong>${escapeHTML(step)}</strong><p>${escapeHTML(objective)}</p></div></div>`).join("")}</div>
+        ${letterGuide ? `
+          <section class="writing-letter-guide" aria-label="${escapeHTML(genre.label)} openings and closings">
+            <div class="writing-letter-guide-heading">
+              <div><span class="eyebrow">Opening &amp; closing</span><h3>${escapeHTML(letterGuide.title)}</h3></div>
+              <p>${escapeHTML(letterGuide.note)}</p>
+            </div>
+            <div class="writing-letter-guide-grid">
+              ${letterGuide.situations.map(item => `
+                <article class="writing-letter-guide-card">
+                  <div class="writing-letter-guide-reader"><strong>${escapeHTML(item.situation)}</strong><span>${escapeHTML(item.reader)}</span></div>
+                  <div><span>Open</span><p>${escapeHTML(item.opening)}</p></div>
+                  <div><span>Close</span><p>${escapeHTML(item.closing)}</p></div>
+                  <small>${escapeHTML(item.tip)}</small>
+                </article>
+              `).join("")}
+            </div>
+            ${letterGuide.addressees ? `
+              <div class="writing-letter-addressee-heading">
+                <div><span class="eyebrow">Organisation reference</span><h3>Who should you address?</h3></div>
+                <p>Use the role named or implied by the task. If none fits, fall back to <strong>Dear Sir or Madam,</strong></p>
+              </div>
+              <div class="writing-letter-addressee-grid">
+                ${letterGuide.addressees.map(item => `
+                  <article class="writing-letter-addressee-card">
+                    <span>${escapeHTML(item.organisation)}</span>
+                    <div><small>Role</small><strong>${escapeHTML(item.role)}</strong></div>
+                    <div><small>Write</small><p>${escapeHTML(item.opening)}</p></div>
+                    <p>${escapeHTML(item.context)}</p>
+                  </article>
+                `).join("")}
+              </div>
+            ` : ""}
+          </section>
+        ` : ""}
         <div class="writing-genre-grid">
           <div class="writing-genre-phrases">
             <h3>High-value moves</h3>
@@ -2589,7 +2624,7 @@ function renderDashboardView() {
           <div class="summary-card">
             <div class="summary-card-title">Average scale</div>
             <div class="summary-card-value ${avgScaleScore >= 200 ? "positive" : "risk"}">${avgScaleScore || "--"}</div>
-            <div class="summary-card-note">${avgScaleScore ? avgGrade : "No average yet"}</div>
+            <div class="summary-card-note">${avgScaleScore ? `${avgGrade} · papers weighted equally` : "No average yet"}</div>
           </div>
           <div class="summary-card">
             <div class="summary-card-title">Average accuracy</div>
@@ -5044,6 +5079,19 @@ function getWritingMarkdownTableCells(line) {
   return line.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map(cell => cell.trim());
 }
 
+function getWritingMarkdownTableColumnRole(header) {
+  const normalized = String(header || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toLowerCase();
+
+  if (["criterio", "criteria", "criterion"].includes(normalized)) return "criterion";
+  if (["nota", "score", "mark", "marks", "puntuacion"].includes(normalized)) return "score";
+  if (["justificacion", "justification", "feedback", "comentario", "comments"].includes(normalized)) return "feedback";
+  return "";
+}
+
 function renderWritingFeedbackMarkdown(value) {
   const lines = String(value || "").replace(/\r\n?/g, "\n").split("\n");
   const output = [];
@@ -5091,6 +5139,8 @@ function renderWritingFeedbackMarkdown(value) {
     if (isTable) {
       flushBlocks();
       const headers = getWritingMarkdownTableCells(line);
+      const columnRoles = headers.map(getWritingMarkdownTableColumnRole);
+      const isAssessmentTable = columnRoles.includes("criterion") && columnRoles.includes("score") && columnRoles.includes("feedback");
       const rows = [];
       index += 2;
       while (index < lines.length && lines[index].trim() && lines[index].includes("|")) {
@@ -5100,9 +5150,10 @@ function renderWritingFeedbackMarkdown(value) {
       index -= 1;
       output.push(`
         <div class="markdown-table-wrap">
-          <table>
-            <thead><tr>${headers.map(cell => `<th>${renderWritingMarkdownInline(cell)}</th>`).join("")}</tr></thead>
-            <tbody>${rows.map(row => `<tr>${row.map(cell => `<td>${renderWritingMarkdownInline(cell)}</td>`).join("")}</tr>`).join("")}</tbody>
+          <table class="${isAssessmentTable ? "writing-assessment-table" : ""}">
+            ${isAssessmentTable ? `<colgroup>${columnRoles.map(role => `<col class="markdown-col-${role || "default"}">`).join("")}</colgroup>` : ""}
+            <thead><tr>${headers.map((cell, columnIndex) => `<th class="${columnRoles[columnIndex] ? `markdown-cell-${columnRoles[columnIndex]}` : ""}">${renderWritingMarkdownInline(cell)}</th>`).join("")}</tr></thead>
+            <tbody>${rows.map(row => `<tr>${row.map((cell, columnIndex) => `<td class="${columnRoles[columnIndex] ? `markdown-cell-${columnRoles[columnIndex]}` : ""}">${renderWritingMarkdownInline(cell)}</td>`).join("")}</tr>`).join("")}</tbody>
           </table>
         </div>
       `);
@@ -5156,8 +5207,14 @@ function renderWritingFeedbackMarkdown(value) {
 
 function calculateAverageScaleScore() {
   if (STATE.history.length === 0) return 0;
-  const sum = STATE.history.reduce((acc, curr) => acc + curr.scaleScore, 0);
-  return Math.round(sum / STATE.history.length);
+  const sectionAverages = SECTION_ORDER.map(section => {
+    const attempts = STATE.history.filter(item => item.section === section);
+    if (attempts.length === 0) return null;
+    return attempts.reduce((sum, item) => sum + item.scaleScore, 0) / attempts.length;
+  }).filter(average => average !== null);
+
+  if (sectionAverages.length === 0) return 0;
+  return Math.round(sectionAverages.reduce((sum, average) => sum + average, 0) / sectionAverages.length);
 }
 
 async function deleteHistoryItem(id) {
