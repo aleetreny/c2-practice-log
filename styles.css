@@ -3588,6 +3588,7 @@ input.sheet-text-input:disabled,
 
 .history-writing-markdown table {
   width: 100%;
+  min-width: 620px;
   border-collapse: collapse;
   background: #ffffff;
 }
@@ -3598,12 +3599,33 @@ input.sheet-text-input:disabled,
   border: 1px solid #cfe2de;
   text-align: left;
   vertical-align: top;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
 }
 
 .history-writing-markdown th {
   background: rgba(15, 118, 110, 0.08);
   font-size: 0.76rem;
   font-weight: 850;
+}
+
+.history-writing-markdown .writing-assessment-table {
+  min-width: 680px;
+  table-layout: fixed;
+}
+
+.history-writing-markdown .writing-assessment-table .markdown-col-criterion {
+  width: 190px;
+}
+
+.history-writing-markdown .writing-assessment-table .markdown-col-score {
+  width: 88px;
+}
+
+.history-writing-markdown .writing-assessment-table .markdown-cell-score {
+  text-align: center;
+  white-space: nowrap;
 }
 
 /* Animated result summary */
@@ -6687,6 +6709,176 @@ kbd {
   line-height: 1.42;
 }
 
+.writing-letter-guide {
+  margin-bottom: 19px;
+  padding: 15px;
+  border: 1px solid #cfe2de;
+  border-radius: 10px;
+  background: #f7fbfa;
+}
+
+.writing-letter-guide-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 12px;
+}
+
+.writing-letter-guide-heading h3 {
+  margin-top: 3px;
+  font-size: 0.9rem;
+}
+
+.writing-letter-guide-heading p {
+  max-width: 520px;
+  color: var(--text-muted);
+  font-size: 0.66rem;
+  line-height: 1.45;
+  text-align: right;
+}
+
+.writing-letter-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.writing-letter-guide-card {
+  padding: 12px;
+  border: 1px solid #dce9e7;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.writing-letter-guide-reader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e8efee;
+}
+
+.writing-letter-guide-reader strong {
+  color: var(--accent-color);
+  font-size: 0.72rem;
+}
+
+.writing-letter-guide-reader span {
+  color: var(--text-muted);
+  font-size: 0.61rem;
+  text-align: right;
+}
+
+.writing-letter-guide-card > div:not(.writing-letter-guide-reader) {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.writing-letter-guide-card > div:not(.writing-letter-guide-reader) > span {
+  color: var(--text-soft);
+  font-size: 0.59rem;
+  font-weight: 850;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.writing-letter-guide-card p {
+  font-size: 0.66rem;
+  font-weight: 750;
+  line-height: 1.4;
+}
+
+.writing-letter-guide-card small {
+  display: block;
+  margin-top: 9px;
+  padding-top: 8px;
+  border-top: 1px dashed #dce9e7;
+  color: var(--text-muted);
+  font-size: 0.59rem;
+  line-height: 1.45;
+}
+
+.writing-letter-addressee-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 20px 0 12px;
+  padding-top: 16px;
+  border-top: 1px solid #cfe2de;
+}
+
+.writing-letter-addressee-heading h3 {
+  margin-top: 3px;
+  font-size: 0.9rem;
+}
+
+.writing-letter-addressee-heading p {
+  max-width: 520px;
+  color: var(--text-muted);
+  font-size: 0.66rem;
+  line-height: 1.45;
+  text-align: right;
+}
+
+.writing-letter-addressee-heading p strong {
+  color: var(--text-main);
+}
+
+.writing-letter-addressee-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.writing-letter-addressee-card {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid #dce9e7;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.writing-letter-addressee-card > span {
+  color: var(--accent-color);
+  font-size: 0.7rem;
+  font-weight: 850;
+}
+
+.writing-letter-addressee-card > div {
+  display: grid;
+  gap: 2px;
+  padding-top: 7px;
+  border-top: 1px solid #e8efee;
+}
+
+.writing-letter-addressee-card small {
+  color: var(--text-soft);
+  font-size: 0.57rem;
+  font-weight: 850;
+  letter-spacing: 0.035em;
+  text-transform: uppercase;
+}
+
+.writing-letter-addressee-card strong,
+.writing-letter-addressee-card > div p {
+  color: var(--text-main);
+  font-size: 0.64rem;
+  line-height: 1.4;
+}
+
+.writing-letter-addressee-card > p {
+  color: var(--text-muted);
+  font-size: 0.59rem;
+  line-height: 1.45;
+}
+
 .writing-genre-grid {
   display: grid;
   grid-template-columns: minmax(0, 3fr) minmax(360px, 2fr);
@@ -6871,6 +7063,10 @@ kbd {
     border-radius: 8px;
     background: #f7fbfa;
   }
+
+  .writing-letter-addressee-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 680px) {
@@ -6978,6 +7174,29 @@ kbd {
   }
 
   .writing-genre-structure {
+    grid-template-columns: 1fr;
+  }
+
+  .writing-letter-guide-heading,
+  .writing-letter-addressee-heading,
+  .writing-letter-guide-reader {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .writing-letter-guide-heading p,
+  .writing-letter-addressee-heading p,
+  .writing-letter-guide-reader span {
+    max-width: none;
+    text-align: left;
+  }
+
+  .writing-letter-guide-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .writing-letter-addressee-grid {
     grid-template-columns: 1fr;
   }
 
