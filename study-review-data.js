@@ -1,5 +1,5 @@
 (function initialiseStudyReviewData(root) {
-  const STUDY_DATA_VERSION = 2;
+  const STUDY_DATA_VERSION = 3;
   const TRACKED_PARTS = [
     { id: "reading:part1", section: "reading", partKey: "part1", startQ: 1, endQ: 8 },
     { id: "useOfEnglish:part2", section: "useOfEnglish", partKey: "part2", startQ: 9, endQ: 16 },
@@ -25,6 +25,36 @@
 
   function shouldIncludeInErrorLog(gradeState, maxPoints, note) {
     return isMissedAnswer(gradeState, maxPoints) || Boolean(String(note || "").trim());
+  }
+
+  function normalizeCorrectAnswer(value) {
+    return String(value || "").trim().toLocaleUpperCase("en-GB");
+  }
+
+  function normalizeStudySearch(value) {
+    return String(value || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLocaleLowerCase("en-GB")
+      .trim();
+  }
+
+  function matchesTrackedErrorSearch(error, query) {
+    const normalizedQuery = normalizeStudySearch(query);
+    if (!normalizedQuery) return true;
+    const haystack = normalizeStudySearch([
+      `Q.${error?.question ?? ""}`,
+      error?.question,
+      error?.section,
+      error?.sectionName,
+      error?.partKey,
+      error?.partName,
+      error?.answer,
+      error?.correctAnswer,
+      error?.note,
+      error?.gradeState
+    ].join(" "));
+    return haystack.includes(normalizedQuery);
   }
 
   function cleanCorrectAnswerLine(line) {
@@ -68,7 +98,7 @@
         return parsedFirstLine.remainder ? [parsedFirstLine.remainder] : [];
       });
       return {
-        correctAnswer: parsedFirstLine.answer,
+        correctAnswer: normalizeCorrectAnswer(parsedFirstLine.answer),
         note: remainingLines.join("\n").trim(),
         matchedLegacy: true,
         inferredFromAnswer: false,
@@ -78,7 +108,7 @@
 
     const canInfer = isFullCredit(gradeState, maxPoints) && String(fallbackAnswer || "").trim();
     return {
-      correctAnswer: canInfer ? String(fallbackAnswer).trim() : "",
+      correctAnswer: canInfer ? normalizeCorrectAnswer(fallbackAnswer) : "",
       note: original,
       matchedLegacy: false,
       inferredFromAnswer: Boolean(canInfer),
@@ -87,7 +117,12 @@
   }
 
   function getCorrectAnswers(item) {
-    return plainObject(plainObject(plainObject(item).answers).meta).correctAnswers || {};
+    const stored = plainObject(plainObject(plainObject(item).answers).meta).correctAnswers;
+    return Object.fromEntries(
+      Object.entries(plainObject(stored))
+        .map(([question, answer]) => [question, normalizeCorrectAnswer(answer)])
+        .filter(([, answer]) => answer)
+    );
   }
 
   function migrateHistoryStudyData(history, metadata) {
@@ -131,13 +166,19 @@
 
           hasTrackedGrade = true;
           audit.gradedAnswers += 1;
-          const existingCorrectAnswer = typeof correctAnswers[question] === "string" ? correctAnswers[question].trim() : "";
+          const storedCorrectAnswer = typeof correctAnswers[question] === "string" ? correctAnswers[question].trim() : "";
+          const existingCorrectAnswer = normalizeCorrectAnswer(storedCorrectAnswer);
           const legacyNote = typeof notes[question] === "string" ? notes[question] : "";
+
+          if (storedCorrectAnswer && storedCorrectAnswer !== existingCorrectAnswer) {
+            correctAnswers[question] = existingCorrectAnswer;
+            itemChanged = true;
+          }
 
           if (!existingCorrectAnswer) {
             const split = splitLegacyStudyNote(legacyNote, answers[question], gradeState, maxPoints);
             if (split.correctAnswer) {
-              correctAnswers[question] = split.correctAnswer;
+              correctAnswers[question] = normalizeCorrectAnswer(split.correctAnswer);
               itemChanged = true;
               if (split.matchedLegacy) {
                 audit.migratedAnswers += 1;
@@ -236,6 +277,9 @@
     isFullCredit,
     isMissedAnswer,
     shouldIncludeInErrorLog,
+    normalizeCorrectAnswer,
+    normalizeStudySearch,
+    matchesTrackedErrorSearch,
     parseLegacyCorrectAnswerLine,
     isLegacyCorrectAnswerLine,
     splitLegacyStudyNote,
