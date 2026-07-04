@@ -721,9 +721,7 @@ function getErrorNotes(item = {}) {
 }
 
 function getCorrectAnswers(item = {}) {
-  const answers = getPlainObject(item.answers);
-  const meta = getPlainObject(answers.meta);
-  return getPlainObject(meta.correctAnswers);
+  return C2_STUDY_REVIEW.getCorrectAnswers(item);
 }
 
 function getUseOfEnglishPartTexts(item = {}) {
@@ -1187,11 +1185,8 @@ function renderMainNavigation(activeView) {
         `).join("")}
       </div>
       <button class="candidate-switch" onclick="openProfileModal()" title="Account and sync">
-        <span class="profile-avatar">${STATE.activeProfile.charAt(0).toUpperCase()}</span>
-        <span class="candidate-copy">
-          <span class="candidate-label">${getSyncLabel()}</span>
-          <span class="candidate-name">${escapeHTML(STATE.activeProfile)}</span>
-        </span>
+        <span class="candidate-name">${escapeHTML(STATE.activeProfile)}</span>
+        <span class="candidate-status"><i aria-hidden="true"></i>${getSyncLabel()}</span>
       </button>
     </nav>
   `;
@@ -2414,7 +2409,7 @@ function renderErrorReviewSetupHTML() {
           <h2>Which parts should appear?</h2>
           <div class="study-review-part-grid">
             ${C2_STUDY_REVIEW.TRACKED_PARTS.map(part => {
-              const count = getStudyReviewCandidates({ ...setup, scope: "all", parts: [part.id] }).length;
+              const count = getStudyReviewCandidates({ ...setup, parts: [part.id] }).length;
               return `<button class="study-review-part ${selectedParts.has(part.id) ? "active" : ""}" onclick="toggleErrorReviewPart('${part.id}')">
                 <span>${part.section === "reading" ? "Reading" : "Use of English"}</span>
                 <strong>${getUseOfEnglishPartShortLabel(part.partKey)}</strong>
@@ -3097,6 +3092,27 @@ function renderTrackedErrorItemHTML(error, compact = false, textPanelId = "ue-da
   `;
 }
 
+function focusErrorLogPartColumn(workspace, section, partKey) {
+  if (!workspace?.classList.contains("ue-errors-workspace")) return;
+  workspace.dataset.activeErrorSection = section;
+  workspace.dataset.activeErrorPart = partKey;
+  workspace.querySelectorAll(".ue-part-card[data-error-section][data-error-part]").forEach(card => {
+    const isActive = card.dataset.errorSection === section && card.dataset.errorPart === partKey;
+    card.hidden = !isActive;
+    card.classList.toggle("text-source", isActive);
+  });
+}
+
+function clearErrorLogPartFocus(workspace) {
+  if (!workspace?.classList.contains("ue-errors-workspace")) return;
+  workspace.querySelectorAll(".ue-part-card[data-error-section][data-error-part]").forEach(card => {
+    card.hidden = false;
+    card.classList.remove("text-source");
+  });
+  delete workspace.dataset.activeErrorSection;
+  delete workspace.dataset.activeErrorPart;
+}
+
 function showPartReferenceText(sessionId, section, partKey, panelId) {
   const item = STATE.history.find(historyItem => historyItem.id === sessionId);
   const panel = document.getElementById(panelId);
@@ -3122,6 +3138,7 @@ function showPartReferenceText(sessionId, section, partKey, panelId) {
   `;
   panel.hidden = false;
   const workspace = panel.closest(".ue-text-workspace");
+  focusErrorLogPartColumn(workspace, section, partKey);
   workspace?.classList.add("text-open");
   panel.closest(".history-review-modal")?.classList.add("text-open");
   const textContent = panel.querySelector(".ue-part-text-content");
@@ -3132,15 +3149,37 @@ function hidePartReferenceText(panelId) {
   const panel = document.getElementById(panelId);
   if (!panel) return;
   panel.hidden = true;
-  panel.closest(".ue-text-workspace")?.classList.remove("text-open");
+  const workspace = panel.closest(".ue-text-workspace");
+  clearErrorLogPartFocus(workspace);
+  workspace?.classList.remove("text-open");
   panel.closest(".history-review-modal")?.classList.remove("text-open");
+}
+
+function getTrackedPartErrors(section, partKey) {
+  return getTrackedErrorEntries().filter(error => error.section === section && error.partKey === partKey);
+}
+
+function renderTrackedPartErrorSearchResultsHTML(errors) {
+  if (errors.length === 0) {
+    return `<div class="empty-state ue-search-empty">No corrections match this search.</div>`;
+  }
+  return errors.map(error => renderTrackedErrorItemHTML(error, false, "ue-modal-part-text-panel")).join("");
+}
+
+function filterTrackedPartErrors(section, partKey, query) {
+  const errors = getTrackedPartErrors(section, partKey)
+    .filter(error => C2_STUDY_REVIEW.matchesTrackedErrorSearch(error, query));
+  const list = document.getElementById("ue-all-errors-list");
+  const count = document.getElementById("ue-error-search-count");
+  if (list) list.innerHTML = renderTrackedPartErrorSearchResultsHTML(errors);
+  if (count) count.textContent = `${errors.length} ${errors.length === 1 ? "result" : "results"}`;
 }
 
 function openTrackedPartErrorsModal(section, partKey) {
   const partData = C2_EXAM_METADATA[section]?.parts?.[partKey];
   if (!partData) return;
 
-  const errors = getTrackedErrorEntries().filter(error => error.section === section && error.partKey === partKey);
+  const errors = getTrackedPartErrors(section, partKey);
   const modal = document.createElement("div");
   modal.className = "modal-overlay";
   modal.innerHTML = `
@@ -3152,9 +3191,18 @@ function openTrackedPartErrorsModal(section, partKey) {
         </div>
         <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
       </div>
+      <div class="ue-error-search-row">
+        <label for="ue-error-search-input">
+          <span>Search corrections</span>
+          <input id="ue-error-search-input" type="search"
+                 placeholder="Question, answer or note..."
+                 oninput="filterTrackedPartErrors('${section}', '${partKey}', this.value)">
+        </label>
+        <small id="ue-error-search-count">${errors.length} ${errors.length === 1 ? "result" : "results"}</small>
+      </div>
       <div class="modal-body ue-text-workspace ue-all-errors-workspace">
-        <div class="ue-all-errors-list">
-          ${errors.map(error => renderTrackedErrorItemHTML(error, false, "ue-modal-part-text-panel")).join("")}
+        <div class="ue-all-errors-list" id="ue-all-errors-list">
+          ${renderTrackedPartErrorSearchResultsHTML(errors)}
         </div>
         <aside class="ue-part-text-panel" id="ue-modal-part-text-panel" hidden aria-live="polite"></aside>
       </div>
@@ -3189,7 +3237,7 @@ function renderErrorLogDashboardHTML() {
                 const partErrors = errors.filter(error => error.section === section && error.partKey === partKey);
                 const visibleErrors = partErrors.slice(0, VISIBLE_ERRORS_PER_LOG_COLUMN);
                 return `
-                  <article class="ue-part-card">
+                  <article class="ue-part-card" data-error-section="${section}" data-error-part="${partKey}">
                     <div class="ue-part-card-head">
                       <div>
                         <span>${sectionName} · ${getUseOfEnglishPartShortLabel(partKey)}</span>
@@ -4021,12 +4069,13 @@ function renderHistoryErrorNoteEditorHTML(item, q, partKey) {
   if (!isTrackedErrorPart(item.section, partKey)) return "";
 
   const note = getErrorNotes(item)[q] || "";
-  const correctAnswer = getCorrectAnswers(item)[q] || "";
+  const correctAnswer = C2_STUDY_REVIEW.normalizeCorrectAnswer(getCorrectAnswers(item)[q]);
 
   return `
     <div class="history-error-note-editor" id="history-error-note-editor-${q}">
       <label for="history-correct-answer-${q}">Correct answer</label>
       <input id="history-correct-answer-${q}" value="${escapeHTML(correctAnswer)}"
+             oninput="normalizeCorrectAnswerInput(this)"
              placeholder="Only the correct answer, without explanation">
       <label for="history-error-note-${q}">Notes and observations (optional)</label>
       <textarea id="history-error-note-${q}" rows="2"
@@ -4240,7 +4289,7 @@ async function saveHistoryReviewEdits(sessionId) {
       Object.entries(sectionParts).forEach(([partKey, partData]) => {
         if (!isTrackedErrorPart(item.section, partKey)) return;
         for (let q = partData.startQ; q <= partData.endQ; q++) {
-          const correctAnswer = document.getElementById(`history-correct-answer-${q}`)?.value.trim() || "";
+          const correctAnswer = C2_STUDY_REVIEW.normalizeCorrectAnswer(document.getElementById(`history-correct-answer-${q}`)?.value);
           const note = document.getElementById(`history-error-note-${q}`)?.value.trim() || "";
           if (correctAnswer) correctAnswers[q] = correctAnswer;
           if (note) errorNotes[q] = note;
@@ -4806,8 +4855,8 @@ function markPartialGrade(qNum, pts) {
 }
 
 function seedCorrectAnswerFromFullCredit(qNum, hasFullCredit) {
-  const submittedAnswer = String(STATE.answers[qNum] || "").trim();
-  const currentCorrectAnswer = String(STATE.correctAnswers[qNum] || "").trim();
+  const submittedAnswer = C2_STUDY_REVIEW.normalizeCorrectAnswer(STATE.answers[qNum]);
+  const currentCorrectAnswer = C2_STUDY_REVIEW.normalizeCorrectAnswer(STATE.correctAnswers[qNum]);
 
   if (hasFullCredit && !currentCorrectAnswer && submittedAnswer) {
     STATE.correctAnswers[qNum] = submittedAnswer;
@@ -4835,8 +4884,8 @@ function updateErrorNoteArea(qNum) {
     <div class="sheet-error-note-box">
       <label for="correct-answer-${qNum}">Correct answer</label>
       <input class="sheet-correct-answer-input" id="correct-answer-${qNum}"
-             value="${escapeHTML(STATE.correctAnswers[qNum] || "")}"
-             oninput="storeCorrectAnswer(${qNum}, this.value)"
+             value="${escapeHTML(C2_STUDY_REVIEW.normalizeCorrectAnswer(STATE.correctAnswers[qNum]))}"
+             oninput="storeCorrectAnswer(${qNum}, this)"
              placeholder="Only the correct answer, without explanation">
       <label for="error-note-${qNum}">Notes and observations (optional)</label>
       <textarea class="sheet-error-note-input" id="error-note-${qNum}" rows="2"
@@ -4846,9 +4895,19 @@ function updateErrorNoteArea(qNum) {
   `;
 }
 
-function storeCorrectAnswer(qNum, value) {
+function normalizeCorrectAnswerInput(input) {
+  if (!input) return "";
+  const uppercaseValue = String(input.value || "").toLocaleUpperCase("en-GB");
+  if (input.value !== uppercaseValue) input.value = uppercaseValue;
+  return C2_STUDY_REVIEW.normalizeCorrectAnswer(uppercaseValue);
+}
+
+function storeCorrectAnswer(qNum, valueOrInput) {
   const partEntry = getPartEntryForQuestion(STATE.activeSection, qNum);
   if (!partEntry || !isTrackedErrorPart(STATE.activeSection, partEntry[0])) return;
+  const value = typeof valueOrInput === "object" && valueOrInput
+    ? normalizeCorrectAnswerInput(valueOrInput)
+    : C2_STUDY_REVIEW.normalizeCorrectAnswer(valueOrInput);
   STATE.correctAnswers[qNum] = value;
 }
 
@@ -4961,7 +5020,7 @@ async function saveGradedSheetResult() {
   const correctAnswers = Object.fromEntries(
     Object.entries(STATE.correctAnswers)
       .filter(([q]) => gradedQuestionSet.has(Number(q)))
-      .map(([q, answer]) => [q, typeof answer === "string" ? answer.trim() : ""])
+      .map(([q, answer]) => [q, C2_STUDY_REVIEW.normalizeCorrectAnswer(answer)])
       .filter(([, answer]) => answer.length > 0)
   );
 
