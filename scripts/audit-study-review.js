@@ -5,7 +5,9 @@ const {
   migrateHistoryStudyData,
   extractStudyReviewPrompt,
   getStudyReviewPrompt,
-  shouldIncludeInErrorLog
+  shouldIncludeInErrorLog,
+  normalizeCorrectAnswer,
+  matchesTrackedErrorSearch
 } = require("../study-review-data.js");
 
 const metadata = {
@@ -130,6 +132,20 @@ assert.equal(shouldIncludeInErrorLog("correct", 1, "Useful note"), true);
 assert.equal(shouldIncludeInErrorLog("correct", 1, ""), false);
 assert.equal(shouldIncludeInErrorLog(1, 2, ""), true);
 assert.equal(shouldIncludeInErrorLog(2, 2, ""), false);
+assert.equal(normalizeCorrectAnswer("  had I known  "), "HAD I KNOWN");
+assert.equal(matchesTrackedErrorSearch({ question: 25, answer: "if I knew", correctAnswer: "HAD I KNOWN", note: "Inversion" }, "q.25"), true);
+assert.equal(matchesTrackedErrorSearch({ question: 25, answer: "if I knew", correctAnswer: "HAD I KNOWN", note: "Inversión" }, "inversion"), true);
+assert.equal(matchesTrackedErrorSearch({ question: 25, answer: "if I knew", correctAnswer: "HAD I KNOWN", note: "Inversion" }, "resides"), false);
+
+const lowercaseHistory = [{
+  id: "lowercase-correction",
+  section: "useOfEnglish",
+  answers: { 9: "to", meta: { correctAnswers: { 9: "to" }, useOfEnglishPartTexts: { part2: "Full text" } } },
+  gradedStates: { 9: "correct" }
+}];
+const normalizedHistory = migrateHistoryStudyData(lowercaseHistory, metadata);
+assert.equal(normalizedHistory.history[0].answers.meta.correctAnswers[9], "TO");
+assert.equal(normalizedHistory.changed, true);
 
 console.log(
   `Study review audit passed: ${migrated.audit.migratedAnswers} legacy answers split, ` +
