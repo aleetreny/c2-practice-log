@@ -793,7 +793,7 @@ function getTrackedErrorColumns() {
   ];
 }
 
-function getTrackedErrorEntries() {
+function getTrackedErrorEntries({ includeCorrectWithoutNotes = false } = {}) {
   const entries = [];
 
   STATE.history
@@ -813,7 +813,12 @@ function getTrackedErrorEntries() {
           const note = typeof notes[q] === "string" ? notes[q].trim() : "";
           const correctAnswer = typeof correctAnswers[q] === "string" ? correctAnswers[q].trim() : "";
           const isMissed = isObjectiveError(partData, gradeState);
-          if (!C2_STUDY_REVIEW.shouldIncludeInErrorLog(gradeState, partData.weight, note)) continue;
+          if (!C2_STUDY_REVIEW.shouldIncludeInErrorLog(
+            gradeState,
+            partData.weight,
+            note,
+            includeCorrectWithoutNotes
+          )) continue;
 
           entries.push({
             attemptId: item.id,
@@ -3155,8 +3160,10 @@ function hidePartReferenceText(panelId) {
   panel.closest(".history-review-modal")?.classList.remove("text-open");
 }
 
-function getTrackedPartErrors(section, partKey) {
-  return getTrackedErrorEntries().filter(error => error.section === section && error.partKey === partKey);
+function getTrackedPartErrors(section, partKey, scope = "corrections") {
+  const includeCorrectWithoutNotes = scope === "all";
+  return getTrackedErrorEntries({ includeCorrectWithoutNotes })
+    .filter(error => error.section === section && error.partKey === partKey);
 }
 
 function renderTrackedPartErrorSearchResultsHTML(errors) {
@@ -3166,8 +3173,10 @@ function renderTrackedPartErrorSearchResultsHTML(errors) {
   return errors.map(error => renderTrackedErrorItemHTML(error, false, "ue-modal-part-text-panel")).join("");
 }
 
-function filterTrackedPartErrors(section, partKey, query) {
-  const errors = getTrackedPartErrors(section, partKey)
+function filterTrackedPartErrors(section, partKey) {
+  const query = document.getElementById("ue-error-search-input")?.value || "";
+  const scope = document.getElementById("ue-error-scope-select")?.value || "corrections";
+  const errors = getTrackedPartErrors(section, partKey, scope)
     .filter(error => C2_STUDY_REVIEW.matchesTrackedErrorSearch(error, query));
   const list = document.getElementById("ue-all-errors-list");
   const count = document.getElementById("ue-error-search-count");
@@ -3192,11 +3201,18 @@ function openTrackedPartErrorsModal(section, partKey) {
         <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
       </div>
       <div class="ue-error-search-row">
-        <label for="ue-error-search-input">
+        <label class="ue-error-search-control" for="ue-error-search-input">
           <span>Search corrections</span>
           <input id="ue-error-search-input" type="search"
                  placeholder="Question, answer or note..."
-                 oninput="filterTrackedPartErrors('${section}', '${partKey}', this.value)">
+                 oninput="filterTrackedPartErrors('${section}', '${partKey}')">
+        </label>
+        <label class="ue-error-scope-control" for="ue-error-scope-select">
+          <span>Show</span>
+          <select id="ue-error-scope-select" onchange="filterTrackedPartErrors('${section}', '${partKey}')">
+            <option value="corrections">Mistakes + correct with notes</option>
+            <option value="all">All graded answers</option>
+          </select>
         </label>
         <small id="ue-error-search-count">${errors.length} ${errors.length === 1 ? "result" : "results"}</small>
       </div>
@@ -3284,16 +3300,23 @@ function getAccuracyTone(value) {
   return "neutral";
 }
 
-function renderHistoryListV2HTML(limit = 4) {
-  if (STATE.history.length === 0) {
+function getSavedWorkItems(sectionFilter = "all") {
+  const validSections = new Set(["useOfEnglish", "reading", "listening", "writing"]);
+  if (!validSections.has(sectionFilter)) return STATE.history;
+  return STATE.history.filter(item => item.section === sectionFilter);
+}
+
+function renderHistoryListV2HTML(limit = 4, sectionFilter = "all") {
+  const filteredHistory = getSavedWorkItems(sectionFilter);
+  if (filteredHistory.length === 0) {
     return `
       <div class="empty-state" style="display:flex; flex-direction:column; align-items:center; gap:12px; padding:2rem 1rem; text-align:center;">
-        <span>Save a mock to start tracking progress.</span>
+        <span>${STATE.history.length === 0 ? "Save a mock to start tracking progress." : "No saved work for this section yet."}</span>
       </div>
     `;
   }
 
-  const itemsToShow = limit ? STATE.history.slice(-limit) : STATE.history;
+  const itemsToShow = limit ? filteredHistory.slice(-limit) : filteredHistory;
 
   return `
     <div class="attempt-list">
@@ -4076,6 +4099,7 @@ function renderHistoryErrorNoteEditorHTML(item, q, partKey) {
       <label for="history-correct-answer-${q}">Correct answer</label>
       <input id="history-correct-answer-${q}" value="${escapeHTML(correctAnswer)}"
              oninput="normalizeCorrectAnswerInput(this)"
+             autocapitalize="characters" spellcheck="false"
              placeholder="Only the correct answer, without explanation">
       <label for="history-error-note-${q}">Notes and observations (optional)</label>
       <textarea id="history-error-note-${q}" rows="2"
@@ -4886,6 +4910,7 @@ function updateErrorNoteArea(qNum) {
       <input class="sheet-correct-answer-input" id="correct-answer-${qNum}"
              value="${escapeHTML(C2_STUDY_REVIEW.normalizeCorrectAnswer(STATE.correctAnswers[qNum]))}"
              oninput="storeCorrectAnswer(${qNum}, this)"
+             autocapitalize="characters" spellcheck="false"
              placeholder="Only the correct answer, without explanation">
       <label for="error-note-${qNum}">Notes and observations (optional)</label>
       <textarea class="sheet-error-note-input" id="error-note-${qNum}" rows="2"
@@ -5931,23 +5956,45 @@ function refreshCurrentView() {
 }
 
 function openAllAttemptsModal() {
+  const savedWorkCount = getSavedWorkItems().length;
   const modal = document.createElement("div");
   modal.className = "modal-overlay";
   modal.innerHTML = `
-    <div class="modal-content" style="max-width: 600px; max-height: 85vh; display: flex; flex-direction: column;">
+    <div class="modal-content all-attempts-modal">
       <div class="modal-header" style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid var(--border-color);">
         <h3 class="modal-title">All Saved Work</h3>
         <button class="modal-close" onclick="closeModal()" aria-label="Close" style="background: transparent; border: 0; font-size: 1.5rem; cursor: pointer; color: var(--text-muted);">&times;</button>
       </div>
-      <div class="modal-body" style="flex: 1; overflow-y: auto; padding: 16px 0; min-height: 0;">
-        ${renderHistoryListV2HTML(null)}
+      <div class="all-attempts-filter-row">
+        <label for="all-attempts-section-filter">
+          <span>Section</span>
+          <select id="all-attempts-section-filter" onchange="filterAllAttemptsModal(this.value)">
+            <option value="all">All sections</option>
+            <option value="useOfEnglish">Use of English</option>
+            <option value="reading">Reading</option>
+            <option value="listening">Listening</option>
+            <option value="writing">Writing</option>
+          </select>
+        </label>
+        <small id="all-attempts-count">${savedWorkCount} ${savedWorkCount === 1 ? "item" : "items"}</small>
       </div>
-      <div style="padding-top: 12px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end;">
+      <div class="modal-body all-attempts-list" id="all-attempts-list">
+        ${renderHistoryListV2HTML(null, "all")}
+      </div>
+      <div class="all-attempts-actions">
         <button class="btn btn-primary" onclick="closeModal()">Close</button>
       </div>
     </div>
   `;
   mountModal(modal);
+}
+
+function filterAllAttemptsModal(sectionFilter) {
+  const items = getSavedWorkItems(sectionFilter);
+  const list = document.getElementById("all-attempts-list");
+  const count = document.getElementById("all-attempts-count");
+  if (list) list.innerHTML = renderHistoryListV2HTML(null, sectionFilter);
+  if (count) count.textContent = `${items.length} ${items.length === 1 ? "item" : "items"}`;
 }
 
 function getSectionIconSVG(section) {
