@@ -23,8 +23,10 @@
     return gradeState === "incorrect" || (typeof gradeState === "number" && gradeState < maxPoints);
   }
 
-  function shouldIncludeInErrorLog(gradeState, maxPoints, note) {
-    return isMissedAnswer(gradeState, maxPoints) || Boolean(String(note || "").trim());
+  function shouldIncludeInErrorLog(gradeState, maxPoints, note, includeCorrectWithoutNotes = false) {
+    return isMissedAnswer(gradeState, maxPoints)
+      || Boolean(String(note || "").trim())
+      || (includeCorrectWithoutNotes && isFullCredit(gradeState, maxPoints));
   }
 
   function normalizeCorrectAnswer(value) {
