@@ -43,11 +43,11 @@ situations.forEach(item => {
 });
 
 const languageGroups = data.WRITING_LANGUAGE_GROUPS;
-expect(languageGroups.length === 9, "Language bank must contain nine focused groups.");
+expect(languageGroups.length === 8, "Language bank must contain eight focused groups.");
 const languageEntries = languageGroups.flatMap(group => group.items || []);
-expect(languageEntries.length === 42, "Language bank must contain 42 entries.");
+expect(languageEntries.length === 38, "Language bank must contain 38 entries.");
 expect(new Set(languageGroups.map(group => group.id)).size === languageGroups.length, "Language group ids must be unique.");
-["text-positions", "safe-pairs", "high-impact-clauses"].forEach(id => {
+["text-positions", "high-impact-clauses"].forEach(id => {
   const group = languageGroups.find(item => item.id === id);
   expect(group && group.items.length === 4, `${id} must contain four memorable entries.`);
 });
