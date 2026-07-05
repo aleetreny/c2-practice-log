@@ -7439,6 +7439,55 @@ kbd {
   line-height: 1.45;
 }
 
+.writing-letter-template-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 20px 0 12px;
+  padding-top: 16px;
+  border-top: 1px solid #cfe2de;
+}
+
+.writing-letter-template-heading h3 {
+  margin-top: 3px;
+  font-size: 0.9rem;
+}
+
+.writing-letter-template-heading p {
+  max-width: 430px;
+  color: var(--text-muted);
+  font-size: 0.66rem;
+  line-height: 1.45;
+  text-align: right;
+}
+
+.writing-letter-template-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.writing-letter-template-card {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid #dce9e7;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.writing-letter-template-card > span {
+  color: var(--accent-color);
+  font-size: 0.7rem;
+  font-weight: 850;
+}
+
+.writing-letter-template-card .writing-phrase {
+  min-height: 100%;
+}
+
 .writing-letter-addressee-heading {
   display: flex;
   align-items: end;
@@ -7815,6 +7864,7 @@ kbd {
   }
 
   .writing-letter-guide-heading,
+  .writing-letter-template-heading,
   .writing-letter-addressee-heading,
   .writing-letter-guide-reader {
     align-items: flex-start;
@@ -7823,6 +7873,7 @@ kbd {
   }
 
   .writing-letter-guide-heading p,
+  .writing-letter-template-heading p,
   .writing-letter-addressee-heading p,
   .writing-letter-guide-reader span {
     max-width: none;
@@ -7830,6 +7881,10 @@ kbd {
   }
 
   .writing-letter-guide-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .writing-letter-template-grid {
     grid-template-columns: 1fr;
   }
 
