@@ -7,6 +7,7 @@ const {
   getStudyReviewPrompt,
   shouldIncludeInErrorLog,
   normalizeCorrectAnswer,
+  getUppercaseInputState,
   matchesTrackedErrorSearch
 } = require("../study-review-data.js");
 
@@ -135,6 +136,16 @@ assert.equal(shouldIncludeInErrorLog(1, 2, ""), true);
 assert.equal(shouldIncludeInErrorLog(2, 2, ""), false);
 assert.equal(shouldIncludeInErrorLog(2, 2, "", true), true);
 assert.equal(normalizeCorrectAnswer("  had I known  "), "HAD I KNOWN");
+assert.deepEqual(getUppercaseInputState("HAD i KNOWN", 5, 5), {
+  value: "HAD I KNOWN",
+  selectionStart: 5,
+  selectionEnd: 5
+});
+assert.deepEqual(getUppercaseInputState("A stra\u00dfe", 7, 7), {
+  value: "A STRASSE",
+  selectionStart: 8,
+  selectionEnd: 8
+});
 assert.equal(matchesTrackedErrorSearch({ question: 25, answer: "if I knew", correctAnswer: "HAD I KNOWN", note: "Inversion" }, "q.25"), true);
 assert.equal(matchesTrackedErrorSearch({ question: 25, answer: "if I knew", correctAnswer: "HAD I KNOWN", note: "Inversión" }, "inversion"), true);
 assert.equal(matchesTrackedErrorSearch({ question: 25, answer: "if I knew", correctAnswer: "HAD I KNOWN", note: "Inversion" }, "resides"), false);
