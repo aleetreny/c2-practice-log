@@ -27,6 +27,8 @@ assert.match(appSource, /function focusErrorLogPartColumn\(/, "Opening a part te
 assert.match(appSource, /function clearErrorLogPartFocus\(/, "Closing a part text must restore all columns.");
 assert.match(appSource, /data-error-section=/);
 assert.match(appSource, /normalizeCorrectAnswerInput\(this\)/, "Correction editors must uppercase answers while typing.");
+assert.match(appSource, /input\.setSelectionRange\(/, "Uppercase conversion must restore the correction cursor position.");
+assert.match(appSource, /getUppercaseInputState\(/, "Cursor restoration must account for uppercase length changes.");
 assert.equal((appSource.match(/autocapitalize="characters" spellcheck="false"/g) || []).length, 2, "Both correction inputs must request uppercase keyboard input.");
 assert.match(appSource, /normalizeCorrectAnswer\(STATE\.answers\[qNum\]\)/, "Auto-seeded correct answers must be canonical uppercase.");
 assert.match(appSource, /function filterAllAttemptsModal\(/, "All saved work must support filtering by section.");

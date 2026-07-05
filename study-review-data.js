@@ -33,6 +33,23 @@
     return String(value || "").trim().toLocaleUpperCase("en-GB");
   }
 
+  function getUppercaseInputState(value, selectionStart, selectionEnd) {
+    const source = String(value || "");
+    const sourceLength = source.length;
+    const start = Number.isInteger(selectionStart)
+      ? Math.max(0, Math.min(selectionStart, sourceLength))
+      : sourceLength;
+    const end = Number.isInteger(selectionEnd)
+      ? Math.max(start, Math.min(selectionEnd, sourceLength))
+      : start;
+
+    return {
+      value: source.toLocaleUpperCase("en-GB"),
+      selectionStart: source.slice(0, start).toLocaleUpperCase("en-GB").length,
+      selectionEnd: source.slice(0, end).toLocaleUpperCase("en-GB").length
+    };
+  }
+
   function normalizeStudySearch(value) {
     return String(value || "")
       .normalize("NFD")
@@ -280,6 +297,7 @@
     isMissedAnswer,
     shouldIncludeInErrorLog,
     normalizeCorrectAnswer,
+    getUppercaseInputState,
     normalizeStudySearch,
     matchesTrackedErrorSearch,
     parseLegacyCorrectAnswerLine,
