@@ -4922,9 +4922,21 @@ function updateErrorNoteArea(qNum) {
 
 function normalizeCorrectAnswerInput(input) {
   if (!input) return "";
-  const uppercaseValue = String(input.value || "").toLocaleUpperCase("en-GB");
-  if (input.value !== uppercaseValue) input.value = uppercaseValue;
-  return C2_STUDY_REVIEW.normalizeCorrectAnswer(uppercaseValue);
+  const selectionDirection = input.selectionDirection;
+  const uppercaseState = C2_STUDY_REVIEW.getUppercaseInputState(
+    input.value,
+    input.selectionStart,
+    input.selectionEnd
+  );
+  if (input.value !== uppercaseState.value) {
+    input.value = uppercaseState.value;
+    input.setSelectionRange(
+      uppercaseState.selectionStart,
+      uppercaseState.selectionEnd,
+      selectionDirection || "none"
+    );
+  }
+  return C2_STUDY_REVIEW.normalizeCorrectAnswer(uppercaseState.value);
 }
 
 function storeCorrectAnswer(qNum, valueOrInput) {
