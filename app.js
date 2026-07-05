@@ -2866,6 +2866,20 @@ function renderWritingFormatsHTML() {
                 </article>
               `).join("")}
             </div>
+            ${letterGuide.openingTemplates ? `
+              <div class="writing-letter-template-heading">
+                <div><span class="eyebrow">First paragraph</span><h3>Choose the purpose, then adapt one template</h3></div>
+                <p>Learn the structure rather than every word. One opening is enough for each task.</p>
+              </div>
+              <div class="writing-letter-template-grid">
+                ${letterGuide.openingTemplates.map(([purpose, paragraph]) => `
+                  <article class="writing-letter-template-card">
+                    <span>${escapeHTML(purpose)}</span>
+                    ${renderWritingPhraseButtonHTML(paragraph)}
+                  </article>
+                `).join("")}
+              </div>
+            ` : ""}
             ${letterGuide.addressees ? `
               <div class="writing-letter-addressee-heading">
                 <div><span class="eyebrow">Organisation reference</span><h3>Who should you address?</h3></div>
