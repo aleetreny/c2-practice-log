@@ -344,17 +344,6 @@ const WRITING_LANGUAGE_GROUPS = [
     ]
   },
   {
-    id: "safe-pairs",
-    title: "Safe, reusable collocations",
-    note: "Four dependable combinations are more useful than a long list of ambitious adjectives.",
-    items: [
-      ["legitimate concern", "raise a legitimate concern about", "The first author raises a legitimate concern about the financial insecurity of musicians."],
-      ["meaningful contribution", "make a meaningful contribution to", "Music can make a meaningful contribution to young people's social development."],
-      ["practical value", "have considerable practical value", "The second proposal has considerable practical value in a school setting."],
-      ["broader significance", "be of broader significance to", "The argument is of broader significance to anyone concerned with cultural education."]
-    ]
-  },
-  {
     id: "high-impact-clauses",
     title: "Impressive clauses you can control",
     note: "Memorise the frame, then insert a simple idea. One accurate complex clause is enough.",
