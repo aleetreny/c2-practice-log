@@ -43,9 +43,14 @@ situations.forEach(item => {
 });
 
 const languageGroups = data.WRITING_LANGUAGE_GROUPS;
-expect(languageGroups.length === 6, "Language bank must contain six groups.");
+expect(languageGroups.length === 9, "Language bank must contain nine focused groups.");
 const languageEntries = languageGroups.flatMap(group => group.items || []);
-expect(languageEntries.length === 30, "Language bank must contain 30 entries.");
+expect(languageEntries.length === 42, "Language bank must contain 42 entries.");
+expect(new Set(languageGroups.map(group => group.id)).size === languageGroups.length, "Language group ids must be unique.");
+["text-positions", "safe-pairs", "high-impact-clauses"].forEach(id => {
+  const group = languageGroups.find(item => item.id === id);
+  expect(group && group.items.length === 4, `${id} must contain four memorable entries.`);
+});
 languageEntries.forEach((entry, index) => {
   expect(Array.isArray(entry) && present(entry[0]), `Language entry ${index + 1} is missing a term.`);
   expect(Array.isArray(entry) && present(entry[1]), `Language entry ${index + 1} is missing a pattern.`);
@@ -74,6 +79,10 @@ Object.entries(data.WRITING_GENRES).forEach(([key, genre]) => {
       expect(present(item.tip), `${key} letter situation ${index + 1} needs usage guidance.`);
     });
     if (key === "formalLetter") {
+      expect(Array.isArray(genre.letterGuide?.openingTemplates) && genre.letterGuide.openingTemplates.length === 4, "formalLetter needs four first-paragraph templates.");
+      (genre.letterGuide?.openingTemplates || []).forEach((item, index) => {
+        expect(Array.isArray(item) && present(item[0]) && present(item[1]), `formalLetter opening template ${index + 1} is incomplete.`);
+      });
       expect(Array.isArray(genre.letterGuide?.addressees) && genre.letterGuide.addressees.length >= 8, "formalLetter needs a broad organisation addressee reference.");
       (genre.letterGuide?.addressees || []).forEach((item, index) => {
         expect(present(item.organisation) && present(item.role), `formalLetter addressee ${index + 1} needs its organisation and role.`);

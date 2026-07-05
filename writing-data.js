@@ -331,6 +331,39 @@ const WRITING_LANGUAGE_GROUPS = [
       ["viability", "long-term/economic viability", "The first text says little about the plan's long-term viability."],
       ["justification", "compelling/sound justification", "Convenience alone is not a sound justification for the change."]
     ]
+  },
+  {
+    id: "text-positions",
+    title: "Refer to the texts with variety",
+    note: "Prefer these to repeating view, opinion or perspective - and avoid I resonate with or I see both points.",
+    items: [
+      ["central claim", "advance the central claim that", "The first text advances the central claim that music deserves greater public support."],
+      ["line of reasoning", "this line of reasoning + verb", "This line of reasoning carries weight because it recognises the pressures faced by creators."],
+      ["stance", "adopt a stance on", "The second author adopts a more optimistic stance on the role of music in education."],
+      ["account", "offer a ... account of", "The first text offers a compelling account of the difficulties facing professional musicians."]
+    ]
+  },
+  {
+    id: "safe-pairs",
+    title: "Safe, reusable collocations",
+    note: "Four dependable combinations are more useful than a long list of ambitious adjectives.",
+    items: [
+      ["legitimate concern", "raise a legitimate concern about", "The first author raises a legitimate concern about the financial insecurity of musicians."],
+      ["meaningful contribution", "make a meaningful contribution to", "Music can make a meaningful contribution to young people's social development."],
+      ["practical value", "have considerable practical value", "The second proposal has considerable practical value in a school setting."],
+      ["broader significance", "be of broader significance to", "The argument is of broader significance to anyone concerned with cultural education."]
+    ]
+  },
+  {
+    id: "high-impact-clauses",
+    title: "Impressive clauses you can control",
+    note: "Memorise the frame, then insert a simple idea. One accurate complex clause is enough.",
+    items: [
+      ["What makes...", "What makes + noun + adjective + is that", "What makes this argument persuasive is that it links creativity to social development."],
+      ["Much as...", "Much as + subject + verb, main clause", "Much as the first text is right to defend musicians, it says little about how support should be funded."],
+      ["Not only...", "Not only + auxiliary + subject + verb, but...", "Not only does music foster creativity, but it also gives young people a sense of belonging."],
+      ["Were... to...", "Were + subject + to + verb, would...", "Were schools to reduce music provision, they would lose an important means of building confidence."]
+    ]
   }
 ];
 
@@ -471,6 +504,24 @@ const WRITING_GENRES = {
           closing: "Yours faithfully, / Kind regards,",
           tip: "Yours faithfully is safest when no individual is named; Kind regards suits an established professional relationship."
         }
+      ],
+      openingTemplates: [
+        [
+          "Respond or comment",
+          "I am writing in response to [article / proposal / announcement] concerning [topic]. Having considered the points raised, I would like to [give my views / suggest a course of action], particularly in relation to [task point]."
+        ],
+        [
+          "Raise a concern or complain",
+          "I am writing to express my concern regarding [problem]. Although I appreciate [positive point / practical constraint], the current situation has caused [effect] and requires further attention."
+        ],
+        [
+          "Enquire or apply",
+          "I am writing in connection with [course / event / opportunity] advertised [where]. I am particularly interested in [aspect] and would be grateful for further information regarding [task points]."
+        ],
+        [
+          "Suggest or request",
+          "I am writing in connection with [initiative / event] to suggest [proposal]. While the scheme is clearly worthwhile, I believe it could be made more [effective / accessible] by [brief direction]."
+        ]
       ],
       addressees: [
         {
