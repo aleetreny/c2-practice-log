@@ -4733,15 +4733,15 @@ input.sheet-text-input:disabled,
   }
 
   .ue-all-errors-workspace {
-    overflow-y: auto;
+    overflow: hidden;
   }
 
   .ue-all-errors-workspace.text-open .ue-all-errors-list {
-    max-height: 42vh;
+    display: none;
   }
 
   .ue-all-errors-workspace .ue-part-text-panel {
-    height: min(52vh, 600px);
+    height: 100%;
   }
 
   .history-review-modal.text-open > .modal-body {
