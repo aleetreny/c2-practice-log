@@ -1467,6 +1467,10 @@ button {
   padding: 14px 16px;
 }
 
+.modal-content.ue-all-errors-modal > .ue-all-errors-workspace {
+  overflow: hidden;
+}
+
 .ue-all-errors-modal .modal-header {
   margin-bottom: 10px;
   padding-bottom: 10px;
