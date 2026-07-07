@@ -44,6 +44,7 @@ assert.match(stylesSource, /\.ue-errors-workspace\.text-open \.ue-part-register-
 assert.match(stylesSource, /\.ue-error-search-row\s*\{/);
 assert.match(stylesSource, /\.all-attempts-filter-row\s*\{/);
 assert.match(stylesSource, /\.ue-all-errors-workspace\.text-open\s*\{[^}]*minmax\(500px, 0\.95fr\)/s, "Correction text should receive a wider column.");
+assert.match(stylesSource, /\.modal-content\.ue-all-errors-modal > \.ue-all-errors-workspace\s*\{\s*overflow:\s*hidden;/, "The corrections modal body must not create a second scrollbar.");
 assert.match(stylesSource, /@media \(max-width: 1040px\)[^]*?\.ue-all-errors-workspace\s*\{\s*overflow:\s*hidden;/, "Responsive corrections must not add an outer scrollbar.");
 assert.match(stylesSource, /\.ue-all-errors-workspace\.text-open \.ue-all-errors-list\s*\{\s*display:\s*none;/, "Responsive text view must hide the list instead of stacking two scroll regions.");
 assert.match(stylesSource, /text-transform:\s*uppercase;/);
