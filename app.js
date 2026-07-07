@@ -3139,14 +3139,19 @@ function showPartReferenceText(sessionId, section, partKey, panelId) {
   if (!item || item.section !== section || !panel || !partData) return;
 
   const text = getPartReferenceTexts(item)[partKey]?.trim() || "";
+  const isCorrectionsModal = panelId === "ue-modal-part-text-panel";
   panel.innerHTML = `
-    <div class="ue-part-text-panel-head">
-      <div>
-        <span>${getUseOfEnglishPartShortLabel(partKey)}</span>
-        <strong>${partData.name.replace(/^Part \d+ - /, "")}</strong>
+    ${isCorrectionsModal ? `
+      <button class="ue-part-text-floating-close" type="button" onclick="hidePartReferenceText('${panelId}')" aria-label="Close part text">&times;</button>
+    ` : `
+      <div class="ue-part-text-panel-head">
+        <div>
+          <span>${getUseOfEnglishPartShortLabel(partKey)}</span>
+          <strong>${partData.name.replace(/^Part \d+ - /, "")}</strong>
+        </div>
+        <button type="button" onclick="hidePartReferenceText('${panelId}')" aria-label="Close part text">&times;</button>
       </div>
-      <button type="button" onclick="hidePartReferenceText('${panelId}')" aria-label="Close part text">&times;</button>
-    </div>
+    `}
     <div class="ue-part-text-panel-meta">Saved with the attempt from ${formatCompactDateTime(item.date)}</div>
     ${text
       ? `<div class="ue-part-text-content" tabindex="0" aria-label="Full text for ${getUseOfEnglishPartShortLabel(partKey)}">${escapeHTML(text)}</div>`
