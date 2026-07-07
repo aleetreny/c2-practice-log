@@ -1406,6 +1406,25 @@ button {
   color: var(--text-main);
 }
 
+.ue-part-text-floating-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1.3rem;
+}
+
+.ue-part-text-floating-close:hover {
+  background: #e8f3f0;
+  color: var(--text-main);
+}
+
 .ue-part-text-panel-meta {
   margin-top: 10px;
   color: var(--text-muted);
@@ -1590,6 +1609,10 @@ button {
   overflow: hidden;
 }
 
+.ue-all-errors-workspace.text-open {
+  grid-template-columns: minmax(0, 1.1fr) minmax(500px, 0.95fr);
+}
+
 .ue-all-errors-list {
   min-width: 0;
   min-height: 0;
@@ -1601,7 +1624,7 @@ button {
 }
 
 .ue-all-errors-workspace .ue-part-text-panel {
-  position: static;
+  position: relative;
   height: 100%;
   padding: 12px;
 }
@@ -1614,6 +1637,14 @@ button {
 .ue-all-errors-modal .ue-part-text-panel-meta,
 .history-review-modal.text-open .ue-part-text-panel-meta {
   margin-top: 7px;
+}
+
+.ue-all-errors-modal .ue-part-text-panel-meta {
+  min-height: 28px;
+  margin-top: 0;
+  padding-right: 34px;
+  display: flex;
+  align-items: center;
 }
 
 .ue-all-errors-modal .ue-part-text-content,
@@ -4694,6 +4725,10 @@ input.sheet-text-input:disabled,
 
   .ue-text-workspace.text-open,
   .history-review-workspace.text-open {
+    grid-template-columns: 1fr;
+  }
+
+  .ue-all-errors-workspace.text-open {
     grid-template-columns: 1fr;
   }
 
