@@ -25,6 +25,8 @@ assert.match(appSource, /id="ue-error-scope-select"/, "Correction modals must of
 assert.match(appSource, /getTrackedErrorEntries\(\{ includeCorrectWithoutNotes \}\)/, "The all-results scope must be requested explicitly.");
 assert.match(appSource, /function focusErrorLogPartColumn\(/, "Opening a part text must focus its source column.");
 assert.match(appSource, /function clearErrorLogPartFocus\(/, "Closing a part text must restore all columns.");
+assert.match(appSource, /panelId === "ue-modal-part-text-panel"/, "The correction modal must use its compact text header.");
+assert.match(appSource, /class="ue-part-text-floating-close"/, "The compact text panel must retain a close control.");
 assert.match(appSource, /data-error-section=/);
 assert.match(appSource, /normalizeCorrectAnswerInput\(this\)/, "Correction editors must uppercase answers while typing.");
 assert.match(appSource, /input\.setSelectionRange\(/, "Uppercase conversion must restore the correction cursor position.");
@@ -41,6 +43,7 @@ assert.match(stylesSource, /\.candidate-status\s*\{/);
 assert.match(stylesSource, /\.ue-errors-workspace\.text-open \.ue-part-register-grid\s*\{/);
 assert.match(stylesSource, /\.ue-error-search-row\s*\{/);
 assert.match(stylesSource, /\.all-attempts-filter-row\s*\{/);
+assert.match(stylesSource, /\.ue-all-errors-workspace\.text-open\s*\{[^}]*minmax\(500px, 0\.95fr\)/s, "Correction text should receive a wider column.");
 assert.match(stylesSource, /text-transform:\s*uppercase;/);
 
 console.log("Error Log UI audit passed: scoped filters, saved-work sections, uppercase corrections and column focus verified.");
