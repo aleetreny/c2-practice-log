@@ -1189,7 +1189,11 @@ function renderMainNavigation(activeView) {
           <button class="nav-pill ${activeView === item.key ? "active" : ""}" onclick="${item.action}">${item.label}</button>
         `).join("")}
       </div>
-      <button class="candidate-switch" onclick="openProfileModal()" title="Account and sync">
+      <button type="button" class="candidate-switch" onclick="openProfileModal()" aria-label="${STATE.isAuthenticated ? `Account and sync, ${getSyncLabel()}` : "Sign in to sync your progress"}" title="${STATE.isAuthenticated ? "Account and sync" : "Sign in to sync"}">
+        <svg class="candidate-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <circle cx="12" cy="8" r="3.25"></circle>
+          <path d="M5.75 19c.55-3.25 2.62-5 6.25-5s5.7 1.75 6.25 5"></path>
+        </svg>
         <span class="candidate-name">${escapeHTML(STATE.activeProfile)}</span>
         <span class="candidate-status"><i aria-hidden="true"></i>${getSyncLabel()}</span>
       </button>
