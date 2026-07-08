@@ -606,6 +606,17 @@ button {
   box-shadow: var(--shadow-line);
 }
 
+.candidate-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .candidate-name {
   max-width: 125px;
   overflow: hidden;
@@ -5949,6 +5960,16 @@ kbd {
   }
 
   .candidate-switch {
+    display: inline-flex;
+    justify-content: center;
+    width: 40px;
+    max-width: 40px;
+    flex: 0 0 40px;
+    padding: 0;
+  }
+
+  .candidate-switch .candidate-name,
+  .candidate-switch .candidate-status {
     display: none;
   }
 
@@ -6002,7 +6023,8 @@ kbd {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr) minmax(0, 1.25fr) minmax(0, 0.85fr);
     gap: 2px;
-    width: 100%;
+    width: auto;
+    flex: 1 1 0;
     overflow: visible;
     padding: 3px;
   }
