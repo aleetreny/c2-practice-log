@@ -8,7 +8,10 @@ const {
   shouldIncludeInErrorLog,
   normalizeCorrectAnswer,
   getUppercaseInputState,
-  matchesTrackedErrorSearch
+  matchesTrackedErrorSearch,
+  getStudyReviewRatingWeight,
+  getStudyReviewCandidateWeight,
+  selectWeightedStudyReviewItems
 } = require("../study-review-data.js");
 
 const metadata = {
@@ -149,6 +152,35 @@ assert.deepEqual(getUppercaseInputState("A stra\u00dfe", 7, 7), {
 assert.equal(matchesTrackedErrorSearch({ question: 25, answer: "if I knew", correctAnswer: "HAD I KNOWN", note: "Inversion" }, "q.25"), true);
 assert.equal(matchesTrackedErrorSearch({ question: 25, answer: "if I knew", correctAnswer: "HAD I KNOWN", note: "Inversión" }, "inversion"), true);
 assert.equal(matchesTrackedErrorSearch({ question: 25, answer: "if I knew", correctAnswer: "HAD I KNOWN", note: "Inversion" }, "resides"), false);
+
+assert.equal(getStudyReviewRatingWeight(""), getStudyReviewRatingWeight("unsure"));
+assert.ok(getStudyReviewRatingWeight("again") > getStudyReviewRatingWeight("unsure"));
+assert.ok(getStudyReviewRatingWeight("known") > 0);
+assert.ok(getStudyReviewRatingWeight("known") < getStudyReviewRatingWeight("unsure"));
+const reviewStats = {
+  knownNow: { lastRating: "known", again: 50, unsure: 12, known: 1 },
+  againNow: { lastRating: "again", known: 50 },
+  unsureNow: { lastRating: "unsure" }
+};
+assert.equal(
+  getStudyReviewCandidateWeight({ key: "knownNow" }, reviewStats),
+  getStudyReviewRatingWeight("known"),
+  "Future probability must use only the latest rating, not older counts."
+);
+assert.equal(
+  getStudyReviewCandidateWeight({ key: "unrated" }, reviewStats),
+  getStudyReviewRatingWeight("unsure"),
+  "Unrated cards must start at the same weight as unsure cards."
+);
+const randomSequence = [0.2, 0.9];
+const weightedSelection = selectWeightedStudyReviewItems(
+  [{ key: "knownNow" }, { key: "againNow" }, { key: "unrated" }],
+  reviewStats,
+  2,
+  () => randomSequence.shift()
+);
+assert.deepEqual(weightedSelection.map(item => item.key), ["againNow", "unrated"]);
+assert.equal(new Set(weightedSelection.map(item => item.key)).size, weightedSelection.length);
 
 const lowercaseHistory = [{
   id: "lowercase-correction",

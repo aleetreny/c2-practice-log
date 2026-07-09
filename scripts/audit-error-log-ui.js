@@ -36,6 +36,15 @@ assert.match(appSource, /normalizeCorrectAnswer\(STATE\.answers\[qNum\]\)/, "Aut
 assert.match(appSource, /function filterAllAttemptsModal\(/, "All saved work must support filtering by section.");
 assert.match(appSource, /id="all-attempts-section-filter"/, "The saved-work modal must expose its section filter.");
 assert.match(appSource, /renderHistoryListV2HTML\(null, sectionFilter\)/, "Saved-work filtering must stay local to the modal list.");
+assert.match(appSource, /LOCAL_ERROR_REVIEW_KEY = "c2_error_review_stats_v1"/, "Error review ratings must start in a fresh storage namespace.");
+assert.match(appSource, /selectionMode: "smart"/, "Error review setup must default to the weighted algorithm.");
+assert.match(appSource, /selectWeightedStudyReviewItems\(/, "Error review rounds must use weighted selection.");
+assert.match(appSource, /saveErrorReviewRating\(key, rating, \{ countView: true \}\)/, "Card ratings must persist after each review.");
+assert.match(appSource, /\["again", "Again only"/, "Review setup must offer an Again-only criterion.");
+assert.match(appSource, /id="error-review-rated-table-body"/, "Exercise review must show the editable rated review table.");
+assert.match(appSource, /function filterErrorReviewRatedTable\(/, "Rated review table must provide local filtering.");
+assert.match(appSource, /updateErrorReviewRatingFromTable/, "Rated review rows must be editable.");
+assert.match(appSource, /Open exercise/, "Rated review rows must link back to the saved exercise.");
 assert.doesNotMatch(getFunctionSource("filterTrackedPartErrors"), /STATE\./, "Correction modal filters must not alter dashboard state.");
 assert.doesNotMatch(getFunctionSource("filterAllAttemptsModal"), /STATE\./, "Saved-work modal filters must not alter dashboard state.");
 
@@ -48,5 +57,8 @@ assert.match(stylesSource, /\.modal-content\.ue-all-errors-modal > \.ue-all-erro
 assert.match(stylesSource, /@media \(max-width: 1040px\)[^]*?\.ue-all-errors-workspace\s*\{\s*overflow:\s*hidden;/, "Responsive corrections must not add an outer scrollbar.");
 assert.match(stylesSource, /\.ue-all-errors-workspace\.text-open \.ue-all-errors-list\s*\{\s*display:\s*none;/, "Responsive text view must hide the list instead of stacking two scroll regions.");
 assert.match(stylesSource, /text-transform:\s*uppercase;/);
+assert.match(stylesSource, /\.error-review-rated-panel\s*\{/, "Rated review table must be styled as part of Exercise review.");
+assert.match(stylesSource, /\.error-review-rated-filters\s*\{/, "Rated review table filters must be styled.");
+assert.match(stylesSource, /\.error-review-rating-select\.known\s*\{/, "Editable ratings need visible status styling.");
 
-console.log("Error Log UI audit passed: scoped filters, saved-work sections, uppercase corrections and column focus verified.");
+console.log("Error Log UI audit passed: scoped filters, weighted review controls, rated table, uppercase corrections and column focus verified.");

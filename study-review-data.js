@@ -1,5 +1,11 @@
 (function initialiseStudyReviewData(root) {
   const STUDY_DATA_VERSION = 3;
+  const STUDY_REVIEW_RATINGS = ["again", "unsure", "known"];
+  const STUDY_REVIEW_RATING_WEIGHTS = {
+    again: 2.25,
+    unsure: 1,
+    known: 0.45
+  };
   const TRACKED_PARTS = [
     { id: "reading:part1", section: "reading", partKey: "part1", startQ: 1, endQ: 8 },
     { id: "useOfEnglish:part2", section: "useOfEnglish", partKey: "part2", startQ: 9, endQ: 16 },
@@ -74,6 +80,58 @@
       error?.gradeState
     ].join(" "));
     return haystack.includes(normalizedQuery);
+  }
+
+  function normalizeStudyReviewRating(value) {
+    const rating = String(value || "").trim();
+    return STUDY_REVIEW_RATINGS.includes(rating) ? rating : "";
+  }
+
+  function getStudyReviewRatingWeight(value) {
+    const rating = normalizeStudyReviewRating(value) || "unsure";
+    return STUDY_REVIEW_RATING_WEIGHTS[rating];
+  }
+
+  function getStudyReviewCandidateWeight(candidate, reviewStats = {}) {
+    const key = typeof candidate === "string" ? candidate : candidate?.key;
+    const stat = plainObject(reviewStats)[key];
+    return getStudyReviewRatingWeight(plainObject(stat).lastRating);
+  }
+
+  function selectWeightedStudyReviewItems(candidates, reviewStats = {}, size = candidates.length, randomFn = Math.random) {
+    const pool = Array.isArray(candidates) ? [...candidates] : [];
+    const limit = Math.max(0, Math.min(Number(size) || 0, pool.length));
+    const selected = [];
+
+    while (selected.length < limit && pool.length > 0) {
+      const weights = pool.map(candidate => {
+        const weight = Number(getStudyReviewCandidateWeight(candidate, reviewStats));
+        return Number.isFinite(weight) && weight > 0 ? weight : STUDY_REVIEW_RATING_WEIGHTS.unsure;
+      });
+      const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
+
+      if (!(totalWeight > 0)) {
+        selected.push(...pool.splice(0, limit - selected.length));
+        break;
+      }
+
+      const rawRandom = Number(typeof randomFn === "function" ? randomFn() : Math.random());
+      const randomValue = Number.isFinite(rawRandom) ? Math.max(0, Math.min(rawRandom, 0.999999999)) : Math.random();
+      let threshold = randomValue * totalWeight;
+      let selectedIndex = pool.length - 1;
+
+      for (let index = 0; index < pool.length; index += 1) {
+        threshold -= weights[index];
+        if (threshold <= 0) {
+          selectedIndex = index;
+          break;
+        }
+      }
+
+      selected.push(pool.splice(selectedIndex, 1)[0]);
+    }
+
+    return selected;
   }
 
   function cleanCorrectAnswerLine(line) {
@@ -300,6 +358,12 @@
     getUppercaseInputState,
     normalizeStudySearch,
     matchesTrackedErrorSearch,
+    STUDY_REVIEW_RATINGS,
+    STUDY_REVIEW_RATING_WEIGHTS,
+    normalizeStudyReviewRating,
+    getStudyReviewRatingWeight,
+    getStudyReviewCandidateWeight,
+    selectWeightedStudyReviewItems,
     parseLegacyCorrectAnswerLine,
     isLegacyCorrectAnswerLine,
     splitLegacyStudyNote,
