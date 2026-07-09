@@ -5714,8 +5714,11 @@ input.sheet-text-input:disabled,
   font-size: 0.72rem;
 }
 
-.review-substep-title {
-  margin-top: 18px;
+.review-divider {
+  border: 0;
+  height: 1px;
+  background-color: var(--border-color);
+  margin: 18px 0 6px 0;
 }
 
 .review-scope-controls {
