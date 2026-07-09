@@ -22,6 +22,8 @@ const STATE = {
   vocabularyArchivedIds: [],
   vocabularyReviewStats: {},
   vocabularyUpdatedAt: 0,
+  errorReviewStats: {},
+  errorReviewUpdatedAt: 0,
   vocabularyFilters: {
     query: "",
     family: "vocabulary",
@@ -40,6 +42,7 @@ const STATE = {
   errorReviewSetup: {
     parts: C2_STUDY_REVIEW.TRACKED_PARTS.map(part => part.id),
     scope: "missed",
+    selectionMode: "smart",
     size: 10
   },
   errorReviewSession: null,
@@ -61,6 +64,7 @@ const OWNER_PROFILE = "Aleetreny";
 const LOCAL_HISTORY_KEY = "c2_owner_history";
 const LOCAL_VOCABULARY_KEY = "c2_vocabulary_library";
 const LOCAL_VOCABULARY_REVIEW_KEY = "c2_vocabulary_review_stats";
+const LOCAL_ERROR_REVIEW_KEY = "c2_error_review_stats_v1";
 const VOCABULARY_STATE_ID_PREFIX = "vocabulary_state_";
 const SUPABASE_SESSION_KEY = "c2_supabase_session";
 const SUPABASE_CONFIG = {
@@ -138,12 +142,17 @@ function loadLocalStorage() {
     STATE.vocabularyUpdatedAt = Number(storedVocabulary.updatedAt) || 0;
     const storedReviewStats = JSON.parse(localStorage.getItem(LOCAL_VOCABULARY_REVIEW_KEY) || "{}");
     STATE.vocabularyReviewStats = storedReviewStats && typeof storedReviewStats === "object" ? storedReviewStats : {};
+    const storedErrorReview = parseStoredErrorReviewState(localStorage.getItem(LOCAL_ERROR_REVIEW_KEY));
+    STATE.errorReviewStats = storedErrorReview.stats;
+    STATE.errorReviewUpdatedAt = storedErrorReview.updatedAt;
   } catch (e) {
     console.error("Failed to load local storage", e);
     STATE.history = [];
     STATE.vocabularyEntries = [];
     STATE.vocabularyArchivedIds = [];
     STATE.vocabularyReviewStats = {};
+    STATE.errorReviewStats = {};
+    STATE.errorReviewUpdatedAt = 0;
     STATE.vocabularyUpdatedAt = 0;
   }
 }
@@ -162,6 +171,19 @@ function saveVocabularyLocalStorage(options = {}) {
   }
 }
 
+function saveErrorReviewLocalStorage(options = {}) {
+  try {
+    localStorage.setItem(LOCAL_ERROR_REVIEW_KEY, JSON.stringify({
+      version: 1,
+      stats: STATE.errorReviewStats,
+      updatedAt: STATE.errorReviewUpdatedAt
+    }));
+    if (options.sync !== false) queueVocabularyCloudSync();
+  } catch (error) {
+    console.error("Failed to save error review ratings", error);
+  }
+}
+
 function stripVocabularyCategory(entry) {
   const { topic, topics, ...cleanEntry } = entry || {};
   return cleanEntry;
@@ -170,6 +192,11 @@ function stripVocabularyCategory(entry) {
 function markVocabularyChanged() {
   STATE.vocabularyUpdatedAt = Date.now();
   saveVocabularyLocalStorage();
+}
+
+function markErrorReviewChanged() {
+  STATE.errorReviewUpdatedAt = Date.now();
+  saveErrorReviewLocalStorage();
 }
 
 function queueVocabularyCloudSync() {
@@ -214,6 +241,41 @@ function parseStoredHistory(raw) {
   return Array.isArray(parsed) ? parsed : [];
 }
 
+function normalizeStoredErrorReviewStat(value) {
+  const source = getPlainObject(value);
+  const lastRating = C2_STUDY_REVIEW.normalizeStudyReviewRating(source.lastRating);
+  const stat = {
+    views: Math.max(0, Math.floor(Number(source.views) || 0)),
+    again: Math.max(0, Math.floor(Number(source.again) || 0)),
+    unsure: Math.max(0, Math.floor(Number(source.unsure) || 0)),
+    known: Math.max(0, Math.floor(Number(source.known) || 0)),
+    lastRating,
+    lastReviewedAt: Math.max(0, Number(source.lastReviewedAt) || 0)
+  };
+
+  return stat.lastRating || stat.views > 0 ? stat : null;
+}
+
+function normalizeErrorReviewStats(value) {
+  return Object.fromEntries(
+    Object.entries(getPlainObject(value))
+      .map(([key, stat]) => [String(key), normalizeStoredErrorReviewStat(stat)])
+      .filter(([key, stat]) => key && stat)
+  );
+}
+
+function parseStoredErrorReviewState(raw) {
+  if (!raw) return { stats: {}, updatedAt: 0 };
+  const parsed = JSON.parse(raw);
+  const payload = getPlainObject(parsed);
+  const statsSource = payload.stats ? payload.stats : parsed;
+
+  return {
+    stats: normalizeErrorReviewStats(statsSource),
+    updatedAt: Math.max(0, Number(payload.updatedAt) || 0)
+  };
+}
+
 function mergeHistoryCollections(...collections) {
   const byId = new Map();
 
@@ -223,6 +285,10 @@ function mergeHistoryCollections(...collections) {
   });
 
   return [...byId.values()].sort((a, b) => (a.date || 0) - (b.date || 0));
+}
+
+function getLearningStateUpdatedAt() {
+  return Math.max(Number(STATE.vocabularyUpdatedAt) || 0, Number(STATE.errorReviewUpdatedAt) || 0);
 }
 
 function normalizeSupabaseUrl(value) {
@@ -435,6 +501,7 @@ function getVocabularyStateRowId() {
 }
 
 function vocabularyStateToSupabaseRow() {
+  const updatedAt = getLearningStateUpdatedAt();
   return {
     id: getVocabularyStateRowId(),
     user_id: STATE.supabaseSession.user.id,
@@ -448,10 +515,13 @@ function vocabularyStateToSupabaseRow() {
       entries: STATE.vocabularyEntries.map(stripVocabularyCategory),
       archivedIds: STATE.vocabularyArchivedIds,
       reviewStats: STATE.vocabularyReviewStats,
-      updatedAt: STATE.vocabularyUpdatedAt
+      vocabularyUpdatedAt: STATE.vocabularyUpdatedAt,
+      errorReviewStats: STATE.errorReviewStats,
+      errorReviewUpdatedAt: STATE.errorReviewUpdatedAt,
+      updatedAt
     },
     graded_states: {},
-    attempted_at: new Date(STATE.vocabularyUpdatedAt || Date.now()).toISOString()
+    attempted_at: new Date(updatedAt || Date.now()).toISOString()
   };
 }
 
@@ -465,8 +535,35 @@ function applyRemoteVocabularyState(row) {
   STATE.vocabularyEntries = Array.isArray(payload.entries) ? payload.entries.map(stripVocabularyCategory) : [];
   STATE.vocabularyArchivedIds = Array.isArray(payload.archivedIds) ? payload.archivedIds : [];
   STATE.vocabularyReviewStats = payload.reviewStats && typeof payload.reviewStats === "object" ? payload.reviewStats : {};
-  STATE.vocabularyUpdatedAt = Number(payload.updatedAt) || (row.attempted_at ? new Date(row.attempted_at).getTime() : 0);
+  STATE.vocabularyUpdatedAt = getRemoteVocabularyUpdatedAt(row);
   saveVocabularyLocalStorage({ sync: false });
+  return true;
+}
+
+function getRemoteVocabularyUpdatedAt(row) {
+  const payload = row?.answers;
+  if (!payload || payload.__kind !== "vocabulary_state") return 0;
+  if (Object.prototype.hasOwnProperty.call(payload, "vocabularyUpdatedAt")) {
+    return Math.max(0, Number(payload.vocabularyUpdatedAt) || 0);
+  }
+  return Math.max(
+    0,
+    Number(payload.updatedAt) || (row.attempted_at ? new Date(row.attempted_at).getTime() : 0)
+  );
+}
+
+function getRemoteErrorReviewUpdatedAt(row) {
+  const payload = row?.answers;
+  if (!payload || payload.__kind !== "vocabulary_state") return 0;
+  return Math.max(0, Number(payload.errorReviewUpdatedAt) || 0);
+}
+
+function applyRemoteErrorReviewState(row) {
+  const payload = row?.answers;
+  if (!payload || payload.__kind !== "vocabulary_state") return false;
+  STATE.errorReviewStats = normalizeErrorReviewStats(payload.errorReviewStats);
+  STATE.errorReviewUpdatedAt = getRemoteErrorReviewUpdatedAt(row);
+  saveErrorReviewLocalStorage({ sync: false });
   return true;
 }
 
@@ -521,12 +618,23 @@ async function hydrateRemoteHistory() {
     STATE.history = mergedHistory;
     saveLocalStorage();
 
-    const remoteVocabularyUpdatedAt = Number(remoteVocabularyState?.answers?.updatedAt) || 0;
+    const remoteVocabularyUpdatedAt = getRemoteVocabularyUpdatedAt(remoteVocabularyState);
+    const remoteErrorReviewUpdatedAt = getRemoteErrorReviewUpdatedAt(remoteVocabularyState);
+    let shouldSaveLearningState = false;
+
     if (remoteVocabularyState && remoteVocabularyUpdatedAt > STATE.vocabularyUpdatedAt) {
       applyRemoteVocabularyState(remoteVocabularyState);
     } else if (STATE.vocabularyUpdatedAt > remoteVocabularyUpdatedAt) {
-      await saveRemoteVocabularyState();
+      shouldSaveLearningState = true;
     }
+
+    if (remoteVocabularyState && remoteErrorReviewUpdatedAt > STATE.errorReviewUpdatedAt) {
+      applyRemoteErrorReviewState(remoteVocabularyState);
+    } else if (STATE.errorReviewUpdatedAt > remoteErrorReviewUpdatedAt) {
+      shouldSaveLearningState = true;
+    }
+
+    if (shouldSaveLearningState) await saveRemoteVocabularyState();
 
     if (mergedHistory.length !== remoteHistory.length || migration.changed) {
       await saveRemoteHistory("merge");
@@ -558,7 +666,7 @@ async function saveRemoteHistory(mode = "merge") {
     });
   }
 
-  if (STATE.vocabularyUpdatedAt > 0) {
+  if (getLearningStateUpdatedAt() > 0) {
     await saveRemoteVocabularyState();
   }
 
@@ -2299,8 +2407,67 @@ function getStudyReviewPartLabel(partId) {
   return partData?.name || `${C2_EXAM_METADATA[part.section]?.name || "Practice"} ${getUseOfEnglishPartShortLabel(part.partKey)}`;
 }
 
+function getErrorReviewStat(key) {
+  return normalizeStoredErrorReviewStat(STATE.errorReviewStats[key]) || {
+    views: 0,
+    again: 0,
+    unsure: 0,
+    known: 0,
+    lastRating: "",
+    lastReviewedAt: 0
+  };
+}
+
+function getErrorReviewRatingLabel(rating) {
+  if (rating === "again") return "Again";
+  if (rating === "unsure") return "Unsure";
+  if (rating === "known") return "Got it";
+  return "Unrated";
+}
+
+function getErrorReviewRatingDetail(rating) {
+  if (rating === "again") return "more likely";
+  if (rating === "known") return "less likely";
+  return "normal weight";
+}
+
+function saveErrorReviewRating(key, rating, options = {}) {
+  const normalizedRating = C2_STUDY_REVIEW.normalizeStudyReviewRating(rating);
+  if (!key || !normalizedRating) return null;
+
+  const countView = options.countView !== false;
+  const current = getErrorReviewStat(key);
+  const next = {
+    ...current,
+    lastRating: normalizedRating,
+    lastReviewedAt: countView ? Date.now() : (current.lastReviewedAt || Date.now())
+  };
+
+  if (countView) {
+    next.views += 1;
+    next[normalizedRating] = (next[normalizedRating] || 0) + 1;
+  }
+
+  STATE.errorReviewStats[key] = next;
+  markErrorReviewChanged();
+  return next;
+}
+
+function removeErrorReviewStatsForAttempt(attemptId) {
+  const prefix = `${attemptId}:`;
+  let changed = false;
+  Object.keys(STATE.errorReviewStats).forEach(key => {
+    if (key.startsWith(prefix)) {
+      delete STATE.errorReviewStats[key];
+      changed = true;
+    }
+  });
+  if (changed) markErrorReviewChanged();
+}
+
 function getStudyReviewCandidates(setup = STATE.errorReviewSetup) {
   const selectedParts = new Set(Array.isArray(setup.parts) ? setup.parts : []);
+  const selectionMode = setup.selectionMode === "again" ? "again" : "smart";
   const candidates = [];
 
   STATE.history.forEach(item => {
@@ -2333,7 +2500,7 @@ function getStudyReviewCandidates(setup = STATE.errorReviewSetup) {
           part.endQ
         );
 
-        candidates.push({
+        const candidate = {
           key: `${item.id}:${part.id}:${question}`,
           attemptId: item.id,
           date: Number(item.date) || 0,
@@ -2350,7 +2517,13 @@ function getStudyReviewCandidates(setup = STATE.errorReviewSetup) {
           isMissed,
           gradeState,
           maxPoints: partData.weight
-        });
+        };
+        const reviewStat = getErrorReviewStat(candidate.key);
+        candidate.reviewStat = reviewStat;
+        candidate.lastReviewRating = reviewStat.lastRating;
+        candidate.reviewWeight = C2_STUDY_REVIEW.getStudyReviewCandidateWeight(candidate, STATE.errorReviewStats);
+        if (selectionMode === "again" && reviewStat.lastRating !== "again") continue;
+        candidates.push(candidate);
       }
     });
   });
@@ -2362,6 +2535,7 @@ function getStudyReviewCandidateByKey(key) {
   return getStudyReviewCandidates({
     ...STATE.errorReviewSetup,
     scope: "all",
+    selectionMode: "smart",
     parts: C2_STUDY_REVIEW.TRACKED_PARTS.map(part => part.id)
   }).find(candidate => candidate.key === key) || null;
 }
@@ -2396,9 +2570,14 @@ function renderErrorReview() {
 
 function renderErrorReviewSetupHTML() {
   const setup = STATE.errorReviewSetup;
-  const selectedParts = new Set(setup.parts);
+  if (!["smart", "again"].includes(setup.selectionMode)) setup.selectionMode = "smart";
+  if (!["missed", "all"].includes(setup.scope)) setup.scope = "missed";
+  if (![5, 10, 20].includes(Number(setup.size))) setup.size = 10;
+  const selectedParts = new Set(Array.isArray(setup.parts) ? setup.parts : []);
   const eligible = getStudyReviewCandidates(setup);
   const readyCount = Math.min(Number(setup.size), eligible.length);
+  const smartCount = getStudyReviewCandidates({ ...setup, selectionMode: "smart" }).length;
+  const againCount = getStudyReviewCandidates({ ...setup, selectionMode: "again" }).length;
 
   return `
     <section class="review-setup-hero study-review-hero">
@@ -2432,7 +2611,14 @@ function renderErrorReviewSetupHTML() {
       <div class="review-setup-step">
         <span class="review-step-number">2</span>
         <div>
-          <h2>What should the deck include?</h2>
+          <h2>How should cards be chosen?</h2>
+          <div class="review-mode-grid">
+            ${[
+              ["smart", "Smart algorithm", `${smartCount.toLocaleString("en-GB")} eligible`, "Unrated and unsure stay normal; again appears more, got it less."],
+              ["again", "Again only", `${againCount.toLocaleString("en-GB")} marked again`, "Only cards whose latest rating is Again."]
+            ].map(([key, title, count, detail]) => `<button class="review-mode-card ${setup.selectionMode === key ? "active" : ""}" onclick="setErrorReviewOption('selectionMode','${key}')"><strong>${title}<small>${count}</small></strong><span>${detail}</span></button>`).join("")}
+          </div>
+          <h2 class="review-substep-title">Original result</h2>
           <div class="review-mode-grid">
             ${[
               ["missed", "Mistakes only", "Focus only on answers that lost marks."],
@@ -2453,10 +2639,12 @@ function renderErrorReviewSetupHTML() {
       </div>
 
       <div class="review-launch-row">
-        <div><strong>${eligible.length && selectedParts.size ? `${readyCount} ${readyCount === 1 ? "card" : "cards"} ready` : "No cards for this selection"}</strong><span>Randomised on every round. Your saved data is never changed by reviewing.</span></div>
+        <div><strong>${eligible.length && selectedParts.size ? `${readyCount} ${readyCount === 1 ? "card" : "cards"} ready` : "No cards for this selection"}</strong><span>${setup.selectionMode === "again" ? "Using only cards whose latest rating is Again." : "Weighted every round from the latest rating only."}</span></div>
         <button class="btn btn-primary review-launch-button" onclick="startErrorReviewSession()" ${eligible.length && selectedParts.size ? "" : "disabled"}>Start review</button>
       </div>
     </section>
+
+    ${renderErrorReviewRatedTableHTML()}
   `;
 }
 
@@ -2473,10 +2661,173 @@ function setErrorReviewOption(key, value) {
   renderErrorReview();
 }
 
+function getRatedErrorReviewRows() {
+  return getStudyReviewCandidates({
+    parts: C2_STUDY_REVIEW.TRACKED_PARTS.map(part => part.id),
+    scope: "all",
+    selectionMode: "smart"
+  })
+    .map(candidate => ({ ...candidate, reviewStat: getErrorReviewStat(candidate.key) }))
+    .filter(candidate => candidate.reviewStat.lastRating)
+    .sort((a, b) => (b.reviewStat.lastReviewedAt || 0) - (a.reviewStat.lastReviewedAt || 0) || b.date - a.date);
+}
+
+function getErrorReviewRowSearchText(row) {
+  return [
+    row.partLabel,
+    row.section === "reading" ? "Reading" : "Use of English",
+    getUseOfEnglishPartShortLabel(row.partKey),
+    `Q.${row.question}`,
+    row.question,
+    row.answer,
+    row.correctAnswer,
+    row.note,
+    getErrorReviewRatingLabel(row.reviewStat.lastRating)
+  ].join(" ");
+}
+
+function renderErrorReviewRatingSelectHTML(row) {
+  const rating = row.reviewStat.lastRating;
+  return `
+    <select class="error-review-rating-select ${rating}" aria-label="Edit review rating for Q.${row.question}"
+            onchange="updateErrorReviewRatingFromTable('${escapeJS(row.key)}', this.value)">
+      ${C2_STUDY_REVIEW.STUDY_REVIEW_RATINGS.map(option => `
+        <option value="${option}" ${rating === option ? "selected" : ""}>${getErrorReviewRatingLabel(option)}</option>
+      `).join("")}
+    </select>
+  `;
+}
+
+function renderErrorReviewRatedTableRowsHTML(rows) {
+  return rows.map(row => {
+    const rating = row.reviewStat.lastRating;
+    const gradeLabel = typeof row.gradeState === "number"
+      ? `${row.gradeState}/${row.maxPoints} pts`
+      : row.isMissed ? "Missed" : "Correct";
+    const reviewCount = row.reviewStat.views || 0;
+
+    return `
+      <tr data-error-review-row data-rating="${rating}" data-part-id="${row.partId}" data-search="${escapeHTML(getErrorReviewRowSearchText(row))}">
+        <td>
+          <strong>${escapeHTML(row.partLabel)} · Q.${row.question}</strong>
+          <small>${escapeHTML(gradeLabel)} · ${formatCompactDateTime(row.date)}</small>
+        </td>
+        <td>
+          <span>Your answer</span>
+          <strong>${escapeHTML(row.answer || "No answer")}</strong>
+          <span>Correct answer</span>
+          <strong>${escapeHTML(row.correctAnswer)}</strong>
+        </td>
+        <td>
+          ${renderErrorReviewRatingSelectHTML(row)}
+          <small>${reviewCount} ${reviewCount === 1 ? "review" : "reviews"} · ${getErrorReviewRatingDetail(rating)}</small>
+        </td>
+        <td>
+          <button class="btn btn-secondary" onclick="openHistoryDetailModal('${escapeJS(row.attemptId)}')">Open exercise</button>
+        </td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function renderErrorReviewRatedTableHTML() {
+  const rows = getRatedErrorReviewRows();
+  const ratingCounts = Object.fromEntries(C2_STUDY_REVIEW.STUDY_REVIEW_RATINGS.map(rating => [
+    rating,
+    rows.filter(row => row.reviewStat.lastRating === rating).length
+  ]));
+  const partCounts = Object.fromEntries(C2_STUDY_REVIEW.TRACKED_PARTS.map(part => [
+    part.id,
+    rows.filter(row => row.partId === part.id).length
+  ]));
+
+  return `
+    <section class="error-review-rated-panel" aria-labelledby="error-review-rated-title">
+      <div class="error-review-rated-head">
+        <div>
+          <span class="eyebrow">Rated reviews</span>
+          <h2 id="error-review-rated-title">Latest card ratings</h2>
+        </div>
+        <small id="error-review-rated-count">${rows.length} ${rows.length === 1 ? "rated card" : "rated cards"}</small>
+      </div>
+      ${rows.length ? `
+        <div class="error-review-rated-filters">
+          <label>
+            <span>Rating</span>
+            <select id="error-review-rating-filter" onchange="filterErrorReviewRatedTable()">
+              <option value="all">All ratings</option>
+              ${C2_STUDY_REVIEW.STUDY_REVIEW_RATINGS.map(rating => `<option value="${rating}">${getErrorReviewRatingLabel(rating)} (${ratingCounts[rating] || 0})</option>`).join("")}
+            </select>
+          </label>
+          <label>
+            <span>Part</span>
+            <select id="error-review-part-filter" onchange="filterErrorReviewRatedTable()">
+              <option value="all">All parts</option>
+              ${C2_STUDY_REVIEW.TRACKED_PARTS.map(part => `<option value="${part.id}">${getStudyReviewPartLabel(part.id)} (${partCounts[part.id] || 0})</option>`).join("")}
+            </select>
+          </label>
+          <label>
+            <span>Search</span>
+            <input id="error-review-rated-search" type="search" placeholder="Question, answer or note..." oninput="filterErrorReviewRatedTable()">
+          </label>
+        </div>
+        <div class="error-review-table-scroll">
+          <table class="error-review-rated-table">
+            <thead>
+              <tr>
+                <th>Card</th>
+                <th>Correction</th>
+                <th>Latest rating</th>
+                <th>Exercise</th>
+              </tr>
+            </thead>
+            <tbody id="error-review-rated-table-body">
+              ${renderErrorReviewRatedTableRowsHTML(rows)}
+            </tbody>
+          </table>
+        </div>
+        <div class="empty-state error-review-rated-empty" id="error-review-rated-filter-empty" hidden>No rated cards match this filter.</div>
+      ` : `<div class="empty-state error-review-rated-empty">No cards have been rated yet. After your first Again, Unsure or Got it, they will appear here.</div>`}
+    </section>
+  `;
+}
+
+function filterErrorReviewRatedTable() {
+  const ratingFilter = document.getElementById("error-review-rating-filter")?.value || "all";
+  const partFilter = document.getElementById("error-review-part-filter")?.value || "all";
+  const query = C2_STUDY_REVIEW.normalizeStudySearch(document.getElementById("error-review-rated-search")?.value || "");
+  const rows = [...document.querySelectorAll("[data-error-review-row]")];
+  let visible = 0;
+
+  rows.forEach(row => {
+    const matchesRating = ratingFilter === "all" || row.dataset.rating === ratingFilter;
+    const matchesPart = partFilter === "all" || row.dataset.partId === partFilter;
+    const matchesQuery = !query || C2_STUDY_REVIEW.normalizeStudySearch(row.dataset.search).includes(query);
+    const shouldShow = matchesRating && matchesPart && matchesQuery;
+    row.hidden = !shouldShow;
+    if (shouldShow) visible += 1;
+  });
+
+  const count = document.getElementById("error-review-rated-count");
+  const empty = document.getElementById("error-review-rated-filter-empty");
+  if (count) count.textContent = `${visible} ${visible === 1 ? "rated card" : "rated cards"}`;
+  if (empty) empty.hidden = visible > 0;
+}
+
+function updateErrorReviewRatingFromTable(key, rating) {
+  if (!getStudyReviewCandidateByKey(key)) return;
+  saveErrorReviewRating(key, rating, { countView: false });
+  renderErrorReview();
+}
+
 function startErrorReviewSession() {
   const eligible = getStudyReviewCandidates();
   if (!eligible.length) return;
-  const items = shuffleVocabularyEntries(eligible).slice(0, Math.min(Number(STATE.errorReviewSetup.size), eligible.length));
+  const items = C2_STUDY_REVIEW.selectWeightedStudyReviewItems(
+    eligible,
+    STATE.errorReviewStats,
+    Number(STATE.errorReviewSetup.size)
+  );
   STATE.errorReviewSession = {
     itemKeys: items.map(item => item.key),
     index: 0,
@@ -2562,6 +2913,8 @@ function revealErrorReviewCard() {
 function rateErrorReviewCard(rating) {
   const session = STATE.errorReviewSession;
   if (!session || !session.revealed || session.complete) return;
+  const key = session.itemKeys[session.index];
+  if (!saveErrorReviewRating(key, rating, { countView: true })) return;
   session.ratings[rating] += 1;
   session.index += 1;
   session.revealed = false;
@@ -3264,7 +3617,7 @@ function renderErrorLogDashboardHTML() {
           <span>Error log</span>
           <small>${errors.length} ${errors.length === 1 ? "saved correction" : "saved corrections"}</small>
         </div>
-        <button class="btn btn-primary ue-start-review" onclick="openErrorReview()" ${getStudyReviewCandidates({ ...STATE.errorReviewSetup, scope: "all" }).length ? "" : "disabled"}>Review exercises</button>
+        <button class="btn btn-primary ue-start-review" onclick="openErrorReview()" ${getStudyReviewCandidates({ ...STATE.errorReviewSetup, scope: "all", selectionMode: "smart" }).length ? "" : "disabled"}>Review exercises</button>
       </div>
       ${errors.length === 0 ? `
         <div class="empty-state ue-errors-empty">Corrections from Reading Part 1 and Use of English Parts 2–4 will appear here.</div>
@@ -5942,6 +6295,7 @@ function calculateAverageScaleScore() {
 async function deleteHistoryItem(id) {
   if (confirm("Delete this history record?")) {
     STATE.history = STATE.history.filter(h => h.id !== id);
+    removeErrorReviewStatsForAttempt(id);
     await persistHistory({ mode: "replace" });
     refreshCurrentView();
   }
@@ -5956,6 +6310,7 @@ async function deleteHistoryItemFromReview(id) {
 
   closeAllModals();
   STATE.history = STATE.history.filter(historyItem => historyItem.id !== id);
+  removeErrorReviewStatsForAttempt(id);
   await persistHistory({ mode: "replace" });
   refreshCurrentView();
 }
@@ -5963,6 +6318,8 @@ async function deleteHistoryItemFromReview(id) {
 async function clearHistory() {
   if (confirm("Clear your practice history from this app? Online sync keeps a versioned backup when it is available.")) {
     STATE.history = [];
+    STATE.errorReviewStats = {};
+    markErrorReviewChanged();
     await persistHistory({ mode: "replace" });
     refreshCurrentView();
   }
