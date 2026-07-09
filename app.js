@@ -2618,7 +2618,7 @@ function renderErrorReviewSetupHTML() {
               ["again", "Again only", `${againCount.toLocaleString("en-GB")} marked again`, "Only cards whose latest rating is Again."]
             ].map(([key, title, count, detail]) => `<button class="review-mode-card ${setup.selectionMode === key ? "active" : ""}" onclick="setErrorReviewOption('selectionMode','${key}')"><strong>${title}<small>${count}</small></strong><span>${detail}</span></button>`).join("")}
           </div>
-          <h2 class="review-substep-title">Original result</h2>
+          <hr class="review-divider">
           <div class="review-mode-grid">
             ${[
               ["missed", "Mistakes only", "Focus only on answers that lost marks."],
