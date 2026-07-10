@@ -45,6 +45,13 @@ assert.match(appSource, /id="error-review-rated-table-body"/, "Exercise review m
 assert.match(appSource, /function filterErrorReviewRatedTable\(/, "Rated review table must provide local filtering.");
 assert.match(appSource, /ERROR_REVIEW_RATED_VIEW_LIMIT = 50/, "Rated review tables must cap each view at 50 cards.");
 assert.match(appSource, /allRows\.slice\(0, ERROR_REVIEW_RATED_VIEW_LIMIT\)/, "Only the newest 50 rated cards should render in one view.");
+assert.match(appSource, /function openFullDataResetModal\(/, "The dashboard must offer a non-destructive first reset confirmation.");
+assert.match(appSource, /function openFullDataResetFinalConfirmation\(/, "Resetting must require a second confirmation step.");
+assert.match(appSource, /id="full-data-reset-submit"[^>]*disabled/, "The final reset action must start disabled.");
+assert.match(appSource, /function resetAllRegisteredData\(/, "A confirmed reset must clear all registered data.");
+assert.match(appSource, /method:\s*"DELETE"/, "Signed-in resets must remove the synced records too.");
+assert.doesNotMatch(appSource, /onclick="clearHistory\(\)"/, "The old one-click history clear must not remain reachable.");
+assert.doesNotMatch(appSource, /ue-error-review-controls/, "Algorithm settings must not sit beside the Error log launch button.");
 assert.match(appSource, /updateErrorReviewRatingFromTable/, "Rated review rows must be editable.");
 assert.match(appSource, /Open exercise/, "Rated review rows must link back to the saved exercise.");
 assert.doesNotMatch(getFunctionSource("filterTrackedPartErrors"), /STATE\./, "Correction modal filters must not alter dashboard state.");

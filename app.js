@@ -2211,8 +2211,9 @@ function getVocabularyReviewSettings() {
 }
 
 function getVocabularyReviewAlgorithmSummary(settings = getVocabularyReviewSettings()) {
-  const factorAtFourReviews = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(4, settings);
-  return `Again ${formatErrorReviewWeight(settings.againWeight)}× · Unsure ${formatErrorReviewWeight(settings.unsureWeight)}× · Got it ${formatErrorReviewWeight(settings.knownWeight)}× · ${Math.round(factorAtFourReviews * 100)}% weight after 4 reviews`;
+  const factorAfterFirstReview = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(1, settings);
+  const factorAfterSecondReview = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(2, settings);
+  return `Again ${formatErrorReviewWeight(settings.againWeight)}× · Unsure ${formatErrorReviewWeight(settings.unsureWeight)}× · Got it ${formatErrorReviewWeight(settings.knownWeight)}× · ${Math.round(factorAfterFirstReview * 100)}% after 1 review · ${Math.round(factorAfterSecondReview * 100)}% after 2`;
 }
 
 function getVocabularyReviewLaunchSummary(settings = getVocabularyReviewSettings()) {
@@ -2221,8 +2222,8 @@ function getVocabularyReviewLaunchSummary(settings = getVocabularyReviewSettings
 
 function refreshVocabularyReviewAlgorithmSettingsPreview() {
   const settings = getVocabularyReviewSettings();
-  const factorAtFourReviews = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(4, settings);
-  const factorAtEightReviews = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(8, settings);
+  const factorAfterFirstReview = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(1, settings);
+  const factorAfterSecondReview = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(2, settings);
 
   document.querySelectorAll("[data-vocabulary-review-algorithm-summary]").forEach(element => {
     element.textContent = getVocabularyReviewAlgorithmSummary(settings);
@@ -2230,11 +2231,11 @@ function refreshVocabularyReviewAlgorithmSettingsPreview() {
   document.querySelectorAll("[data-vocabulary-review-launch-summary]").forEach(element => {
     element.textContent = getVocabularyReviewLaunchSummary(settings);
   });
-  document.querySelectorAll("[data-vocabulary-review-four-review-factor]").forEach(element => {
-    element.textContent = `${Math.round(factorAtFourReviews * 100)}%`;
+  document.querySelectorAll("[data-vocabulary-review-first-review-factor]").forEach(element => {
+    element.textContent = `${Math.round(factorAfterFirstReview * 100)}%`;
   });
-  document.querySelectorAll("[data-vocabulary-review-eight-review-factor]").forEach(element => {
-    element.textContent = `${Math.round(factorAtEightReviews * 100)}%`;
+  document.querySelectorAll("[data-vocabulary-review-second-review-factor]").forEach(element => {
+    element.textContent = `${Math.round(factorAfterSecondReview * 100)}%`;
   });
 }
 
@@ -2270,12 +2271,12 @@ function renderVocabularyReviewAlgorithmSettingsHTML() {
         <label class="review-algorithm-field review-algorithm-penalty-field">
           <span>Prefer less-reviewed terms</span>
           <input id="vocabulary-review-setting-reviewCountPenalty" type="number" min="${limits.minReviewCountPenalty}" max="${limits.maxReviewCountPenalty}" step="0.05" inputmode="decimal" value="${settings.reviewCountPenalty}" oninput="updateVocabularyReviewAlgorithmSetting('reviewCountPenalty', this.value)">
-          <small>0 keeps all review counts equal. Higher values spread the round across less-seen terms more strongly.</small>
+          <small>0 keeps all review counts equal. Any value above 0 lowers the weight from the first review; higher values spread the round across less-seen terms more strongly.</small>
         </label>
         <div class="review-algorithm-preview" aria-live="polite">
           <strong>Current vocabulary balance</strong>
           <span data-vocabulary-review-algorithm-summary>${escapeHTML(getVocabularyReviewAlgorithmSummary(settings))}</span>
-          <small>A term with 4 reviews keeps <b data-vocabulary-review-four-review-factor>${Math.round(C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(4, settings) * 100)}%</b> of its category weight; after 8 reviews it keeps <b data-vocabulary-review-eight-review-factor>${Math.round(C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(8, settings) * 100)}%</b>.</small>
+          <small>An unseen term starts at 100% of its category weight. After 1 review it keeps <b data-vocabulary-review-first-review-factor>${Math.round(C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(1, settings) * 100)}%</b>; after 2 it keeps <b data-vocabulary-review-second-review-factor>${Math.round(C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(2, settings) * 100)}%</b>.</small>
         </div>
       </div>
       <div class="history-review-actions review-algorithm-actions">
@@ -2603,23 +2604,24 @@ function formatErrorReviewWeight(value) {
 }
 
 function getErrorReviewAlgorithmSummary(settings = getErrorReviewSettings()) {
-  const factorAtFourReviews = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(4, settings);
-  return `Again ${formatErrorReviewWeight(settings.againWeight)}× · Unsure ${formatErrorReviewWeight(settings.unsureWeight)}× · Got it ${formatErrorReviewWeight(settings.knownWeight)}× · ${Math.round(factorAtFourReviews * 100)}% weight after 4 reviews`;
+  const factorAfterFirstReview = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(1, settings);
+  const factorAfterSecondReview = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(2, settings);
+  return `Again ${formatErrorReviewWeight(settings.againWeight)}× · Unsure ${formatErrorReviewWeight(settings.unsureWeight)}× · Got it ${formatErrorReviewWeight(settings.knownWeight)}× · ${Math.round(factorAfterFirstReview * 100)}% after 1 review · ${Math.round(factorAfterSecondReview * 100)}% after 2`;
 }
 
 function refreshErrorReviewAlgorithmSettingsPreview() {
   const settings = getErrorReviewSettings();
-  const factorAtFourReviews = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(4, settings);
-  const factorAtEightReviews = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(8, settings);
+  const factorAfterFirstReview = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(1, settings);
+  const factorAfterSecondReview = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(2, settings);
 
   document.querySelectorAll("[data-error-review-algorithm-summary]").forEach(element => {
     element.textContent = getErrorReviewAlgorithmSummary(settings);
   });
-  document.querySelectorAll("[data-error-review-four-review-factor]").forEach(element => {
-    element.textContent = `${Math.round(factorAtFourReviews * 100)}%`;
+  document.querySelectorAll("[data-error-review-first-review-factor]").forEach(element => {
+    element.textContent = `${Math.round(factorAfterFirstReview * 100)}%`;
   });
-  document.querySelectorAll("[data-error-review-eight-review-factor]").forEach(element => {
-    element.textContent = `${Math.round(factorAtEightReviews * 100)}%`;
+  document.querySelectorAll("[data-error-review-second-review-factor]").forEach(element => {
+    element.textContent = `${Math.round(factorAfterSecondReview * 100)}%`;
   });
 }
 
@@ -2655,12 +2657,12 @@ function renderErrorReviewAlgorithmSettingsHTML() {
         <label class="review-algorithm-field review-algorithm-penalty-field">
           <span>Prefer less-reviewed cards</span>
           <input id="error-review-setting-reviewCountPenalty" type="number" min="${limits.minReviewCountPenalty}" max="${limits.maxReviewCountPenalty}" step="0.05" inputmode="decimal" value="${settings.reviewCountPenalty}" oninput="updateErrorReviewAlgorithmSetting('reviewCountPenalty', this.value)">
-          <small>0 keeps all review counts equal. Higher values spread the round across less-seen cards more strongly.</small>
+          <small>0 keeps all review counts equal. Any value above 0 lowers the weight from the first review; higher values spread the round across less-seen cards more strongly.</small>
         </label>
         <div class="review-algorithm-preview" aria-live="polite">
           <strong>Current balance</strong>
           <span data-error-review-algorithm-summary>${escapeHTML(getErrorReviewAlgorithmSummary(settings))}</span>
-          <small>A card with 4 reviews keeps <b data-error-review-four-review-factor>${Math.round(C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(4, settings) * 100)}%</b> of its category weight; after 8 reviews it keeps <b data-error-review-eight-review-factor>${Math.round(C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(8, settings) * 100)}%</b>.</small>
+          <small>An unseen card starts at 100% of its category weight. After 1 review it keeps <b data-error-review-first-review-factor>${Math.round(C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(1, settings) * 100)}%</b>; after 2 it keeps <b data-error-review-second-review-factor>${Math.round(C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(2, settings) * 100)}%</b>.</small>
         </div>
       </div>
       <div class="history-review-actions review-algorithm-actions">
@@ -3691,7 +3693,7 @@ function renderDashboardView() {
           <section class="dash-panel attempts-panel">
             <div class="panel-title">
               <span>Recent saved work</span>
-              ${STATE.history.length > 0 ? `<button class="btn-danger-link" onclick="clearHistory()">Clear all</button>` : ""}
+              <button class="btn-danger-link" onclick="openFullDataResetModal()">Reset all data</button>
             </div>
             <div class="panel-body-scroll">
               ${renderHistoryListV2HTML(6)}
@@ -3899,10 +3901,7 @@ function renderErrorLogDashboardHTML() {
           <span>Error log</span>
           <small>${errors.length} ${errors.length === 1 ? "saved correction" : "saved corrections"}</small>
         </div>
-        <div class="ue-error-review-controls">
-          <button class="btn btn-secondary" onclick="openErrorReviewAlgorithmSettings()">Adjust algorithm</button>
-          <button class="btn btn-primary ue-start-review" onclick="openErrorReview()" ${getStudyReviewCandidates({ ...STATE.errorReviewSetup, scope: "all", selectionMode: "smart" }).length ? "" : "disabled"}>Review exercises</button>
-        </div>
+        <button class="btn btn-primary ue-start-review" onclick="openErrorReview()" ${getStudyReviewCandidates({ ...STATE.errorReviewSetup, scope: "all", selectionMode: "smart" }).length ? "" : "disabled"}>Review exercises</button>
       </div>
       ${errors.length === 0 ? `
         <div class="empty-state ue-errors-empty">Corrections from Reading Part 1 and Use of English Parts 2–4 will appear here.</div>
@@ -6600,14 +6599,140 @@ async function deleteHistoryItemFromReview(id) {
   refreshCurrentView();
 }
 
-async function clearHistory() {
-  if (confirm("Clear your practice history from this app? Online sync keeps a versioned backup when it is available.")) {
-    STATE.history = [];
-    STATE.errorReviewStats = {};
-    markErrorReviewChanged();
-    await persistHistory({ mode: "replace" });
-    refreshCurrentView();
+function getFullDataResetSummaryHTML() {
+  const values = [
+    ["Saved attempts", STATE.history.length],
+    ["Custom vocabulary entries", STATE.vocabularyEntries.length],
+    ["Hidden vocabulary entries", STATE.vocabularyArchivedIds.length],
+    ["Vocabulary review records", Object.keys(STATE.vocabularyReviewStats).length],
+    ["Exercise review records", Object.keys(STATE.errorReviewStats).length]
+  ];
+
+  return `<div class="data-reset-summary">${values.map(([label, count]) => `<span><strong>${count.toLocaleString("en-GB")}</strong>${label}</span>`).join("")}</div>`;
+}
+
+function openFullDataResetModal() {
+  if (document.getElementById("full-data-reset-modal")) return;
+  const modal = document.createElement("div");
+  modal.id = "full-data-reset-modal";
+  modal.className = "modal-overlay";
+  modal.innerHTML = `
+    <div class="modal-content data-reset-modal" role="dialog" aria-modal="true" aria-labelledby="full-data-reset-title">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow">Danger zone</span>
+          <h2 class="modal-title" id="full-data-reset-title">Start completely fresh?</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close reset confirmation">&times;</button>
+      </div>
+      <div class="data-reset-body">
+        <p>This clears every piece of registered progress, not just the attempts shown on the dashboard.</p>
+        ${getFullDataResetSummaryHTML()}
+        <div class="data-reset-warning"><strong>This includes</strong><span>saved attempts, custom and hidden vocabulary, both review histories and both algorithm settings. The built-in vocabulary bank stays available.</span></div>
+        <p class="data-reset-sync-note">When you are signed in, the same registered data is removed from online sync. When signed out, only this browser can be reset.</p>
+      </div>
+      <div class="history-review-actions data-reset-actions">
+        <button class="btn btn-secondary" onclick="closeModal()">Keep my data</button>
+        <button class="btn btn-danger" onclick="openFullDataResetFinalConfirmation()">Continue</button>
+      </div>
+    </div>
+  `;
+  mountModal(modal);
+}
+
+function openFullDataResetFinalConfirmation() {
+  const modal = document.getElementById("full-data-reset-modal");
+  if (!modal) return;
+  modal.innerHTML = `
+    <div class="modal-content data-reset-modal" role="dialog" aria-modal="true" aria-labelledby="full-data-reset-final-title">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow">Final confirmation</span>
+          <h2 class="modal-title" id="full-data-reset-final-title">This cannot be undone</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close reset confirmation">&times;</button>
+      </div>
+      <div class="data-reset-body">
+        <p>The next button permanently deletes all registered data listed below. It does not affect the built-in vocabulary bank.</p>
+        ${getFullDataResetSummaryHTML()}
+        <label class="data-reset-confirmation" for="full-data-reset-acknowledgement">
+          <input id="full-data-reset-acknowledgement" type="checkbox" onchange="setFullDataResetFinalEnabled(this.checked)">
+          <span>I understand that this deletes my registered progress and review data.</span>
+        </label>
+      </div>
+      <div class="history-review-actions data-reset-actions">
+        <button class="btn btn-secondary" onclick="openFullDataResetModal()">Go back</button>
+        <button class="btn btn-danger" id="full-data-reset-submit" onclick="resetAllRegisteredData()" disabled>Delete all registered data</button>
+      </div>
+    </div>
+  `;
+  document.getElementById("full-data-reset-acknowledgement")?.focus();
+}
+
+function setFullDataResetFinalEnabled(confirmed) {
+  const submit = document.getElementById("full-data-reset-submit");
+  if (submit) submit.disabled = !confirmed;
+}
+
+function clearRegisteredDataFromLocalStorage() {
+  [
+    LOCAL_HISTORY_KEY,
+    `c2_history_${getProfileKey(OWNER_PROFILE)}`,
+    "c2_history_Candidate_C2",
+    LOCAL_VOCABULARY_KEY,
+    LOCAL_VOCABULARY_REVIEW_KEY,
+    LOCAL_ERROR_REVIEW_KEY
+  ].forEach(key => localStorage.removeItem(key));
+}
+
+function resetRegisteredDataState() {
+  if (vocabularySyncTimeoutId) clearTimeout(vocabularySyncTimeoutId);
+  vocabularySyncTimeoutId = null;
+  STATE.history = [];
+  STATE.vocabularyEntries = [];
+  STATE.vocabularyArchivedIds = [];
+  STATE.vocabularyReviewStats = {};
+  STATE.vocabularyReviewSettings = C2_STUDY_REVIEW.normalizeStudyReviewSettings();
+  STATE.vocabularyUpdatedAt = 0;
+  STATE.errorReviewStats = {};
+  STATE.errorReviewSettings = C2_STUDY_REVIEW.normalizeStudyReviewSettings();
+  STATE.errorReviewUpdatedAt = 0;
+  STATE.vocabularyReviewSession = null;
+  STATE.errorReviewSession = null;
+  STATE.vocabularyEditingId = null;
+  STATE.vocabularyNotice = "";
+  clearRegisteredDataFromLocalStorage();
+}
+
+async function resetAllRegisteredData() {
+  if (!document.getElementById("full-data-reset-acknowledgement")?.checked) return;
+  resetRegisteredDataState();
+  closeAllModals();
+
+  const userId = STATE.supabaseSession?.user?.id;
+  let resetWarning = "";
+  if (STATE.isAuthenticated && userId) {
+    try {
+      STATE.syncStatus = "syncing";
+      STATE.syncMessage = "Clearing registered data";
+      await supabaseRequest(`/c2_attempts?user_id=eq.${encodeURIComponent(userId)}`, {
+        method: "DELETE"
+      });
+      STATE.syncStatus = "synced";
+      STATE.syncMessage = "All registered data cleared";
+    } catch (error) {
+      console.error("Online data reset failed", error);
+      STATE.syncStatus = "local";
+      STATE.syncMessage = "Cleared locally";
+      resetWarning = "Your browser was reset, but the online reset failed. Please sign in and run Reset all data again before relying on a clean start.";
+    }
+  } else {
+    STATE.syncStatus = "local";
+    STATE.syncMessage = "Cleared locally";
   }
+
+  renderDashboard();
+  if (resetWarning) alert(resetWarning);
 }
 
 function storeInputAnswer(qNum, value) {

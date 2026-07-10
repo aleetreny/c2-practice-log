@@ -143,12 +143,6 @@
   padding: 8px 14px;
 }
 
-.ue-error-review-controls {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 8px;
-}
 
 .study-review-container .review-main {
   max-width: 1120px;
@@ -441,14 +435,6 @@
     width: 100%;
   }
 
-  .ue-error-review-controls {
-    width: 100%;
-  }
-
-  .ue-error-review-controls .btn {
-    flex: 1;
-    width: auto;
-  }
 
   .study-review-part-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -707,6 +693,24 @@ button {
 .btn-secondary {
   background: #ffffff;
   color: var(--text-main);
+}
+
+.btn-danger {
+  border-color: var(--color-error);
+  background: var(--color-error);
+  color: #ffffff;
+}
+
+.btn-danger:hover:not(:disabled) {
+  border-color: #9f2630;
+  background: #9f2630;
+}
+
+.btn-danger:disabled {
+  border-color: #d8a6aa;
+  background: #d8a6aa;
+  color: rgba(255, 255, 255, 0.86);
+  cursor: not-allowed;
 }
 
 .btn-full {
@@ -6261,6 +6265,94 @@ kbd {
   margin-top: 18px;
 }
 
+.data-reset-modal {
+  width: min(590px, 100%);
+}
+
+.data-reset-body {
+  display: grid;
+  gap: 16px;
+  overflow-y: auto;
+  padding: 2px;
+}
+
+.data-reset-body > p {
+  color: var(--text-muted);
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.data-reset-summary {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.data-reset-summary span {
+  display: grid;
+  gap: 2px;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #fbfcfd;
+  color: var(--text-muted);
+  font-size: 0.7rem;
+}
+
+.data-reset-summary strong {
+  color: var(--text-main);
+  font-size: 1rem;
+}
+
+.data-reset-warning {
+  display: grid;
+  gap: 4px;
+  padding: 13px;
+  border: 1px solid #e2b1b5;
+  border-radius: 9px;
+  background: var(--color-error-bg);
+  color: #5c252a;
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
+.data-reset-warning strong {
+  color: var(--color-error);
+  text-transform: uppercase;
+  font-size: 0.68rem;
+  letter-spacing: 0.07em;
+}
+
+.data-reset-sync-note {
+  font-size: 0.75rem !important;
+}
+
+.data-reset-confirmation {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 13px;
+  border: 1px solid #e2b1b5;
+  border-radius: 9px;
+  background: var(--color-error-bg);
+  color: #5c252a;
+  font-size: 0.8rem;
+  font-weight: 750;
+  line-height: 1.4;
+  cursor: pointer;
+}
+
+.data-reset-confirmation input {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  accent-color: var(--color-error);
+}
+
+.data-reset-actions {
+  margin-top: 18px;
+}
+
 @media (max-width: 980px) {
   .app-topbar {
     align-items: flex-start;
@@ -6435,6 +6527,10 @@ kbd {
 
   .review-algorithm-weight-grid,
   .review-algorithm-penalty-field {
+    grid-template-columns: 1fr;
+  }
+
+  .data-reset-summary {
     grid-template-columns: 1fr;
   }
 
