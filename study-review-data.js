@@ -4,8 +4,20 @@
   const STUDY_REVIEW_RATING_WEIGHTS = {
     again: 2.25,
     unsure: 1,
-    known: 0.45
+    known: 0.25
   };
+  const DEFAULT_STUDY_REVIEW_SETTINGS = Object.freeze({
+    againWeight: STUDY_REVIEW_RATING_WEIGHTS.again,
+    unsureWeight: STUDY_REVIEW_RATING_WEIGHTS.unsure,
+    knownWeight: STUDY_REVIEW_RATING_WEIGHTS.known,
+    reviewCountPenalty: 0.35
+  });
+  const STUDY_REVIEW_WEIGHT_LIMITS = Object.freeze({
+    minRatingWeight: 0.05,
+    maxRatingWeight: 20,
+    minReviewCountPenalty: 0,
+    maxReviewCountPenalty: 2
+  });
   const TRACKED_PARTS = [
     { id: "reading:part1", section: "reading", partKey: "part1", startQ: 1, endQ: 8 },
     { id: "useOfEnglish:part2", section: "useOfEnglish", partKey: "part2", startQ: 9, endQ: 16 },
@@ -87,26 +99,83 @@
     return STUDY_REVIEW_RATINGS.includes(rating) ? rating : "";
   }
 
-  function getStudyReviewRatingWeight(value) {
+  function clampStudyReviewSetting(value, fallback, minimum, maximum) {
+    const numericValue = Number(value);
+    if (!Number.isFinite(numericValue)) return fallback;
+    return Math.min(maximum, Math.max(minimum, numericValue));
+  }
+
+  function normalizeStudyReviewSettings(value) {
+    const source = plainObject(value);
+    return {
+      againWeight: clampStudyReviewSetting(
+        source.againWeight,
+        DEFAULT_STUDY_REVIEW_SETTINGS.againWeight,
+        STUDY_REVIEW_WEIGHT_LIMITS.minRatingWeight,
+        STUDY_REVIEW_WEIGHT_LIMITS.maxRatingWeight
+      ),
+      unsureWeight: clampStudyReviewSetting(
+        source.unsureWeight,
+        DEFAULT_STUDY_REVIEW_SETTINGS.unsureWeight,
+        STUDY_REVIEW_WEIGHT_LIMITS.minRatingWeight,
+        STUDY_REVIEW_WEIGHT_LIMITS.maxRatingWeight
+      ),
+      knownWeight: clampStudyReviewSetting(
+        source.knownWeight,
+        DEFAULT_STUDY_REVIEW_SETTINGS.knownWeight,
+        STUDY_REVIEW_WEIGHT_LIMITS.minRatingWeight,
+        STUDY_REVIEW_WEIGHT_LIMITS.maxRatingWeight
+      ),
+      reviewCountPenalty: clampStudyReviewSetting(
+        source.reviewCountPenalty,
+        DEFAULT_STUDY_REVIEW_SETTINGS.reviewCountPenalty,
+        STUDY_REVIEW_WEIGHT_LIMITS.minReviewCountPenalty,
+        STUDY_REVIEW_WEIGHT_LIMITS.maxReviewCountPenalty
+      )
+    };
+  }
+
+  function getStudyReviewRatingWeight(value, settings) {
     const rating = normalizeStudyReviewRating(value) || "unsure";
-    return STUDY_REVIEW_RATING_WEIGHTS[rating];
+    const normalizedSettings = normalizeStudyReviewSettings(settings);
+    return normalizedSettings[`${rating}Weight`];
   }
 
-  function getStudyReviewCandidateWeight(candidate, reviewStats = {}) {
+  function getStudyReviewReviewCount(value) {
+    const stat = plainObject(value);
+    const views = Number(stat.views);
+    if (Number.isFinite(views)) return Math.max(0, Math.floor(views));
+
+    return STUDY_REVIEW_RATINGS.reduce((total, rating) => {
+      return total + Math.max(0, Math.floor(Number(stat[rating]) || 0));
+    }, 0);
+  }
+
+  function getStudyReviewCountWeightFactor(reviewCount, settings) {
+    const normalizedSettings = normalizeStudyReviewSettings(settings);
+    const count = Math.max(0, Math.floor(Number(reviewCount) || 0));
+    return 1 / Math.sqrt(1 + count * normalizedSettings.reviewCountPenalty);
+  }
+
+  function getStudyReviewCandidateWeight(candidate, reviewStats = {}, settings) {
     const key = typeof candidate === "string" ? candidate : candidate?.key;
-    const stat = plainObject(reviewStats)[key];
-    return getStudyReviewRatingWeight(plainObject(stat).lastRating);
+    const storedStat = plainObject(reviewStats)[key];
+    const candidateStat = typeof candidate === "object" ? candidate?.reviewStat : null;
+    const stat = Object.keys(plainObject(storedStat)).length ? storedStat : candidateStat;
+    const ratingWeight = getStudyReviewRatingWeight(plainObject(stat).lastRating, settings);
+    return ratingWeight * getStudyReviewCountWeightFactor(getStudyReviewReviewCount(stat), settings);
   }
 
-  function selectWeightedStudyReviewItems(candidates, reviewStats = {}, size = candidates.length, randomFn = Math.random) {
+  function selectWeightedStudyReviewItems(candidates, reviewStats = {}, size = candidates.length, randomFn = Math.random, settings) {
     const pool = Array.isArray(candidates) ? [...candidates] : [];
     const limit = Math.max(0, Math.min(Number(size) || 0, pool.length));
+    const normalizedSettings = normalizeStudyReviewSettings(settings);
     const selected = [];
 
     while (selected.length < limit && pool.length > 0) {
       const weights = pool.map(candidate => {
-        const weight = Number(getStudyReviewCandidateWeight(candidate, reviewStats));
-        return Number.isFinite(weight) && weight > 0 ? weight : STUDY_REVIEW_RATING_WEIGHTS.unsure;
+        const weight = Number(getStudyReviewCandidateWeight(candidate, reviewStats, normalizedSettings));
+        return Number.isFinite(weight) && weight > 0 ? weight : normalizedSettings.unsureWeight;
       });
       const totalWeight = weights.reduce((sum, weight) => sum + weight, 0);
 
@@ -360,8 +429,13 @@
     matchesTrackedErrorSearch,
     STUDY_REVIEW_RATINGS,
     STUDY_REVIEW_RATING_WEIGHTS,
+    DEFAULT_STUDY_REVIEW_SETTINGS,
+    STUDY_REVIEW_WEIGHT_LIMITS,
     normalizeStudyReviewRating,
+    normalizeStudyReviewSettings,
     getStudyReviewRatingWeight,
+    getStudyReviewReviewCount,
+    getStudyReviewCountWeightFactor,
     getStudyReviewCandidateWeight,
     selectWeightedStudyReviewItems,
     parseLegacyCorrectAnswerLine,

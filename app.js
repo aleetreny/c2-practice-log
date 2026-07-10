@@ -23,6 +23,7 @@ const STATE = {
   vocabularyReviewStats: {},
   vocabularyUpdatedAt: 0,
   errorReviewStats: {},
+  errorReviewSettings: C2_STUDY_REVIEW.normalizeStudyReviewSettings(),
   errorReviewUpdatedAt: 0,
   vocabularyFilters: {
     query: "",
@@ -65,6 +66,7 @@ const LOCAL_HISTORY_KEY = "c2_owner_history";
 const LOCAL_VOCABULARY_KEY = "c2_vocabulary_library";
 const LOCAL_VOCABULARY_REVIEW_KEY = "c2_vocabulary_review_stats";
 const LOCAL_ERROR_REVIEW_KEY = "c2_error_review_stats_v1";
+const ERROR_REVIEW_RATED_VIEW_LIMIT = 50;
 const VOCABULARY_STATE_ID_PREFIX = "vocabulary_state_";
 const SUPABASE_SESSION_KEY = "c2_supabase_session";
 const SUPABASE_CONFIG = {
@@ -144,6 +146,7 @@ function loadLocalStorage() {
     STATE.vocabularyReviewStats = storedReviewStats && typeof storedReviewStats === "object" ? storedReviewStats : {};
     const storedErrorReview = parseStoredErrorReviewState(localStorage.getItem(LOCAL_ERROR_REVIEW_KEY));
     STATE.errorReviewStats = storedErrorReview.stats;
+    STATE.errorReviewSettings = storedErrorReview.settings;
     STATE.errorReviewUpdatedAt = storedErrorReview.updatedAt;
   } catch (e) {
     console.error("Failed to load local storage", e);
@@ -152,6 +155,7 @@ function loadLocalStorage() {
     STATE.vocabularyArchivedIds = [];
     STATE.vocabularyReviewStats = {};
     STATE.errorReviewStats = {};
+    STATE.errorReviewSettings = C2_STUDY_REVIEW.normalizeStudyReviewSettings();
     STATE.errorReviewUpdatedAt = 0;
     STATE.vocabularyUpdatedAt = 0;
   }
@@ -174,8 +178,9 @@ function saveVocabularyLocalStorage(options = {}) {
 function saveErrorReviewLocalStorage(options = {}) {
   try {
     localStorage.setItem(LOCAL_ERROR_REVIEW_KEY, JSON.stringify({
-      version: 1,
+      version: 2,
       stats: STATE.errorReviewStats,
+      settings: STATE.errorReviewSettings,
       updatedAt: STATE.errorReviewUpdatedAt
     }));
     if (options.sync !== false) queueVocabularyCloudSync();
@@ -244,8 +249,12 @@ function parseStoredHistory(raw) {
 function normalizeStoredErrorReviewStat(value) {
   const source = getPlainObject(value);
   const lastRating = C2_STUDY_REVIEW.normalizeStudyReviewRating(source.lastRating);
+  const ratingCount = C2_STUDY_REVIEW.STUDY_REVIEW_RATINGS.reduce(
+    (total, rating) => total + Math.max(0, Math.floor(Number(source[rating]) || 0)),
+    0
+  );
   const stat = {
-    views: Math.max(0, Math.floor(Number(source.views) || 0)),
+    views: Math.max(ratingCount, Math.max(0, Math.floor(Number(source.views) || 0))),
     again: Math.max(0, Math.floor(Number(source.again) || 0)),
     unsure: Math.max(0, Math.floor(Number(source.unsure) || 0)),
     known: Math.max(0, Math.floor(Number(source.known) || 0)),
@@ -265,13 +274,18 @@ function normalizeErrorReviewStats(value) {
 }
 
 function parseStoredErrorReviewState(raw) {
-  if (!raw) return { stats: {}, updatedAt: 0 };
+  if (!raw) return {
+    stats: {},
+    settings: C2_STUDY_REVIEW.normalizeStudyReviewSettings(),
+    updatedAt: 0
+  };
   const parsed = JSON.parse(raw);
   const payload = getPlainObject(parsed);
   const statsSource = payload.stats ? payload.stats : parsed;
 
   return {
     stats: normalizeErrorReviewStats(statsSource),
+    settings: C2_STUDY_REVIEW.normalizeStudyReviewSettings(payload.settings),
     updatedAt: Math.max(0, Number(payload.updatedAt) || 0)
   };
 }
@@ -517,6 +531,7 @@ function vocabularyStateToSupabaseRow() {
       reviewStats: STATE.vocabularyReviewStats,
       vocabularyUpdatedAt: STATE.vocabularyUpdatedAt,
       errorReviewStats: STATE.errorReviewStats,
+      errorReviewSettings: STATE.errorReviewSettings,
       errorReviewUpdatedAt: STATE.errorReviewUpdatedAt,
       updatedAt
     },
@@ -562,6 +577,7 @@ function applyRemoteErrorReviewState(row) {
   const payload = row?.answers;
   if (!payload || payload.__kind !== "vocabulary_state") return false;
   STATE.errorReviewStats = normalizeErrorReviewStats(payload.errorReviewStats);
+  STATE.errorReviewSettings = C2_STUDY_REVIEW.normalizeStudyReviewSettings(payload.errorReviewSettings);
   STATE.errorReviewUpdatedAt = getRemoteErrorReviewUpdatedAt(row);
   saveErrorReviewLocalStorage({ sync: false });
   return true;
@@ -2431,6 +2447,118 @@ function getErrorReviewRatingDetail(rating) {
   return "normal weight";
 }
 
+function getErrorReviewSettings() {
+  const settings = C2_STUDY_REVIEW.normalizeStudyReviewSettings(STATE.errorReviewSettings);
+  STATE.errorReviewSettings = settings;
+  return settings;
+}
+
+function formatErrorReviewWeight(value) {
+  return Number(value).toLocaleString("en-GB", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2
+  });
+}
+
+function getErrorReviewAlgorithmSummary(settings = getErrorReviewSettings()) {
+  const factorAtFourReviews = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(4, settings);
+  return `Again ${formatErrorReviewWeight(settings.againWeight)}× · Unsure ${formatErrorReviewWeight(settings.unsureWeight)}× · Got it ${formatErrorReviewWeight(settings.knownWeight)}× · ${Math.round(factorAtFourReviews * 100)}% weight after 4 reviews`;
+}
+
+function refreshErrorReviewAlgorithmSettingsPreview() {
+  const settings = getErrorReviewSettings();
+  const factorAtFourReviews = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(4, settings);
+  const factorAtEightReviews = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(8, settings);
+
+  document.querySelectorAll("[data-error-review-algorithm-summary]").forEach(element => {
+    element.textContent = getErrorReviewAlgorithmSummary(settings);
+  });
+  document.querySelectorAll("[data-error-review-four-review-factor]").forEach(element => {
+    element.textContent = `${Math.round(factorAtFourReviews * 100)}%`;
+  });
+  document.querySelectorAll("[data-error-review-eight-review-factor]").forEach(element => {
+    element.textContent = `${Math.round(factorAtEightReviews * 100)}%`;
+  });
+}
+
+function renderErrorReviewAlgorithmSettingsHTML() {
+  const settings = getErrorReviewSettings();
+  const limits = C2_STUDY_REVIEW.STUDY_REVIEW_WEIGHT_LIMITS;
+  const fields = [
+    ["againWeight", "Again", "Cards you could not retrieve."],
+    ["unsureWeight", "Unsure", "Also used for cards you have not rated yet."],
+    ["knownWeight", "Got it", "Cards you recalled quickly and accurately."]
+  ];
+
+  return `
+    <div class="modal-content review-algorithm-modal" role="dialog" aria-modal="true" aria-labelledby="review-algorithm-title">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow">Exercise review</span>
+          <h2 class="modal-title" id="review-algorithm-title">Tune the selection algorithm</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close algorithm settings">&times;</button>
+      </div>
+      <div class="review-algorithm-body">
+        <p>Each card starts with the weight for its latest rating. That weight is then reduced as the same card has been reviewed more times.</p>
+        <div class="review-algorithm-weight-grid">
+          ${fields.map(([key, label, description]) => `
+            <label class="review-algorithm-field">
+              <span>${label}</span>
+              <input id="error-review-setting-${key}" type="number" min="${limits.minRatingWeight}" max="${limits.maxRatingWeight}" step="0.05" inputmode="decimal" value="${settings[key]}" oninput="updateErrorReviewAlgorithmSetting('${key}', this.value)">
+              <small>${description}</small>
+            </label>
+          `).join("")}
+        </div>
+        <label class="review-algorithm-field review-algorithm-penalty-field">
+          <span>Prefer less-reviewed cards</span>
+          <input id="error-review-setting-reviewCountPenalty" type="number" min="${limits.minReviewCountPenalty}" max="${limits.maxReviewCountPenalty}" step="0.05" inputmode="decimal" value="${settings.reviewCountPenalty}" oninput="updateErrorReviewAlgorithmSetting('reviewCountPenalty', this.value)">
+          <small>0 keeps all review counts equal. Higher values spread the round across less-seen cards more strongly.</small>
+        </label>
+        <div class="review-algorithm-preview" aria-live="polite">
+          <strong>Current balance</strong>
+          <span data-error-review-algorithm-summary>${escapeHTML(getErrorReviewAlgorithmSummary(settings))}</span>
+          <small>A card with 4 reviews keeps <b data-error-review-four-review-factor>${Math.round(C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(4, settings) * 100)}%</b> of its category weight; after 8 reviews it keeps <b data-error-review-eight-review-factor>${Math.round(C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(8, settings) * 100)}%</b>.</small>
+        </div>
+      </div>
+      <div class="history-review-actions review-algorithm-actions">
+        <button class="btn btn-secondary" onclick="resetErrorReviewAlgorithmSettings()">Restore defaults</button>
+        <button class="btn btn-primary" onclick="closeModal()">Done</button>
+      </div>
+    </div>
+  `;
+}
+
+function openErrorReviewAlgorithmSettings() {
+  if (document.getElementById("review-algorithm-modal")) return;
+  const modal = document.createElement("div");
+  modal.id = "review-algorithm-modal";
+  modal.className = "modal-overlay review-algorithm-overlay";
+  modal.innerHTML = renderErrorReviewAlgorithmSettingsHTML();
+  mountModal(modal);
+  document.getElementById("error-review-setting-againWeight")?.focus();
+}
+
+function updateErrorReviewAlgorithmSetting(key, value) {
+  if (!["againWeight", "unsureWeight", "knownWeight", "reviewCountPenalty"].includes(key)) return;
+  STATE.errorReviewSettings = C2_STUDY_REVIEW.normalizeStudyReviewSettings({
+    ...getErrorReviewSettings(),
+    [key]: value
+  });
+  markErrorReviewChanged();
+  refreshErrorReviewAlgorithmSettingsPreview();
+}
+
+function resetErrorReviewAlgorithmSettings() {
+  STATE.errorReviewSettings = C2_STUDY_REVIEW.normalizeStudyReviewSettings();
+  markErrorReviewChanged();
+  Object.entries(STATE.errorReviewSettings).forEach(([key, value]) => {
+    const input = document.getElementById(`error-review-setting-${key}`);
+    if (input) input.value = value;
+  });
+  refreshErrorReviewAlgorithmSettingsPreview();
+}
+
 function saveErrorReviewRating(key, rating, options = {}) {
   const normalizedRating = C2_STUDY_REVIEW.normalizeStudyReviewRating(rating);
   if (!key || !normalizedRating) return null;
@@ -2521,7 +2649,7 @@ function getStudyReviewCandidates(setup = STATE.errorReviewSetup) {
         const reviewStat = getErrorReviewStat(candidate.key);
         candidate.reviewStat = reviewStat;
         candidate.lastReviewRating = reviewStat.lastRating;
-        candidate.reviewWeight = C2_STUDY_REVIEW.getStudyReviewCandidateWeight(candidate, STATE.errorReviewStats);
+        candidate.reviewWeight = C2_STUDY_REVIEW.getStudyReviewCandidateWeight(candidate, STATE.errorReviewStats, getErrorReviewSettings());
         if (selectionMode === "again" && reviewStat.lastRating !== "again") continue;
         candidates.push(candidate);
       }
@@ -2570,6 +2698,8 @@ function renderErrorReview() {
 
 function renderErrorReviewSetupHTML() {
   const setup = STATE.errorReviewSetup;
+  const algorithmSettings = getErrorReviewSettings();
+  const algorithmSummary = getErrorReviewAlgorithmSummary(algorithmSettings);
   if (!["smart", "again"].includes(setup.selectionMode)) setup.selectionMode = "smart";
   if (!["missed", "all"].includes(setup.scope)) setup.scope = "missed";
   if (![5, 10, 20].includes(Number(setup.size))) setup.size = 10;
@@ -2585,6 +2715,10 @@ function renderErrorReviewSetupHTML() {
         <button class="study-review-back" onclick="renderDashboard()">&larr; Back to Error log</button>
         <span class="eyebrow">Exercise review</span>
         <h1>Turn corrections into recall.</h1>
+        <div class="study-review-algorithm-action">
+          <button class="btn btn-secondary" onclick="openErrorReviewAlgorithmSettings()">Adjust algorithm</button>
+          <small data-error-review-algorithm-summary>${escapeHTML(algorithmSummary)}</small>
+        </div>
         <p>Random questions from Reading Part 1 and Use of English Parts 2–4, built from your saved exercises.</p>
       </div>
       <div class="review-setup-count"><strong>${eligible.length.toLocaleString("en-GB")}</strong><span>cards available</span></div>
@@ -2614,7 +2748,7 @@ function renderErrorReviewSetupHTML() {
           <h2>How should cards be chosen?</h2>
           <div class="review-mode-grid">
             ${[
-              ["smart", "Smart algorithm", `${smartCount.toLocaleString("en-GB")} eligible`, "Unrated and unsure stay normal; again appears more, got it less."],
+              ["smart", "Smart algorithm", `${smartCount.toLocaleString("en-GB")} eligible`, `Uses your weights: Again ${formatErrorReviewWeight(algorithmSettings.againWeight)}×, Unsure ${formatErrorReviewWeight(algorithmSettings.unsureWeight)}×, Got it ${formatErrorReviewWeight(algorithmSettings.knownWeight)}×. Within each rating, less-reviewed cards rise.`],
               ["again", "Again only", `${againCount.toLocaleString("en-GB")} marked again`, "Only cards whose latest rating is Again."]
             ].map(([key, title, count, detail]) => `<button class="review-mode-card ${setup.selectionMode === key ? "active" : ""}" onclick="setErrorReviewOption('selectionMode','${key}')"><strong>${title}<small>${count}</small></strong><span>${detail}</span></button>`).join("")}
           </div>
@@ -2639,7 +2773,7 @@ function renderErrorReviewSetupHTML() {
       </div>
 
       <div class="review-launch-row">
-        <div><strong>${eligible.length && selectedParts.size ? `${readyCount} ${readyCount === 1 ? "card" : "cards"} ready` : "No cards for this selection"}</strong><span>${setup.selectionMode === "again" ? "Using only cards whose latest rating is Again." : "Weighted every round from the latest rating only."}</span></div>
+        <div><strong>${eligible.length && selectedParts.size ? `${readyCount} ${readyCount === 1 ? "card" : "cards"} ready` : "No cards for this selection"}</strong><span>${setup.selectionMode === "again" ? "Using only cards whose latest rating is Again; less-reviewed cards still rise within that group." : "Weighted by latest rating and total prior reviews."}</span></div>
         <button class="btn btn-primary review-launch-button" onclick="startErrorReviewSession()" ${eligible.length && selectedParts.size ? "" : "disabled"}>Start review</button>
       </div>
     </section>
@@ -2731,7 +2865,8 @@ function renderErrorReviewRatedTableRowsHTML(rows) {
 }
 
 function renderErrorReviewRatedTableHTML() {
-  const rows = getRatedErrorReviewRows();
+  const allRows = getRatedErrorReviewRows();
+  const rows = allRows.slice(0, ERROR_REVIEW_RATED_VIEW_LIMIT);
   const ratingCounts = Object.fromEntries(C2_STUDY_REVIEW.STUDY_REVIEW_RATINGS.map(rating => [
     rating,
     rows.filter(row => row.reviewStat.lastRating === rating).length
@@ -2748,9 +2883,10 @@ function renderErrorReviewRatedTableHTML() {
           <span class="eyebrow">Rated reviews</span>
           <h2 id="error-review-rated-title">Latest card ratings</h2>
         </div>
-        <small id="error-review-rated-count">${rows.length} ${rows.length === 1 ? "rated card" : "rated cards"}</small>
+        <small id="error-review-rated-count">${rows.length} ${rows.length === 1 ? "rated card" : "rated cards"}${allRows.length > rows.length ? ` of ${allRows.length}` : ""}</small>
       </div>
       ${rows.length ? `
+        ${allRows.length > rows.length ? `<p class="error-review-rated-limit-note">Showing the 50 most recently rated cards. The review algorithm still uses every eligible card.</p>` : ""}
         <div class="error-review-rated-filters">
           <label>
             <span>Rating</span>
@@ -2826,7 +2962,9 @@ function startErrorReviewSession() {
   const items = C2_STUDY_REVIEW.selectWeightedStudyReviewItems(
     eligible,
     STATE.errorReviewStats,
-    Number(STATE.errorReviewSetup.size)
+    Number(STATE.errorReviewSetup.size),
+    Math.random,
+    getErrorReviewSettings()
   );
   STATE.errorReviewSession = {
     itemKeys: items.map(item => item.key),
@@ -2857,6 +2995,7 @@ function renderErrorReviewSessionHTML() {
     <section class="review-session-shell study-review-session">
       <div class="review-session-topbar">
         <button class="btn btn-secondary" onclick="exitErrorReviewSession()">End round</button>
+        <button class="btn btn-secondary review-algorithm-session-button" onclick="openErrorReviewAlgorithmSettings()">Adjust algorithm</button>
         <div class="review-progress-copy"><strong>${session.index + 1} / ${session.itemKeys.length}</strong><span>${escapeHTML(card.partLabel)}</span></div>
         <div class="review-progress-track" aria-label="${progress}% complete"><span style="width:${progress}%"></span></div>
       </div>
@@ -2937,6 +3076,7 @@ function renderErrorReviewCompleteHTML(session) {
       </div>
       <div class="review-complete-actions">
         <button class="btn btn-primary" onclick="startErrorReviewSession()">Another random round</button>
+        <button class="btn btn-secondary" onclick="openErrorReviewAlgorithmSettings()">Adjust algorithm</button>
         <button class="btn btn-secondary" onclick="exitErrorReviewSession()">Change setup</button>
         <button class="btn btn-secondary" onclick="renderDashboard()">Back to Error log</button>
       </div>
@@ -3617,7 +3757,10 @@ function renderErrorLogDashboardHTML() {
           <span>Error log</span>
           <small>${errors.length} ${errors.length === 1 ? "saved correction" : "saved corrections"}</small>
         </div>
-        <button class="btn btn-primary ue-start-review" onclick="openErrorReview()" ${getStudyReviewCandidates({ ...STATE.errorReviewSetup, scope: "all", selectionMode: "smart" }).length ? "" : "disabled"}>Review exercises</button>
+        <div class="ue-error-review-controls">
+          <button class="btn btn-secondary" onclick="openErrorReviewAlgorithmSettings()">Adjust algorithm</button>
+          <button class="btn btn-primary ue-start-review" onclick="openErrorReview()" ${getStudyReviewCandidates({ ...STATE.errorReviewSetup, scope: "all", selectionMode: "smart" }).length ? "" : "disabled"}>Review exercises</button>
+        </div>
       </div>
       ${errors.length === 0 ? `
         <div class="empty-state ue-errors-empty">Corrections from Reading Part 1 and Use of English Parts 2–4 will appear here.</div>

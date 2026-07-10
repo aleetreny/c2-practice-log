@@ -43,6 +43,8 @@ assert.match(appSource, /saveErrorReviewRating\(key, rating, \{ countView: true 
 assert.match(appSource, /\["again", "Again only"/, "Review setup must offer an Again-only criterion.");
 assert.match(appSource, /id="error-review-rated-table-body"/, "Exercise review must show the editable rated review table.");
 assert.match(appSource, /function filterErrorReviewRatedTable\(/, "Rated review table must provide local filtering.");
+assert.match(appSource, /ERROR_REVIEW_RATED_VIEW_LIMIT = 50/, "Rated review tables must cap each view at 50 cards.");
+assert.match(appSource, /allRows\.slice\(0, ERROR_REVIEW_RATED_VIEW_LIMIT\)/, "Only the newest 50 rated cards should render in one view.");
 assert.match(appSource, /updateErrorReviewRatingFromTable/, "Rated review rows must be editable.");
 assert.match(appSource, /Open exercise/, "Rated review rows must link back to the saved exercise.");
 assert.doesNotMatch(getFunctionSource("filterTrackedPartErrors"), /STATE\./, "Correction modal filters must not alter dashboard state.");

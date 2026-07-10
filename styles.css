@@ -143,6 +143,13 @@
   padding: 8px 14px;
 }
 
+.ue-error-review-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
 .study-review-container .review-main {
   max-width: 1120px;
   width: 100%;
@@ -164,6 +171,20 @@
   font: inherit;
   font-size: 0.78rem;
   font-weight: 800;
+}
+
+.study-review-algorithm-action {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px 12px;
+  margin-top: 14px;
+}
+
+.study-review-algorithm-action small {
+  color: var(--text-muted);
+  font-size: 0.7rem;
+  font-weight: 700;
 }
 
 .study-review-part-grid {
@@ -418,6 +439,15 @@
 
   .ue-start-review {
     width: 100%;
+  }
+
+  .ue-error-review-controls {
+    width: 100%;
+  }
+
+  .ue-error-review-controls .btn {
+    flex: 1;
+    width: auto;
   }
 
   .study-review-part-grid {
@@ -5791,6 +5821,13 @@ input.sheet-text-input:disabled,
   text-transform: uppercase;
 }
 
+.error-review-rated-limit-note {
+  margin: 12px 0 0;
+  color: var(--text-muted);
+  font-size: 0.74rem;
+  line-height: 1.4;
+}
+
 .error-review-rated-filters {
   display: grid;
   grid-template-columns: minmax(135px, 0.8fr) minmax(190px, 1fr) minmax(220px, 1.4fr);
@@ -5914,9 +5951,13 @@ input.sheet-text-input:disabled,
 
 .review-session-topbar {
   display: grid;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: auto auto auto 1fr;
   align-items: center;
   gap: 16px;
+}
+
+.review-algorithm-session-button {
+  white-space: nowrap;
 }
 
 .review-progress-copy {
@@ -6117,6 +6158,109 @@ kbd {
   margin-top: 25px;
 }
 
+.review-algorithm-modal {
+  width: min(600px, 100%);
+}
+
+.review-algorithm-body {
+  display: grid;
+  gap: 18px;
+  overflow-y: auto;
+  padding: 2px 2px 4px;
+}
+
+.review-algorithm-body > p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.5;
+}
+
+.review-algorithm-weight-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.review-algorithm-field {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  background: #fbfcfd;
+}
+
+.review-algorithm-field > span {
+  color: var(--text-main);
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.review-algorithm-field input {
+  width: 100%;
+  min-height: 38px;
+  padding: 8px 9px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  background: #fff;
+  color: var(--text-main);
+  font: inherit;
+  font-weight: 750;
+  outline: none;
+}
+
+.review-algorithm-field input:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.1);
+}
+
+.review-algorithm-field small {
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  line-height: 1.35;
+}
+
+.review-algorithm-penalty-field {
+  grid-template-columns: minmax(150px, 0.9fr) minmax(100px, 0.45fr) minmax(0, 1.65fr);
+  align-items: center;
+}
+
+.review-algorithm-penalty-field small {
+  grid-column: 3;
+}
+
+.review-algorithm-preview {
+  display: grid;
+  gap: 5px;
+  padding: 14px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+}
+
+.review-algorithm-preview strong {
+  color: var(--accent-color);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.review-algorithm-preview > span {
+  font-size: 0.87rem;
+  font-weight: 800;
+}
+
+.review-algorithm-preview small {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.review-algorithm-actions {
+  margin-top: 18px;
+}
+
 @media (max-width: 980px) {
   .app-topbar {
     align-items: flex-start;
@@ -6272,11 +6416,30 @@ kbd {
   }
 
   .review-session-topbar {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto auto;
+    gap: 10px;
   }
 
   .review-progress-track {
     grid-column: 1 / -1;
+  }
+
+  .review-progress-copy {
+    grid-column: 1 / -1;
+  }
+
+  .study-review-algorithm-action {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .review-algorithm-weight-grid,
+  .review-algorithm-penalty-field {
+    grid-template-columns: 1fr;
+  }
+
+  .review-algorithm-penalty-field small {
+    grid-column: auto;
   }
 
   .review-flashcard,
