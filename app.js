@@ -21,6 +21,7 @@ const STATE = {
   vocabularyEntries: [],
   vocabularyArchivedIds: [],
   vocabularyReviewStats: {},
+  vocabularyReviewSettings: C2_STUDY_REVIEW.normalizeStudyReviewSettings(),
   vocabularyUpdatedAt: 0,
   errorReviewStats: {},
   errorReviewSettings: C2_STUDY_REVIEW.normalizeStudyReviewSettings(),
@@ -142,8 +143,9 @@ function loadLocalStorage() {
     STATE.vocabularyEntries = Array.isArray(storedVocabulary.entries) ? storedVocabulary.entries.map(stripVocabularyCategory) : [];
     STATE.vocabularyArchivedIds = Array.isArray(storedVocabulary.archivedIds) ? storedVocabulary.archivedIds : [];
     STATE.vocabularyUpdatedAt = Number(storedVocabulary.updatedAt) || 0;
-    const storedReviewStats = JSON.parse(localStorage.getItem(LOCAL_VOCABULARY_REVIEW_KEY) || "{}");
-    STATE.vocabularyReviewStats = storedReviewStats && typeof storedReviewStats === "object" ? storedReviewStats : {};
+    const storedVocabularyReview = parseStoredVocabularyReviewState(localStorage.getItem(LOCAL_VOCABULARY_REVIEW_KEY));
+    STATE.vocabularyReviewStats = storedVocabularyReview.stats;
+    STATE.vocabularyReviewSettings = storedVocabularyReview.settings;
     const storedErrorReview = parseStoredErrorReviewState(localStorage.getItem(LOCAL_ERROR_REVIEW_KEY));
     STATE.errorReviewStats = storedErrorReview.stats;
     STATE.errorReviewSettings = storedErrorReview.settings;
@@ -154,6 +156,7 @@ function loadLocalStorage() {
     STATE.vocabularyEntries = [];
     STATE.vocabularyArchivedIds = [];
     STATE.vocabularyReviewStats = {};
+    STATE.vocabularyReviewSettings = C2_STUDY_REVIEW.normalizeStudyReviewSettings();
     STATE.errorReviewStats = {};
     STATE.errorReviewSettings = C2_STUDY_REVIEW.normalizeStudyReviewSettings();
     STATE.errorReviewUpdatedAt = 0;
@@ -168,7 +171,11 @@ function saveVocabularyLocalStorage(options = {}) {
       archivedIds: STATE.vocabularyArchivedIds,
       updatedAt: STATE.vocabularyUpdatedAt
     }));
-    localStorage.setItem(LOCAL_VOCABULARY_REVIEW_KEY, JSON.stringify(STATE.vocabularyReviewStats));
+    localStorage.setItem(LOCAL_VOCABULARY_REVIEW_KEY, JSON.stringify({
+      version: 2,
+      stats: STATE.vocabularyReviewStats,
+      settings: STATE.vocabularyReviewSettings
+    }));
     if (options.sync !== false) queueVocabularyCloudSync();
   } catch (error) {
     console.error("Failed to save vocabulary", error);
@@ -244,6 +251,21 @@ function parseStoredHistory(raw) {
   if (!raw) return [];
   const parsed = JSON.parse(raw);
   return Array.isArray(parsed) ? parsed : [];
+}
+
+function parseStoredVocabularyReviewState(raw) {
+  if (!raw) return {
+    stats: {},
+    settings: C2_STUDY_REVIEW.normalizeStudyReviewSettings()
+  };
+  const parsed = JSON.parse(raw);
+  const payload = getPlainObject(parsed);
+  const statsSource = payload.stats ? payload.stats : parsed;
+
+  return {
+    stats: getPlainObject(statsSource),
+    settings: C2_STUDY_REVIEW.normalizeStudyReviewSettings(payload.settings)
+  };
 }
 
 function normalizeStoredErrorReviewStat(value) {
@@ -529,6 +551,7 @@ function vocabularyStateToSupabaseRow() {
       entries: STATE.vocabularyEntries.map(stripVocabularyCategory),
       archivedIds: STATE.vocabularyArchivedIds,
       reviewStats: STATE.vocabularyReviewStats,
+      vocabularyReviewSettings: STATE.vocabularyReviewSettings,
       vocabularyUpdatedAt: STATE.vocabularyUpdatedAt,
       errorReviewStats: STATE.errorReviewStats,
       errorReviewSettings: STATE.errorReviewSettings,
@@ -550,6 +573,7 @@ function applyRemoteVocabularyState(row) {
   STATE.vocabularyEntries = Array.isArray(payload.entries) ? payload.entries.map(stripVocabularyCategory) : [];
   STATE.vocabularyArchivedIds = Array.isArray(payload.archivedIds) ? payload.archivedIds : [];
   STATE.vocabularyReviewStats = payload.reviewStats && typeof payload.reviewStats === "object" ? payload.reviewStats : {};
+  STATE.vocabularyReviewSettings = C2_STUDY_REVIEW.normalizeStudyReviewSettings(payload.vocabularyReviewSettings);
   STATE.vocabularyUpdatedAt = getRemoteVocabularyUpdatedAt(row);
   saveVocabularyLocalStorage({ sync: false });
   return true;
@@ -2180,13 +2204,116 @@ function getReviewEligibleEntries(setup = STATE.vocabularyReviewSetup) {
     .filter(entry => ["recognition", "recall"].includes(setup.mode) && Boolean(entry.meaning));
 }
 
-function shuffleVocabularyEntries(entries) {
-  const result = [...entries];
-  for (let index = result.length - 1; index > 0; index -= 1) {
-    const swapIndex = Math.floor(Math.random() * (index + 1));
-    [result[index], result[swapIndex]] = [result[swapIndex], result[index]];
-  }
-  return result;
+function getVocabularyReviewSettings() {
+  const settings = C2_STUDY_REVIEW.normalizeStudyReviewSettings(STATE.vocabularyReviewSettings);
+  STATE.vocabularyReviewSettings = settings;
+  return settings;
+}
+
+function getVocabularyReviewAlgorithmSummary(settings = getVocabularyReviewSettings()) {
+  const factorAtFourReviews = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(4, settings);
+  return `Again ${formatErrorReviewWeight(settings.againWeight)}× · Unsure ${formatErrorReviewWeight(settings.unsureWeight)}× · Got it ${formatErrorReviewWeight(settings.knownWeight)}× · ${Math.round(factorAtFourReviews * 100)}% weight after 4 reviews`;
+}
+
+function getVocabularyReviewLaunchSummary(settings = getVocabularyReviewSettings()) {
+  return `Weighted by your separate vocabulary settings: Again ${formatErrorReviewWeight(settings.againWeight)}×, Unsure ${formatErrorReviewWeight(settings.unsureWeight)}×, Got it ${formatErrorReviewWeight(settings.knownWeight)}×.`;
+}
+
+function refreshVocabularyReviewAlgorithmSettingsPreview() {
+  const settings = getVocabularyReviewSettings();
+  const factorAtFourReviews = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(4, settings);
+  const factorAtEightReviews = C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(8, settings);
+
+  document.querySelectorAll("[data-vocabulary-review-algorithm-summary]").forEach(element => {
+    element.textContent = getVocabularyReviewAlgorithmSummary(settings);
+  });
+  document.querySelectorAll("[data-vocabulary-review-launch-summary]").forEach(element => {
+    element.textContent = getVocabularyReviewLaunchSummary(settings);
+  });
+  document.querySelectorAll("[data-vocabulary-review-four-review-factor]").forEach(element => {
+    element.textContent = `${Math.round(factorAtFourReviews * 100)}%`;
+  });
+  document.querySelectorAll("[data-vocabulary-review-eight-review-factor]").forEach(element => {
+    element.textContent = `${Math.round(factorAtEightReviews * 100)}%`;
+  });
+}
+
+function renderVocabularyReviewAlgorithmSettingsHTML() {
+  const settings = getVocabularyReviewSettings();
+  const limits = C2_STUDY_REVIEW.STUDY_REVIEW_WEIGHT_LIMITS;
+  const fields = [
+    ["againWeight", "Again", "Terms that did not come back."],
+    ["unsureWeight", "Unsure", "Also used for terms you have not rated yet."],
+    ["knownWeight", "Got it", "Terms you recalled quickly and confidently."]
+  ];
+
+  return `
+    <div class="modal-content review-algorithm-modal" role="dialog" aria-modal="true" aria-labelledby="vocabulary-review-algorithm-title">
+      <div class="modal-header">
+        <div>
+          <span class="eyebrow">Vocabulary review</span>
+          <h2 class="modal-title" id="vocabulary-review-algorithm-title">Tune the vocabulary algorithm</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close vocabulary algorithm settings">&times;</button>
+      </div>
+      <div class="review-algorithm-body">
+        <p>Each vocabulary card starts with the weight for its latest rating. That weight is then reduced as the same term has been reviewed more times. These settings are separate from Exercise review.</p>
+        <div class="review-algorithm-weight-grid">
+          ${fields.map(([key, label, description]) => `
+            <label class="review-algorithm-field">
+              <span>${label}</span>
+              <input id="vocabulary-review-setting-${key}" type="number" min="${limits.minRatingWeight}" max="${limits.maxRatingWeight}" step="0.05" inputmode="decimal" value="${settings[key]}" oninput="updateVocabularyReviewAlgorithmSetting('${key}', this.value)">
+              <small>${description}</small>
+            </label>
+          `).join("")}
+        </div>
+        <label class="review-algorithm-field review-algorithm-penalty-field">
+          <span>Prefer less-reviewed terms</span>
+          <input id="vocabulary-review-setting-reviewCountPenalty" type="number" min="${limits.minReviewCountPenalty}" max="${limits.maxReviewCountPenalty}" step="0.05" inputmode="decimal" value="${settings.reviewCountPenalty}" oninput="updateVocabularyReviewAlgorithmSetting('reviewCountPenalty', this.value)">
+          <small>0 keeps all review counts equal. Higher values spread the round across less-seen terms more strongly.</small>
+        </label>
+        <div class="review-algorithm-preview" aria-live="polite">
+          <strong>Current vocabulary balance</strong>
+          <span data-vocabulary-review-algorithm-summary>${escapeHTML(getVocabularyReviewAlgorithmSummary(settings))}</span>
+          <small>A term with 4 reviews keeps <b data-vocabulary-review-four-review-factor>${Math.round(C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(4, settings) * 100)}%</b> of its category weight; after 8 reviews it keeps <b data-vocabulary-review-eight-review-factor>${Math.round(C2_STUDY_REVIEW.getStudyReviewCountWeightFactor(8, settings) * 100)}%</b>.</small>
+        </div>
+      </div>
+      <div class="history-review-actions review-algorithm-actions">
+        <button class="btn btn-secondary" onclick="resetVocabularyReviewAlgorithmSettings()">Restore defaults</button>
+        <button class="btn btn-primary" onclick="closeModal()">Done</button>
+      </div>
+    </div>
+  `;
+}
+
+function openVocabularyReviewAlgorithmSettings() {
+  if (document.getElementById("vocabulary-review-algorithm-modal")) return;
+  const modal = document.createElement("div");
+  modal.id = "vocabulary-review-algorithm-modal";
+  modal.className = "modal-overlay review-algorithm-overlay";
+  modal.innerHTML = renderVocabularyReviewAlgorithmSettingsHTML();
+  mountModal(modal);
+  document.getElementById("vocabulary-review-setting-againWeight")?.focus();
+}
+
+function updateVocabularyReviewAlgorithmSetting(key, value) {
+  if (!["againWeight", "unsureWeight", "knownWeight", "reviewCountPenalty"].includes(key)) return;
+  STATE.vocabularyReviewSettings = C2_STUDY_REVIEW.normalizeStudyReviewSettings({
+    ...getVocabularyReviewSettings(),
+    [key]: value
+  });
+  markVocabularyChanged();
+  refreshVocabularyReviewAlgorithmSettingsPreview();
+}
+
+function resetVocabularyReviewAlgorithmSettings() {
+  STATE.vocabularyReviewSettings = C2_STUDY_REVIEW.normalizeStudyReviewSettings();
+  markVocabularyChanged();
+  Object.entries(STATE.vocabularyReviewSettings).forEach(([key, value]) => {
+    const input = document.getElementById(`vocabulary-review-setting-${key}`);
+    if (input) input.value = value;
+  });
+  refreshVocabularyReviewAlgorithmSettingsPreview();
 }
 
 function renderVocabularyReview() {
@@ -2213,6 +2340,9 @@ function renderVocabularyReview() {
 
 function renderVocabularyReviewSetupHTML() {
   const setup = STATE.vocabularyReviewSetup;
+  const algorithmSettings = getVocabularyReviewSettings();
+  const algorithmSummary = getVocabularyReviewAlgorithmSummary(algorithmSettings);
+  const algorithmLaunchSummary = getVocabularyReviewLaunchSummary(algorithmSettings);
   if (setup.collection === "personal") setup.collection = "all";
   const entries = getAllVocabularyEntries();
   const scopedEntries = entries.filter(entry => getVocabularyCollection(entry) !== "personal").filter(entry => setup.collection === "all" || getVocabularyCollection(entry) === setup.collection);
@@ -2226,6 +2356,10 @@ function renderVocabularyReviewSetupHTML() {
       <div>
         <span class="eyebrow">Vocabulary review</span>
         <h1>A small, sharp round.</h1>
+        <div class="study-review-algorithm-action">
+          <button class="btn btn-secondary" onclick="openVocabularyReviewAlgorithmSettings()">Adjust algorithm</button>
+          <small data-vocabulary-review-algorithm-summary>${escapeHTML(algorithmSummary)}</small>
+        </div>
         <p>Only rows with the fields required by the chosen question are included.</p>
       </div>
       <div class="review-setup-count"><strong>${eligible.length.toLocaleString("en-GB")}</strong><span>cards available</span></div>
@@ -2269,7 +2403,7 @@ function renderVocabularyReviewSetupHTML() {
       </div>
 
       <div class="review-launch-row">
-        <div><strong>${eligible.length ? `${Math.min(Number(setup.size), eligible.length)} ${Math.min(Number(setup.size), eligible.length) === 1 ? "card" : "cards"} ready` : "No compatible cards"}</strong><span>${skipped ? `${skipped.toLocaleString("en-GB")} ${skipped === 1 ? "row is" : "rows are"} intentionally skipped because ${skipped === 1 ? "it has" : "they have"} no compatible answer field.` : "Randomised every round."}</span></div>
+        <div><strong>${eligible.length ? `${Math.min(Number(setup.size), eligible.length)} ${Math.min(Number(setup.size), eligible.length) === 1 ? "card" : "cards"} ready` : "No compatible cards"}</strong><span ${skipped ? "" : "data-vocabulary-review-launch-summary"}>${skipped ? `${skipped.toLocaleString("en-GB")} ${skipped === 1 ? "row is" : "rows are"} intentionally skipped because ${skipped === 1 ? "it has" : "they have"} no compatible answer field.` : escapeHTML(algorithmLaunchSummary)}</span></div>
         <button class="btn btn-primary review-launch-button" onclick="startVocabularyReviewSession()" ${eligible.length ? "" : "disabled"}>Start review</button>
       </div>
     </section>
@@ -2284,7 +2418,13 @@ function setVocabularyReviewOption(key, value) {
 function startVocabularyReviewSession() {
   const eligible = getReviewEligibleEntries();
   if (!eligible.length) return;
-  const items = shuffleVocabularyEntries(eligible).slice(0, Math.min(Number(STATE.vocabularyReviewSetup.size), eligible.length));
+  const items = C2_STUDY_REVIEW.selectWeightedStudyReviewItems(
+    eligible.map(entry => ({ ...entry, key: entry.id })),
+    STATE.vocabularyReviewStats,
+    Math.min(Number(STATE.vocabularyReviewSetup.size), eligible.length),
+    Math.random,
+    getVocabularyReviewSettings()
+  );
   STATE.vocabularyReviewSession = {
     itemIds: items.map(item => item.id),
     index: 0,
@@ -2312,6 +2452,7 @@ function renderVocabularyReviewSessionHTML() {
     <section class="review-session-shell">
       <div class="review-session-topbar">
         <button class="btn btn-secondary" onclick="exitVocabularyReviewSession()">End round</button>
+        <button class="btn btn-secondary review-algorithm-session-button" onclick="openVocabularyReviewAlgorithmSettings()">Adjust algorithm</button>
         <div class="review-progress-copy"><strong>${session.index + 1} / ${session.itemIds.length}</strong><span>${escapeHTML(collection?.shortLabel || "Vocabulary")}</span></div>
         <div class="review-progress-track" aria-label="${progress}% complete"><span style="width:${progress}%"></span></div>
       </div>
@@ -2387,6 +2528,7 @@ function renderVocabularyReviewCompleteHTML(session) {
       </div>
       <div class="review-complete-actions">
         <button class="btn btn-primary" onclick="startVocabularyReviewSession()">Another random round</button>
+        <button class="btn btn-secondary" onclick="openVocabularyReviewAlgorithmSettings()">Adjust algorithm</button>
         <button class="btn btn-secondary" onclick="exitVocabularyReviewSession()">Change setup</button>
         <button class="btn btn-secondary" onclick="openVocabulary()">Open library</button>
       </div>
