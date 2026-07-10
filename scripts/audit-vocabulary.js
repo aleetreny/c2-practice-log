@@ -50,6 +50,11 @@ if (duplicates.length) fail("Example sentences must be unique.", duplicates.map(
 if (schemaLeaks.length) fail("Removed category/topic fields leaked into the generated database.", schemaLeaks.map(entry => entry.id));
 if (typoEntries.length) fail("Known source typos remain in displayed terms.", typoEntries.map(entry => `${entry.id}: ${entry.term}`));
 if (/\["context",\s*"In context"|Complete an expression inside its example|setup\.mode\s*===\s*"context"/.test(appSource)) fail("The removed In context mode is still reachable.");
+if (!/vocabularyReviewSettings:\s*C2_STUDY_REVIEW\.normalizeStudyReviewSettings\(\)/.test(appSource)) fail("Vocabulary review needs its own default algorithm settings.");
+if (!/vocabularyReviewSettings:\s*STATE\.vocabularyReviewSettings/.test(appSource)) fail("Vocabulary algorithm settings must sync independently.");
+if (!/function openVocabularyReviewAlgorithmSettings\(/.test(appSource)) fail("Vocabulary review must expose its own algorithm controls.");
+if (!/selectWeightedStudyReviewItems\([\s\S]*?STATE\.vocabularyReviewStats[\s\S]*?getVocabularyReviewSettings\(\)/.test(appSource)) fail("Vocabulary review rounds must use separate weighted selection settings.");
+if (/function shuffleVocabularyEntries\(/.test(appSource)) fail("Vocabulary review must not retain the old uniform shuffle algorithm.");
 
 const frontStart = appSource.indexOf("function renderVocabularyReviewFront");
 const frontEnd = appSource.indexOf("\nfunction ", frontStart + 10);
