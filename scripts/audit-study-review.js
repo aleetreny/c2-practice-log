@@ -179,6 +179,12 @@ assert.equal(getStudyReviewReviewCount({ again: 2, unsure: 1 }), 3);
 assert.equal(getStudyReviewReviewCount({ views: 4, again: 10 }), 4, "Saved review totals are authoritative when present.");
 const defaultReviewFactorAtFour = getStudyReviewCountWeightFactor(4);
 assert.ok(defaultReviewFactorAtFour < 0.7 && defaultReviewFactorAtFour > 0.6, "Four previous reviews should noticeably, but not radically, lower the weight.");
+const factorWithNoReviews = getStudyReviewCountWeightFactor(0);
+const factorAfterFirstReview = getStudyReviewCountWeightFactor(1);
+const factorAfterSecondReview = getStudyReviewCountWeightFactor(2);
+assert.equal(factorWithNoReviews, 1, "Unseen cards must retain their full category weight.");
+assert.ok(factorAfterFirstReview < factorWithNoReviews, "The first review must immediately lower a card's future probability.");
+assert.ok(factorAfterSecondReview < factorAfterFirstReview, "Additional reviews must keep lowering probability without a fixed threshold.");
 assert.equal(getStudyReviewCountWeightFactor(4, { reviewCountPenalty: 0 }), 1);
 const reviewStats = {
   knownNow: { lastRating: "known", views: 1, again: 50, unsure: 12, known: 1 },
