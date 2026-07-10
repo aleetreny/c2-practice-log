@@ -9,7 +9,11 @@ const {
   normalizeCorrectAnswer,
   getUppercaseInputState,
   matchesTrackedErrorSearch,
+  DEFAULT_STUDY_REVIEW_SETTINGS,
+  normalizeStudyReviewSettings,
   getStudyReviewRatingWeight,
+  getStudyReviewReviewCount,
+  getStudyReviewCountWeightFactor,
   getStudyReviewCandidateWeight,
   selectWeightedStudyReviewItems
 } = require("../study-review-data.js");
@@ -157,20 +161,48 @@ assert.equal(getStudyReviewRatingWeight(""), getStudyReviewRatingWeight("unsure"
 assert.ok(getStudyReviewRatingWeight("again") > getStudyReviewRatingWeight("unsure"));
 assert.ok(getStudyReviewRatingWeight("known") > 0);
 assert.ok(getStudyReviewRatingWeight("known") < getStudyReviewRatingWeight("unsure"));
+assert.equal(DEFAULT_STUDY_REVIEW_SETTINGS.knownWeight, 0.25);
+assert.deepEqual(normalizeStudyReviewSettings({
+  againWeight: 3.5,
+  unsureWeight: "1.25",
+  knownWeight: 0.1,
+  reviewCountPenalty: 0.5
+}), {
+  againWeight: 3.5,
+  unsureWeight: 1.25,
+  knownWeight: 0.1,
+  reviewCountPenalty: 0.5
+});
+assert.equal(normalizeStudyReviewSettings({ knownWeight: -1 }).knownWeight, 0.05);
+assert.equal(normalizeStudyReviewSettings({ againWeight: Infinity }).againWeight, DEFAULT_STUDY_REVIEW_SETTINGS.againWeight);
+assert.equal(getStudyReviewReviewCount({ again: 2, unsure: 1 }), 3);
+assert.equal(getStudyReviewReviewCount({ views: 4, again: 10 }), 4, "Saved review totals are authoritative when present.");
+const defaultReviewFactorAtFour = getStudyReviewCountWeightFactor(4);
+assert.ok(defaultReviewFactorAtFour < 0.7 && defaultReviewFactorAtFour > 0.6, "Four previous reviews should noticeably, but not radically, lower the weight.");
+assert.equal(getStudyReviewCountWeightFactor(4, { reviewCountPenalty: 0 }), 1);
 const reviewStats = {
-  knownNow: { lastRating: "known", again: 50, unsure: 12, known: 1 },
-  againNow: { lastRating: "again", known: 50 },
+  knownNow: { lastRating: "known", views: 1, again: 50, unsure: 12, known: 1 },
+  againNow: { lastRating: "again", views: 1, known: 50 },
+  againReviewedOften: { lastRating: "again", views: 5 },
   unsureNow: { lastRating: "unsure" }
 };
 assert.equal(
   getStudyReviewCandidateWeight({ key: "knownNow" }, reviewStats),
-  getStudyReviewRatingWeight("known"),
-  "Future probability must use only the latest rating, not older counts."
+  getStudyReviewRatingWeight("known") * getStudyReviewCountWeightFactor(1),
+  "The latest rating controls the base weight while the total number of reviews applies one shared penalty."
 );
 assert.equal(
   getStudyReviewCandidateWeight({ key: "unrated" }, reviewStats),
   getStudyReviewRatingWeight("unsure"),
   "Unrated cards must start at the same weight as unsure cards."
+);
+assert.ok(
+  getStudyReviewCandidateWeight({ key: "againNow" }, reviewStats) > getStudyReviewCandidateWeight({ key: "againReviewedOften" }, reviewStats),
+  "Within one rating, cards reviewed fewer times must be selected more often."
+);
+assert.ok(
+  getStudyReviewCandidateWeight({ key: "againNow" }, reviewStats, { againWeight: 0.5 }) < getStudyReviewCandidateWeight({ key: "againNow" }, reviewStats),
+  "Custom rating weights must change the selection weight."
 );
 const randomSequence = [0.2, 0.9];
 const weightedSelection = selectWeightedStudyReviewItems(
@@ -181,6 +213,14 @@ const weightedSelection = selectWeightedStudyReviewItems(
 );
 assert.deepEqual(weightedSelection.map(item => item.key), ["againNow", "unrated"]);
 assert.equal(new Set(weightedSelection.map(item => item.key)).size, weightedSelection.length);
+const customWeightedSelection = selectWeightedStudyReviewItems(
+  [{ key: "knownNow" }, { key: "againNow" }],
+  reviewStats,
+  1,
+  () => 0.5,
+  { againWeight: 0.05, unsureWeight: 1, knownWeight: 10, reviewCountPenalty: 0 }
+);
+assert.deepEqual(customWeightedSelection.map(item => item.key), ["knownNow"], "Custom settings must drive the actual weighted selection, not only the displayed weight.");
 
 const lowercaseHistory = [{
   id: "lowercase-correction",
