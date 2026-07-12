@@ -98,6 +98,23 @@
     const appContainer = document.getElementById("app-container");
     const collection = getCollection();
     const objectiveSession = ["reading", "useOfEnglish"].includes(STATE.examBankSession?.section) ? STATE.examBankSession : null;
+
+    // While actively answering a Reading/Use of English paper, run the two-column
+    // workspace full-screen: no top navigation or demo banner, a fixed viewport,
+    // and independent scrolling inside each column (question text / answer sheet).
+    const isAnsweringWorkspace = objectiveSession
+      && objectiveSession.phase !== "result"
+      && objectiveSession.phase !== "gradingPart4";
+    if (isAnsweringWorkspace) {
+      appContainer.innerHTML = `
+        <div class="exam-session-view">
+          ${objectiveSession.section === "reading" ? renderReadingSessionHTML(objectiveSession) : renderUseOfEnglishSessionHTML(objectiveSession)}
+        </div>
+      `;
+      updatePracticeTimerDisplay();
+      return;
+    }
+
     appContainer.innerHTML = `
       <div class="exam-bank-container app-shell">
         <header class="app-topbar">

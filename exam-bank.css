@@ -811,6 +811,54 @@
   background: #ffffff;
 }
 
+/* Full-screen answering workspace: fixed viewport, only the columns scroll. */
+html:has(.exam-session-view),
+body:has(.exam-session-view) {
+  overflow: hidden;
+}
+
+.exam-session-view {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+  padding: 12px 16px;
+  background: var(--bg-main, #f4f6f7);
+}
+
+.exam-session-view .exam-session-shell {
+  flex: 1 1 auto;
+  width: 100%;
+  max-width: 1680px;
+  margin: 0 auto;
+  min-width: 0;
+  min-height: 0;
+  gap: 10px;
+}
+
+.exam-session-view .exam-session-topbar,
+.exam-session-view .exam-part-navigation {
+  flex: 0 0 auto;
+}
+
+.exam-session-view .exam-session-topbar {
+  padding: 10px 16px;
+}
+
+.exam-session-view .exam-reading-workspace {
+  flex: 1 1 0;
+  height: auto;
+  min-height: 0;
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.exam-session-view .exam-reading-paper,
+.exam-session-view .exam-reading-questions {
+  min-height: 0;
+}
+
 .exam-paper-heading {
   padding-bottom: 18px;
   margin-bottom: 20px;
