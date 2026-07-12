@@ -11,7 +11,12 @@ const WRITING_SOURCE = path.join(ROOT, "C2_Proficiency_Writing_Practice_Bank.md"
 const WRITING_EXTRA_SOURCE = path.join(ROOT, "C2_Writing_Part_1_Practice_4_Tests.md");
 const DEMO_SOURCE = path.join(ROOT, "demo-data.js");
 const READING_PART1_EXTRA_SOURCE = path.join(ROOT, "data", "reading-part1-test12.json");
+const LISTENING_ANSWERS_SOURCE = path.join(ROOT, "data", "listening-answers.json");
 const OUTPUT = path.join(ROOT, "exam-bank-data.js");
+
+// Listening answer sheets use local numbers 1-30; the app numbers Listening
+// questions 54-83, so every local answer is stored under local + 53.
+const LISTENING_QUESTION_OFFSET = 53;
 
 function readSource(filePath) {
   if (!fs.existsSync(filePath)) throw new Error(`Missing source file: ${path.basename(filePath)}`);
@@ -539,29 +544,53 @@ function pairWritingTests(baseTests, additionalPart1) {
   });
 }
 
-function parseListeningTests(indexSource, documentationSource) {
+function buildListeningAnswerMap(answersSource) {
+  const parsed = JSON.parse(answersSource);
+  const map = new Map();
+  (parsed.tests || []).forEach(entry => {
+    const globalAnswers = {};
+    for (let local = 1; local <= 30; local++) {
+      const value = entry.answers?.[String(local)];
+      if (typeof value !== "string" || !value.trim()) {
+        throw new Error(`Listening answers: test ${entry.test} is missing local question ${local}`);
+      }
+      globalAnswers[local + LISTENING_QUESTION_OFFSET] = value.trim();
+    }
+    map.set(entry.test, globalAnswers);
+  });
+  return map;
+}
+
+function parseListeningTests(indexSource, documentationSource, answersSource) {
   const parsed = JSON.parse(indexSource);
   if (!/^PL[\w-]+$/.test(parsed.playlist_id || "")) throw new Error("Listening: invalid playlist ID");
   if (!documentationSource.includes(parsed.playlist_id)) throw new Error("Listening: Markdown and JSON playlist IDs do not match");
   if (!Array.isArray(parsed.tests) || parsed.tests.length !== 33) {
     throw new Error(`Listening: expected 33 playlist entries, found ${parsed.tests?.length || 0}`);
   }
-  return parsed.tests.map((entry, index) => ({
-    id: `listening-${index + 1}`,
-    number: index + 1,
-    sourceTest: entry.test,
-    title: `C2 Proficiency Listening Test ${index + 1}`,
-    playlistId: parsed.playlist_id,
-    playlistPosition: entry.playlist_position,
-    apiIndex: entry.api_index,
-    watchUrl: entry.playlist_url
-  }));
+  const answerMap = buildListeningAnswerMap(answersSource);
+  return parsed.tests.map((entry, index) => {
+    const answers = answerMap.get(entry.test);
+    if (!answers) throw new Error(`Listening: no answer key for source test ${entry.test}`);
+    return {
+      id: `listening-${index + 1}`,
+      number: index + 1,
+      sourceTest: entry.test,
+      title: `C2 Proficiency Listening Test ${index + 1}`,
+      playlistId: parsed.playlist_id,
+      playlistPosition: entry.playlist_position,
+      apiIndex: entry.api_index,
+      watchUrl: entry.playlist_url,
+      answers
+    };
+  });
 }
 
 function build() {
   const readingSource = readSource(READING_SOURCE);
   const listeningSource = readSource(LISTENING_SOURCE);
   const listeningIndexSource = readSource(LISTENING_INDEX_SOURCE);
+  const listeningAnswersSource = readSource(LISTENING_ANSWERS_SOURCE);
   const writingSource = readSource(WRITING_SOURCE);
   const writingExtraSource = readSource(WRITING_EXTRA_SOURCE);
   const demoSource = readSource(DEMO_SOURCE);
@@ -577,6 +606,7 @@ function build() {
       .update(readingSource)
       .update(listeningSource)
       .update(listeningIndexSource)
+      .update(listeningAnswersSource)
       .update(writingSource)
       .update(writingExtraSource)
       .update(demoSource)
@@ -585,7 +615,7 @@ function build() {
       .slice(0, 16),
     useOfEnglish,
     reading,
-    listening: parseListeningTests(listeningIndexSource, listeningSource),
+    listening: parseListeningTests(listeningIndexSource, listeningSource, listeningAnswersSource),
     writing
   };
 
