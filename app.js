@@ -1,6 +1,6 @@
 // STATE MANAGEMENT
 const STATE = {
-  currentView: "home", // "home" | "dashboard" | "errorReview" | "writingLab" | "vocabulary" | "vocabularyReview" | "sheet"
+  currentView: "home", // "home" | "examBank" | "dashboard" | "errorReview" | "writingLab" | "vocabulary" | "vocabularyReview" | "sheet"
   activeSection: null, // "useOfEnglish" | "reading" | "listening" | "writing"
   answers: {}, // Q-num -> string
   gradedStates: {}, // Q-num -> "correct" | "incorrect" | score (0|1|2)
@@ -55,6 +55,9 @@ const STATE = {
   writingGenre: "report",
   writingToolkitTab: "situations",
   writingToolkitGroup: "compare",
+  examBankCollection: "reading",
+  examBankSession: null,
+  examBankWritingSelections: {},
   tourIndex: -1,
   timer: {
     elapsedSeconds: 0,
@@ -162,6 +165,7 @@ function resetWorkspaceData() {
   STATE.errorReviewSession = null;
   STATE.vocabularyEditingId = null;
   STATE.vocabularyNotice = "";
+  STATE.examBankSession = null;
 }
 
 function cloneDemoValue(value, fallback) {
@@ -866,12 +870,20 @@ function formatPracticeTimer(totalSeconds) {
 }
 
 function getCurrentPracticeDurationSeconds() {
-  if (STATE.activeSection === "listening") return 0;
+  if (STATE.activeSection === "listening" && !STATE.examBankSession) return 0;
   return getPracticeTimerSeconds();
 }
 
 function getPlainObject(value) {
   return value && typeof value === "object" && !Array.isArray(value) ? value : {};
+}
+
+function getExamBankAttemptMeta(item = {}) {
+  return getPlainObject(getPlainObject(getPlainObject(item).answers).meta).examBank;
+}
+
+function isExamBankAttempt(item = {}) {
+  return Boolean(getExamBankAttemptMeta(item)?.id);
 }
 
 function isPartialPracticeAttempt(item) {
@@ -963,7 +975,7 @@ function getReadingPartTexts(item = {}) {
   const answers = getPlainObject(item.answers);
   const meta = getPlainObject(answers.meta);
   const savedTexts = getPlainObject(meta.readingPartTexts);
-  if (savedTexts.part1) return savedTexts;
+  if (Object.values(savedTexts).some(value => typeof value === "string" && value.trim())) return savedTexts;
 
   const legacyQuestionTexts = getPlainObject(meta.questionTexts);
   const legacyText = Object.values(legacyQuestionTexts).find(value => typeof value === "string" && value.trim());
@@ -1405,6 +1417,7 @@ function getNextFocusInsight(sectionStats = getAllSectionStats()) {
 function renderMainNavigation(activeView) {
   const items = [
     { key: "home", label: "Practice", action: "renderHome()" },
+    { key: "examBank", label: "Exams", action: "openExamBank()" },
     { key: "dashboard", label: "Progress", action: "renderDashboard()" },
     { key: "writingLab", label: "Writing", action: "openWritingLab()" },
     { key: "vocabulary", label: "Vocabulary", action: "openVocabulary()" },
@@ -1448,42 +1461,49 @@ const ABOUT_TOUR_STEPS = [
   {
     view: "home",
     selector: '[data-tour-tab="home"]',
-    eyebrow: "1 of 6 · Practice",
+    eyebrow: "1 of 7 · Practice",
     title: "Complete a paper, then correct it",
     body: "Choose an exam paper, enter your answers and lock the sheet when you finish. Mark each answer, add the correct version and keep a short error note before saving."
   },
   {
+    view: "examBank",
+    selector: '[data-tour-tab="examBank"]',
+    eyebrow: "2 of 7 · Real exams",
+    title: "Practise with complete exam material",
+    body: "Choose from 12 Reading papers, 33 embedded Listening tests and 10 Writing sets. Reading marks itself; Listening uses the familiar self-correction sheet; Writing keeps the full rubric workflow."
+  },
+  {
     view: "dashboard",
     selector: '[data-tour-tab="dashboard"]',
-    eyebrow: "2 of 6 · Progress",
+    eyebrow: "3 of 7 · Progress",
     title: "Turn attempts into a study plan",
     body: "See scale scores, trends and performance by paper and part. Open any saved attempt to inspect or refine its correction."
   },
   {
     view: "writingLab",
     selector: '[data-tour-tab="writingLab"]',
-    eyebrow: "3 of 6 · Writing",
+    eyebrow: "4 of 7 · Writing",
     title: "Build stronger C2 writing",
     body: "Use the essay map, situation language, phrase bank and format guides before or after a timed Writing paper."
   },
   {
     view: "vocabulary",
     selector: '[data-tour-tab="vocabulary"]',
-    eyebrow: "4 of 6 · Vocabulary",
+    eyebrow: "5 of 7 · Vocabulary",
     title: "Keep one useful language bank",
     body: "Search the built-in collection, listen to pronunciation and add personal vocabulary, word formation or collocation entries."
   },
   {
     view: "vocabularyReview",
     selector: '[data-tour-tab="vocabularyReview"]',
-    eyebrow: "5 of 6 · Review",
+    eyebrow: "6 of 7 · Review",
     title: "Review what is most likely to help",
     body: "Run quick vocabulary sessions or revisit mistakes from saved papers. Familiarity ratings shape what appears next."
   },
   {
     view: "home",
     selector: '[data-tour="account"]',
-    eyebrow: "6 of 6 · Account",
+    eyebrow: "7 of 7 · Account",
     title: "Your private workspace starts empty",
     body: "Create an account with email and password. The public demo is never copied: your attempts, corrections and review history start at zero and sync only to you."
   }
@@ -1520,9 +1540,10 @@ function openAboutModal() {
         </section>
 
         <section class="about-section about-tabs-summary">
-          <div class="about-section-heading"><span>The workspace</span><h3>Five tabs, one learning loop</h3></div>
+          <div class="about-section-heading"><span>The workspace</span><h3>Six tabs, one learning loop</h3></div>
           <div class="about-tab-grid">
             <article><strong>Practice</strong><p>Exam answer sheets and correction.</p></article>
+            <article><strong>Exams</strong><p>Real Reading, Listening and Writing banks.</p></article>
             <article><strong>Progress</strong><p>Scores, trends, weak parts and saved work.</p></article>
             <article><strong>Writing</strong><p>Planning, formats and high-level language.</p></article>
             <article><strong>Vocabulary</strong><p>Curated and personal language banks.</p></article>
@@ -1541,6 +1562,7 @@ function openAboutModal() {
 
 function navigateToAboutTourView(view) {
   if (view === "dashboard") renderDashboard();
+  else if (view === "examBank") openExamBank();
   else if (view === "writingLab") openWritingLab();
   else if (view === "vocabulary") openVocabulary();
   else if (view === "vocabularyReview") openVocabularyReview();
@@ -1655,6 +1677,8 @@ function renderHome() {
             </div>
           </div>
         </section>
+
+        ${typeof renderExamBankHomeFeatureHTML === "function" ? renderExamBankHomeFeatureHTML() : ""}
 
         <section class="sections-grid" aria-label="Exam parts">
           ${SECTION_ORDER.map(key => {
@@ -4253,6 +4277,7 @@ function renderHistoryListV2HTML(limit = 4, sectionFilter = "all") {
         const dateFormatted = formatCompactDateTime(item.date);
         const durationText = formatAttemptDuration(getAttemptDurationSeconds(item));
         const scopeLabel = isPartial ? getPartialPracticeScopeLabel(item) : "";
+        const bankMeta = getExamBankAttemptMeta(item);
 
         return `
           <div class="attempt-item" role="button" tabindex="0"
@@ -4262,8 +4287,8 @@ function renderHistoryListV2HTML(limit = 4, sectionFilter = "all") {
             <div class="attempt-main">
               <span class="section-code">${getSectionIconSVG(item.section)}</span>
               <div class="attempt-copy">
-                <strong>${sectionName}</strong>
-                <span>${dateFormatted}${scopeLabel ? ` · ${escapeHTML(scopeLabel)}` : ""}${durationText ? ` - ${durationText}` : ""}</span>
+                <strong>${sectionName}${bankMeta ? '<em class="exam-bank-history-badge">Exam bank</em>' : ""}</strong>
+                <span>${dateFormatted}${bankMeta?.label ? ` · ${escapeHTML(bankMeta.label)}` : ""}${scopeLabel ? ` · ${escapeHTML(scopeLabel)}` : ""}${durationText ? ` - ${durationText}` : ""}</span>
               </div>
             </div>
             <div class="attempt-score">
@@ -4940,6 +4965,10 @@ function renderWritingHistoryPartHTML(item, partKey, editMode = false) {
   const correctionText = typeof correctionNotes[partKey] === "string"
     ? correctionNotes[partKey].trim()
     : "";
+  const examBankMeta = getExamBankAttemptMeta(item);
+  const savedPrompt = typeof examBankMeta?.prompts?.[partKey] === "string"
+    ? examBankMeta.prompts[partKey].trim()
+    : "";
 
   if (!criteria && !responseText && !correctionText) return "";
 
@@ -4976,6 +5005,7 @@ function renderWritingHistoryPartHTML(item, partKey, editMode = false) {
   return `
     <div class="history-writing-part">
       <h4>${title} <span>${scoreLabel}</span></h4>
+      ${savedPrompt ? `<details class="history-writing-bank-prompt"><summary>View exam task</summary><div>${renderWritingFeedbackMarkdown(savedPrompt)}</div></details>` : ""}
       ${editorHTML}
       <div class="history-writing-response">${responseText ? escapeHTML(responseText) : "No text saved"}</div>
       ${!editMode && correctionText ? `
@@ -5304,7 +5334,8 @@ function openHistoryDetailModal(sessionId, editMode = false) {
   const dateFormatted = new Date(item.date).toLocaleString();
   const sectionMeta = C2_EXAM_METADATA[item.section];
   const isPartialPractice = isPartialPracticeAttempt(item);
-  const attemptedQuestions = new Set(isPartialPractice ? getAttemptedQuestionNumbers(item) : []);
+  const isBankAttempt = isExamBankAttempt(item);
+  const attemptedQuestions = new Set((isPartialPractice || isBankAttempt) ? getAttemptedQuestionNumbers(item) : []);
   const durationText = formatAttemptDuration(getAttemptDurationSeconds(item));
   
   let sheetHTML = "";
@@ -5319,19 +5350,21 @@ function openHistoryDetailModal(sessionId, editMode = false) {
     let questionsHTML = "";
     
     for (const [partKey, partData] of Object.entries(sectionMeta.parts)) {
-      if (isPartialPractice) {
+      if (isPartialPractice || isBankAttempt) {
         const partWasAttempted = [...attemptedQuestions].some(q => q >= partData.startQ && q <= partData.endQ);
         if (!partWasAttempted) continue;
       }
       let rowsHTML = "";
       
       for (let q = partData.startQ; q <= partData.endQ; q++) {
-        if (isPartialPractice && !attemptedQuestions.has(q)) continue;
+        if ((isPartialPractice || isBankAttempt) && !attemptedQuestions.has(q)) continue;
         const uAns = escapeHTML(getPlainObject(item.answers)[q] || "--");
         const gradeState = item.gradedStates[q];
-        const isError = isTrackedErrorPart(item.section, partKey) && isObjectiveError(partData, gradeState);
-        const errorNote = isTrackedErrorPart(item.section, partKey) ? (getErrorNotes(item)[q] || "").trim() : "";
-        const correctAnswer = isTrackedErrorPart(item.section, partKey) ? (getCorrectAnswers(item)[q] || "").trim() : "";
+        const supportsSavedCorrection = isTrackedErrorPart(item.section, partKey) || isBankAttempt;
+        const isError = supportsSavedCorrection && isObjectiveError(partData, gradeState);
+        const errorNote = supportsSavedCorrection ? (getErrorNotes(item)[q] || "").trim() : "";
+        const correctAnswer = supportsSavedCorrection ? (getCorrectAnswers(item)[q] || "").trim() : "";
+        const hasReferenceText = Boolean(getPartReferenceTexts(item)[partKey]);
         
         let gradeLabel = "";
         if (editMode) {
@@ -5348,14 +5381,14 @@ function openHistoryDetailModal(sessionId, editMode = false) {
         rowsHTML += `
           <div class="history-question-row">
             <div class="history-question-main">
-              <span><b>Q.${q}</b>: <span style="font-family:monospace; font-weight:700; text-transform:uppercase;">${uAns}</span></span>
+              <span><b>Q.${getHistoryQuestionDisplayNumber(item, q)}</b>: <span style="font-family:monospace; font-weight:700; text-transform:uppercase;">${uAns}</span></span>
               <span>${gradeLabel}</span>
             </div>
             ${editMode
               ? renderHistoryErrorNoteEditorHTML(item, q, partKey)
               : `${isError && correctAnswer ? `<div class="history-correct-answer"><strong>Correct answer</strong>${escapeHTML(correctAnswer)}</div>` : ""}
                  ${errorNote ? `<div class="history-error-note ${isError ? "" : "noted-correct"}"><strong>Notes</strong>${escapeHTML(errorNote)}</div>` : ""}`}
-            ${!editMode && (isError || errorNote) ? `
+            ${!editMode && hasReferenceText && (isError || errorNote) ? `
               <button class="history-question-text-button" onclick="showPartReferenceText('${escapeJS(item.id)}', '${item.section}', '${partKey}', 'history-review-part-text-panel')">
                 View ${getUseOfEnglishPartShortLabel(partKey)} text
               </button>
@@ -5368,7 +5401,7 @@ function openHistoryDetailModal(sessionId, editMode = false) {
         <div class="history-part-card">
           <div class="history-part-card-headline">
             <h4>${partData.name}</h4>
-            ${isTrackedErrorPart(item.section, partKey) && !editMode ? `
+            ${(isTrackedErrorPart(item.section, partKey) || (isBankAttempt && getPartReferenceTexts(item)[partKey])) && !editMode ? `
               <button class="history-part-text-button" onclick="showPartReferenceText('${escapeJS(item.id)}', '${item.section}', '${partKey}', 'history-review-part-text-panel')">View part text</button>
             ` : ""}
           </div>
@@ -5398,7 +5431,7 @@ function openHistoryDetailModal(sessionId, editMode = false) {
          data-history-section="${item.section}" data-history-partial="${isPartialPractice}" style="width: min(${reviewMaxWidth}, 100%); max-width: ${reviewMaxWidth}; max-height: 90vh;">
       <div class="modal-header">
         <div>
-          <h3 class="modal-title">Review: ${sectionMeta.name}</h3>
+          <h3 class="modal-title">Review: ${sectionMeta.name}${isBankAttempt ? ` · ${escapeHTML(getExamBankAttemptMeta(item).label || "Exam bank")}` : ""}</h3>
           ${editMode ? `<span class="history-review-mode">Editing corrections</span>` : ""}
         </div>
         <button class="modal-close" onclick="closeModal()">&times;</button>
@@ -5431,7 +5464,7 @@ function openHistoryDetailModal(sessionId, editMode = false) {
           <button class="btn btn-primary" id="history-review-save" onclick="saveHistoryReviewEdits('${escapeJS(item.id)}')">Save changes</button>
         ` : `
           <button class="btn history-review-delete" onclick="deleteHistoryItemFromReview('${escapeJS(item.id)}')">Delete this attempt</button>
-          <button class="btn btn-secondary" onclick="reopenHistoryDetailModal('${escapeJS(item.id)}', true)">Edit corrections</button>
+          ${isBankAttempt && getExamBankAttemptMeta(item).collection === "reading" ? "" : `<button class="btn btn-secondary" onclick="reopenHistoryDetailModal('${escapeJS(item.id)}', true)">Edit corrections</button>`}
           <button class="btn btn-primary" onclick="closeModal()">Close</button>
         `}
       </div>
@@ -5443,7 +5476,8 @@ function openHistoryDetailModal(sessionId, editMode = false) {
 // ==========================================================================
 // 4. ANSWER SHEET TEMPLATE CONTROLLER
 // ==========================================================================
-function openAnswerSheet(section) {
+function openAnswerSheet(section, options = {}) {
+  if (!options.preserveExamBank) STATE.examBankSession = null;
   STATE.currentView = "sheet";
   STATE.activeSection = section;
   STATE.answers = {};
@@ -5454,7 +5488,10 @@ function openAnswerSheet(section) {
   STATE.readingPartTexts = {};
   STATE.isCorrecting = false;
   STATE.isSavingAttempt = false;
-  resetPracticeTimer();
+  if (STATE.examBankSession?.section === "writing" && STATE.examBankSession.part2Task?.type) {
+    STATE.answers.part2Type = STATE.examBankSession.part2Task.type;
+  }
+  resetPracticeTimer({ keepRunning: options.startTimer === true });
   
   renderAnswerSheetHTML();
 }
@@ -5462,36 +5499,40 @@ function openAnswerSheet(section) {
 function renderAnswerSheetHTML() {
   const appContainer = document.getElementById("app-container");
   const sectionMeta = C2_EXAM_METADATA[STATE.activeSection];
+  const bankContext = STATE.examBankSession?.section === STATE.activeSection ? STATE.examBankSession : null;
   
   let sheetContent = "";
   
   if (STATE.activeSection === "writing") {
+    const bankHasPart2 = !bankContext || Boolean(bankContext.part2Task);
     sheetContent = `
       <div class="sheet-notice">
-        Paste both writing tasks, check the word count, then score each criterion.
+        ${bankContext ? "Complete the selected authentic task set, check the word count, then score each criterion." : "Paste both writing tasks, check the word count, then score each criterion."}
       </div>
       
       <!-- PART 1 WRITING -->
       <div style="background-color:#fafafa; border:1px solid var(--border-color); border-radius:8px; padding:1.25rem; margin-bottom:1.5rem;">
         <h3 style="font-size:1rem; font-weight:700; margin-bottom:0.75rem; color:var(--accent-color);">Writing Part 1: Compulsory Essay (240 - 280 words)</h3>
+        ${bankContext && typeof renderActiveExamBankWritingPromptHTML === "function" ? renderActiveExamBankWritingPromptHTML("part1") : ""}
         <textarea class="writing-sheet-textarea" id="writing-textarea-part1" placeholder="Write your essay here..." oninput="trackSectionWritingWordCount('part1', this.value); updateWritingAssessmentPrompt()" style="height:180px;"></textarea>
         <div class="writing-word-badge under" id="writing-count-part1" style="margin-top:0.5rem;">0 words</div>
       </div>
 
       <!-- PART 2 WRITING -->
-      <div style="background-color:#fafafa; border:1px solid var(--border-color); border-radius:8px; padding:1.25rem; margin-bottom:1.5rem;">
+      ${bankHasPart2 ? `<div style="background-color:#fafafa; border:1px solid var(--border-color); border-radius:8px; padding:1.25rem; margin-bottom:1.5rem;">
         <div class="writing-part2-head">
           <h3 style="font-size:1rem; font-weight:700; color:var(--accent-color);">Writing Part 2: Optional Writing (280 - 320 words)</h3>
-          <label class="writing-type-control">
+          ${bankContext ? `<span class="exam-bank-writing-type">${escapeHTML(bankContext.part2Task.label)}</span>` : `<label class="writing-type-control">
             <span>Text type</span>
             <select id="writing-part2-type" onchange="storeWritingPart2Type(this.value); updateWritingAssessmentPrompt()">
               ${getWritingPart2TypeOptionsHTML()}
             </select>
-          </label>
+          </label>`}
         </div>
+        ${bankContext && typeof renderActiveExamBankWritingPromptHTML === "function" ? renderActiveExamBankWritingPromptHTML("part2") : ""}
         <textarea class="writing-sheet-textarea" id="writing-textarea-part2" placeholder="Write your article/report/review/email here..." oninput="trackSectionWritingWordCount('part2', this.value); updateWritingAssessmentPrompt()" style="height:180px;"></textarea>
         <div class="writing-word-badge under" id="writing-count-part2" style="margin-top:0.5rem;">0 words</div>
-      </div>
+      </div>` : ""}
 
       ${renderWritingPromptPanelHTML()}
       
@@ -5503,7 +5544,7 @@ function renderAnswerSheetHTML() {
       : STATE.activeSection === "reading"
         ? "You can also complete Reading Part 1 on its own. It will be saved as unscored partial practice."
         : "";
-    sheetContent = `
+    const objectiveSheetContent = `
       <div class="sheet-notice">
         <strong>Enter, lock and grade.</strong> ${partialPracticeHint || "Complete the whole paper to save a scored attempt."}
       </div>
@@ -5512,6 +5553,12 @@ function renderAnswerSheetHTML() {
         ${renderSectionPartsHTML(sectionMeta)}
       </div>
     `;
+    const listeningMedia = bankContext?.section === "listening" && typeof renderActiveExamBankListeningMediaHTML === "function"
+      ? renderActiveExamBankListeningMediaHTML()
+      : "";
+    sheetContent = listeningMedia
+      ? `<div class="exam-listening-workspace"><aside>${listeningMedia}</aside><div class="exam-listening-answer-column">${objectiveSheetContent}</div></div>`
+      : objectiveSheetContent;
   }
 
   appContainer.innerHTML = `
@@ -5519,13 +5566,13 @@ function renderAnswerSheetHTML() {
       <div class="sheet-container ${STATE.activeSection === "listening" ? "sheet-container-wide" : ""}">
         <div class="sheet-header">
           <div class="sheet-title">
-            <h2>Mock: ${sectionMeta.name}</h2>
-            <p>${sectionMeta.description}</p>
+            <h2>${bankContext ? escapeHTML(bankContext.label) : `Mock: ${sectionMeta.name}`}</h2>
+            <p>${bankContext ? escapeHTML(bankContext.subtitle || sectionMeta.description) : sectionMeta.description}</p>
           </div>
           <div class="sheet-header-actions">
             ${renderPracticeTimerHTML()}
             ${STATE.activeSection === "writing" ? `<button class="btn btn-secondary writing-toolkit-trigger" onclick="openWritingToolkit()">Writing toolkit</button>` : ""}
-            <button class="btn btn-secondary" onclick="renderHome()">Back</button>
+            <button class="btn btn-secondary" onclick="${bankContext ? `openExamBank('${STATE.activeSection}')` : "renderHome()"}">Back</button>
           </div>
         </div>
 
@@ -5612,13 +5659,21 @@ function renderSheetQuestionInputHTML(q, partData) {
   `;
 }
 
+function getSheetQuestionDisplayNumber(q) {
+  return STATE.examBankSession?.section === "listening" ? q - 53 : q;
+}
+
+function getHistoryQuestionDisplayNumber(item, q) {
+  return isExamBankAttempt(item) && item.section === "listening" ? q - 53 : q;
+}
+
 function renderSheetQuestionRowHTML(q, partData, extraClass = "") {
   const weightHint = partData.weight > 1 ? `<span style="font-size:0.7rem; color:var(--text-muted); font-weight:normal; margin-left:0.25rem;">(${partData.weight} marks)</span>` : "";
 
   return `
     <div class="sheet-row ${extraClass}" id="sheet-row-${q}" style="border:none; border-bottom:1px solid #f3f4f6; border-radius:0; padding:0.6rem 0.5rem;">
       <div class="sheet-row-main">
-        <div class="sheet-q-num">Q.${q} ${weightHint}</div>
+        <div class="sheet-q-num">Q.${getSheetQuestionDisplayNumber(q)} ${weightHint}</div>
         <div style="flex-grow:1; display:flex; justify-content:flex-start;">
           ${renderSheetQuestionInputHTML(q, partData)}
         </div>
@@ -5650,7 +5705,7 @@ function renderListeningPart4HTML(partData) {
         <section class="listening-task-column" aria-label="Listening Part 4 Task 1">
           <div class="listening-task-header">
             <span>Task 1</span>
-            <small>Questions ${partData.startQ}-${midpoint}</small>
+            <small>Questions ${getSheetQuestionDisplayNumber(partData.startQ)}-${getSheetQuestionDisplayNumber(midpoint)}</small>
           </div>
           <div class="listening-task-rows">
             ${task1Rows.join("")}
@@ -5659,7 +5714,7 @@ function renderListeningPart4HTML(partData) {
         <section class="listening-task-column" aria-label="Listening Part 4 Task 2">
           <div class="listening-task-header">
             <span>Task 2</span>
-            <small>Questions ${midpoint + 1}-${partData.endQ}</small>
+            <small>Questions ${getSheetQuestionDisplayNumber(midpoint + 1)}-${getSheetQuestionDisplayNumber(partData.endQ)}</small>
           </div>
           <div class="listening-task-rows">
             ${task2Rows.join("")}
@@ -5679,6 +5734,9 @@ function clearSheetInputs() {
     STATE.useOfEnglishPartTexts = {};
     STATE.readingPartTexts = {};
     STATE.isCorrecting = false;
+    if (STATE.examBankSession?.section === "writing" && STATE.examBankSession.part2Task?.type) {
+      STATE.answers.part2Type = STATE.examBankSession.part2Task.type;
+    }
     renderAnswerSheetHTML();
   }
 }
@@ -5823,9 +5881,10 @@ function updateErrorNoteArea(qNum) {
   const partKey = partEntry?.[0];
   const partData = partEntry?.[1];
   const shouldShow = isTrackedErrorPart(STATE.activeSection, partKey)
-    && hasObjectiveGrade(partData, STATE.gradedStates[qNum]);
+    || Boolean(STATE.examBankSession && ["reading", "listening"].includes(STATE.activeSection));
+  const hasGrade = hasObjectiveGrade(partData, STATE.gradedStates[qNum]);
 
-  if (!shouldShow) {
+  if (!shouldShow || !hasGrade) {
     noteArea.innerHTML = "";
     return;
   }
@@ -5927,11 +5986,17 @@ async function saveGradedSheetResult() {
       .map(([partKey, text]) => [partKey, typeof text === "string" ? text.trim() : ""])
       .filter(([, text]) => text.length > 0)
   );
+  const examBankMeta = typeof getActiveExamBankAttemptMeta === "function"
+    ? getActiveExamBankAttemptMeta()
+    : null;
+  const supportsStudyCorrections = STATE.activeSection === "useOfEnglish"
+    || STATE.activeSection === "reading"
+    || Boolean(examBankMeta);
 
-  if (STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") {
+  if (supportsStudyCorrections) {
     const missingCorrectAnswers = [];
     Object.entries(sectionMeta.parts).forEach(([partKey, partData]) => {
-      if (!isTrackedErrorPart(STATE.activeSection, partKey)) return;
+      if (!isTrackedErrorPart(STATE.activeSection, partKey) && !examBankMeta) return;
       for (let q = partData.startQ; q <= partData.endQ; q++) {
         if (!gradedQuestionSet.has(q)) continue;
         if (!String(STATE.correctAnswers[q] || "").trim()) missingCorrectAnswers.push(q);
@@ -5986,12 +6051,12 @@ async function saveGradedSheetResult() {
       .map(([q, answer]) => [q, C2_STUDY_REVIEW.normalizeCorrectAnswer(answer)])
       .filter(([, answer]) => answer.length > 0)
   );
-
   if (
     isPartialPractice
     || durationSeconds > 0
-    || ((STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") && Object.keys(correctAnswers).length > 0)
-    || ((STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") && Object.keys(errorNotes).length > 0)
+    || examBankMeta
+    || (supportsStudyCorrections && Object.keys(correctAnswers).length > 0)
+    || (supportsStudyCorrections && Object.keys(errorNotes).length > 0)
     || ((STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") && Object.keys(partTexts).length > 0)
   ) {
     answers.meta = {
@@ -6001,12 +6066,13 @@ async function saveGradedSheetResult() {
         attemptedParts: completion.attemptedParts,
         gradedQuestions: completion.gradedQuestions
       } : {}),
+      ...(examBankMeta ? { examBank: examBankMeta } : {}),
       ...(durationSeconds > 0 ? { durationSeconds } : {}),
-      ...((STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") && Object.keys(correctAnswers).length > 0 ? {
+      ...(supportsStudyCorrections && Object.keys(correctAnswers).length > 0 ? {
         correctAnswers,
         studyDataVersion: C2_STUDY_REVIEW.STUDY_DATA_VERSION
       } : {}),
-      ...((STATE.activeSection === "useOfEnglish" || STATE.activeSection === "reading") && Object.keys(errorNotes).length > 0 ? { errorNotes } : {}),
+      ...(supportsStudyCorrections && Object.keys(errorNotes).length > 0 ? { errorNotes } : {}),
       ...(STATE.activeSection === "reading" && Object.keys(partTexts).length > 0 ? { readingPartTexts: partTexts } : {}),
       ...(STATE.activeSection === "useOfEnglish" && Object.keys(partTexts).length > 0 ? { useOfEnglishPartTexts: partTexts } : {})
     };
@@ -6297,6 +6363,9 @@ function buildWritingAssessmentPrompt() {
   const part2Text = document.getElementById("writing-textarea-part2")?.value.trim() || "";
   const part2Type = document.getElementById("writing-part2-type")?.value || getWritingPart2Type();
   const part2TypeLabel = getWritingPart2TypeLabel(part2Type);
+  const examTaskContext = typeof getActiveExamBankWritingAssessmentContext === "function"
+    ? getActiveExamBankWritingAssessmentContext()
+    : "";
   const tasks = [];
 
   if (part1Text) {
@@ -6346,6 +6415,8 @@ If both tasks are included, also return:
 - Whether the performance is closer to C1, C2 Grade C, C2 Grade B, or C2 Grade A.
 
 Candidate text:
+
+${examTaskContext ? `EXAM TASKS:\n${examTaskContext}\n\n` : ""}
 
 ${taskBlock}`;
 }
@@ -6505,8 +6576,10 @@ function setupWritingGradingArea() {
     return;
   }
 
-  document.getElementById("writing-textarea-part1").disabled = true;
-  document.getElementById("writing-textarea-part2").disabled = true;
+  const part1Textarea = document.getElementById("writing-textarea-part1");
+  const part2Textarea = document.getElementById("writing-textarea-part2");
+  if (part1Textarea) part1Textarea.disabled = true;
+  if (part2Textarea) part2Textarea.disabled = true;
   const part2TypeSelect = document.getElementById("writing-part2-type");
   if (part2TypeSelect) part2TypeSelect.disabled = true;
 
@@ -6568,9 +6641,11 @@ function updateWritingRawTotal() {
 async function saveWritingSheetResult() {
   if (STATE.isSavingAttempt) return;
 
-  const text1 = document.getElementById("writing-textarea-part1").value;
-  const text2 = document.getElementById("writing-textarea-part2").value;
-  const part2Type = document.getElementById("writing-part2-type")?.value || getWritingPart2Type();
+  const text1 = document.getElementById("writing-textarea-part1")?.value || "";
+  const text2 = document.getElementById("writing-textarea-part2")?.value || "";
+  const part2Type = document.getElementById("writing-part2-type")?.value
+    || STATE.examBankSession?.part2Task?.type
+    || getWritingPart2Type();
   const snapshot = getWritingScoringSnapshot();
 
   if (snapshot.partKeys.length === 0) {
@@ -6609,6 +6684,9 @@ async function saveWritingSheetResult() {
       actualMax: snapshot.actualMax,
       equivalentRaw: snapshot.equivalentRaw,
       scaleBasis: "normalised-to-40",
+      ...(typeof getActiveExamBankAttemptMeta === "function" && getActiveExamBankAttemptMeta()
+        ? { examBank: getActiveExamBankAttemptMeta() }
+        : {}),
       ...(Object.keys(writingCorrectionNotes).length > 0 ? { writingCorrectionNotes } : {})
     }
   };
@@ -6998,6 +7076,8 @@ function storeInputAnswer(qNum, value) {
 function refreshCurrentView() {
   if (STATE.currentView === "dashboard") {
     renderDashboard();
+  } else if (STATE.currentView === "examBank") {
+    openExamBank(STATE.examBankCollection);
   } else if (STATE.currentView === "errorReview") {
     renderErrorReview();
   } else if (STATE.currentView === "writingLab") {
