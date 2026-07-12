@@ -57,6 +57,7 @@ const STATE = {
   writingToolkitGroup: "compare",
   examBankCollection: "reading",
   examBankSession: null,
+  examBankUseOfEnglishFilter: "full",
   examBankWritingSelections: {},
   tourIndex: -1,
   timer: {
@@ -1470,7 +1471,7 @@ const ABOUT_TOUR_STEPS = [
     selector: '[data-tour-tab="examBank"]',
     eyebrow: "2 of 7 · Real exams",
     title: "Practise with complete exam material",
-    body: "Choose from 12 Reading papers, 33 embedded Listening tests and 10 Writing sets. Reading marks itself; Listening uses the familiar self-correction sheet; Writing keeps the full rubric workflow."
+    body: "Choose from 44 Use of English sets, 12 Reading papers, 33 playlist-led Listening tests and 14 paired Writing sets. Objective answers feed the same Progress and Review loop as your blank answer sheets."
   },
   {
     view: "dashboard",
@@ -1543,7 +1544,7 @@ function openAboutModal() {
           <div class="about-section-heading"><span>The workspace</span><h3>Six tabs, one learning loop</h3></div>
           <div class="about-tab-grid">
             <article><strong>Practice</strong><p>Exam answer sheets and correction.</p></article>
-            <article><strong>Exams</strong><p>Real Reading, Listening and Writing banks.</p></article>
+            <article><strong>Exams</strong><p>Real Use of English, Reading, Listening and Writing banks.</p></article>
             <article><strong>Progress</strong><p>Scores, trends, weak parts and saved work.</p></article>
             <article><strong>Writing</strong><p>Planning, formats and high-level language.</p></article>
             <article><strong>Vocabulary</strong><p>Curated and personal language banks.</p></article>
@@ -1677,8 +1678,6 @@ function renderHome() {
             </div>
           </div>
         </section>
-
-        ${typeof renderExamBankHomeFeatureHTML === "function" ? renderExamBankHomeFeatureHTML() : ""}
 
         <section class="sections-grid" aria-label="Exam parts">
           ${SECTION_ORDER.map(key => {
@@ -5500,6 +5499,7 @@ function renderAnswerSheetHTML() {
   const appContainer = document.getElementById("app-container");
   const sectionMeta = C2_EXAM_METADATA[STATE.activeSection];
   const bankContext = STATE.examBankSession?.section === STATE.activeSection ? STATE.examBankSession : null;
+  const isBankListening = bankContext?.section === "listening";
   
   let sheetContent = "";
   
@@ -5562,7 +5562,7 @@ function renderAnswerSheetHTML() {
   }
 
   appContainer.innerHTML = `
-    <div class="sheet-view">
+    <div class="sheet-view ${isBankListening ? "exam-listening-sheet-view" : ""}">
       <div class="sheet-container ${STATE.activeSection === "listening" ? "sheet-container-wide" : ""}">
         <div class="sheet-header">
           <div class="sheet-title">
@@ -5573,22 +5573,26 @@ function renderAnswerSheetHTML() {
             ${renderPracticeTimerHTML()}
             ${STATE.activeSection === "writing" ? `<button class="btn btn-secondary writing-toolkit-trigger" onclick="openWritingToolkit()">Writing toolkit</button>` : ""}
             <button class="btn btn-secondary" onclick="${bankContext ? `openExamBank('${STATE.activeSection}')` : "renderHome()"}">Back</button>
+            ${isBankListening ? `<button class="btn btn-primary" id="sheet-submit-btn" onclick="lockAnswersAndStartCorrection()">Grade</button>` : ""}
           </div>
         </div>
 
         ${sheetContent}
 
-        <div style="border-top:1px solid var(--border-color); padding-top:1.5rem; display:flex; justify-content:space-between; align-items:center;">
+        ${isBankListening ? "" : `<div style="border-top:1px solid var(--border-color); padding-top:1.5rem; display:flex; justify-content:space-between; align-items:center;">
           <button class="btn btn-danger-link" onclick="clearSheetInputs()">Clear</button>
           <button class="btn btn-primary" id="sheet-submit-btn" onclick="lockAnswersAndStartCorrection()">
             Grade
           </button>
-        </div>
+        </div>`}
       </div>
     </div>
   `;
 
   updatePracticeTimerDisplay();
+  if (isBankListening && typeof initializeActiveListeningPlayer === "function") {
+    initializeActiveListeningPlayer();
+  }
   if (STATE.activeSection === "writing") {
     updateWritingAssessmentPrompt();
   }
