@@ -10,9 +10,10 @@ const STATE = {
   readingPartTexts: {}, // part1 -> shared Reading reference text
   isCorrecting: false,
   isSavingAttempt: false,
-  activeProfile: "Aleetreny",
-  profiles: ["Aleetreny"],
+  activeProfile: "Demo",
+  profiles: ["Demo"],
   history: [],
+  dataMode: "demo",
   isAuthenticated: false,
   supabaseSession: null,
   supabaseUserEmail: "",
@@ -54,6 +55,7 @@ const STATE = {
   writingGenre: "report",
   writingToolkitTab: "situations",
   writingToolkitGroup: "compare",
+  tourIndex: -1,
   timer: {
     elapsedSeconds: 0,
     isRunning: false,
@@ -67,6 +69,7 @@ const LOCAL_HISTORY_KEY = "c2_owner_history";
 const LOCAL_VOCABULARY_KEY = "c2_vocabulary_library";
 const LOCAL_VOCABULARY_REVIEW_KEY = "c2_vocabulary_review_stats";
 const LOCAL_ERROR_REVIEW_KEY = "c2_error_review_stats_v1";
+const ACCOUNT_STORAGE_PREFIX = "c2_account";
 const ERROR_REVIEW_RATED_VIEW_LIMIT = 50;
 const VOCABULARY_STATE_ID_PREFIX = "vocabulary_state_";
 const SUPABASE_SESSION_KEY = "c2_supabase_session";
@@ -110,43 +113,115 @@ window.addEventListener("DOMContentLoaded", async () => {
 
 async function initializeApp() {
   loadProfiles();
-  loadLocalStorage();
   await consumeSupabaseRedirectSession();
+  const hasSession = await ensureSupabaseSession();
+  if (hasSession) {
+    activateAccountWorkspace();
+  } else {
+    activateDemoWorkspace();
+  }
   renderHome();
 
-  await hydrateRemoteHistory();
-  refreshCurrentView();
+  if (hasSession) {
+    await hydrateRemoteHistory();
+    refreshCurrentView();
+  }
 }
 
 // LOAD AND SAVE LOCAL STORAGE
 function loadProfiles() {
-  STATE.activeProfile = OWNER_PROFILE;
-  STATE.profiles = [OWNER_PROFILE];
-  saveProfilesMeta();
+  STATE.activeProfile = "Demo";
+  STATE.profiles = ["Demo"];
 }
 
-function loadLocalStorage() {
-  try {
-    const localHistories = [
-      parseStoredHistory(localStorage.getItem(LOCAL_HISTORY_KEY)),
-      parseStoredHistory(localStorage.getItem(`c2_history_${getProfileKey(OWNER_PROFILE)}`)),
-      parseStoredHistory(localStorage.getItem("c2_history_Candidate_C2"))
-    ];
+function getAccountUserId() {
+  return String(STATE.supabaseSession?.user?.id || "").trim();
+}
 
+function getAccountStorageKeys(userId = getAccountUserId()) {
+  const safeUserId = userId.replace(/[^a-zA-Z0-9_-]/g, "_");
+  return {
+    history: `${ACCOUNT_STORAGE_PREFIX}_${safeUserId}_history`,
+    vocabulary: `${ACCOUNT_STORAGE_PREFIX}_${safeUserId}_vocabulary`,
+    vocabularyReview: `${ACCOUNT_STORAGE_PREFIX}_${safeUserId}_vocabulary_review`,
+    errorReview: `${ACCOUNT_STORAGE_PREFIX}_${safeUserId}_error_review`
+  };
+}
+
+function resetWorkspaceData() {
+  STATE.history = [];
+  STATE.vocabularyEntries = [];
+  STATE.vocabularyArchivedIds = [];
+  STATE.vocabularyReviewStats = {};
+  STATE.vocabularyReviewSettings = C2_STUDY_REVIEW.normalizeStudyReviewSettings();
+  STATE.vocabularyUpdatedAt = 0;
+  STATE.errorReviewStats = {};
+  STATE.errorReviewSettings = C2_STUDY_REVIEW.normalizeStudyReviewSettings();
+  STATE.errorReviewUpdatedAt = 0;
+  STATE.vocabularyReviewSession = null;
+  STATE.errorReviewSession = null;
+  STATE.vocabularyEditingId = null;
+  STATE.vocabularyNotice = "";
+}
+
+function cloneDemoValue(value, fallback) {
+  if (value === undefined || value === null) return fallback;
+  return JSON.parse(JSON.stringify(value));
+}
+
+function activateDemoWorkspace() {
+  resetWorkspaceData();
+  const demo = globalThis.C2_DEMO_DATA || {};
+  const migration = C2_STUDY_REVIEW.migrateHistoryStudyData(
+    cloneDemoValue(demo.history, []),
+    C2_EXAM_METADATA
+  );
+
+  STATE.dataMode = "demo";
+  STATE.activeProfile = demo.profileName || "Demo";
+  STATE.profiles = [STATE.activeProfile];
+  STATE.history = migration.history;
+  STATE.vocabularyEntries = cloneDemoValue(demo.vocabularyEntries, []).map(stripVocabularyCategory);
+  STATE.vocabularyArchivedIds = cloneDemoValue(demo.vocabularyArchivedIds, []);
+  STATE.vocabularyReviewStats = cloneDemoValue(demo.vocabularyReviewStats, {});
+  STATE.vocabularyReviewSettings = C2_STUDY_REVIEW.normalizeStudyReviewSettings(demo.vocabularyReviewSettings);
+  STATE.vocabularyUpdatedAt = Number(demo.vocabularyUpdatedAt) || 0;
+  STATE.errorReviewStats = normalizeErrorReviewStats(cloneDemoValue(demo.errorReviewStats, {}));
+  STATE.errorReviewSettings = C2_STUDY_REVIEW.normalizeStudyReviewSettings(demo.errorReviewSettings);
+  STATE.errorReviewUpdatedAt = Number(demo.errorReviewUpdatedAt) || 0;
+  STATE.syncStatus = "demo";
+  STATE.syncMessage = "Public example data";
+}
+
+function activateAccountWorkspace() {
+  resetWorkspaceData();
+  STATE.dataMode = "account";
+  STATE.activeProfile = STATE.supabaseUserEmail ? STATE.supabaseUserEmail.split("@")[0] : "My account";
+  STATE.profiles = [STATE.activeProfile];
+  STATE.syncStatus = "local";
+  STATE.syncMessage = "Loading account";
+  loadAccountLocalStorage();
+}
+
+function loadAccountLocalStorage() {
+  const userId = getAccountUserId();
+  if (!userId) return;
+  const keys = getAccountStorageKeys(userId);
+  try {
     const localMigration = C2_STUDY_REVIEW.migrateHistoryStudyData(
-      mergeHistoryCollections(...localHistories),
+      parseStoredHistory(localStorage.getItem(keys.history)),
       C2_EXAM_METADATA
     );
     STATE.history = localMigration.history;
     if (localMigration.changed) saveLocalStorage();
-    const storedVocabulary = JSON.parse(localStorage.getItem(LOCAL_VOCABULARY_KEY) || "{}");
+    const storedVocabulary = JSON.parse(localStorage.getItem(keys.vocabulary) || "{}");
     STATE.vocabularyEntries = Array.isArray(storedVocabulary.entries) ? storedVocabulary.entries.map(stripVocabularyCategory) : [];
     STATE.vocabularyArchivedIds = Array.isArray(storedVocabulary.archivedIds) ? storedVocabulary.archivedIds : [];
     STATE.vocabularyUpdatedAt = Number(storedVocabulary.updatedAt) || 0;
-    const storedVocabularyReview = parseStoredVocabularyReviewState(localStorage.getItem(LOCAL_VOCABULARY_REVIEW_KEY));
+    const storedVocabularyReview = parseStoredVocabularyReviewState(localStorage.getItem(keys.vocabularyReview));
     STATE.vocabularyReviewStats = storedVocabularyReview.stats;
     STATE.vocabularyReviewSettings = storedVocabularyReview.settings;
-    const storedErrorReview = parseStoredErrorReviewState(localStorage.getItem(LOCAL_ERROR_REVIEW_KEY));
+    const storedErrorReview = parseStoredErrorReviewState(localStorage.getItem(keys.errorReview));
     STATE.errorReviewStats = storedErrorReview.stats;
     STATE.errorReviewSettings = storedErrorReview.settings;
     STATE.errorReviewUpdatedAt = storedErrorReview.updatedAt;
@@ -165,13 +240,15 @@ function loadLocalStorage() {
 }
 
 function saveVocabularyLocalStorage(options = {}) {
+  if (!STATE.isAuthenticated || STATE.dataMode !== "account") return;
+  const keys = getAccountStorageKeys();
   try {
-    localStorage.setItem(LOCAL_VOCABULARY_KEY, JSON.stringify({
+    localStorage.setItem(keys.vocabulary, JSON.stringify({
       entries: STATE.vocabularyEntries,
       archivedIds: STATE.vocabularyArchivedIds,
       updatedAt: STATE.vocabularyUpdatedAt
     }));
-    localStorage.setItem(LOCAL_VOCABULARY_REVIEW_KEY, JSON.stringify({
+    localStorage.setItem(keys.vocabularyReview, JSON.stringify({
       version: 2,
       stats: STATE.vocabularyReviewStats,
       settings: STATE.vocabularyReviewSettings
@@ -183,8 +260,10 @@ function saveVocabularyLocalStorage(options = {}) {
 }
 
 function saveErrorReviewLocalStorage(options = {}) {
+  if (!STATE.isAuthenticated || STATE.dataMode !== "account") return;
+  const keys = getAccountStorageKeys();
   try {
-    localStorage.setItem(LOCAL_ERROR_REVIEW_KEY, JSON.stringify({
+    localStorage.setItem(keys.errorReview, JSON.stringify({
       version: 2,
       stats: STATE.errorReviewStats,
       settings: STATE.errorReviewSettings,
@@ -225,9 +304,10 @@ function queueVocabularyCloudSync() {
 }
 
 function saveLocalStorage() {
+  if (!STATE.isAuthenticated || STATE.dataMode !== "account") return;
+  const keys = getAccountStorageKeys();
   try {
-    localStorage.setItem(LOCAL_HISTORY_KEY, JSON.stringify(STATE.history));
-    localStorage.setItem(`c2_history_${getProfileKey(OWNER_PROFILE)}`, JSON.stringify(STATE.history));
+    localStorage.setItem(keys.history, JSON.stringify(STATE.history));
     saveProfilesMeta();
   } catch (e) {
     console.error("Failed to save local storage", e);
@@ -235,9 +315,10 @@ function saveLocalStorage() {
 }
 
 function saveProfilesMeta() {
+  if (!STATE.isAuthenticated || STATE.dataMode !== "account") return;
   try {
-    localStorage.setItem("c2_companion_active_profile", OWNER_PROFILE);
-    localStorage.setItem("c2_companion_profiles", JSON.stringify([OWNER_PROFILE]));
+    localStorage.setItem("c2_companion_active_profile", STATE.activeProfile);
+    localStorage.setItem("c2_companion_profiles", JSON.stringify([STATE.activeProfile]));
   } catch (e) {
     console.error("Failed to save profile metadata", e);
   }
@@ -745,7 +826,7 @@ async function persistHistory(options = {}) {
 function getSyncLabel() {
   if (STATE.syncStatus === "syncing") return "Syncing";
   if (STATE.isAuthenticated) return "Online";
-  return "Local backup";
+  return "Demo data";
 }
 
 function resetPracticeTimer(options = {}) {
@@ -1334,10 +1415,11 @@ function renderMainNavigation(activeView) {
     <nav class="topbar-actions" aria-label="Main navigation">
       <div class="nav-group">
         ${items.map(item => `
-          <button class="nav-pill ${activeView === item.key ? "active" : ""}" onclick="${item.action}">${item.label}</button>
+          <button class="nav-pill ${activeView === item.key ? "active" : ""}" data-tour-tab="${item.key}" onclick="${item.action}">${item.label}</button>
         `).join("")}
       </div>
-      <button type="button" class="candidate-switch" onclick="openProfileModal()" aria-label="${STATE.isAuthenticated ? `Account and sync, ${getSyncLabel()}` : "Sign in to sync your progress"}" title="${STATE.isAuthenticated ? "Account and sync" : "Sign in to sync"}">
+      <button type="button" class="about-button" data-tour="about" onclick="openAboutModal()" aria-label="About C2 Practice Log">About</button>
+      <button type="button" class="candidate-switch" data-tour="account" onclick="openProfileModal()" aria-label="${STATE.isAuthenticated ? `Account and sync, ${getSyncLabel()}` : "Create an account or sign in"}" title="${STATE.isAuthenticated ? "Account and sync" : "Create an account or sign in"}">
         <svg class="candidate-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
           <circle cx="12" cy="8" r="3.25"></circle>
           <path d="M5.75 19c.55-3.25 2.62-5 6.25-5s5.7 1.75 6.25 5"></path>
@@ -1347,6 +1429,175 @@ function renderMainNavigation(activeView) {
       </button>
     </nav>
   `;
+}
+
+function renderDemoNoticeHTML() {
+  if (STATE.isAuthenticated) return "";
+  return `
+    <aside class="demo-notice" aria-label="Public demo workspace">
+      <div>
+        <span class="demo-notice-dot" aria-hidden="true"></span>
+        <p><strong>You are exploring Aleetreny's real example data.</strong> Changes in this demo are temporary and never enter your future account.</p>
+      </div>
+      <button type="button" class="demo-notice-action" onclick="openProfileModal()">Start from zero</button>
+    </aside>
+  `;
+}
+
+const ABOUT_TOUR_STEPS = [
+  {
+    view: "home",
+    selector: '[data-tour-tab="home"]',
+    eyebrow: "1 of 6 · Practice",
+    title: "Complete a paper, then correct it",
+    body: "Choose an exam paper, enter your answers and lock the sheet when you finish. Mark each answer, add the correct version and keep a short error note before saving."
+  },
+  {
+    view: "dashboard",
+    selector: '[data-tour-tab="dashboard"]',
+    eyebrow: "2 of 6 · Progress",
+    title: "Turn attempts into a study plan",
+    body: "See scale scores, trends and performance by paper and part. Open any saved attempt to inspect or refine its correction."
+  },
+  {
+    view: "writingLab",
+    selector: '[data-tour-tab="writingLab"]',
+    eyebrow: "3 of 6 · Writing",
+    title: "Build stronger C2 writing",
+    body: "Use the essay map, situation language, phrase bank and format guides before or after a timed Writing paper."
+  },
+  {
+    view: "vocabulary",
+    selector: '[data-tour-tab="vocabulary"]',
+    eyebrow: "4 of 6 · Vocabulary",
+    title: "Keep one useful language bank",
+    body: "Search the built-in collection, listen to pronunciation and add personal vocabulary, word formation or collocation entries."
+  },
+  {
+    view: "vocabularyReview",
+    selector: '[data-tour-tab="vocabularyReview"]',
+    eyebrow: "5 of 6 · Review",
+    title: "Review what is most likely to help",
+    body: "Run quick vocabulary sessions or revisit mistakes from saved papers. Familiarity ratings shape what appears next."
+  },
+  {
+    view: "home",
+    selector: '[data-tour="account"]',
+    eyebrow: "6 of 6 · Account",
+    title: "Your private workspace starts empty",
+    body: "Create an account with email and password. The public demo is never copied: your attempts, corrections and review history start at zero and sync only to you."
+  }
+];
+
+function openAboutModal() {
+  const modal = document.createElement("div");
+  modal.className = "modal-overlay";
+  modal.innerHTML = `
+    <div class="modal-content about-modal" role="dialog" aria-modal="true" aria-labelledby="about-title">
+      <div class="modal-header about-modal-header">
+        <div>
+          <span class="eyebrow">About</span>
+          <h2 class="modal-title" id="about-title">A calmer way to prepare for Cambridge C2</h2>
+        </div>
+        <button class="modal-close" onclick="closeModal()" aria-label="Close About">&times;</button>
+      </div>
+      <div class="about-body">
+        <section class="about-intro">
+          <p>C2 Practice Log brings mock answer sheets, self-correction, progress analytics, writing support and spaced review into one focused workspace.</p>
+          <div class="about-mode-grid">
+            <article><span>Without an account</span><strong>Explore the real demo</strong><p>You see Aleetreny's example attempts and corrections. Anything you change is temporary.</p></article>
+            <article><span>With an account</span><strong>Start clean and private</strong><p>Your workspace begins at zero, is isolated by user and syncs through Supabase.</p></article>
+          </div>
+        </section>
+
+        <section class="about-section">
+          <div class="about-section-heading"><span>How it works</span><h3>From mock to useful feedback</h3></div>
+          <ol class="about-flow">
+            <li><span>01</span><div><strong>Enter</strong><p>Open a paper, fill the answer sheet and use the built-in timer if you want exam conditions.</p></div></li>
+            <li><span>02</span><div><strong>Correct</strong><p>Lock your answers, grade every item, record the correct answer and add a note explaining the mistake.</p></div></li>
+            <li><span>03</span><div><strong>Improve</strong><p>Save the attempt, inspect weak parts in Progress and bring errors back through Review.</p></div></li>
+          </ol>
+        </section>
+
+        <section class="about-section about-tabs-summary">
+          <div class="about-section-heading"><span>The workspace</span><h3>Five tabs, one learning loop</h3></div>
+          <div class="about-tab-grid">
+            <article><strong>Practice</strong><p>Exam answer sheets and correction.</p></article>
+            <article><strong>Progress</strong><p>Scores, trends, weak parts and saved work.</p></article>
+            <article><strong>Writing</strong><p>Planning, formats and high-level language.</p></article>
+            <article><strong>Vocabulary</strong><p>Curated and personal language banks.</p></article>
+            <article><strong>Review</strong><p>Adaptive vocabulary and error recall.</p></article>
+          </div>
+        </section>
+      </div>
+      <div class="about-actions">
+        ${STATE.isAuthenticated ? "" : '<button class="btn btn-secondary" onclick="closeModal(); openProfileModal()">Create account</button>'}
+        <button class="btn btn-primary" onclick="startAboutTour()">Take the 2-minute tour</button>
+      </div>
+    </div>
+  `;
+  mountModal(modal);
+}
+
+function navigateToAboutTourView(view) {
+  if (view === "dashboard") renderDashboard();
+  else if (view === "writingLab") openWritingLab();
+  else if (view === "vocabulary") openVocabulary();
+  else if (view === "vocabularyReview") openVocabularyReview();
+  else renderHome();
+}
+
+function clearAboutTourLayer() {
+  document.getElementById("about-tour-layer")?.remove();
+  document.querySelectorAll(".tour-highlight").forEach(element => element.classList.remove("tour-highlight"));
+}
+
+function startAboutTour() {
+  closeAllModals();
+  showAboutTourStep(0);
+}
+
+function showAboutTourStep(index) {
+  if (index < 0 || index >= ABOUT_TOUR_STEPS.length) {
+    closeAboutTour();
+    return;
+  }
+
+  clearAboutTourLayer();
+  STATE.tourIndex = index;
+  const step = ABOUT_TOUR_STEPS[index];
+  navigateToAboutTourView(step.view);
+
+  requestAnimationFrame(() => {
+    const target = document.querySelector(step.selector);
+    if (target) target.classList.add("tour-highlight");
+
+    const layer = document.createElement("div");
+    layer.id = "about-tour-layer";
+    layer.className = "about-tour-layer";
+    layer.innerHTML = `
+      <div class="about-tour-card" role="dialog" aria-modal="true" aria-live="polite">
+        <div class="about-tour-progress" aria-hidden="true"><span style="width:${((index + 1) / ABOUT_TOUR_STEPS.length) * 100}%"></span></div>
+        <span class="eyebrow">${step.eyebrow}</span>
+        <h2>${step.title}</h2>
+        <p>${step.body}</p>
+        <div class="about-tour-controls">
+          <button class="tour-exit" onclick="closeAboutTour()">Exit tour</button>
+          <div>
+            ${index > 0 ? `<button class="btn btn-secondary" onclick="showAboutTourStep(${index - 1})">Back</button>` : ""}
+            <button class="btn btn-primary" onclick="showAboutTourStep(${index + 1})">${index === ABOUT_TOUR_STEPS.length - 1 ? "Finish" : "Next"}</button>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(layer);
+    layer.querySelector(".btn-primary")?.focus();
+  });
+}
+
+function closeAboutTour() {
+  clearAboutTourLayer();
+  STATE.tourIndex = -1;
 }
 
 function renderHome() {
@@ -1375,6 +1626,8 @@ function renderHome() {
 
         ${renderMainNavigation("home")}
       </header>
+
+      ${renderDemoNoticeHTML()}
 
       <main class="home-main">
         <section class="home-overview">
@@ -1755,6 +2008,8 @@ function renderVocabularyLegacy() {
         ${renderMainNavigation("vocabulary")}
       </header>
 
+      ${renderDemoNoticeHTML()}
+
       <main class="vocabulary-main">
         <section class="vocabulary-hero">
           <div>
@@ -1916,6 +2171,8 @@ function renderVocabulary() {
         </button>
         ${renderMainNavigation("vocabulary")}
       </header>
+
+      ${renderDemoNoticeHTML()}
 
       <main class="vocabulary-main vocabulary-table-main">
         <section class="vocabulary-hero compact-vocabulary-hero">
@@ -2332,6 +2589,7 @@ function renderVocabularyReview() {
         </button>
         ${renderMainNavigation("vocabularyReview")}
       </header>
+      ${renderDemoNoticeHTML()}
       <main class="review-main">
         ${STATE.vocabularyReviewSession ? renderVocabularyReviewSessionHTML() : renderVocabularyReviewSetupHTML()}
       </main>
@@ -2833,6 +3091,7 @@ function renderErrorReview() {
         </button>
         ${renderMainNavigation("dashboard")}
       </header>
+      ${renderDemoNoticeHTML()}
       <main class="review-main">
         ${STATE.errorReviewSession ? renderErrorReviewSessionHTML() : renderErrorReviewSetupHTML()}
       </main>
@@ -3289,6 +3548,7 @@ function renderWritingLab() {
         </button>
         ${renderMainNavigation("writingLab")}
       </header>
+      ${renderDemoNoticeHTML()}
       <main class="writing-lab-main">
         <section class="writing-lab-hero">
           <div>
@@ -3645,6 +3905,8 @@ function renderDashboardView() {
         ${renderMainNavigation("dashboard")}
       </header>
 
+      ${renderDemoNoticeHTML()}
+
       <main class="dashboard-main">
         <section class="insight-hero ${scorePosition.tone}">
           <div class="insight-copy">
@@ -3693,7 +3955,9 @@ function renderDashboardView() {
           <section class="dash-panel attempts-panel">
             <div class="panel-title">
               <span>Recent saved work</span>
-              <button class="btn-danger-link" onclick="openFullDataResetModal()">Reset all data</button>
+              ${STATE.isAuthenticated
+                ? `<button class="btn-danger-link" onclick="openFullDataResetModal()">Reset all data</button>`
+                : `<button class="btn-danger-link demo-start-link" onclick="openProfileModal()">Create your own log</button>`}
             </div>
             <div class="panel-body-scroll">
               ${renderHistoryListV2HTML(6)}
@@ -4454,7 +4718,7 @@ function renderPartBreakdownHTML() {
 }
 
 // ==========================================================================
-// 2. OWNER ACCOUNT CONTROLLER
+// 2. ACCOUNT CONTROLLER
 // ==========================================================================
 function openProfileModal() {
   openProfileModalView();
@@ -4465,17 +4729,17 @@ function openProfileModalView() {
   modal.className = "modal-overlay";
   const accountState = STATE.isAuthenticated
     ? "Supabase sync active"
-    : "Local backup only";
+    : "Public demo";
   const accountDetail = STATE.isAuthenticated
-    ? `Signed in as ${escapeHTML(STATE.supabaseUserEmail || "owner")}. New attempts are saved online.`
-    : "Sign in with your Supabase account. Local attempts will be uploaded after sign in.";
+    ? `Signed in as ${escapeHTML(STATE.supabaseUserEmail || "your account")}. This private workspace is saved online.`
+    : "Create an account or sign in to leave the public example and open your own private workspace.";
 
   modal.innerHTML = `
     <div class="modal-content profile-modal">
       <div class="modal-header">
         <div>
-          <span class="eyebrow">Owner account</span>
-          <h3 class="modal-title">Aleetreny</h3>
+          <span class="eyebrow">Your workspace</span>
+          <h3 class="modal-title">${STATE.isAuthenticated ? escapeHTML(STATE.supabaseUserEmail || "My account") : "Start from zero"}</h3>
         </div>
         <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
       </div>
@@ -4495,8 +4759,9 @@ function openProfileModalView() {
             </div>
           ` : `
             <div class="account-form">
+              <p class="account-zero-note">A new account starts completely empty. The demo attempts, corrections and review ratings are never copied across.</p>
               <input type="email" id="owner-email-input" placeholder="Email" autocomplete="email">
-              <input type="password" id="owner-password-input" placeholder="Password" onkeydown="handleAccountPasswordKeydown(event)" autocomplete="current-password">
+              <input type="password" id="owner-password-input" placeholder="Password (at least 6 characters)" onkeydown="handleAccountPasswordKeydown(event)" autocomplete="current-password">
               <div class="new-profile-row">
                 <button class="btn btn-primary" id="owner-login-btn" onclick="loginOwnerFromModal()">Sign in</button>
                 <button class="btn btn-secondary" id="owner-signup-btn" onclick="signUpOwnerFromModal()">Create account</button>
@@ -4534,6 +4799,7 @@ async function loginOwnerFromModal() {
 
   try {
     await signInWithSupabase(email, password);
+    activateAccountWorkspace();
     await hydrateRemoteHistory();
     closeModal();
     refreshCurrentView();
@@ -4562,6 +4828,7 @@ async function signUpOwnerFromModal() {
   try {
     const session = await signUpWithSupabase(email, password);
     if (session.access_token) {
+      activateAccountWorkspace();
       await hydrateRemoteHistory();
       closeModal();
       refreshCurrentView();
@@ -4583,10 +4850,9 @@ async function signUpOwnerFromModal() {
 
 async function logoutOwnerFromModal() {
   clearSupabaseSession();
-  STATE.syncStatus = "local";
-  STATE.syncMessage = "Local backup";
+  activateDemoWorkspace();
   closeModal();
-  refreshCurrentView();
+  renderHome();
 }
 
 function switchUserProfile() {
@@ -4594,7 +4860,7 @@ function switchUserProfile() {
 }
 
 function createUserProfile() {
-  alert("This app is configured for one owner account.");
+  openProfileModal();
 }
 
 // ==========================================================================
@@ -6675,32 +6941,22 @@ function setFullDataResetFinalEnabled(confirmed) {
 }
 
 function clearRegisteredDataFromLocalStorage() {
-  [
+  const keys = [
     LOCAL_HISTORY_KEY,
     `c2_history_${getProfileKey(OWNER_PROFILE)}`,
     "c2_history_Candidate_C2",
     LOCAL_VOCABULARY_KEY,
     LOCAL_VOCABULARY_REVIEW_KEY,
     LOCAL_ERROR_REVIEW_KEY
-  ].forEach(key => localStorage.removeItem(key));
+  ];
+  if (getAccountUserId()) keys.push(...Object.values(getAccountStorageKeys()));
+  keys.forEach(key => localStorage.removeItem(key));
 }
 
 function resetRegisteredDataState() {
   if (vocabularySyncTimeoutId) clearTimeout(vocabularySyncTimeoutId);
   vocabularySyncTimeoutId = null;
-  STATE.history = [];
-  STATE.vocabularyEntries = [];
-  STATE.vocabularyArchivedIds = [];
-  STATE.vocabularyReviewStats = {};
-  STATE.vocabularyReviewSettings = C2_STUDY_REVIEW.normalizeStudyReviewSettings();
-  STATE.vocabularyUpdatedAt = 0;
-  STATE.errorReviewStats = {};
-  STATE.errorReviewSettings = C2_STUDY_REVIEW.normalizeStudyReviewSettings();
-  STATE.errorReviewUpdatedAt = 0;
-  STATE.vocabularyReviewSession = null;
-  STATE.errorReviewSession = null;
-  STATE.vocabularyEditingId = null;
-  STATE.vocabularyNotice = "";
+  resetWorkspaceData();
   clearRegisteredDataFromLocalStorage();
 }
 
