@@ -3488,7 +3488,20 @@ button {
 }
 
 .sheet-container-wide {
-  width: min(960px, 100%);
+  width: min(1680px, 100%);
+}
+
+.exam-listening-sheet-view {
+  padding: 10px 8px 12px;
+}
+
+.exam-listening-sheet-view .sheet-container-wide {
+  padding: 16px;
+}
+
+.exam-listening-sheet-view .sheet-header {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
 }
 
 .sheet-header {

@@ -1,6 +1,6 @@
 # C2 Practice Log
 
-A Cambridge C2 Proficiency exam simulator and study workspace: real Reading, Listening and Writing practice banks, answer sheets, guided correction, progress analytics and adaptive review in one static web app.
+A Cambridge C2 Proficiency exam simulator and study workspace: real Use of English, Reading, Listening and Writing practice banks, answer sheets, guided correction, progress analytics and adaptive review in one static web app.
 
 **Live app:** [aleetreny.github.io/c2-practice-log](https://aleetreny.github.io/c2-practice-log/)
 
@@ -19,35 +19,43 @@ Practice Log is built around the work that happens after answering a question:
 
 The `Exams` workspace turns the application into a reusable practice library without changing the existing history model.
 
+### Use of English
+
+- 24 full papers covering Parts 2, 3 and 4
+- 20 additional focused Part 4 drills
+- All 44 source sets reconstructed from real logged exercises but presented as fresh, unattempted practice
+- Split-screen source and answer panels, timer and automatic marking for Parts 2 and 3
+- Accurate 0–2 self-marking against the supplied key for Part 4 transformations
+- Full papers feed the normal scale-score history; focused drills stay outside aggregate score metrics
+
 ### Reading
 
-- 12 papers covering Parts 5, 6 and 7
-- 276 rendered questions and 276 checked answers
+- 12 complete 44-mark papers combining Parts 1, 5, 6 and 7
+- 372 rendered questions with checked answer keys
 - Split-screen source text and question panels modelled on computer-based exam software
+- Part 6 paragraphs can be dragged directly into the original text and removed back to a stable A–H bank
 - Part navigation, live completion counts, timer and automatic marking
-- 36 available marks normalised to the 44-mark Reading component for a clearly labelled scale estimate
+- Full papers use all 44 available marks; the incomplete Test 12 retains a clearly labelled normalised estimate
 - Full source text, submitted answers and answer key preserved in the saved attempt
 
 ### Listening
 
-- 33 full video-led tests; incomplete Tests 24 and 25 are intentionally absent
-- Privacy-enhanced `youtube-nocookie.com` embeds
+- 33 full video-led tests displayed consecutively as Tests 1–33
+- Playlist positions are resolved through the YouTube IFrame Player API; incomplete source Tests 24 and 25 are skipped internally
 - The video supplies the audio and on-screen questions while the app keeps a 30-answer sheet alongside it
 - Local question numbers 1–30, manual Correct/Missed grading, corrected-answer fields and notes
-- A direct YouTube fallback remains available when an embed is restricted
+- Wide-screen working mode, top-mounted Grade action and a direct playlist fallback
 
 ### Writing
 
-- 10 authentic task sets and 24 tasks in total
+- 14 paired task sets and 28 tasks in total
+- Four additional Part 1 essays combined deterministically with the existing 14 Part 2 tasks
 - Two source texts shown beside the Part 1 editor
-- Exact Part 2 choice retained for every available article, letter, report or review prompt
+- Compact one-word topic previews avoid revealing source-text titles or full prompts
 - 90-minute timer, live word limits, Writing toolkit and copyable assessment prompt
 - Cambridge criteria controls for Content, Communicative Achievement, Organisation and Language
-- Part 1-only source sets are supported and transparently normalised to 40 marks
 
 The bank contains no Speaking material.
-
-Previously registered Use of English Parts 2–4 and Reading Part 1 source exercises remain linked from `Exams` through the personal saved-paper archive, so every non-Speaking component has a direct route from the same workspace.
 
 ## Public demo and private accounts
 
@@ -103,9 +111,13 @@ To regenerate it, place these files at the repository root:
 
 ```text
 cambridge_c2_reading_12_tests_polished.md
-c2_listening_youtube_embeds.md
+c2_listening_youtube_embeds_corrected.md
+c2_listening_playlist_indexes.json
 C2_Proficiency_Writing_Practice_Bank.md
+C2_Writing_Part_1_Practice_4_Tests.md
 ```
+
+Use of English and the first 11 Reading Part 1 sources are recovered from the sanitised `demo-data.js` snapshot, which remains committed because it also powers the public demo. The final corrected Part 1 source is stored separately in `data/reading-part1-test12.json`; candidate answers and account data are excluded.
 
 Then run:
 
@@ -114,7 +126,7 @@ npm run build:exam-bank
 npm run audit:exam-bank
 ```
 
-The generator rejects incomplete Reading structures, missing answer keys, invalid Listening embeds and malformed Writing task counts. A source digest in the generated asset makes accidental drift visible.
+The generator rejects incomplete Reading structures, missing logged answer keys, inconsistent Listening playlist indexes and any Writing pairing that does not contain 14 unique tasks on each side. A source digest in the generated asset makes accidental drift visible.
 
 ## Supabase setup
 
@@ -167,25 +179,26 @@ For a fork, also update:
 ```text
 index.html                    App shell and asset loading
 app.js                        Shared UI, auth, persistence and analytics
-exam-bank.js                  Exam library and Reading simulator controller
+exam-bank.js                  Exam library and objective-paper simulators
 exam-bank.css                 Exam library and computer-based-paper layouts
-exam-bank-data.js             Generated Reading, Listening and Writing bank
+exam-bank-data.js             Generated Use of English, Reading, Listening and Writing bank
 demo-data.js                  Sanitised public account snapshot
+data/reading-part1-test12.json  Sanitised final Reading Part 1 source and key
 questions.js                  Exam metadata and answer-sheet definitions
 attempt-data.js               Completion and partial-practice rules
 study-review-data.js          Review selection and study-data migration
 vocabulary-data.js            Built-in vocabulary bank
 writing-data.js               Writing lab content
 styles.css                    Core responsive application styles
-scripts/build-exam-bank-data.js  Deterministic Markdown importer
+scripts/build-exam-bank-data.js  Deterministic source/log importer
 scripts/audit-*.js            Data, UI, privacy and isolation audits
 ```
 
 ## Quality and privacy checks
 
-`npm run check` validates JavaScript syntax, all 12 Reading papers and keys, all 33 Listening records, all 24 Writing tasks, vocabulary integrity, Writing resources, migrations, partial practice, Error Log behaviour and the public demo/account boundary.
+`npm run check` validates JavaScript syntax, all 44 Use of English sets, all 12 Reading papers and keys, all 33 Listening records, all 28 Writing tasks, vocabulary integrity, Writing resources, migrations, partial practice, Error Log behaviour and the public demo/account boundary.
 
-The exam-bank audit proves question ranges, option sets, Part 6 gaps, Part 7 section references, YouTube URL shape and Writing task completeness. The public-demo audit rejects session and refresh-token fields.
+The exam-bank audit proves question ranges, all 12 Reading Part 1 keys, Part 6 gaps, Part 7 section references, playlist indexes and unique Writing pairings. The public-demo audit rejects session and refresh-token fields.
 
 ## Disclaimer
 
