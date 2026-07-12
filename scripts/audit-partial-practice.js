@@ -108,7 +108,7 @@ assert.match(appSource, /function calculateAverageScaleScore\(\)[\s\S]*?getScore
 assert.match(appSource, /function getSectionEvolutionMetrics\(section\)[\s\S]*?getScoredHistory\(section\)/);
 assert.match(appSource, /function getAttemptDurationSeconds\(item = \{\}\) \{\s*if \(isPartialPracticeAttempt\(item\)\) return 0;/);
 assert.match(appSource, /const durationSeconds = isPartialPractice \? 0 : getCurrentPracticeDurationSeconds\(\)/);
-assert.match(appSource, /if \(isPartialPractice && !attemptedQuestions\.has\(q\)\) continue;/);
+assert.match(appSource, /if \(\(isPartialPractice \|\| isBankAttempt\) && !attemptedQuestions\.has\(q\)\) continue;/);
 assert.match(appSource, /Partial practice saved/);
 
 console.log("Partial-practice audit passed: completion, zero-point grades, scope and metric exclusion verified.");

@@ -48,10 +48,11 @@ assert.match(
   "immediate sign up must clear the demo before remote hydration"
 );
 
-for (const tab of ["home", "dashboard", "writingLab", "vocabulary", "vocabularyReview"]) {
+for (const tab of ["home", "examBank", "dashboard", "writingLab", "vocabulary", "vocabularyReview"]) {
   assert.ok(appSource.includes(`data-tour-tab=\"${tab}\"`) || appSource.includes(`key: "${tab}"`), `tour should cover ${tab}`);
 }
 assert.match(appSource, /const ABOUT_TOUR_STEPS = \[/, "guided tour steps should exist");
+assert.match(appSource, /7 of 7 · Account/, "guided tour should cover all six tabs and account");
 assert.match(appSource, /Your private workspace starts empty/, "tour should explain account isolation");
 
 console.log(`Public demo audit passed: ${demo.history.length} attempts, ${demo.vocabularyEntries.length} personal vocabulary entries, ${Object.keys(demo.vocabularyReviewStats).length} vocabulary ratings and ${Object.keys(demo.errorReviewStats).length} error ratings.`);

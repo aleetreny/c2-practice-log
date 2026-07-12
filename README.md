@@ -1,24 +1,59 @@
 # C2 Practice Log
 
-A focused Cambridge C2 Proficiency workspace for completing mock answer sheets, correcting them carefully and turning every attempt into a practical study plan.
+A Cambridge C2 Proficiency exam simulator and study workspace: real Reading, Listening and Writing practice banks, answer sheets, guided correction, progress analytics and adaptive review in one static web app.
 
 **Live app:** [aleetreny.github.io/c2-practice-log](https://aleetreny.github.io/c2-practice-log/)
 
-## Why it exists
+## The learning loop
 
-Mock scores are useful, but the correction behind them is where most of the learning happens. C2 Practice Log keeps the whole loop in one place:
+Practice Log is built around the work that happens after answering a question:
 
-1. Complete a paper with an optional timer.
-2. Lock the answers and self-correct every item.
-3. Save correct answers and short error notes.
-4. Track Cambridge scale-score trends and weak exam parts.
-5. Bring mistakes and vocabulary back through adaptive review.
+1. Choose a real paper from **Exams**, or open a blank answer sheet from **Practice**.
+2. Work under timed conditions in a computer-based-exam layout.
+3. Mark automatically where an answer key is available, or lock and self-correct the sheet.
+4. Save correct answers, useful notes and Writing feedback.
+5. Track scale-score trends and weak exam parts in **Progress**.
+6. Bring language and recurring mistakes back through **Review**.
+
+## Real exam repository
+
+The `Exams` workspace turns the application into a reusable practice library without changing the existing history model.
+
+### Reading
+
+- 12 papers covering Parts 5, 6 and 7
+- 276 rendered questions and 276 checked answers
+- Split-screen source text and question panels modelled on computer-based exam software
+- Part navigation, live completion counts, timer and automatic marking
+- 36 available marks normalised to the 44-mark Reading component for a clearly labelled scale estimate
+- Full source text, submitted answers and answer key preserved in the saved attempt
+
+### Listening
+
+- 33 full video-led tests; incomplete Tests 24 and 25 are intentionally absent
+- Privacy-enhanced `youtube-nocookie.com` embeds
+- The video supplies the audio and on-screen questions while the app keeps a 30-answer sheet alongside it
+- Local question numbers 1–30, manual Correct/Missed grading, corrected-answer fields and notes
+- A direct YouTube fallback remains available when an embed is restricted
+
+### Writing
+
+- 10 authentic task sets and 24 tasks in total
+- Two source texts shown beside the Part 1 editor
+- Exact Part 2 choice retained for every available article, letter, report or review prompt
+- 90-minute timer, live word limits, Writing toolkit and copyable assessment prompt
+- Cambridge criteria controls for Content, Communicative Achievement, Organisation and Language
+- Part 1-only source sets are supported and transparently normalised to 40 marks
+
+The bank contains no Speaking material.
+
+Previously registered Use of English Parts 2–4 and Reading Part 1 source exercises remain linked from `Exams` through the personal saved-paper archive, so every non-Speaking component has a direct route from the same workspace.
 
 ## Public demo and private accounts
 
-Visitors who are not signed in see a public, interactive snapshot of Aleetreny's real preparation data. It contains 84 saved practices plus example corrections, vocabulary and review history, so every area of the app is useful on first visit.
+Visitors who are not signed in see an interactive snapshot of Aleetreny's preparation data: 84 saved practices plus example corrections, vocabulary and review history. They can also explore every exam-bank paper.
 
-The demo and account workspaces are deliberately separate:
+The public demo and account workspaces are deliberately separate:
 
 - Demo changes are temporary and disappear on reload.
 - A newly created account starts with no attempts, personal vocabulary or review ratings.
@@ -26,26 +61,25 @@ The demo and account workspaces are deliberately separate:
 - Supabase Row Level Security keeps each user's online rows private.
 - Signing out immediately returns to the public demo.
 
-The published demo asset contains study data only. Session tokens, passwords and Supabase user credentials are never included.
+The published demo and exam-bank assets contain study material only. Session tokens, passwords and Supabase credentials are never included.
 
-## Features
+## Other features
 
-- Practice answer sheets for Use of English, Reading, Listening and Writing
-- Full and partial-practice modes with a built-in timer
-- Guided self-correction, model-answer fields and error notes
+- Blank answer sheets for Use of English, Reading, Listening and Writing
+- Full and focused partial-practice modes
+- Guided self-correction, correct-answer fields and error notes
 - Cambridge scale-score conversion and grade bands
-- Progress dashboard with trends, pass rate, part breakdowns and attempt history
-- Detailed saved-attempt editing and deletion
+- Progress dashboard with trends, pass rate, part breakdowns and saved-attempt review
 - Writing lab with essay planning, situation language and text-type guidance
 - Searchable curated vocabulary plus a personal language bank
-- Pronunciation using the browser speech engine
+- Browser-based pronunciation
 - Adaptive vocabulary and exercise-error review
 - Email/password accounts with cloud sync and offline browser backup
-- Responsive layout, public About guide and an interactive six-step tour
+- Responsive layout, public About guide and interactive seven-step tour
 
 ## Run locally
 
-The app is intentionally framework-free. Node.js 18 or newer is only required for the audits.
+The application is framework-free. Node.js 18 or newer is only required for data generation and audits.
 
 ```bash
 git clone https://github.com/aleetreny/c2-practice-log.git
@@ -53,17 +87,38 @@ cd c2-practice-log
 python -m http.server 4173
 ```
 
-Open [http://localhost:4173](http://localhost:4173), then run the full validation suite separately:
+Open [http://localhost:4173](http://localhost:4173), then run:
 
 ```bash
 npm run check
 ```
 
-No package installation is required for the application itself.
+No package installation or frontend build is required.
+
+## Rebuilding the exam bank
+
+The original Markdown imports are intentionally ignored by Git. The generated, browser-ready `exam-bank-data.js` is committed and deterministic.
+
+To regenerate it, place these files at the repository root:
+
+```text
+cambridge_c2_reading_12_tests_polished.md
+c2_listening_youtube_embeds.md
+C2_Proficiency_Writing_Practice_Bank.md
+```
+
+Then run:
+
+```bash
+npm run build:exam-bank
+npm run audit:exam-bank
+```
+
+The generator rejects incomplete Reading structures, missing answer keys, invalid Listening embeds and malformed Writing task counts. A source digest in the generated asset makes accidental drift visible.
 
 ## Supabase setup
 
-Authentication and persistence use Supabase directly from the static frontend. Create a project, enable email/password authentication and run the following in the SQL editor:
+Authentication and persistence use Supabase directly from the static frontend. Create a project, enable email/password authentication and run:
 
 ```sql
 create table public.c2_attempts (
@@ -92,39 +147,49 @@ create index c2_attempts_user_date_idx
 on public.c2_attempts (user_id, attempted_at);
 ```
 
-Then update `SUPABASE_CONFIG` near the top of `app.js` with the project URL and anon key. Add both the production URL and any local development URL to the allowed redirect URLs in Supabase Auth.
+Update `SUPABASE_CONFIG` near the top of `app.js` with the project URL and anon key, then add the production and development URLs to the allowed Auth redirects.
 
-The anon key is designed to be present in a browser app. Its safety depends on Row Level Security; never place a `service_role` key in this repository.
+The anon key is expected in a browser application. Its safety depends on Row Level Security; never publish a `service_role` key.
 
 ## Deployment
 
-The production site is served by GitHub Pages from the `gh-pages` branch. Because the project is static, deployment consists of publishing the repository files without a build step. After changing JavaScript or CSS, update the corresponding query-string version in `index.html` so returning visitors receive the new asset.
+Production is served by GitHub Pages from `gh-pages`. The deploy branch contains only browser assets and needs no build step. After changing JavaScript or CSS, update its query-string version in `index.html` so returning visitors receive the new files.
 
 For a fork, also update:
 
-- `SUPABASE_CONFIG` and the allowed Auth redirect URLs
-- the live link and clone URL in this README
-- the public demo snapshot if different example data is desired
+- `SUPABASE_CONFIG` and allowed Auth redirects
+- the live and clone URLs in this README
+- the public demo snapshot, if different example data is desired
+- the Listening URLs, if using a different video collection
 
 ## Project map
 
 ```text
-index.html                 App shell and asset loading
-app.js                     UI, authentication, persistence and analytics
-demo-data.js               Sanitised public example snapshot
-questions.js               Exam metadata and question definitions
-attempt-data.js             Attempt completion and partial-practice rules
-study-review-data.js        Review selection and migration logic
-vocabulary-data.js          Built-in vocabulary bank
-writing-data.js             Writing lab content
-styles.css                  Responsive application styles
-scripts/audit-*.js          Data, UI and isolation audits
-data/vocabulary-*.json      Vocabulary enrichment source data
+index.html                    App shell and asset loading
+app.js                        Shared UI, auth, persistence and analytics
+exam-bank.js                  Exam library and Reading simulator controller
+exam-bank.css                 Exam library and computer-based-paper layouts
+exam-bank-data.js             Generated Reading, Listening and Writing bank
+demo-data.js                  Sanitised public account snapshot
+questions.js                  Exam metadata and answer-sheet definitions
+attempt-data.js               Completion and partial-practice rules
+study-review-data.js          Review selection and study-data migration
+vocabulary-data.js            Built-in vocabulary bank
+writing-data.js               Writing lab content
+styles.css                    Core responsive application styles
+scripts/build-exam-bank-data.js  Deterministic Markdown importer
+scripts/audit-*.js            Data, UI, privacy and isolation audits
 ```
 
 ## Quality and privacy checks
 
-`npm run check` validates JavaScript syntax, vocabulary integrity, writing resources, study-data migrations, partial practice, Error Log behaviour and the public demo/account boundary. The public-demo audit also rejects session and refresh-token fields in `demo-data.js`.
+`npm run check` validates JavaScript syntax, all 12 Reading papers and keys, all 33 Listening records, all 24 Writing tasks, vocabulary integrity, Writing resources, migrations, partial practice, Error Log behaviour and the public demo/account boundary.
+
+The exam-bank audit proves question ranges, option sets, Part 6 gaps, Part 7 section references, YouTube URL shape and Writing task completeness. The public-demo audit rejects session and refresh-token fields.
+
+## Disclaimer
+
+This independent educational project is not affiliated with or endorsed by Cambridge University Press & Assessment. Cambridge names are used only to identify the exam format. Listening media is hosted by YouTube and remains subject to the availability and terms of its respective channel.
 
 ## License
 
