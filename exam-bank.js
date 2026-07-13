@@ -692,11 +692,13 @@
 
   function renderUseOfEnglishPart4GradingHTML(session) {
     const part2Questions = session.test.parts.part2?.questions || [];
+    const part3Questions = session.test.parts.part3?.questions || [];
     const part4Questions = session.test.parts.part4?.questions || [];
     const includesPart2 = part2Questions.length > 0;
+    const includesPart3 = part3Questions.length > 0;
     return `
       <section class="exam-uoe-grading">
-        <div class="exam-session-topbar"><div><span class="eyebrow">Final correction</span><h1>${includesPart2 ? "Review Parts 2 and 4" : "Score Part 4"}</h1><p>${includesPart2 ? "Confirm each open-cloze answer, then award 0, 1 or 2 marks to every transformation." : "Award 0, 1 or 2 marks after comparing each transformation with the key."}</p></div><div class="exam-session-actions"><button class="btn btn-secondary" onclick="exitUseOfEnglishBankTest()">Exit</button><button class="btn btn-primary" id="save-uoe-bank" onclick="saveUseOfEnglishBankResult()" ${hasMissingUseOfEnglishManualGrades(session) ? "disabled" : ""}>Save result</button></div></div>
+        <div class="exam-session-topbar"><div><span class="eyebrow">Final correction</span><h1>${includesPart3 ? "Review Parts 2, 3 and 4" : "Score Part 4"}</h1><p>${includesPart3 ? "Confirm Part 2, review the automatic Part 3 marking, then award 0, 1 or 2 marks to every Part 4 transformation." : "Award 0, 1 or 2 marks after comparing each transformation with the key."}</p></div><div class="exam-session-actions"><button class="btn btn-secondary" onclick="exitUseOfEnglishBankTest()">Exit</button><button class="btn btn-primary" id="save-uoe-bank" onclick="saveUseOfEnglishBankResult()" ${hasMissingUseOfEnglishManualGrades(session) ? "disabled" : ""}>Save result</button></div></div>
         ${includesPart2 ? `
           <section class="uoe-grading-section">
             <div class="uoe-grading-heading"><div><span class="eyebrow">Part 2 · Open cloze</span><h2>Confirm the suggested marking</h2></div><p>Valid alternatives are separated by “/”. Change any pre-marked answer when context allows another form.</p></div>
@@ -712,6 +714,24 @@
                   </div>
                 </article>
               `).join("")}
+            </div>
+          </section>
+        ` : ""}
+        ${includesPart3 ? `
+          <section class="uoe-grading-section">
+            <div class="uoe-grading-heading"><div><span class="eyebrow">Part 3 · Word formation</span><h2>Automatic marking</h2></div><p>Check your answer against the key. Part 3 is marked automatically.</p></div>
+            <div class="uoe-grading-grid">
+              ${part3Questions.map(question => {
+                const isCorrect = matchesObjectiveAnswer(session.answers[question.number], session.test.answers[question.number]);
+                return `
+                  <article>
+                    <span>Question ${question.number}</span>
+                    <div><small>Your answer</small><strong>${escapeHTML(session.answers[question.number])}</strong></div>
+                    <div class="correct"><small>Answer key</small><strong>${escapeHTML(session.test.answers[question.number])}</strong></div>
+                    <div class="uoe-auto-grade ${isCorrect ? "correct" : "missed"}"><small>Automatic result</small><strong>${isCorrect ? "Correct" : "Missed"}</strong></div>
+                  </article>
+                `;
+              }).join("")}
             </div>
           </section>
         ` : ""}
@@ -759,7 +779,7 @@
           ? session.part4Grades[number]
           : partKey === "part2"
             ? session.part2Grades[number]
-            : normalizeObjectiveAnswer(session.answers[number]) === normalizeObjectiveAnswer(correctAnswer) ? weight : 0;
+            : matchesObjectiveAnswer(session.answers[number], correctAnswer) ? weight : 0;
         gradedStates[number] = partKey === "part4" ? points : points === weight ? "correct" : "incorrect";
         correctAnswers[number] = correctAnswer;
         questionTexts[number] = `Part ${part.number} · Question ${number}`;
@@ -901,6 +921,11 @@
         const input = option.querySelector('input[type="radio"]');
         option.classList.toggle("selected", input?.value === value);
       });
+    }
+    const sessionView = document.querySelector(".exam-session-view");
+    if (sessionView) {
+      sessionView.scrollTop = 0;
+      sessionView.scrollLeft = 0;
     }
     updateReadingProgressDOM();
   }
