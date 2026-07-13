@@ -76,6 +76,24 @@
     }).join("");
   }
 
+  function renderUseOfEnglishPart4Passage(value) {
+    const transformations = String(value || "").replace(/\r\n?/g, "\n").trim().split(/\n{2,}/).filter(Boolean);
+    return `<div class="exam-uoe-transformations">${transformations.map(transformation => {
+      const lines = transformation.split("\n").map(line => line.trim()).filter(Boolean);
+      return `<article class="exam-uoe-transformation">${lines.map(line => {
+        const sourceLine = line.replace(/(?:_{5,}|\.{8,})/g, "C2UOEBLANKTOKEN");
+        const html = renderWritingMarkdownInline(sourceLine).replace(/C2UOEBLANKTOKEN/g, '<span class="exam-transformation-blank" aria-hidden="true"></span>');
+        return `<p>${html}</p>`;
+      }).join("")}</article>`;
+    }).join("")}</div>`;
+  }
+
+  function renderUseOfEnglishPassageHTML(part) {
+    return part.number === 4
+      ? renderUseOfEnglishPart4Passage(part.passage)
+      : renderRichText(part.passage, { highlightUoeGaps: true });
+  }
+
   function openExamBank(collection = STATE.examBankCollection) {
     const nextCollection = getCollection(collection);
     const returningFromSheet = STATE.currentView === "sheet";
@@ -137,8 +155,9 @@
   }
 
   function renderLibraryHeroHTML(collection) {
+    const useOfEnglishPaperCount = BANK.useOfEnglish.filter(test => test.kind === "full").length;
     const copy = {
-      useOfEnglish: ["Use of English sets", "44 real Use of English sets", "Start fresh from 24 full Parts 2–4 papers or 20 additional Part 4 drills reconstructed from the source material in the practice logs."],
+      useOfEnglish: ["complete papers", "24 real Use of English papers", "Start fresh from 24 full Parts 2–4 papers or use 20 additional Part 4 drills reconstructed from the source material in the practice logs."],
       reading: ["Reading papers", "12 complete Reading papers", "Every paper combines a real Part 1 with Parts 5–7 in one split-screen, 44-mark Reading test."],
       listening: ["Listening papers", "33 full video-led tests", "The video carries the audio and on-screen questions. The answer sheet marks all 30 responses automatically, with a guided check for Part 2 sentence completion."],
       writing: ["Writing papers", "14 paired Writing sets", "Each set combines one real Part 1 essay with one real Part 2 task. Work from the prompts without leaving the editor, then use the rubric and assessment prompt as usual."]
@@ -146,14 +165,15 @@
     return `
       <section class="exam-bank-hero">
         <div><span class="eyebrow">Exam repository</span><h1>${copy[1]}</h1><p>${copy[2]}</p></div>
-        <div class="exam-bank-hero-mark"><strong>${collection === "useOfEnglish" ? BANK.useOfEnglish.length : collection === "reading" ? BANK.reading.length : collection === "listening" ? BANK.listening.length : BANK.writing.length}</strong><span>${copy[0]}</span></div>
+        <div class="exam-bank-hero-mark"><strong>${collection === "useOfEnglish" ? useOfEnglishPaperCount : collection === "reading" ? BANK.reading.length : collection === "listening" ? BANK.listening.length : BANK.writing.length}</strong><span>${copy[0]}</span></div>
       </section>
     `;
   }
 
   function renderCollectionTabsHTML(active) {
+    const useOfEnglishPaperCount = BANK.useOfEnglish.filter(test => test.kind === "full").length;
     const collections = [
-      ["useOfEnglish", "Use of English", `${BANK.useOfEnglish.length} sets`],
+      ["useOfEnglish", "Use of English", `${useOfEnglishPaperCount} papers + 20 drills`],
       ["reading", "Reading", `${BANK.reading.length} tests`],
       ["listening", "Listening", `${BANK.listening.length} videos`],
       ["writing", "Writing", `${BANK.writing.length} sets`]
@@ -178,11 +198,19 @@
           <button class="${filter === "full" ? "active" : ""}" onclick="setUseOfEnglishBankFilter('full')"><strong>24</strong><span>Full papers</span><small>Parts 2–4 · 28 marks</small></button>
           <button class="${filter === "part4" ? "active" : ""}" onclick="setUseOfEnglishBankFilter('part4')"><strong>20</strong><span>Part 4 drills</span><small>6 transformations · 12 marks</small></button>
         </div>
-        <div class="uoe-test-grid">
+        <div class="reading-test-grid">
           ${tests.map((test, index) => `
-            <article class="uoe-test-card">
+            <article class="reading-test-card">
               <div class="exam-card-number">${String(filter === "full" ? test.number : index + 1).padStart(2, "0")}</div>
-              <div><span>${test.kind === "full" ? "Full paper" : "Focused drill"}</span><h3>${escapeHTML(test.title)}</h3><p>${test.kind === "full" ? "Open cloze · Word formation · Key word transformations" : "Six key word transformations"}</p>${renderAttemptBadge(test.id)}</div>
+              <div class="reading-test-card-copy">
+                <span>${test.kind === "full" ? `Use of English Paper ${test.number}` : `Part 4 Drill ${index + 1}`}</span>
+                <ul>
+                  ${test.kind === "full"
+                    ? "<li><b>Part 2</b>Open cloze</li><li><b>Part 3</b>Word formation</li><li><b>Part 4</b>Key word transformations</li>"
+                    : "<li><b>Part 4</b>Key word transformations</li><li><b>Format</b>Six questions · 12 marks</li>"}
+                </ul>
+                ${renderAttemptBadge(test.id)}
+              </div>
               <button class="btn btn-primary" onclick="startUseOfEnglishBankTest('${test.id}')">Open ${test.kind === "full" ? "paper" : "drill"}</button>
             </article>
           `).join("")}
@@ -510,7 +538,6 @@
     if (session?.section !== "useOfEnglish" || !session.test.parts[partKey]) return;
     session.activePart = partKey;
     renderExamBank();
-    document.querySelector(".exam-uoe-workspace")?.scrollIntoView({ block: "start" });
   }
 
   function storeUseOfEnglishBankAnswer(question, value) {
@@ -562,8 +589,7 @@
         </nav>
         <div class="exam-reading-workspace exam-uoe-workspace" data-active-part="${activePart}">
           <article class="exam-reading-paper">
-            <div class="exam-paper-heading"><span>Part ${part.number}</span><h2>${escapeHTML(part.title)}</h2><div class="exam-paper-instructions">${renderRichText(part.instructions)}</div></div>
-            <div class="exam-reading-prose exam-uoe-source">${renderRichText(part.passage, { highlightUoeGaps: true })}</div>
+            <div class="exam-reading-prose exam-uoe-source">${renderUseOfEnglishPassageHTML(part)}</div>
           </article>
           <aside class="exam-reading-questions" aria-label="Part ${part.number} answer fields">
             <div class="exam-question-panel-head"><span>Answers</span><strong>${part.questions[0].number}–${part.questions.at(-1).number}</strong></div>
@@ -861,7 +887,6 @@
     if (STATE.examBankSession?.section !== "reading" || !STATE.examBankSession.test.parts[partKey]) return;
     STATE.examBankSession.activePart = partKey;
     renderExamBank();
-    document.querySelector(".exam-reading-workspace")?.scrollIntoView({ block: "start" });
   }
 
   function storeReadingBankAnswer(question, value) {

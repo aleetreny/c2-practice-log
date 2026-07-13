@@ -172,53 +172,6 @@
   font-size: 0.65rem;
 }
 
-.uoe-test-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 9px;
-}
-
-.uoe-test-card {
-  position: relative;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  min-height: 210px;
-  padding: 14px;
-  border: 1px solid var(--border-color);
-  border-radius: 9px;
-  background: #fbfcfd;
-}
-
-.uoe-test-card > div:nth-child(2) {
-  flex: 1;
-}
-
-.uoe-test-card > div:nth-child(2) > span {
-  color: var(--accent-color);
-  font-size: 0.62rem;
-  font-weight: 900;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-}
-
-.uoe-test-card h3 {
-  max-width: calc(100% - 30px);
-  margin: 6px 0;
-  font-size: 0.9rem;
-}
-
-.uoe-test-card p {
-  margin-bottom: 10px;
-  color: var(--text-muted);
-  font-size: 0.67rem;
-  line-height: 1.45;
-}
-
-.uoe-test-card > .btn {
-  margin-top: 12px;
-}
-
 .reading-test-grid,
 .writing-test-grid {
   display: grid;
@@ -1213,6 +1166,30 @@ body:has(.exam-session-view) {
   white-space: pre-line;
 }
 
+.exam-uoe-transformations {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.exam-uoe-transformation {
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.exam-uoe-transformation:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.exam-uoe-transformation p {
+  margin: 0;
+}
+
+.exam-uoe-transformation p + p {
+  margin-top: 7px;
+}
+
 .exam-transformation-blank {
   display: inline-block;
   min-width: min(280px, 55%);
@@ -1569,10 +1546,6 @@ body:has(.exam-session-view) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .uoe-test-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .exam-reading-workspace {
     grid-template-columns: minmax(0, 1fr) minmax(350px, 0.9fr);
   }
@@ -1629,7 +1602,6 @@ body:has(.exam-session-view) {
     grid-template-columns: 1fr;
   }
 
-  .uoe-test-grid,
   .uoe-grading-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1744,7 +1716,6 @@ body:has(.exam-session-view) {
   }
 
   .uoe-bank-filter,
-  .uoe-test-grid,
   .uoe-grading-grid {
     grid-template-columns: 1fr;
   }
