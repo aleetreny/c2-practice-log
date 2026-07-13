@@ -55,30 +55,19 @@ for (const tab of ["home", "examBank", "dashboard", "writingLab", "vocabulary", 
 assert.match(appSource, /const ABOUT_TOUR_STEPS = \[/, "guided tour steps should exist");
 const tourSource = appSource.slice(appSource.indexOf("const ABOUT_TOUR_STEPS"), appSource.indexOf("function openAboutModal"));
 const tourViews = [...tourSource.matchAll(/view: "([^"]+)"/g)].map(match => match[1]);
-assert.equal(tourViews.length, 18, "guided tour should contain all 18 public-workspace steps");
-for (const view of [
-  "examBank:useOfEnglish",
-  "examBank:reading",
-  "examBank:listening",
-  "examBank:writing",
-  "dashboard",
-  "writingLab:essay",
-  "writingLab:situations",
-  "writingLab:language",
-  "writingLab:formats",
-  "vocabulary",
-  "vocabularyReview",
-  "errorReview"
-]) {
-  assert.ok(tourViews.includes(view), `guided tour should open ${view}`);
-}
-assert.match(tourSource, /Account · Your workspace/, "tour should explain the private account boundary");
+assert.deepEqual(
+  tourViews,
+  ["home", "examBank", "dashboard", "writingLab", "vocabulary", "vocabularyReview", "home"],
+  "guided tour should cover the six navigation tabs and profile only"
+);
+assert.match(tourSource, /eyebrow: "Profile"/, "tour should explain the private account boundary");
 assert.match(appSource, /handleAboutTourKeydown/, "tour should support keyboard navigation");
-assert.match(appSource, /about-tour-backdrop/, "tour should render its backdrop separately from the controls");
-assert.match(stylesSource, /\.about-tour-backdrop[\s\S]*?z-index:\s*10000/, "tour backdrop should sit below the highlighted target");
-assert.match(stylesSource, /\.tour-highlight[\s\S]*?z-index:\s*10001/, "tour target should sit above the backdrop");
-assert.match(stylesSource, /\.about-tour-layer[\s\S]*?z-index:\s*10002/, "tour controls should remain clickable above the target");
-assert.match(indexSource, /styles\.css\?v=public-tour-2/, "tour styles should use a cache-busted public asset");
-assert.match(indexSource, /app\.js\?v=public-tour-2/, "tour script should use a cache-busted public asset");
+const tourRendererSource = appSource.slice(appSource.indexOf("function showAboutTourStep"), appSource.indexOf("function closeAboutTour"));
+assert.doesNotMatch(tourRendererSource, /scrollIntoView\(/, "tour should not reposition individual page content");
+assert.doesNotMatch(stylesSource, /\.tour-highlight\s*\{/, "tour should not draw an empty highlight frame");
+assert.doesNotMatch(stylesSource, /\.about-tour-backdrop\s*\{/, "tour should leave the page visible");
+assert.match(stylesSource, /\.about-tour-layer[\s\S]*?right:\s*24px[\s\S]*?bottom:\s*24px/, "tour panel should stay in the corner");
+assert.match(indexSource, /styles\.css\?v=public-tour-3/, "tour styles should use a cache-busted public asset");
+assert.match(indexSource, /app\.js\?v=public-tour-3/, "tour script should use a cache-busted public asset");
 
 console.log(`Public demo audit passed: ${demo.history.length} attempts, ${demo.vocabularyEntries.length} personal vocabulary entries, ${Object.keys(demo.vocabularyReviewStats).length} vocabulary ratings and ${Object.keys(demo.errorReviewStats).length} error ratings.`);

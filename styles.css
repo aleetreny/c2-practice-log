@@ -244,40 +244,23 @@
 
 .about-tour-layer {
   position: fixed;
-  inset: 0;
-  z-index: 10002;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 24px;
-  pointer-events: none;
-}
-
-.about-tour-backdrop {
-  position: fixed;
-  inset: 0;
+  right: 24px;
+  bottom: 24px;
   z-index: 10000;
-  background: rgba(20, 29, 36, 0.62);
+  width: min(430px, calc(100vw - 48px));
   pointer-events: none;
-}
-
-.tour-highlight {
-  position: relative;
-  z-index: 10001 !important;
-  outline: 4px solid rgba(255, 255, 255, 0.94) !important;
-  box-shadow: 0 0 0 8px rgba(15, 118, 110, 0.68) !important;
 }
 
 .about-tour-card {
   position: relative;
-  width: min(590px, 100%);
+  width: 100%;
   max-height: calc(100dvh - 48px);
-  padding: 22px;
+  padding: 20px;
   overflow-y: auto;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
   background: #ffffff;
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 14px 40px rgba(20, 29, 36, 0.18);
   pointer-events: auto;
 }
 
@@ -322,33 +305,6 @@
   color: var(--text-muted);
   font-size: 0.88rem;
   line-height: 1.55;
-}
-
-.about-tour-points {
-  display: grid;
-  gap: 7px;
-  margin: 14px 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.about-tour-points li {
-  position: relative;
-  padding-left: 18px;
-  color: #3f4d5a;
-  font-size: 0.79rem;
-  line-height: 1.45;
-}
-
-.about-tour-points li::before {
-  position: absolute;
-  top: 0.55em;
-  left: 2px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent-color);
-  content: "";
 }
 
 .about-tour-controls {
@@ -433,7 +389,10 @@
   }
 
   .about-tour-layer {
-    padding: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    width: auto;
   }
 
   .about-tour-card {

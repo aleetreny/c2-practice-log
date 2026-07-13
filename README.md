@@ -84,21 +84,21 @@ The published demo and exam-bank assets contain study material only. Session tok
 - Browser-based pronunciation
 - Adaptive vocabulary and exercise-error review
 - Email/password accounts with cloud sync and offline browser backup
-- Responsive layout, public About guide and an interactive 18-step tour covering every workspace
+- Responsive layout, public About guide and a focused seven-step tour of the main navigation
 
 ## Guided public tour
 
-The **About** button opens a concise explanation of the public demo and private-account boundary. Its complete guided tour then navigates through the live interface rather than showing static screenshots:
+The **About** button opens a concise explanation of the public demo and private-account boundary. Its short guided tour introduces the live interface without covering or repositioning the page:
 
-- Practice overview and blank answer sheets
-- all four real-exam libraries
-- Progress position, analytics, saved work and Error log
-- all four Writing Lab sections
-- vocabulary capture and collection browsing
-- vocabulary review and exercise-error review
-- account creation and the clean private starting state
+- Practice
+- Exams
+- Progress
+- Writing
+- Vocabulary
+- Review
+- profile and account creation
 
-The tour highlights the relevant content on each page, scrolls it into view and supports Back/Next buttons, Left/Right arrow keys and Escape.
+The compact panel stays in the corner while each top-level page opens normally. It supports Back/Next buttons, Left/Right arrow keys and Escape.
 
 ## Run locally
 
