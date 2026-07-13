@@ -5,6 +5,7 @@ const vm = require("node:vm");
 
 const root = path.resolve(__dirname, "..");
 const appSource = fs.readFileSync(path.join(root, "app.js"), "utf8");
+const stylesSource = fs.readFileSync(path.join(root, "styles.css"), "utf8");
 const indexSource = fs.readFileSync(path.join(root, "index.html"), "utf8");
 const demoSource = fs.readFileSync(path.join(root, "demo-data.js"), "utf8");
 const sandbox = {};
@@ -52,7 +53,32 @@ for (const tab of ["home", "examBank", "dashboard", "writingLab", "vocabulary", 
   assert.ok(appSource.includes(`data-tour-tab=\"${tab}\"`) || appSource.includes(`key: "${tab}"`), `tour should cover ${tab}`);
 }
 assert.match(appSource, /const ABOUT_TOUR_STEPS = \[/, "guided tour steps should exist");
-assert.match(appSource, /7 of 7 · Account/, "guided tour should cover all six tabs and account");
-assert.match(appSource, /Your private workspace starts empty/, "tour should explain account isolation");
+const tourSource = appSource.slice(appSource.indexOf("const ABOUT_TOUR_STEPS"), appSource.indexOf("function openAboutModal"));
+const tourViews = [...tourSource.matchAll(/view: "([^"]+)"/g)].map(match => match[1]);
+assert.equal(tourViews.length, 18, "guided tour should contain all 18 public-workspace steps");
+for (const view of [
+  "examBank:useOfEnglish",
+  "examBank:reading",
+  "examBank:listening",
+  "examBank:writing",
+  "dashboard",
+  "writingLab:essay",
+  "writingLab:situations",
+  "writingLab:language",
+  "writingLab:formats",
+  "vocabulary",
+  "vocabularyReview",
+  "errorReview"
+]) {
+  assert.ok(tourViews.includes(view), `guided tour should open ${view}`);
+}
+assert.match(tourSource, /Account · Your workspace/, "tour should explain the private account boundary");
+assert.match(appSource, /handleAboutTourKeydown/, "tour should support keyboard navigation");
+assert.match(appSource, /about-tour-backdrop/, "tour should render its backdrop separately from the controls");
+assert.match(stylesSource, /\.about-tour-backdrop[\s\S]*?z-index:\s*10000/, "tour backdrop should sit below the highlighted target");
+assert.match(stylesSource, /\.tour-highlight[\s\S]*?z-index:\s*10001/, "tour target should sit above the backdrop");
+assert.match(stylesSource, /\.about-tour-layer[\s\S]*?z-index:\s*10002/, "tour controls should remain clickable above the target");
+assert.match(indexSource, /styles\.css\?v=public-tour-2/, "tour styles should use a cache-busted public asset");
+assert.match(indexSource, /app\.js\?v=public-tour-2/, "tour script should use a cache-busted public asset");
 
 console.log(`Public demo audit passed: ${demo.history.length} attempts, ${demo.vocabularyEntries.length} personal vocabulary entries, ${Object.keys(demo.vocabularyReviewStats).length} vocabulary ratings and ${Object.keys(demo.errorReviewStats).length} error ratings.`);

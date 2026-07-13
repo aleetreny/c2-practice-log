@@ -245,12 +245,19 @@
 .about-tour-layer {
   position: fixed;
   inset: 0;
-  z-index: 10000;
+  z-index: 10002;
   display: flex;
   align-items: flex-end;
   justify-content: center;
   padding: 24px;
-  background: rgba(20, 29, 36, 0.58);
+  pointer-events: none;
+}
+
+.about-tour-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(20, 29, 36, 0.62);
   pointer-events: none;
 }
 
@@ -262,8 +269,11 @@
 }
 
 .about-tour-card {
-  width: min(540px, 100%);
+  position: relative;
+  width: min(590px, 100%);
+  max-height: calc(100dvh - 48px);
   padding: 22px;
+  overflow-y: auto;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 14px;
   background: #ffffff;
@@ -293,11 +303,52 @@
   letter-spacing: -0.025em;
 }
 
+.about-tour-step-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.about-tour-step-meta small {
+  flex: 0 0 auto;
+  color: var(--text-soft);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
 .about-tour-card > p {
   margin-top: 8px;
   color: var(--text-muted);
   font-size: 0.88rem;
   line-height: 1.55;
+}
+
+.about-tour-points {
+  display: grid;
+  gap: 7px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-tour-points li {
+  position: relative;
+  padding-left: 18px;
+  color: #3f4d5a;
+  font-size: 0.79rem;
+  line-height: 1.45;
+}
+
+.about-tour-points li::before {
+  position: absolute;
+  top: 0.55em;
+  left: 2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  content: "";
 }
 
 .about-tour-controls {
@@ -324,6 +375,14 @@
 
 .tour-exit:hover {
   color: var(--text-main);
+}
+
+.about-tour-keyboard {
+  display: block;
+  margin-top: 12px;
+  color: var(--text-soft);
+  font-size: 0.68rem;
+  text-align: right;
 }
 
 @media (max-width: 760px) {
@@ -378,7 +437,12 @@
   }
 
   .about-tour-card {
+    max-height: calc(100dvh - 20px);
     padding: 18px;
+  }
+
+  .about-tour-keyboard {
+    display: none;
   }
 }
 

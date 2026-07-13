@@ -1461,52 +1461,165 @@ function renderDemoNoticeHTML() {
 const ABOUT_TOUR_STEPS = [
   {
     view: "home",
-    selector: '[data-tour-tab="home"]',
-    eyebrow: "1 of 7 · Practice",
-    title: "Complete a paper, then correct it",
-    body: "Choose an exam paper, enter your answers and lock the sheet when you finish. Mark each answer, add the correct version and keep a short error note before saving."
+    selector: ".home-title-area",
+    fallbackSelector: '[data-tour-tab="home"]',
+    eyebrow: "Practice · Overview",
+    title: "Start from one clear snapshot",
+    body: "Practice is the front door: it shows your current Cambridge scale average, how much work is saved and the paper that deserves attention next.",
+    points: ["Use the example profile to understand the finished workflow.", "A new account shows the same page with every metric at zero."]
   },
   {
-    view: "examBank",
-    selector: '[data-tour-tab="examBank"]',
-    eyebrow: "2 of 7 · Real exams",
-    title: "Practise with complete exam material",
-    body: "Choose from 44 Use of English sets, 12 Reading papers, 33 playlist-led Listening tests and 14 paired Writing sets. Objective answers feed the same Progress and Review loop as your blank answer sheets."
+    view: "home",
+    selector: ".sections-grid .section-square-card:first-child > div:nth-child(2)",
+    fallbackSelector: '[data-tour-tab="home"]',
+    eyebrow: "Practice · Answer sheets",
+    title: "Open a blank mock for any paper",
+    body: "Each card opens a timed answer sheet. Grade the objective papers, add corrections and notes, or score Writing against the Cambridge criteria before saving.",
+    points: ["Incomplete focused practice is kept separate from full-paper averages.", "Saved corrections become material for Progress and Review."]
+  },
+  {
+    view: "examBank:useOfEnglish",
+    selector: ".uoe-bank-filter",
+    fallbackSelector: '[data-tour-tab="examBank"]',
+    eyebrow: "Exams · Use of English",
+    title: "Practise full papers or focused transformations",
+    body: "The library contains 24 complete Parts 2-4 papers and 20 additional Part 4 drills. Part 3 is automatic; Parts 2 and 4 keep the answer key visible for confirmation and partial credit.",
+    points: ["Every card starts unattempted, even when its source came from the example log.", "Full papers affect Progress; drills stay focused and unscored."]
+  },
+  {
+    view: "examBank:reading",
+    selector: ".exam-library-heading",
+    fallbackSelector: '[data-tour-tab="examBank"]',
+    eyebrow: "Exams · Reading",
+    title: "Work through all four Reading parts",
+    body: "Each of the 12 papers combines Parts 1, 5, 6 and 7 in a 44-mark split-screen test. Part 6 paragraphs can be dragged into the text and removed back to their stable A-H bank.",
+    points: ["Answers remain in place while you move between parts.", "The final review shows every question with its original text and key."]
+  },
+  {
+    view: "examBank:listening",
+    selector: ".listening-library .exam-library-heading h2",
+    fallbackSelector: '[data-tour-tab="examBank"]',
+    eyebrow: "Exams · Listening",
+    title: "Keep the video and answer sheet together",
+    body: "Choose any of 33 consecutive video-led tests or let Surprise me pick one. The wide workspace keeps the player beside the 30-answer sheet.",
+    points: ["Parts 1, 3 and 4 are marked automatically.", "Part 2 is pre-marked and remains editable beside the model answer."]
+  },
+  {
+    view: "examBank:writing",
+    selector: ".writing-test-card:first-child",
+    fallbackSelector: '[data-tour-tab="examBank"]',
+    eyebrow: "Exams · Writing",
+    title: "Write from 14 paired task sets",
+    body: "Each desk joins a real Part 1 essay to a Part 2 task. The prompt, word count, timer and Writing toolkit remain available while you draft.",
+    points: ["Score Content, Communicative Achievement, Organisation and Language.", "Saved feedback stays attached to the exact text you submitted."]
   },
   {
     view: "dashboard",
-    selector: '[data-tour-tab="dashboard"]',
-    eyebrow: "3 of 7 · Progress",
-    title: "Turn attempts into a study plan",
-    body: "See scale scores, trends and performance by paper and part. Open any saved attempt to inspect or refine its correction."
+    selector: ".insight-copy",
+    fallbackSelector: '[data-tour-tab="dashboard"]',
+    eyebrow: "Progress · Position",
+    title: "See where the work is taking you",
+    body: "The headline turns saved full papers into a Cambridge scale position and identifies the section and part that should receive the next block of practice.",
+    points: ["Partial practices never distort the overall average.", "Trend, accuracy and C2 pass rate are calculated from scored papers only."]
   },
   {
-    view: "writingLab",
-    selector: '[data-tour-tab="writingLab"]',
-    eyebrow: "4 of 7 · Writing",
-    title: "Build stronger C2 writing",
-    body: "Use the essay map, situation language, phrase bank and format guides before or after a timed Writing paper."
+    view: "dashboard",
+    selector: ".attempts-panel .panel-title",
+    fallbackSelector: '[data-tour-tab="dashboard"]',
+    eyebrow: "Progress · Evidence",
+    title: "Open the numbers behind the headline",
+    body: "Follow score evolution by paper, compare all four sections, inspect weak parts and reopen any saved attempt with its answers and corrections intact.",
+    points: ["Recent saved work opens a complete attempt review.", "Section evolution separates scale score from raw accuracy."]
+  },
+  {
+    view: "dashboard",
+    selector: ".ue-errors-panel .panel-title",
+    fallbackSelector: '[data-tour-tab="dashboard"]',
+    eyebrow: "Progress · Error log",
+    title: "Keep mistakes connected to their source",
+    body: "The Error log groups Reading Part 1 and Use of English corrections by part. Open the original text, inspect the note or launch an exercise-review round from here.",
+    points: ["Correct answers with useful notes can remain in the log too.", "Review exercises turns saved corrections into active recall."]
+  },
+  {
+    view: "writingLab:essay",
+    selector: ".essay-brief-strip",
+    fallbackSelector: '[data-tour-tab="writingLab"]',
+    eyebrow: "Writing · Essay map",
+    title: "Give every paragraph a job",
+    body: "The Part 1 map turns two source texts into a four-paragraph argument: frame, compare, evaluate and finish with a qualified position.",
+    points: ["Open each stage to see language in its real position.", "Use the map before drafting or to diagnose a weak essay afterwards."]
+  },
+  {
+    view: "writingLab:situations",
+    selector: ".writing-lab-content .writing-section-heading",
+    fallbackSelector: '[data-tour-tab="writingLab"]',
+    eyebrow: "Writing · Situation bank",
+    title: "Find language by rhetorical purpose",
+    body: "Search for the move you need - contrast, support, consequence, nuance or conclusion - instead of choosing an impressive phrase at random.",
+    points: ["Position tags show where each phrase normally belongs.", "Click any phrase to copy it into your draft."]
+  },
+  {
+    view: "writingLab:language",
+    selector: ".writing-language-card:first-child > div:first-child",
+    fallbackSelector: '[data-tour-tab="writingLab"]',
+    eyebrow: "Writing · Language",
+    title: "Use advanced language in the right pattern",
+    body: "The precision bank pairs verbs and nouns with their construction and an example. Upgrade lists help replace vague words without becoming decorative.",
+    points: ["Check the grammar pattern before borrowing a term.", "Formal-safe expressions are separated from riskier upgrades."]
+  },
+  {
+    view: "writingLab:formats",
+    selector: ".writing-genre-picker",
+    fallbackSelector: '[data-tour-tab="writingLab"]',
+    eyebrow: "Writing · Part 2 formats",
+    title: "Change the structure when the genre changes",
+    body: "Switch between report, review, article and letter or email. Each guide explains audience, organisation, useful moves and appropriate openings and closings.",
+    points: ["Purpose and reader come before advanced vocabulary.", "Reusable templates are prompts, not passages to memorise blindly."]
   },
   {
     view: "vocabulary",
-    selector: '[data-tour-tab="vocabulary"]',
-    eyebrow: "5 of 7 · Vocabulary",
-    title: "Keep one useful language bank",
-    body: "Search the built-in collection, listen to pronunciation and add personal vocabulary, word formation or collocation entries."
+    selector: ".quick-capture-panel .capture-heading",
+    fallbackSelector: '[data-tour-tab="vocabulary"]',
+    eyebrow: "Vocabulary · Capture",
+    title: "Save language in the format it needs",
+    body: "Choose general vocabulary, a personal phrase, pattern, idiom or word formation first. The form changes so each type keeps only useful fields.",
+    points: ["Personal entries can be full phrases, not just dictionary words.", "Account vocabulary is private; demo additions disappear on reload."]
+  },
+  {
+    view: "vocabulary",
+    selector: ".vocabulary-browser-head",
+    fallbackSelector: '[data-tour-tab="vocabulary"]',
+    eyebrow: "Vocabulary · Library",
+    title: "Search one organised language bank",
+    body: "Move between vocabulary, patterns, idioms and word formation. Search inside a collection, listen to pronunciation and start a review from the exact rows you are viewing.",
+    points: ["Collections preserve the structure of the imported study material.", "Familiarity appears beside terms after review."]
   },
   {
     view: "vocabularyReview",
-    selector: '[data-tour-tab="vocabularyReview"]',
-    eyebrow: "6 of 7 · Review",
-    title: "Review what is most likely to help",
-    body: "Run quick vocabulary sessions or revisit mistakes from saved papers. Familiarity ratings shape what appears next."
+    selector: ".review-setup-panel .review-setup-step:first-child",
+    fallbackSelector: '[data-tour-tab="vocabularyReview"]',
+    eyebrow: "Review · Vocabulary",
+    title: "Run short recognition or recall rounds",
+    body: "Choose the direction of the question, the collection and a deliberately small deck. Again, Unsure and Got it ratings shape what the algorithm brings back.",
+    points: ["Recognition asks for meaning; Recall asks for the term.", "Algorithm settings can be adjusted without losing the current bank."]
+  },
+  {
+    view: "errorReview",
+    selector: ".study-review-setup-panel .review-setup-step:first-child",
+    fallbackSelector: '[data-tour-tab="dashboard"]',
+    eyebrow: "Review · Exercise errors",
+    title: "Turn corrections into active recall",
+    body: "Select Reading or Use of English parts, choose mistakes only or a mixed deck, and review the exact answers and notes saved during correction.",
+    points: ["Smart selection prioritises weaker and less-reviewed cards.", "Again only creates a focused rescue round."]
   },
   {
     view: "home",
     selector: '[data-tour="account"]',
-    eyebrow: "7 of 7 · Account",
-    title: "Your private workspace starts empty",
-    body: "Create an account with email and password. The public demo is never copied: your attempts, corrections and review history start at zero and sync only to you."
+    fallbackSelector: '[data-tour="about"]',
+    eyebrow: "Account · Your workspace",
+    title: "Start clean, private and synced",
+    body: "Create an account with email and password when you are ready. None of Aleetreny's example attempts, corrections, vocabulary or ratings are copied into it.",
+    points: ["Your first dashboard starts at zero.", "Signing out returns immediately to the public demo."]
   }
 ];
 
@@ -1541,7 +1654,7 @@ function openAboutModal() {
         </section>
 
         <section class="about-section about-tabs-summary">
-          <div class="about-section-heading"><span>The workspace</span><h3>Six tabs, one learning loop</h3></div>
+          <div class="about-section-heading"><span>The workspace</span><h3>Six pages, one learning loop</h3></div>
           <div class="about-tab-grid">
             <article><strong>Practice</strong><p>Exam answer sheets and correction.</p></article>
             <article><strong>Exams</strong><p>Real Use of English, Reading, Listening and Writing banks.</p></article>
@@ -1554,7 +1667,7 @@ function openAboutModal() {
       </div>
       <div class="about-actions">
         ${STATE.isAuthenticated ? "" : '<button class="btn btn-secondary" onclick="closeModal(); openProfileModal()">Create account</button>'}
-        <button class="btn btn-primary" onclick="startAboutTour()">Take the 2-minute tour</button>
+        <button class="btn btn-primary" onclick="startAboutTour()">Take the complete tour</button>
       </div>
     </div>
   `;
@@ -1562,22 +1675,46 @@ function openAboutModal() {
 }
 
 function navigateToAboutTourView(view) {
-  if (view === "dashboard") renderDashboard();
+  if (view.startsWith("examBank:")) {
+    const collection = view.split(":")[1];
+    if (collection === "useOfEnglish") STATE.examBankUseOfEnglishFilter = "full";
+    openExamBank(collection);
+  }
+  else if (view.startsWith("writingLab:")) openWritingLab(view.split(":")[1]);
+  else if (view === "dashboard") renderDashboard();
   else if (view === "examBank") openExamBank();
   else if (view === "writingLab") openWritingLab();
   else if (view === "vocabulary") openVocabulary();
   else if (view === "vocabularyReview") openVocabularyReview();
+  else if (view === "errorReview") openErrorReview();
   else renderHome();
 }
 
 function clearAboutTourLayer() {
   document.getElementById("about-tour-layer")?.remove();
+  document.getElementById("about-tour-backdrop")?.remove();
   document.querySelectorAll(".tour-highlight").forEach(element => element.classList.remove("tour-highlight"));
 }
 
 function startAboutTour() {
   closeAllModals();
+  document.removeEventListener("keydown", handleAboutTourKeydown);
+  document.addEventListener("keydown", handleAboutTourKeydown);
   showAboutTourStep(0);
+}
+
+function handleAboutTourKeydown(event) {
+  if (STATE.tourIndex < 0) return;
+  if (event.key === "Escape") {
+    event.preventDefault();
+    closeAboutTour();
+  } else if (event.key === "ArrowRight") {
+    event.preventDefault();
+    showAboutTourStep(STATE.tourIndex + 1);
+  } else if (event.key === "ArrowLeft" && STATE.tourIndex > 0) {
+    event.preventDefault();
+    showAboutTourStep(STATE.tourIndex - 1);
+  }
 }
 
 function showAboutTourStep(index) {
@@ -1592,18 +1729,28 @@ function showAboutTourStep(index) {
   navigateToAboutTourView(step.view);
 
   requestAnimationFrame(() => {
-    const target = document.querySelector(step.selector);
-    if (target) target.classList.add("tour-highlight");
+    const target = document.querySelector(step.selector) || (step.fallbackSelector ? document.querySelector(step.fallbackSelector) : null);
+    if (target) {
+      target.classList.add("tour-highlight");
+      target.scrollIntoView({ behavior: "instant", block: step.block || "start", inline: "nearest" });
+    }
+
+    const backdrop = document.createElement("div");
+    backdrop.id = "about-tour-backdrop";
+    backdrop.className = "about-tour-backdrop";
+    backdrop.setAttribute("aria-hidden", "true");
+    document.body.appendChild(backdrop);
 
     const layer = document.createElement("div");
     layer.id = "about-tour-layer";
-    layer.className = "about-tour-layer";
+    layer.className = "about-tour-layer is-bottom";
     layer.innerHTML = `
       <div class="about-tour-card" role="dialog" aria-modal="true" aria-live="polite">
         <div class="about-tour-progress" aria-hidden="true"><span style="width:${((index + 1) / ABOUT_TOUR_STEPS.length) * 100}%"></span></div>
-        <span class="eyebrow">${step.eyebrow}</span>
-        <h2>${step.title}</h2>
-        <p>${step.body}</p>
+        <div class="about-tour-step-meta"><span class="eyebrow">${escapeHTML(step.eyebrow)}</span><small>${index + 1} of ${ABOUT_TOUR_STEPS.length}</small></div>
+        <h2>${escapeHTML(step.title)}</h2>
+        <p>${escapeHTML(step.body)}</p>
+        ${step.points?.length ? `<ul class="about-tour-points">${step.points.map(point => `<li>${escapeHTML(point)}</li>`).join("")}</ul>` : ""}
         <div class="about-tour-controls">
           <button class="tour-exit" onclick="closeAboutTour()">Exit tour</button>
           <div>
@@ -1611,6 +1758,7 @@ function showAboutTourStep(index) {
             <button class="btn btn-primary" onclick="showAboutTourStep(${index + 1})">${index === ABOUT_TOUR_STEPS.length - 1 ? "Finish" : "Next"}</button>
           </div>
         </div>
+        <small class="about-tour-keyboard">Use Left/Right arrows to move and Esc to exit.</small>
       </div>
     `;
     document.body.appendChild(layer);
@@ -1620,6 +1768,7 @@ function showAboutTourStep(index) {
 
 function closeAboutTour() {
   clearAboutTourLayer();
+  document.removeEventListener("keydown", handleAboutTourKeydown);
   STATE.tourIndex = -1;
 }
 
