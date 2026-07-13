@@ -24,8 +24,8 @@ The `Exams` workspace turns the application into a reusable practice library wit
 - 24 full papers covering Parts 2, 3 and 4
 - 20 additional focused Part 4 drills
 - All 44 source sets reconstructed from real logged exercises but presented as fresh, unattempted practice
-- Split-screen source and answer panels, timer and automatic marking for Parts 2 and 3
-- Accurate 0–2 self-marking against the supplied key for Part 4 transformations
+- Split-screen source and answer panels, timer and automatic marking for Part 3
+- Guided final review for open-cloze Part 2 answers and accurate 0–2 self-marking for Part 4 transformations
 - Full papers feed the normal scale-score history; focused drills stay outside aggregate score metrics
 
 ### Reading
@@ -35,7 +35,7 @@ The `Exams` workspace turns the application into a reusable practice library wit
 - Split-screen source text and question panels modelled on computer-based exam software
 - Part 6 paragraphs can be dragged directly into the original text and removed back to a stable A–H bank
 - Part navigation, live completion counts, timer and automatic marking
-- Full papers use all 44 available marks; the incomplete Test 12 retains a clearly labelled normalised estimate
+- Every paper uses all 44 available marks, including the complete Part 1 source added to Test 12
 - Full source text, submitted answers and answer key preserved in the saved attempt
 
 ### Listening
@@ -43,7 +43,8 @@ The `Exams` workspace turns the application into a reusable practice library wit
 - 33 full video-led tests displayed consecutively as Tests 1–33
 - Playlist positions are resolved through the YouTube IFrame Player API; incomplete source Tests 24 and 25 are skipped internally
 - The video supplies the audio and on-screen questions while the app keeps a 30-answer sheet alongside it
-- Local question numbers 1–30, manual Correct/Missed grading, corrected-answer fields and notes
+- Local question numbers 1–30 with answer keys mapped internally to global questions 54–83
+- Automatic Correct/Missed marking for Parts 1, 3 and 4; Part 2 accepts `/` alternatives and stays open for manual confirmation beside the model answer
 - Wide-screen working mode, top-mounted Grade action and a direct playlist fallback
 
 ### Writing

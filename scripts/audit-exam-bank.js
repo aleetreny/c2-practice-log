@@ -78,6 +78,10 @@ bank.listening.forEach(test => {
   assert.ok(Number.isInteger(test.apiIndex));
   assert.equal(test.playlistPosition, test.apiIndex + 1);
   assert.match(test.watchUrl, /^https:\/\/www\.youtube\.com\/playlist\?list=/);
+  assert.deepEqual(Object.keys(test.answers).map(Number), Array.from({ length: 30 }, (_, index) => index + 54), `${test.id} global answer numbers`);
+  for (let question = 54; question <= 83; question += 1) {
+    assert.ok(String(test.answers[question] || "").trim(), `${test.id} answer Q.${question}`);
+  }
 });
 
 let writingTaskCount = 0;
@@ -108,6 +112,11 @@ assert.match(moduleSource, /startUseOfEnglishBankTest/);
 assert.match(moduleSource, /finishReadingBankTest/);
 assert.match(moduleSource, /dropReadingParagraph/);
 assert.match(moduleSource, /cuePlaylist/);
+assert.match(appSource, /applyExamBankListeningAnswerKey/);
+assert.match(appSource, /matchesExamBankAnswerOption/);
+assert.match(appSource, /sheet-model-answer-review/);
+assert.match(moduleSource, /setUseOfEnglishPart2Grade/);
+assert.match(moduleSource, /partKey === "part2"\s*\? session\.part2Grades/);
 assert.doesNotMatch(moduleSource, /Already in your log/);
 assert.doesNotMatch(moduleSource, /Practise the paper, not just the answer sheet/);
 assert.ok(fs.existsSync(path.join(root, "data", "reading-part1-test12.json")), "sanitised Test 12 Part 1 source must be committed");
