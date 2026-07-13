@@ -895,7 +895,13 @@
     if (value) session.answers[question] = value;
     else delete session.answers[question];
     const row = document.querySelector(`[data-bank-question="${question}"]`);
-    if (row) row.classList.toggle("answered", Boolean(value));
+    if (row) {
+      row.classList.toggle("answered", Boolean(value));
+      row.querySelectorAll(".exam-mcq-options label").forEach(option => {
+        const input = option.querySelector('input[type="radio"]');
+        option.classList.toggle("selected", input?.value === value);
+      });
+    }
     updateReadingProgressDOM();
   }
 
