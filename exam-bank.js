@@ -103,7 +103,10 @@
       activeYouTubePlayer = null;
       STATE.examBankSession = null;
     }
-    if (STATE.examBankCollection !== nextCollection && ["reading", "useOfEnglish"].includes(STATE.examBankSession?.section)) {
+    const objectiveSession = ["reading", "useOfEnglish"].includes(STATE.examBankSession?.section)
+      ? STATE.examBankSession
+      : null;
+    if (objectiveSession && (STATE.examBankCollection !== nextCollection || objectiveSession.phase === "result")) {
       clearPracticeTimerInterval();
       STATE.examBankSession = null;
     }
@@ -775,11 +778,7 @@
       part.questions.forEach(question => {
         const number = question.number;
         const correctAnswer = session.test.answers[number];
-        const points = partKey === "part4"
-          ? session.part4Grades[number]
-          : partKey === "part2"
-            ? session.part2Grades[number]
-            : matchesObjectiveAnswer(session.answers[number], correctAnswer) ? weight : 0;
+        const points = getUseOfEnglishQuestionPoints(session, partKey, number);
         gradedStates[number] = partKey === "part4" ? points : points === weight ? "correct" : "incorrect";
         correctAnswers[number] = correctAnswer;
         questionTexts[number] = `Part ${part.number} · Question ${number}`;
@@ -837,6 +836,65 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  function getUseOfEnglishQuestionPoints(session, partKey, questionNumber) {
+    if (partKey === "part4") return session.part4Grades[questionNumber];
+    if (partKey === "part2") return session.part2Grades[questionNumber];
+    const weight = USE_OF_ENGLISH_PART_WEIGHTS[partKey];
+    return matchesObjectiveAnswer(session.answers[questionNumber], session.test.answers[questionNumber]) ? weight : 0;
+  }
+
+  function getExamReviewStatus(points, weight) {
+    if (points === weight) return { className: "correct", label: "Correct" };
+    if (points > 0) return { className: "partial", label: `${points}/${weight} marks` };
+    return { className: "missed", label: "Missed" };
+  }
+
+  function renderExamReviewStatusHTML(points, weight) {
+    const status = getExamReviewStatus(points, weight);
+    return `<span class="exam-review-status ${status.className}">${status.label}</span>`;
+  }
+
+  function renderExamReviewAnswerPairHTML(answer, correctAnswer, options = {}) {
+    return `
+      <div class="exam-review-answer-grid">
+        <div class="user ${options.isCorrect ? "correct" : "missed"}"><small>Your answer</small><strong>${escapeHTML(answer || "—")}</strong>${options.answerDetail ? `<p>${renderWritingMarkdownInline(options.answerDetail)}</p>` : ""}</div>
+        <div class="key"><small>Correct answer</small><strong>${escapeHTML(correctAnswer || "—")}</strong>${options.correctDetail ? `<p>${renderWritingMarkdownInline(options.correctDetail)}</p>` : ""}</div>
+      </div>
+    `;
+  }
+
+  function renderUseOfEnglishFullReviewHTML(session) {
+    const partKeys = getUseOfEnglishPartKeys(session.test);
+    return `<div class="exam-full-review">${partKeys.map(partKey => {
+      const part = session.test.parts[partKey];
+      const weight = USE_OF_ENGLISH_PART_WEIGHTS[partKey];
+      const earned = part.questions.reduce((sum, question) => sum + getUseOfEnglishQuestionPoints(session, partKey, question.number), 0);
+      const available = part.questions.length * weight;
+      return `
+        <section class="exam-review-part">
+          <div class="exam-review-part-head"><div><span class="eyebrow">Part ${part.number}</span><h3>${escapeHTML(part.title)}</h3></div><strong>${earned}/${available} marks</strong></div>
+          <details class="exam-review-source">
+            <summary>View the original Part ${part.number} text</summary>
+            <div class="exam-review-source-content exam-reading-prose exam-uoe-source">${renderUseOfEnglishPassageHTML(part)}</div>
+          </details>
+          <div class="exam-review-question-grid">
+            ${part.questions.map(question => {
+              const points = getUseOfEnglishQuestionPoints(session, partKey, question.number);
+              const isCorrect = points === weight;
+              const status = getExamReviewStatus(points, weight);
+              return `
+                <article class="exam-review-question ${status.className}">
+                  <header><div><span>Question ${question.number}</span><h4>${renderWritingMarkdownInline(question.prompt)}</h4></div>${renderExamReviewStatusHTML(points, weight)}</header>
+                  ${renderExamReviewAnswerPairHTML(session.answers[question.number], session.test.answers[question.number], { isCorrect })}
+                </article>
+              `;
+            }).join("")}
+          </div>
+        </section>
+      `;
+    }).join("")}</div>`;
+  }
+
   function renderUseOfEnglishResultHTML(session) {
     const result = session.result;
     const isFull = session.test.kind === "full";
@@ -848,8 +906,8 @@
         </div>
         <div class="exam-result-note"><strong>Saved to Progress.</strong> This bank starts independently from the historical attempts used only to recover the original source material.</div>
         <div class="exam-result-actions"><button class="btn btn-secondary" onclick="openExamBank('useOfEnglish')">Back to library</button><button class="btn btn-secondary" onclick="retryUseOfEnglishBankTest()">Try again</button><button class="btn btn-primary" onclick="renderDashboard()">Open Progress</button></div>
-        <section class="exam-answer-review"><div class="exam-library-heading"><div><span class="eyebrow">Answer review</span><h2>${result.missed.length ? `${result.missed.length} answers to revisit` : "Perfect set"}</h2></div></div>
-          ${result.missed.length ? `<div class="exam-missed-grid">${result.missed.map(item => `<article><span>Part ${session.test.parts[item.partKey].number} · Q.${item.question}</span><div><small>Your answer</small><strong>${escapeHTML(item.answer)}</strong><small>Correct</small><strong>${escapeHTML(item.correctAnswer)}</strong></div></article>`).join("")}</div>` : '<div class="exam-perfect-result">Every available mark secured.</div>'}
+        <section class="exam-answer-review"><div class="exam-library-heading"><div><span class="eyebrow">Complete answer review</span><h2>Every question, part by part</h2></div><p>${result.missed.length ? `${result.missed.length} answers need attention; correct answers remain visible for context.` : "Every answer was correct."}</p></div>
+          ${renderUseOfEnglishFullReviewHTML(session)}
         </section>
       </section>
     `;
@@ -978,7 +1036,7 @@
             ${renderReadingSourceHTML(test, activePart, session)}
           </article>
           <aside class="exam-reading-questions" aria-label="Part ${part.number} questions">
-            ${activePart === "part6" ? renderReadingParagraphBankHTML(session) : `<div class="exam-question-panel-head"><span>Questions</span><strong>${part.questions[0].number}–${part.questions.at(-1).number}</strong></div>${part.questions.map(question => renderReadingQuestionHTML(test, activePart, question, session.answers[question])).join("")}`}
+            ${activePart === "part6" ? renderReadingParagraphBankHTML(session) : `<div class="exam-question-panel-head"><span>Questions</span><strong>${part.questions[0].number}–${part.questions.at(-1).number}</strong></div>${part.questions.map(question => renderReadingQuestionHTML(test, activePart, question, session.answers[question.number])).join("")}`}
             <div class="exam-part-footer">
               ${activePart !== partKeys[0] ? `<button class="btn btn-secondary" onclick="switchReadingBankPart('${partKeys[partKeys.indexOf(activePart) - 1]}')">Previous part</button>` : "<span></span>"}
               ${activePart !== partKeys.at(-1) ? `<button class="btn btn-primary" onclick="switchReadingBankPart('${partKeys[partKeys.indexOf(activePart) + 1]}')">Next part</button>` : `<button class="btn btn-primary" onclick="finishReadingBankTest()">Finish paper</button>`}
@@ -1070,8 +1128,8 @@
     const validLabel = session.test.parts.part6.paragraphs.some(paragraph => paragraph.label === label);
     const validQuestion = session.test.parts.part6.questions.some(item => item.number === Number(question));
     if (!validLabel || !validQuestion) return;
-    Object.keys(session.answers).forEach(key => {
-      if (session.answers[key] === label) delete session.answers[key];
+    session.test.parts.part6.questions.forEach(item => {
+      if (session.answers[item.number] === label) delete session.answers[item.number];
     });
     session.answers[Number(question)] = label;
     rerenderReadingWorkspace();
@@ -1219,6 +1277,93 @@
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
+  function renderReadingReviewSourceHTML(test, partKey) {
+    const part = test.parts[partKey];
+    let content = "";
+    if (partKey === "part1" || partKey === "part5") {
+      content = `<div class="exam-reading-prose">${renderRichText(part.passage)}</div>`;
+    } else if (partKey === "part6") {
+      content = `
+        <div class="exam-reading-prose">${renderRichText(part.passage, { highlightGaps: true })}</div>
+        <div class="exam-review-paragraph-list">${part.paragraphs.map(paragraph => `<article><strong>${paragraph.label}</strong><p>${renderWritingMarkdownInline(paragraph.text)}</p></article>`).join("")}</div>
+      `;
+    } else {
+      content = `<section class="exam-reading-sections exam-review-sections">${part.sections.map(section => `<article><div><strong>${section.label}</strong><h3>${escapeHTML(section.title)}</h3></div>${renderRichText(section.text)}</article>`).join("")}</section>`;
+    }
+    return `<details class="exam-review-source"><summary>View the original Part ${part.number} text</summary><div class="exam-review-source-content">${content}</div></details>`;
+  }
+
+  function renderReadingReviewOptionsHTML(question, answer, correctAnswer) {
+    return `<ul class="exam-review-options">${question.options.map(option => {
+      const isUser = answer === option.value;
+      const isCorrect = correctAnswer === option.value;
+      const labels = [isUser ? "Your answer" : "", isCorrect ? "Correct answer" : ""].filter(Boolean).join(" · ");
+      return `<li class="${isCorrect ? "correct" : ""} ${isUser && !isCorrect ? "missed" : ""}"><b>${option.value}</b><span>${renderWritingMarkdownInline(option.text)}</span>${labels ? `<em>${labels}</em>` : ""}</li>`;
+    }).join("")}</ul>`;
+  }
+
+  function renderReadingReviewAnswerHTML(test, partKey, question, answer, correctAnswer) {
+    if (partKey === "part1" || partKey === "part5") {
+      return renderReadingReviewOptionsHTML(question, answer, correctAnswer);
+    }
+    if (partKey === "part6") {
+      const paragraphs = test.parts.part6.paragraphs;
+      const answerParagraph = paragraphs.find(paragraph => paragraph.label === answer);
+      const correctParagraph = paragraphs.find(paragraph => paragraph.label === correctAnswer);
+      return renderExamReviewAnswerPairHTML(
+        answer ? `Paragraph ${answer}` : "—",
+        correctAnswer ? `Paragraph ${correctAnswer}` : "—",
+        {
+          isCorrect: answer === correctAnswer,
+          answerDetail: answerParagraph?.text || "",
+          correctDetail: correctParagraph?.text || ""
+        }
+      );
+    }
+    const sections = test.parts.part7.sections;
+    const answerSection = sections.find(section => section.label === answer);
+    const correctSection = sections.find(section => section.label === correctAnswer);
+    return renderExamReviewAnswerPairHTML(
+      answer ? `Section ${answer}` : "—",
+      correctAnswer ? `Section ${correctAnswer}` : "—",
+      {
+        isCorrect: answer === correctAnswer,
+        answerDetail: answerSection?.title || "",
+        correctDetail: correctSection?.title || ""
+      }
+    );
+  }
+
+  function renderReadingFullReviewHTML(session) {
+    const partKeys = getReadingPartKeys(session.test);
+    return `<div class="exam-full-review">${partKeys.map(partKey => {
+      const part = session.test.parts[partKey];
+      const weight = READING_PART_WEIGHTS[partKey];
+      const correctCount = part.questions.filter(question => session.answers[question.number] === session.test.answers[question.number]).length;
+      const earned = correctCount * weight;
+      const available = part.questions.length * weight;
+      return `
+        <section class="exam-review-part">
+          <div class="exam-review-part-head"><div><span class="eyebrow">Part ${part.number}</span><h3>${renderWritingMarkdownInline(part.title)}</h3></div><strong>${earned}/${available} marks</strong></div>
+          ${renderReadingReviewSourceHTML(session.test, partKey)}
+          <div class="exam-review-question-grid">
+            ${part.questions.map(question => {
+              const answer = session.answers[question.number];
+              const correctAnswer = session.test.answers[question.number];
+              const isCorrect = answer === correctAnswer;
+              return `
+                <article class="exam-review-question ${isCorrect ? "correct" : "missed"}">
+                  <header><div><span>Question ${question.number}</span><h4>${renderWritingMarkdownInline(question.prompt)}</h4></div>${renderExamReviewStatusHTML(isCorrect ? weight : 0, weight)}</header>
+                  ${renderReadingReviewAnswerHTML(session.test, partKey, question, answer, correctAnswer)}
+                </article>
+              `;
+            }).join("")}
+          </div>
+        </section>
+      `;
+    }).join("")}</div>`;
+  }
+
   function renderReadingResultHTML(session) {
     const result = session.result;
     const partKeys = getReadingPartKeys(session.test);
@@ -1233,8 +1378,8 @@
         </div>
         <div class="exam-result-note"><strong>Saved to Progress.</strong> ${isFullReading ? "This paper includes the complete 44 available marks across Parts 1 and 5–7." : "Test 12 currently contains Parts 5–7, so its 36 available marks are normalised to the full Reading component until one more Part 1 source is added."}</div>
         <div class="exam-result-actions"><button class="btn btn-secondary" onclick="openExamBank('reading')">Back to library</button><button class="btn btn-secondary" onclick="retryReadingBankTest()">Try again</button><button class="btn btn-primary" onclick="renderDashboard()">Open Progress</button></div>
-        <section class="exam-answer-review"><div class="exam-library-heading"><div><span class="eyebrow">Answer review</span><h2>${result.missed.length ? `${result.missed.length} answers to revisit` : "Perfect paper"}</h2></div><p>Every answer remains available in the saved attempt.</p></div>
-          ${result.missed.length ? `<div class="exam-missed-grid">${result.missed.map(item => `<article><span>Part ${session.test.parts[item.partKey].number} · Q.${item.question}</span><p>${renderWritingMarkdownInline(item.prompt)}</p><div><small>Your answer</small><strong>${escapeHTML(item.answer)}</strong><small>Correct</small><strong>${escapeHTML(item.correctAnswer)}</strong></div></article>`).join("")}</div>` : `<div class="exam-perfect-result">All ${totalQuestions} answers correct. That is offensively tidy.</div>`}
+        <section class="exam-answer-review"><div class="exam-library-heading"><div><span class="eyebrow">Complete answer review</span><h2>Every question, part by part</h2></div><p>${correctCount}/${totalQuestions} correct. Open each source text whenever you need the full context.</p></div>
+          ${renderReadingFullReviewHTML(session)}
         </section>
       </section>
     `;
