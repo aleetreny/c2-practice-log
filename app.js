@@ -5544,9 +5544,12 @@ function renderAnswerSheetHTML() {
       : STATE.activeSection === "reading"
         ? "You can also complete Reading Part 1 on its own. It will be saved as unscored partial practice."
         : "";
+    const objectiveNotice = isBankListening
+      ? "<strong>Enter, grade and review.</strong> Parts 1, 3 and 4 are marked automatically. Part 2 is pre-marked against the answer key and remains editable for manual confirmation."
+      : `<strong>Enter, lock and grade.</strong> ${partialPracticeHint || "Complete the whole paper to save a scored attempt."}`;
     const objectiveSheetContent = `
       <div class="sheet-notice">
-        <strong>Enter, lock and grade.</strong> ${partialPracticeHint || "Complete the whole paper to save a scored attempt."}
+        ${objectiveNotice}
       </div>
       
       <div class="sheet-questions-list">
@@ -5745,6 +5748,41 @@ function clearSheetInputs() {
   }
 }
 
+function normalizeExamBankAutoGradeAnswer(value) {
+  return String(value || "")
+    .normalize("NFKC")
+    .toLocaleLowerCase("en")
+    .replace(/[^\p{L}\p{N}]+/gu, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function matchesExamBankAnswerOption(value, answerKey) {
+  const normalizedValue = normalizeExamBankAutoGradeAnswer(value);
+  if (!normalizedValue) return false;
+  return String(answerKey || "")
+    .split("/")
+    .some(option => normalizeExamBankAutoGradeAnswer(option) === normalizedValue);
+}
+
+function applyExamBankListeningAnswerKey(sectionMeta) {
+  const session = STATE.examBankSession;
+  const answerKey = session?.section === "listening" ? session.video?.answers : null;
+  if (!answerKey || typeof answerKey !== "object") return;
+
+  Object.entries(sectionMeta.parts).forEach(([partKey, partData]) => {
+    for (let q = partData.startQ; q <= partData.endQ; q++) {
+      const modelAnswer = String(answerKey[q] || "").trim();
+      if (!modelAnswer) continue;
+      const isCorrect = partKey === "part2"
+        ? matchesExamBankAnswerOption(STATE.answers[q], modelAnswer)
+        : normalizeExamBankAutoGradeAnswer(STATE.answers[q]) === normalizeExamBankAutoGradeAnswer(modelAnswer);
+      STATE.correctAnswers[q] = modelAnswer;
+      markBinaryGrade(q, isCorrect ? "correct" : "incorrect");
+    }
+  });
+}
+
 // LOCK INPUTS AND OPEN TOGGLES
 function lockAnswersAndStartCorrection() {
   const sectionMeta = C2_EXAM_METADATA[STATE.activeSection];
@@ -5824,6 +5862,8 @@ function lockAnswersAndStartCorrection() {
       }
     }
   }
+
+  applyExamBankListeningAnswerKey(sectionMeta);
   
   const mainBtn = document.getElementById("sheet-submit-btn");
   mainBtn.textContent = "Save result";
@@ -5890,6 +5930,18 @@ function updateErrorNoteArea(qNum) {
 
   if (!shouldShow || !hasGrade) {
     noteArea.innerHTML = "";
+    return;
+  }
+
+  const isExamBankListeningReview = STATE.examBankSession?.section === "listening";
+  if (isExamBankListeningReview) {
+    noteArea.innerHTML = `
+      <div class="sheet-error-note-box sheet-model-answer-review">
+        <span>Model answer</span>
+        <strong>${escapeHTML(STATE.correctAnswers[qNum] || "")}</strong>
+        <small>${partKey === "part2" ? "Sentence completion accepts alternatives separated by “/”. Confirm or change the Correct/Missed selection above." : "Marked automatically from the Listening answer key. You can change the Correct/Missed selection above if needed."}</small>
+      </div>
+    `;
     return;
   }
 

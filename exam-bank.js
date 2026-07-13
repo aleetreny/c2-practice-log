@@ -98,6 +98,23 @@
     const appContainer = document.getElementById("app-container");
     const collection = getCollection();
     const objectiveSession = ["reading", "useOfEnglish"].includes(STATE.examBankSession?.section) ? STATE.examBankSession : null;
+
+    // While actively answering a Reading/Use of English paper, run the two-column
+    // workspace full-screen: no top navigation or demo banner, a fixed viewport,
+    // and independent scrolling inside each column (question text / answer sheet).
+    const isAnsweringWorkspace = objectiveSession
+      && objectiveSession.phase !== "result"
+      && objectiveSession.phase !== "gradingPart4";
+    if (isAnsweringWorkspace) {
+      appContainer.innerHTML = `
+        <div class="exam-session-view">
+          ${objectiveSession.section === "reading" ? renderReadingSessionHTML(objectiveSession) : renderUseOfEnglishSessionHTML(objectiveSession)}
+        </div>
+      `;
+      updatePracticeTimerDisplay();
+      return;
+    }
+
     appContainer.innerHTML = `
       <div class="exam-bank-container app-shell">
         <header class="app-topbar">
@@ -123,7 +140,7 @@
     const copy = {
       useOfEnglish: ["Use of English sets", "44 real Use of English sets", "Start fresh from 24 full Parts 2–4 papers or 20 additional Part 4 drills reconstructed from the source material in the practice logs."],
       reading: ["Reading papers", "12 complete Reading papers", "Every paper combines a real Part 1 with Parts 5–7 in one split-screen, 44-mark Reading test."],
-      listening: ["Listening papers", "33 full video-led tests", "The video carries the audio and on-screen questions. Keep the familiar answer sheet alongside it, then lock and self-correct all 30 responses."],
+      listening: ["Listening papers", "33 full video-led tests", "The video carries the audio and on-screen questions. The answer sheet marks all 30 responses automatically, with a guided check for Part 2 sentence completion."],
       writing: ["Writing papers", "14 paired Writing sets", "Each set combines one real Part 1 essay with one real Part 2 task. Work from the prompts without leaving the editor, then use the rubric and assessment prompt as usual."]
     }[collection];
     return `
@@ -156,7 +173,7 @@
     const tests = BANK.useOfEnglish.filter(test => test.kind === filter);
     return `
       <section class="exam-library-section">
-        <div class="exam-library-heading"><div><span class="eyebrow">Choose a fresh paper</span><h2>Use of English Parts 2, 3 and 4</h2></div><p>Automatic key · timed · saved to Progress</p></div>
+        <div class="exam-library-heading"><div><span class="eyebrow">Choose a fresh paper</span><h2>Use of English Parts 2, 3 and 4</h2></div><p>Automatic Part 3 · guided Parts 2 and 4 · timed</p></div>
         <div class="uoe-bank-filter" role="group" aria-label="Use of English source type">
           <button class="${filter === "full" ? "active" : ""}" onclick="setUseOfEnglishBankFilter('full')"><strong>24</strong><span>Full papers</span><small>Parts 2–4 · 28 marks</small></button>
           <button class="${filter === "part4" ? "active" : ""}" onclick="setUseOfEnglishBankFilter('part4')"><strong>20</strong><span>Part 4 drills</span><small>6 transformations · 12 marks</small></button>
@@ -223,7 +240,7 @@
     const latest = getLatestBankAttempt(selected.id);
     return `
       <section class="exam-library-section listening-library">
-        <div class="exam-library-heading"><div><span class="eyebrow">Choose a video test</span><h2>Full Listening paper</h2></div><p>4 parts · 30 answers · manual correction</p></div>
+        <div class="exam-library-heading"><div><span class="eyebrow">Choose a video test</span><h2>Full Listening paper</h2></div><p>4 parts · 30 answers · automatic marking with Part 2 review</p></div>
         <div class="listening-picker-layout">
           <div class="listening-test-picker">
             <label for="listening-bank-select">Test number</label>
@@ -465,6 +482,7 @@
       activePart: partKeys[0],
       phase: "answering",
       answers: {},
+      part2Grades: {},
       part4Grades: {},
       saving: false,
       result: null
@@ -573,10 +591,32 @@
     return String(value || "")
       .normalize("NFKC")
       .replace(/[‘’´`]/g, "'")
-      .replace(/[.,!?;:]+$/g, "")
+      .replace(/[^\p{L}\p{N}]+/gu, " ")
       .replace(/\s+/g, " ")
       .trim()
       .toUpperCase();
+  }
+
+  function matchesObjectiveAnswer(value, answerKey) {
+    const normalizedValue = normalizeObjectiveAnswer(value);
+    if (!normalizedValue) return false;
+    return String(answerKey || "")
+      .split("/")
+      .some(option => normalizeObjectiveAnswer(option) === normalizedValue);
+  }
+
+  function getUseOfEnglishManualQuestions(session) {
+    return [
+      ...(session.test.parts.part2?.questions || []).map(question => ({ partKey: "part2", question })),
+      ...(session.test.parts.part4?.questions || []).map(question => ({ partKey: "part4", question }))
+    ];
+  }
+
+  function hasMissingUseOfEnglishManualGrades(session) {
+    return getUseOfEnglishManualQuestions(session).some(({ partKey, question }) => {
+      const grades = partKey === "part2" ? session.part2Grades : session.part4Grades;
+      return !Number.isInteger(grades[question.number]);
+    });
   }
 
   function finishUseOfEnglishBankTest() {
@@ -589,7 +629,15 @@
       alert(`Answer every question before checking the set. Missing: ${missing.map(question => `Q.${question}`).join(", ")}.`);
       return;
     }
-    if (session.test.parts.part4) {
+    if (session.test.parts.part2) {
+      session.test.parts.part2.questions.forEach(question => {
+        session.part2Grades[question.number] = matchesObjectiveAnswer(
+          session.answers[question.number],
+          session.test.answers[question.number]
+        ) ? 1 : 0;
+      });
+    }
+    if (session.test.parts.part2 || session.test.parts.part4) {
       session.phase = "gradingPart4";
       renderExamBank();
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -604,24 +652,58 @@
     session.part4Grades[question] = points;
     document.querySelectorAll(`[data-uoe-grade-question="${question}"] button`).forEach(button => button.classList.toggle("active", Number(button.dataset.points) === points));
     const saveButton = document.getElementById("save-uoe-bank");
-    if (saveButton) saveButton.disabled = session.test.parts.part4.questions.some(item => !Number.isInteger(session.part4Grades[item.number]));
+    if (saveButton) saveButton.disabled = hasMissingUseOfEnglishManualGrades(session);
+  }
+
+  function setUseOfEnglishPart2Grade(question, points) {
+    const session = STATE.examBankSession;
+    if (session?.section !== "useOfEnglish" || session.phase !== "gradingPart4" || ![0, 1].includes(points)) return;
+    session.part2Grades[question] = points;
+    document.querySelectorAll(`[data-uoe-grade-question="${question}"] button`).forEach(button => button.classList.toggle("active", Number(button.dataset.points) === points));
+    const saveButton = document.getElementById("save-uoe-bank");
+    if (saveButton) saveButton.disabled = hasMissingUseOfEnglishManualGrades(session);
   }
 
   function renderUseOfEnglishPart4GradingHTML(session) {
-    const questions = session.test.parts.part4.questions;
+    const part2Questions = session.test.parts.part2?.questions || [];
+    const part4Questions = session.test.parts.part4?.questions || [];
+    const includesPart2 = part2Questions.length > 0;
     return `
       <section class="exam-uoe-grading">
-        <div class="exam-session-topbar"><div><span class="eyebrow">Final correction</span><h1>Score Part 4</h1><p>Award 0, 1 or 2 marks after comparing each transformation with the key.</p></div><div class="exam-session-actions"><button class="btn btn-secondary" onclick="exitUseOfEnglishBankTest()">Exit</button><button class="btn btn-primary" id="save-uoe-bank" onclick="saveUseOfEnglishBankResult()" ${questions.some(item => !Number.isInteger(session.part4Grades[item.number])) ? "disabled" : ""}>Save result</button></div></div>
-        <div class="uoe-grading-grid">
-          ${questions.map(question => `
-            <article>
-              <span>Question ${question.number}</span>
-              <div><small>Your answer</small><strong>${escapeHTML(session.answers[question.number])}</strong></div>
-              <div class="correct"><small>Answer key</small><strong>${escapeHTML(session.test.answers[question.number])}</strong></div>
-              <div class="uoe-grade-buttons" data-uoe-grade-question="${question.number}">${[0, 1, 2].map(points => `<button data-points="${points}" class="${session.part4Grades[question.number] === points ? "active" : ""}" onclick="setUseOfEnglishPart4Grade(${question.number}, ${points})">${points} pt${points === 1 ? "" : "s"}</button>`).join("")}</div>
-            </article>
-          `).join("")}
-        </div>
+        <div class="exam-session-topbar"><div><span class="eyebrow">Final correction</span><h1>${includesPart2 ? "Review Parts 2 and 4" : "Score Part 4"}</h1><p>${includesPart2 ? "Confirm each open-cloze answer, then award 0, 1 or 2 marks to every transformation." : "Award 0, 1 or 2 marks after comparing each transformation with the key."}</p></div><div class="exam-session-actions"><button class="btn btn-secondary" onclick="exitUseOfEnglishBankTest()">Exit</button><button class="btn btn-primary" id="save-uoe-bank" onclick="saveUseOfEnglishBankResult()" ${hasMissingUseOfEnglishManualGrades(session) ? "disabled" : ""}>Save result</button></div></div>
+        ${includesPart2 ? `
+          <section class="uoe-grading-section">
+            <div class="uoe-grading-heading"><div><span class="eyebrow">Part 2 · Open cloze</span><h2>Confirm the suggested marking</h2></div><p>Valid alternatives are separated by “/”. Change any pre-marked answer when context allows another form.</p></div>
+            <div class="uoe-grading-grid">
+              ${part2Questions.map(question => `
+                <article>
+                  <span>Question ${question.number}</span>
+                  <div><small>Your answer</small><strong>${escapeHTML(session.answers[question.number])}</strong></div>
+                  <div class="correct"><small>Answer key</small><strong>${escapeHTML(session.test.answers[question.number])}</strong></div>
+                  <div class="uoe-grade-buttons binary" data-uoe-grade-question="${question.number}">
+                    <button data-points="1" class="correct ${session.part2Grades[question.number] === 1 ? "active" : ""}" onclick="setUseOfEnglishPart2Grade(${question.number}, 1)">Correct</button>
+                    <button data-points="0" class="missed ${session.part2Grades[question.number] === 0 ? "active" : ""}" onclick="setUseOfEnglishPart2Grade(${question.number}, 0)">Missed</button>
+                  </div>
+                </article>
+              `).join("")}
+            </div>
+          </section>
+        ` : ""}
+        ${part4Questions.length ? `
+          <section class="uoe-grading-section">
+            ${includesPart2 ? `<div class="uoe-grading-heading"><div><span class="eyebrow">Part 4 · Key word transformations</span><h2>Award partial credit</h2></div><p>Compare the full phrase with the key and choose 0, 1 or 2 marks.</p></div>` : ""}
+            <div class="uoe-grading-grid">
+              ${part4Questions.map(question => `
+                <article>
+                  <span>Question ${question.number}</span>
+                  <div><small>Your answer</small><strong>${escapeHTML(session.answers[question.number])}</strong></div>
+                  <div class="correct"><small>Answer key</small><strong>${escapeHTML(session.test.answers[question.number])}</strong></div>
+                  <div class="uoe-grade-buttons" data-uoe-grade-question="${question.number}">${[0, 1, 2].map(points => `<button data-points="${points}" class="${session.part4Grades[question.number] === points ? "active" : ""}" onclick="setUseOfEnglishPart4Grade(${question.number}, ${points})">${points} pt${points === 1 ? "" : "s"}</button>`).join("")}</div>
+                </article>
+              `).join("")}
+            </div>
+          </section>
+        ` : ""}
       </section>
     `;
   }
@@ -630,7 +712,7 @@
     const session = STATE.examBankSession;
     if (session?.section !== "useOfEnglish" || session.saving) return;
     const partKeys = getUseOfEnglishPartKeys(session.test);
-    if (session.test.parts.part4 && session.test.parts.part4.questions.some(item => !Number.isInteger(session.part4Grades[item.number]))) return;
+    if (hasMissingUseOfEnglishManualGrades(session)) return;
     session.saving = true;
     const gradedStates = {};
     const correctAnswers = {};
@@ -649,7 +731,9 @@
         const correctAnswer = session.test.answers[number];
         const points = partKey === "part4"
           ? session.part4Grades[number]
-          : normalizeObjectiveAnswer(session.answers[number]) === normalizeObjectiveAnswer(correctAnswer) ? weight : 0;
+          : partKey === "part2"
+            ? session.part2Grades[number]
+            : normalizeObjectiveAnswer(session.answers[number]) === normalizeObjectiveAnswer(correctAnswer) ? weight : 0;
         gradedStates[number] = partKey === "part4" ? points : points === weight ? "correct" : "incorrect";
         correctAnswers[number] = correctAnswer;
         questionTexts[number] = `Part ${part.number} · Question ${number}`;
@@ -1109,6 +1193,7 @@
   root.switchUseOfEnglishBankPart = switchUseOfEnglishBankPart;
   root.storeUseOfEnglishBankAnswer = storeUseOfEnglishBankAnswer;
   root.finishUseOfEnglishBankTest = finishUseOfEnglishBankTest;
+  root.setUseOfEnglishPart2Grade = setUseOfEnglishPart2Grade;
   root.setUseOfEnglishPart4Grade = setUseOfEnglishPart4Grade;
   root.saveUseOfEnglishBankResult = saveUseOfEnglishBankResult;
   root.selectListeningBankTest = selectListeningBankTest;

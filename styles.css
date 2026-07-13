@@ -3790,6 +3790,35 @@ input.sheet-text-input:disabled,
   border-top: 1px dashed var(--border-color);
 }
 
+.sheet-model-answer-review {
+  grid-template-columns: minmax(100px, auto) minmax(0, 1fr);
+  align-items: center;
+  padding: 10px 12px;
+  border: 1px solid #b9ddd6;
+  border-radius: 8px;
+  background: var(--accent-soft);
+}
+
+.sheet-model-answer-review span {
+  color: var(--accent-hover);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.sheet-model-answer-review strong {
+  overflow-wrap: anywhere;
+  color: var(--text-main);
+  font-size: 0.88rem;
+}
+
+.sheet-model-answer-review small {
+  grid-column: 1 / -1;
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
 .sheet-error-note-box label {
   display: block;
   margin-bottom: 6px;
