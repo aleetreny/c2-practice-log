@@ -776,7 +776,7 @@ body:has(.exam-session-view) {
   z-index: 40;
   display: flex;
   min-height: 0;
-  overflow: hidden;
+  overflow: clip;
   padding: 12px 16px;
   background: var(--bg-main, #f4f6f7);
 }
@@ -1294,6 +1294,15 @@ body:has(.exam-session-view) {
   background: var(--accent-soft);
 }
 
+.uoe-grading-grid article > div.uoe-auto-grade {
+  grid-column: 1 / -1;
+}
+
+.uoe-grading-grid article > div.uoe-auto-grade.missed {
+  background: var(--color-error-bg);
+  color: var(--color-error);
+}
+
 .uoe-grading-grid small,
 .uoe-grading-grid strong {
   display: block;
@@ -1353,6 +1362,7 @@ body:has(.exam-session-view) {
 }
 
 .exam-mcq-options label {
+  position: relative;
   display: grid;
   grid-template-columns: 28px minmax(0, 1fr);
   gap: 8px;
@@ -1370,7 +1380,18 @@ body:has(.exam-session-view) {
 
 .exam-mcq-options input {
   position: absolute;
+  top: 50%;
+  left: 14px;
+  width: 1px;
+  height: 1px;
+  margin: 0;
   opacity: 0;
+  transform: translateY(-50%);
+}
+
+.exam-mcq-options label:has(input:focus-visible) {
+  outline: 3px solid rgba(15, 118, 110, 0.18);
+  outline-offset: 1px;
 }
 
 .exam-mcq-options label > span {

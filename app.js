@@ -5939,7 +5939,6 @@ function updateErrorNoteArea(qNum) {
       <div class="sheet-error-note-box sheet-model-answer-review">
         <span>Model answer</span>
         <strong>${escapeHTML(STATE.correctAnswers[qNum] || "")}</strong>
-        <small>${partKey === "part2" ? "Sentence completion accepts alternatives separated by “/”. Confirm or change the Correct/Missed selection above." : "Marked automatically from the Listening answer key. You can change the Correct/Missed selection above if needed."}</small>
       </div>
     `;
     return;
