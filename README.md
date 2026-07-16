@@ -118,6 +118,8 @@ npm run check
 
 No package installation or frontend build is required.
 
+The public demo works locally. Account authentication is intentionally limited to the trusted production origin; a fork or a separate local-auth environment must add its own origin to Managed Better Auth.
+
 ## Rebuilding the exam bank
 
 The original Markdown imports are intentionally ignored by Git. The generated, browser-ready `exam-bank-data.js` is committed and deterministic.
@@ -155,6 +157,8 @@ The complete, repeatable database definition is in `neon/schema.sql`. It creates
 - explicit grants for `authenticated` and no private-data grants for `anonymous`.
 
 Neon Auth manages email/password sign-up, persistent sessions, refresh and password recovery. Password hashes from the previous provider were not compatible with Managed Better Auth, so the migrated identity keeps the same email and establishes a new password through the one-time-code recovery flow. The Data API forwards the Auth JWT and PostgreSQL enforces row ownership. Demo mode never initializes an account workspace or reads private rows.
+
+The production cutover from Supabase to Neon in Frankfurt was completed and verified in July 2026. It retained one identity mapping, 85 attempts and one learning-state row (86 private rows in total). Source and destination contents were compared by normalized checksums, the public backup was restored on an isolated Neon branch, and account isolation was exercised through the live Auth and Data APIs. The former Supabase project was retained only for final cutover verification and is not a runtime dependency; the published app contains no Supabase project URL or key.
 
 Account data remains usable when cloud sync is unavailable. The original namespaced browser keys are retained, and every relevant change also refreshes a consolidated, versioned per-user backup with a SHA-256 checksum. The one-time local migration copies data from the legacy user namespace only after the authenticated Neon mapping is returned by RLS; it verifies the copy and retains the original keys.
 
@@ -203,8 +207,14 @@ study-review-data.js          Review selection and study-data migration
 vocabulary-data.js            Built-in vocabulary bank
 writing-data.js               Writing lab content
 styles.css                    Core responsive application styles
+neon/schema.sql               Repeatable Neon schema, grants and forced RLS policies
+public-profile-backup/        Sanitised, checksummed owner-profile backup
+.github/workflows/public-profile-backup.yml  Weekly and on-demand backup automation
 scripts/build-exam-bank-data.js  Deterministic source/log importer
 scripts/audit-*.js            Data, UI, privacy and isolation audits
+scripts/export-public-profile.js  Exact single-owner backup export
+scripts/restore-public-profile.js Backup validation and guarded restoration
+scripts/verify-neon-rls.js    Live cross-account isolation verification
 ```
 
 ## Quality and privacy checks
