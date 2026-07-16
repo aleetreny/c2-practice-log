@@ -40,12 +40,12 @@ assert.match(appSource, /function activateDemoWorkspace\(\)/, "demo workspace ac
 assert.match(appSource, /function activateAccountWorkspace\(\)/, "account workspace activation should exist");
 assert.match(
   appSource,
-  /await signInWithSupabase\(email, password\);\s*activateAccountWorkspace\(\);\s*await hydrateRemoteHistory\(\);/,
+  /await signInWithNeon\(email, password\);\s*activateAccountWorkspace\(\);\s*await hydrateRemoteHistory\(\);/,
   "sign in must clear the demo before remote hydration"
 );
 assert.match(
   appSource,
-  /if \(session\.access_token\) \{\s*activateAccountWorkspace\(\);\s*await hydrateRemoteHistory\(\);/,
+  /if \(session\.session \|\| STATE\.isAuthenticated\) \{\s*activateAccountWorkspace\(\);\s*await hydrateRemoteHistory\(\);/,
   "immediate sign up must clear the demo before remote hydration"
 );
 
@@ -68,6 +68,6 @@ assert.doesNotMatch(stylesSource, /\.tour-highlight\s*\{/, "tour should not draw
 assert.doesNotMatch(stylesSource, /\.about-tour-backdrop\s*\{/, "tour should leave the page visible");
 assert.match(stylesSource, /\.about-tour-layer[\s\S]*?right:\s*24px[\s\S]*?bottom:\s*24px/, "tour panel should stay in the corner");
 assert.match(indexSource, /styles\.css\?v=public-tour-3/, "tour styles should use a cache-busted public asset");
-assert.match(indexSource, /app\.js\?v=public-tour-3/, "tour script should use a cache-busted public asset");
+assert.match(indexSource, /app\.js\?v=neon-migration-1/, "Neon frontend script should use a cache-busted public asset");
 
 console.log(`Public demo audit passed: ${demo.history.length} attempts, ${demo.vocabularyEntries.length} personal vocabulary entries, ${Object.keys(demo.vocabularyReviewStats).length} vocabulary ratings and ${Object.keys(demo.errorReviewStats).length} error ratings.`);

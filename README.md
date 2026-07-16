@@ -66,11 +66,11 @@ The public demo and account workspaces are deliberately separate:
 
 - Demo changes are temporary and disappear on reload.
 - A newly created account starts with no attempts, personal vocabulary or review ratings.
-- Browser backups are namespaced by the Supabase user ID.
-- Supabase Row Level Security keeps each user's online rows private.
+- Browser backups are namespaced by the Neon Auth user ID.
+- Neon Postgres Row Level Security keeps each user's online rows private.
 - Signing out immediately returns to the public demo.
 
-The published demo and exam-bank assets contain study material only. Session tokens, passwords and Supabase credentials are never included.
+The published demo and exam-bank assets contain study material only. Session tokens, passwords and Neon database credentials are never included.
 
 ## Other features
 
@@ -102,7 +102,7 @@ The compact panel stays in the corner while each top-level page opens normally. 
 
 ## Run locally
 
-The application is framework-free. Node.js 18 or newer is only required for data generation and audits.
+The application is framework-free. Node.js 20 or newer is only required for data generation and audits.
 
 ```bash
 git clone https://github.com/aleetreny/c2-practice-log.git
@@ -143,40 +143,38 @@ npm run audit:exam-bank
 
 The generator rejects incomplete Reading structures, missing logged answer keys, inconsistent Listening playlist indexes and any Writing pairing that does not contain 14 unique tasks on each side. A source digest in the generated asset makes accidental drift visible.
 
-## Supabase setup
+## Neon backend
 
-Authentication and persistence use Supabase directly from the static frontend. Create a project, enable email/password authentication and run:
+Authentication and persistence use Managed Better Auth and the Neon Data API directly from the static frontend. The application contains only the public Auth and Data API URLs; it never contains a PostgreSQL connection string, an administrative key or a server credential.
 
-```sql
-create table public.c2_attempts (
-  id text primary key,
-  user_id uuid not null references auth.users(id) on delete cascade,
-  section text not null,
-  correct integer not null default 0,
-  total integer not null default 0,
-  percentage numeric not null default 0,
-  scale_score integer not null default 0,
-  answers jsonb not null default '{}'::jsonb,
-  graded_states jsonb not null default '{}'::jsonb,
-  attempted_at timestamptz not null default now()
-);
+The complete, repeatable database definition is in `neon/schema.sql`. It creates:
 
-alter table public.c2_attempts enable row level security;
+- `public.c2_attempts`, preserving the existing IDs, dates, scores and JSON payloads;
+- `public.c2_user_mappings`, which records the explicit legacy-to-Neon user mapping without storing an email address;
+- forced Row Level Security with separate SELECT, INSERT, UPDATE and DELETE policies based on `auth.user_id()`;
+- explicit grants for `authenticated` and no private-data grants for `anonymous`.
 
-create policy "Users manage their own C2 data"
-on public.c2_attempts
-for all
-to authenticated
-using ((select auth.uid()) = user_id)
-with check ((select auth.uid()) = user_id);
+Neon Auth manages email/password sign-up, persistent sessions, refresh and password recovery. Password hashes from the previous provider were not compatible with Managed Better Auth, so the migrated identity keeps the same email and establishes a new password through the one-time-code recovery flow. The Data API forwards the Auth JWT and PostgreSQL enforces row ownership. Demo mode never initializes an account workspace or reads private rows.
 
-create index c2_attempts_user_date_idx
-on public.c2_attempts (user_id, attempted_at);
+Account data remains usable when cloud sync is unavailable. The original namespaced browser keys are retained, and every relevant change also refreshes a consolidated, versioned per-user backup with a SHA-256 checksum. The one-time local migration copies data from the legacy user namespace only after the authenticated Neon mapping is returned by RLS; it verifies the copy and retains the original keys.
+
+## Intentional public owner backup
+
+`public-profile-backup/` is an intentionally public, human-readable copy of Aleetreny's study data. It includes attempts, answers, corrections, vocabulary and review state. It excludes email addresses, passwords, password hashes, sessions, cookies, access/refresh tokens, database URLs and every other user's data.
+
+`.github/workflows/public-profile-backup.yml` runs weekly or through `workflow_dispatch`. It requires these repository secrets:
+
+- `NEON_DATABASE_URL`: an owner connection used only inside GitHub Actions;
+- `PUBLIC_PROFILE_OWNER_EMAIL`: the exact owner identity to export.
+
+The workflow queries exactly one matching Neon Auth user, writes stable JSON, validates checksums and commits only `public-profile-backup/`. Generate or validate the files locally with:
+
+```bash
+npm run backup:public-profile
+npm run restore:public-profile -- --validate
 ```
 
-Update `SUPABASE_CONFIG` near the top of `app.js` with the project URL and anon key, then add the production and development URLs to the allowed Auth redirects.
-
-The anon key is expected in a browser application. Its safety depends on Row Level Security; never publish a `service_role` key.
+`scripts/restore-public-profile.js` supports `--dry-run`, `--validate` and `--restore`. Restore mode requires the same two private environment variables, refuses IDs owned by another user and can target a temporary Neon branch by supplying that branch's `NEON_DATABASE_URL`.
 
 ## Deployment
 
@@ -184,7 +182,7 @@ Production is served by GitHub Pages from `gh-pages`. The deploy branch contains
 
 For a fork, also update:
 
-- `SUPABASE_CONFIG` and allowed Auth redirects
+- `NEON_CONFIG` and the Managed Better Auth trusted domains
 - the live and clone URLs in this README
 - the public demo snapshot, if different example data is desired
 - the Listening URLs, if using a different video collection
@@ -211,7 +209,7 @@ scripts/audit-*.js            Data, UI, privacy and isolation audits
 
 ## Quality and privacy checks
 
-`npm run check` validates JavaScript syntax, all 44 Use of English sets, all 12 Reading papers and keys, all 33 Listening records, all 28 Writing tasks, vocabulary integrity, Writing resources, migrations, partial practice, Error Log behaviour and the public demo/account boundary.
+`npm run check` validates JavaScript syntax, all 44 Use of English sets, all 12 Reading papers and keys, all 33 Listening records, all 28 Writing tasks, vocabulary integrity, Writing resources, migrations, partial practice, Error Log behaviour, the public demo/account boundary, Neon RLS declarations, local migration hooks, backup checksums, restoration input and secret exclusion.
 
 The exam-bank audit proves question ranges, all 12 Reading Part 1 keys, Part 6 gaps, Part 7 section references, playlist indexes and unique Writing pairings. The public-demo audit rejects session and refresh-token fields.
 

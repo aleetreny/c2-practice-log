@@ -1,0 +1,267 @@
+{
+  "archivedIds": [],
+  "checksum": "3949adef162e7f9a6306fa919f87567d35a1da0a99a84cb0edc832d95e880666",
+  "entries": [
+    {
+      "collection": "wordFormation",
+      "entryType": "wordFormation",
+      "example": "",
+      "families": [
+        "wordFormation"
+      ],
+      "family": "wordFormation",
+      "id": "custom-1782922245610-je0ic",
+      "meaning": "Tragicamente",
+      "notionPages": [],
+      "sources": [
+        "Personal entry"
+      ],
+      "term": "(Tragedy) Tragically",
+      "updatedAt": 1782922245610
+    },
+    {
+      "collection": "wordFormation",
+      "entryType": "wordFormation",
+      "example": "",
+      "families": [
+        "wordFormation"
+      ],
+      "family": "wordFormation",
+      "id": "notion-2109",
+      "meaning": "(Engaño) Engañoso. Deceitfull : mentiroso",
+      "notionPages": [
+        "05"
+      ],
+      "sources": [
+        "Word Formation"
+      ],
+      "term": "(Deception) Deceptive",
+      "updatedAt": 1782938073970
+    },
+    {
+      "collection": "wordFormation",
+      "entryType": "wordFormation",
+      "example": "",
+      "families": [
+        "wordFormation"
+      ],
+      "family": "wordFormation",
+      "id": "custom-1783074178634-mgglh",
+      "meaning": "(Satira) Satírico. Esta es de las que el adjetivo se hace con \"cal\". Adv = Satirically",
+      "notionPages": [],
+      "sources": [
+        "Personal entry"
+      ],
+      "term": "(Satire) Satirical",
+      "updatedAt": 1783074178634
+    },
+    {
+      "collection": "wordFormation",
+      "entryType": "wordFormation",
+      "example": "",
+      "families": [
+        "wordFormation"
+      ],
+      "family": "wordFormation",
+      "id": "custom-1783085541402-bltr4",
+      "meaning": "Estado de alerta. Mental alertness",
+      "notionPages": [],
+      "sources": [
+        "Personal entry"
+      ],
+      "term": "(Alert) Alertness",
+      "updatedAt": 1783085541402
+    },
+    {
+      "collection": "wordFormation",
+      "entryType": "wordFormation",
+      "example": "",
+      "families": [
+        "wordFormation"
+      ],
+      "family": "wordFormation",
+      "id": "custom-1783085704928-hoeeh",
+      "meaning": "Comparativamente. no se usa apenas comparably. Compare -> Comparative -> Comparatively",
+      "notionPages": [],
+      "sources": [
+        "Personal entry"
+      ],
+      "term": "(Compare) Comparatively",
+      "updatedAt": 1783085704928
+    },
+    {
+      "collection": "wordFormation",
+      "entryType": "wordFormation",
+      "example": "",
+      "families": [
+        "wordFormation"
+      ],
+      "family": "wordFormation",
+      "id": "custom-1783085742500-cizxt",
+      "meaning": "Designado",
+      "notionPages": [],
+      "sources": [
+        "Personal entry"
+      ],
+      "term": "(Design) Designated",
+      "updatedAt": 1783085742500
+    },
+    {
+      "collection": "wordFormation",
+      "entryType": "wordFormation",
+      "example": "",
+      "families": [
+        "wordFormation"
+      ],
+      "family": "wordFormation",
+      "id": "custom-1783085792491-w0r6f",
+      "meaning": "Acompañar. Accompaniment = Acompañamiento",
+      "notionPages": [],
+      "sources": [
+        "Personal entry"
+      ],
+      "term": "(Company) Accompany",
+      "updatedAt": 1783085792491
+    },
+    {
+      "collection": "wordFormation",
+      "entryType": "wordFormation",
+      "example": "",
+      "families": [
+        "wordFormation"
+      ],
+      "family": "wordFormation",
+      "id": "custom-1783085826624-a2ag0",
+      "meaning": "Desesperacion",
+      "notionPages": [],
+      "sources": [
+        "Personal entry"
+      ],
+      "term": "(Despair) Desperation",
+      "updatedAt": 1783085826624
+    },
+    {
+      "collection": "wordFormation",
+      "entryType": "wordFormation",
+      "example": "",
+      "families": [
+        "wordFormation"
+      ],
+      "family": "wordFormation",
+      "id": "custom-1783163017915-dacvn",
+      "meaning": "Sin dormir. Sleepless nights",
+      "notionPages": [],
+      "sources": [
+        "Personal entry"
+      ],
+      "term": "(Sleep) Sleepless",
+      "updatedAt": 1783163017915
+    },
+    {
+      "collection": "wordFormation",
+      "entryType": "wordFormation",
+      "example": "",
+      "families": [
+        "wordFormation"
+      ],
+      "family": "wordFormation",
+      "id": "custom-1783163048920-29329",
+      "meaning": "lado negativo, inconveniente.",
+      "notionPages": [],
+      "sources": [
+        "Personal entry"
+      ],
+      "term": "(Side) Downside",
+      "updatedAt": 1783163048920
+    },
+    {
+      "collection": "patterns",
+      "entryType": "patterns",
+      "example": "She made a fuss about the food being cold.",
+      "families": [
+        "patterns"
+      ],
+      "family": "patterns",
+      "id": "custom-1783181362290-92515",
+      "meaning": "montar un escandalo por algo",
+      "notionPages": [],
+      "sources": [
+        "Personal entry"
+      ],
+      "term": "make a fuss about + noun / -ing",
+      "updatedAt": 1783181362290
+    },
+    {
+      "collection": "wordFormation",
+      "entryType": "wordFormation",
+      "example": "",
+      "families": [
+        "wordFormation"
+      ],
+      "family": "wordFormation",
+      "id": "custom-1783352868523-9cg5e",
+      "meaning": "Inconcebible",
+      "notionPages": [],
+      "sources": [
+        "Personal entry"
+      ],
+      "term": "(Conceive) Inconceivable",
+      "updatedAt": 1783352868523
+    },
+    {
+      "collection": "wordFormation",
+      "entryType": "wordFormation",
+      "example": "",
+      "families": [
+        "wordFormation"
+      ],
+      "family": "wordFormation",
+      "id": "custom-1783352884987-f7w8s",
+      "meaning": "Incurable",
+      "notionPages": [],
+      "sources": [
+        "Personal entry"
+      ],
+      "term": "(Cure) Incurable",
+      "updatedAt": 1783352884988
+    },
+    {
+      "collection": "wordFormation",
+      "entryType": "wordFormation",
+      "example": "",
+      "families": [
+        "wordFormation"
+      ],
+      "family": "wordFormation",
+      "id": "custom-1783352905631-56e8z",
+      "meaning": "Descafeinado",
+      "notionPages": [],
+      "sources": [
+        "Personal entry"
+      ],
+      "term": "(Caffeine) Decaffeinated",
+      "updatedAt": 1783352905631
+    },
+    {
+      "collection": "wordFormation",
+      "entryType": "wordFormation",
+      "example": "",
+      "families": [
+        "wordFormation"
+      ],
+      "family": "wordFormation",
+      "id": "custom-1783352940934-4wm7b",
+      "meaning": "Irresistible",
+      "notionPages": [],
+      "sources": [
+        "Personal entry"
+      ],
+      "term": "(Resist) Irresistible",
+      "updatedAt": 1783352940934
+    }
+  ],
+  "generatedAt": "2026-07-16T10:07:02.223Z",
+  "profile": "Aleetreny",
+  "updatedAt": 1783703400602,
+  "version": 1
+}

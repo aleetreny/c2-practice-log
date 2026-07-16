@@ -49,7 +49,7 @@ assert.match(appSource, /function openFullDataResetModal\(/, "The dashboard must
 assert.match(appSource, /function openFullDataResetFinalConfirmation\(/, "Resetting must require a second confirmation step.");
 assert.match(appSource, /id="full-data-reset-submit"[^>]*disabled/, "The final reset action must start disabled.");
 assert.match(appSource, /function resetAllRegisteredData\(/, "A confirmed reset must clear all registered data.");
-assert.match(appSource, /method:\s*"DELETE"/, "Signed-in resets must remove the synced records too.");
+assert.match(appSource, /\.from\("c2_attempts"\)[^]*?\.delete\(\)/, "Signed-in resets must remove the synced Neon records too.");
 assert.doesNotMatch(appSource, /onclick="clearHistory\(\)"/, "The old one-click history clear must not remain reachable.");
 assert.doesNotMatch(appSource, /ue-error-review-controls/, "Algorithm settings must not sit beside the Error log launch button.");
 assert.match(appSource, /updateErrorReviewRatingFromTable/, "Rated review rows must be editable.");
