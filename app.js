@@ -15,8 +15,9 @@ const STATE = {
   history: [],
   dataMode: "demo",
   isAuthenticated: false,
-  supabaseSession: null,
-  supabaseUserEmail: "",
+  neonSession: null,
+  neonUserEmail: "",
+  remoteVocabularyStateId: "",
   syncStatus: "local",
   syncMessage: "Local backup",
   vocabularyEntries: [],
@@ -76,14 +77,18 @@ const LOCAL_ERROR_REVIEW_KEY = "c2_error_review_stats_v1";
 const ACCOUNT_STORAGE_PREFIX = "c2_account";
 const ERROR_REVIEW_RATED_VIEW_LIMIT = 50;
 const VOCABULARY_STATE_ID_PREFIX = "vocabulary_state_";
-const SUPABASE_SESSION_KEY = "c2_supabase_session";
-const SUPABASE_CONFIG = {
-  restUrl: "https://irsugdtdqnvlrcbotvfe.supabase.co/rest/v1",
-  authUrl: "https://irsugdtdqnvlrcbotvfe.supabase.co/auth/v1",
-  redirectUrl: "https://aleetreny.github.io/c2-practice-log/",
-  anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlyc3VnZHRkcW52bHJjYm90dmZlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0Nzk4MjgsImV4cCI6MjA5ODA1NTgyOH0.MMJwed40u5tszDUYeS_Tx0BMo0PLWdY-eEp6Qs4XC9o"
+const LEGACY_SUPABASE_SESSION_KEY = "c2_supabase_session";
+const CONSOLIDATED_BACKUP_VERSION = 1;
+const NEON_CONFIG = {
+  authUrl: "https://ep-raspy-firefly-assikdct.neonauth.c-4.eu-central-1.aws.neon.tech/neondb/auth",
+  dataApiUrl: "https://ep-raspy-firefly-assikdct.apirest.c-4.eu-central-1.aws.neon.tech/neondb/rest/v1",
+  sdkUrl: "https://esm.sh/@neondatabase/neon-js@0.6.2-beta?bundle",
+  redirectUrl: "https://aleetreny.github.io/c2-practice-log/"
 };
 let vocabularySyncTimeoutId = null;
+let consolidatedBackupSequence = 0;
+let neonClient = null;
+let neonClientPromise = null;
 let cachedPreferredVocabularyVoice = null;
 let activeVocabularyUtterance = null;
 let activeVocabularySpeechButton = null;
@@ -117,8 +122,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
 async function initializeApp() {
   loadProfiles();
-  await consumeSupabaseRedirectSession();
-  const hasSession = await ensureSupabaseSession();
+  const hasSession = await ensureNeonSession();
   if (hasSession) {
     activateAccountWorkspace();
   } else {
@@ -139,7 +143,7 @@ function loadProfiles() {
 }
 
 function getAccountUserId() {
-  return String(STATE.supabaseSession?.user?.id || "").trim();
+  return String(STATE.neonSession?.user?.id || "").trim();
 }
 
 function getAccountStorageKeys(userId = getAccountUserId()) {
@@ -148,8 +152,84 @@ function getAccountStorageKeys(userId = getAccountUserId()) {
     history: `${ACCOUNT_STORAGE_PREFIX}_${safeUserId}_history`,
     vocabulary: `${ACCOUNT_STORAGE_PREFIX}_${safeUserId}_vocabulary`,
     vocabularyReview: `${ACCOUNT_STORAGE_PREFIX}_${safeUserId}_vocabulary_review`,
-    errorReview: `${ACCOUNT_STORAGE_PREFIX}_${safeUserId}_error_review`
+    errorReview: `${ACCOUNT_STORAGE_PREFIX}_${safeUserId}_error_review`,
+    complete: `${ACCOUNT_STORAGE_PREFIX}_${safeUserId}_complete_v1`,
+    migration: `${ACCOUNT_STORAGE_PREFIX}_${safeUserId}_supabase_to_neon_v1`
   };
+}
+
+function stableProfileValue(value) {
+  if (Array.isArray(value)) return value.map(stableProfileValue);
+  if (!value || typeof value !== "object") return value;
+  return Object.fromEntries(
+    Object.keys(value)
+      .sort()
+      .map(key => [key, stableProfileValue(value[key])])
+  );
+}
+
+function stableProfileJson(value) {
+  return JSON.stringify(stableProfileValue(value));
+}
+
+async function sha256Hex(value) {
+  const bytes = new TextEncoder().encode(String(value));
+  const digest = await crypto.subtle.digest("SHA-256", bytes);
+  return [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function getConsolidatedAccountBackup() {
+  const userId = getAccountUserId();
+  if (!userId) return null;
+  try {
+    const raw = localStorage.getItem(getAccountStorageKeys(userId).complete);
+    const backup = raw ? JSON.parse(raw) : null;
+    return backup?.version === CONSOLIDATED_BACKUP_VERSION && backup?.user?.id === userId
+      ? backup
+      : null;
+  } catch (error) {
+    console.warn("Could not read the consolidated account backup", error);
+    return null;
+  }
+}
+
+async function buildCurrentProfileExport() {
+  if (!STATE.isAuthenticated || STATE.dataMode !== "account") return null;
+  const payload = {
+    version: CONSOLIDATED_BACKUP_VERSION,
+    user: {
+      id: getAccountUserId(),
+      email: STATE.neonUserEmail || ""
+    },
+    history: STATE.history,
+    vocabularyEntries: STATE.vocabularyEntries,
+    vocabularyArchivedIds: STATE.vocabularyArchivedIds,
+    vocabularyReviewStats: STATE.vocabularyReviewStats,
+    vocabularyReviewSettings: STATE.vocabularyReviewSettings,
+    errorReviewStats: STATE.errorReviewStats,
+    errorReviewSettings: STATE.errorReviewSettings,
+    timestamps: {
+      savedAt: Date.now(),
+      historyUpdatedAt: Math.max(0, ...STATE.history.map(item => Number(item.date) || 0)),
+      vocabularyUpdatedAt: Number(STATE.vocabularyUpdatedAt) || 0,
+      errorReviewUpdatedAt: Number(STATE.errorReviewUpdatedAt) || 0
+    }
+  };
+  return {
+    ...payload,
+    checksum: await sha256Hex(stableProfileJson(payload))
+  };
+}
+
+function saveConsolidatedAccountBackup() {
+  if (!STATE.isAuthenticated || STATE.dataMode !== "account") return;
+  const sequence = ++consolidatedBackupSequence;
+  void buildCurrentProfileExport()
+    .then(backup => {
+      if (!backup || sequence !== consolidatedBackupSequence) return;
+      localStorage.setItem(getAccountStorageKeys().complete, JSON.stringify(backup));
+    })
+    .catch(error => console.error("Failed to save consolidated account backup", error));
 }
 
 function resetWorkspaceData() {
@@ -167,6 +247,7 @@ function resetWorkspaceData() {
   STATE.vocabularyEditingId = null;
   STATE.vocabularyNotice = "";
   STATE.examBankSession = null;
+  STATE.remoteVocabularyStateId = "";
 }
 
 function cloneDemoValue(value, fallback) {
@@ -201,7 +282,7 @@ function activateDemoWorkspace() {
 function activateAccountWorkspace() {
   resetWorkspaceData();
   STATE.dataMode = "account";
-  STATE.activeProfile = STATE.supabaseUserEmail ? STATE.supabaseUserEmail.split("@")[0] : "My account";
+  STATE.activeProfile = STATE.neonUserEmail ? STATE.neonUserEmail.split("@")[0] : "My account";
   STATE.profiles = [STATE.activeProfile];
   STATE.syncStatus = "local";
   STATE.syncMessage = "Loading account";
@@ -213,20 +294,32 @@ function loadAccountLocalStorage() {
   if (!userId) return;
   const keys = getAccountStorageKeys(userId);
   try {
+    const completeBackup = getConsolidatedAccountBackup();
     const localMigration = C2_STUDY_REVIEW.migrateHistoryStudyData(
-      parseStoredHistory(localStorage.getItem(keys.history)),
+      parseStoredHistory(localStorage.getItem(keys.history) || JSON.stringify(completeBackup?.history || [])),
       C2_EXAM_METADATA
     );
     STATE.history = localMigration.history;
     if (localMigration.changed) saveLocalStorage();
-    const storedVocabulary = JSON.parse(localStorage.getItem(keys.vocabulary) || "{}");
+    const storedVocabulary = JSON.parse(localStorage.getItem(keys.vocabulary) || JSON.stringify({
+      entries: completeBackup?.vocabularyEntries || [],
+      archivedIds: completeBackup?.vocabularyArchivedIds || [],
+      updatedAt: completeBackup?.timestamps?.vocabularyUpdatedAt || 0
+    }));
     STATE.vocabularyEntries = Array.isArray(storedVocabulary.entries) ? storedVocabulary.entries.map(stripVocabularyCategory) : [];
     STATE.vocabularyArchivedIds = Array.isArray(storedVocabulary.archivedIds) ? storedVocabulary.archivedIds : [];
     STATE.vocabularyUpdatedAt = Number(storedVocabulary.updatedAt) || 0;
-    const storedVocabularyReview = parseStoredVocabularyReviewState(localStorage.getItem(keys.vocabularyReview));
+    const storedVocabularyReview = parseStoredVocabularyReviewState(localStorage.getItem(keys.vocabularyReview) || JSON.stringify({
+      stats: completeBackup?.vocabularyReviewStats || {},
+      settings: completeBackup?.vocabularyReviewSettings || {}
+    }));
     STATE.vocabularyReviewStats = storedVocabularyReview.stats;
     STATE.vocabularyReviewSettings = storedVocabularyReview.settings;
-    const storedErrorReview = parseStoredErrorReviewState(localStorage.getItem(keys.errorReview));
+    const storedErrorReview = parseStoredErrorReviewState(localStorage.getItem(keys.errorReview) || JSON.stringify({
+      stats: completeBackup?.errorReviewStats || {},
+      settings: completeBackup?.errorReviewSettings || {},
+      updatedAt: completeBackup?.timestamps?.errorReviewUpdatedAt || 0
+    }));
     STATE.errorReviewStats = storedErrorReview.stats;
     STATE.errorReviewSettings = storedErrorReview.settings;
     STATE.errorReviewUpdatedAt = storedErrorReview.updatedAt;
@@ -258,6 +351,7 @@ function saveVocabularyLocalStorage(options = {}) {
       stats: STATE.vocabularyReviewStats,
       settings: STATE.vocabularyReviewSettings
     }));
+    saveConsolidatedAccountBackup();
     if (options.sync !== false) queueVocabularyCloudSync();
   } catch (error) {
     console.error("Failed to save vocabulary", error);
@@ -274,6 +368,7 @@ function saveErrorReviewLocalStorage(options = {}) {
       settings: STATE.errorReviewSettings,
       updatedAt: STATE.errorReviewUpdatedAt
     }));
+    saveConsolidatedAccountBackup();
     if (options.sync !== false) queueVocabularyCloudSync();
   } catch (error) {
     console.error("Failed to save error review ratings", error);
@@ -314,6 +409,7 @@ function saveLocalStorage() {
   try {
     localStorage.setItem(keys.history, JSON.stringify(STATE.history));
     saveProfilesMeta();
+    saveConsolidatedAccountBackup();
   } catch (e) {
     console.error("Failed to save local storage", e);
   }
@@ -409,183 +505,211 @@ function mergeHistoryCollections(...collections) {
   return [...byId.values()].sort((a, b) => (a.date || 0) - (b.date || 0));
 }
 
+function writeVerifiedLocalJson(key, value) {
+  const raw = JSON.stringify(value);
+  localStorage.setItem(key, raw);
+  const verified = JSON.parse(localStorage.getItem(key) || "null");
+  if (stableProfileJson(verified) !== stableProfileJson(value)) {
+    throw new Error(`Could not verify migrated local data for ${key}`);
+  }
+}
+
+async function migrateLegacyAccountLocalStorage(legacyUserId) {
+  const neonUserId = getAccountUserId();
+  if (!legacyUserId || !neonUserId || legacyUserId === neonUserId) return false;
+
+  const sourceKeys = getAccountStorageKeys(legacyUserId);
+  const targetKeys = getAccountStorageKeys(neonUserId);
+  if (localStorage.getItem(targetKeys.migration)) return false;
+
+  const originalSource = {
+    history: localStorage.getItem(sourceKeys.history),
+    vocabulary: localStorage.getItem(sourceKeys.vocabulary),
+    vocabularyReview: localStorage.getItem(sourceKeys.vocabularyReview),
+    errorReview: localStorage.getItem(sourceKeys.errorReview)
+  };
+  const hasSource = Object.values(originalSource).some(Boolean);
+
+  if (originalSource.history) {
+    const sourceHistory = parseStoredHistory(originalSource.history);
+    const targetHistory = parseStoredHistory(localStorage.getItem(targetKeys.history));
+    writeVerifiedLocalJson(targetKeys.history, mergeHistoryCollections(sourceHistory, targetHistory));
+  }
+
+  if (originalSource.vocabulary) {
+    const source = JSON.parse(originalSource.vocabulary);
+    const targetRaw = localStorage.getItem(targetKeys.vocabulary);
+    const target = targetRaw ? JSON.parse(targetRaw) : null;
+    if (!target || Number(source.updatedAt || 0) > Number(target.updatedAt || 0)) {
+      writeVerifiedLocalJson(targetKeys.vocabulary, source);
+    }
+  }
+
+  if (originalSource.vocabularyReview && !localStorage.getItem(targetKeys.vocabularyReview)) {
+    writeVerifiedLocalJson(targetKeys.vocabularyReview, JSON.parse(originalSource.vocabularyReview));
+  }
+
+  if (originalSource.errorReview) {
+    const source = JSON.parse(originalSource.errorReview);
+    const targetRaw = localStorage.getItem(targetKeys.errorReview);
+    const target = targetRaw ? JSON.parse(targetRaw) : null;
+    if (!target || Number(source.updatedAt || 0) > Number(target.updatedAt || 0)) {
+      writeVerifiedLocalJson(targetKeys.errorReview, source);
+    }
+  }
+
+  for (const [name, raw] of Object.entries(originalSource)) {
+    if (raw !== localStorage.getItem(sourceKeys[name])) {
+      throw new Error("Legacy local data changed during migration");
+    }
+  }
+
+  const markerPayload = {
+    version: 1,
+    legacyUserId,
+    neonUserId,
+    migratedAt: new Date().toISOString(),
+    sourcePreserved: true,
+    sourceFound: hasSource,
+    sourceChecksum: await sha256Hex(stableProfileJson(originalSource))
+  };
+  writeVerifiedLocalJson(targetKeys.migration, markerPayload);
+
+  try {
+    const legacySession = JSON.parse(localStorage.getItem(LEGACY_SUPABASE_SESSION_KEY) || "null");
+    const legacyEmail = String(legacySession?.user?.email || "").trim().toLowerCase();
+    if (!legacyEmail || legacyEmail === String(STATE.neonUserEmail || "").trim().toLowerCase()) {
+      localStorage.removeItem(LEGACY_SUPABASE_SESSION_KEY);
+    }
+  } catch (error) {
+    console.warn("Could not clear the obsolete session record", error);
+  }
+
+  if (hasSource) loadAccountLocalStorage();
+  saveConsolidatedAccountBackup();
+  return hasSource;
+}
+
 function getLearningStateUpdatedAt() {
   return Math.max(Number(STATE.vocabularyUpdatedAt) || 0, Number(STATE.errorReviewUpdatedAt) || 0);
 }
 
-function normalizeSupabaseUrl(value) {
-  return value.replace(/\/$/, "");
-}
-
-function loadSupabaseSession() {
-  try {
-    const raw = localStorage.getItem(SUPABASE_SESSION_KEY);
-    const session = raw ? JSON.parse(raw) : null;
-    if (!session || !session.access_token || !session.user) return null;
-
-    STATE.supabaseSession = session;
-    STATE.isAuthenticated = true;
-    STATE.supabaseUserEmail = session.user.email || "";
-    return session;
-  } catch (error) {
-    console.error("Failed to load Supabase session", error);
-    return null;
-  }
-}
-
-function saveSupabaseSession(session) {
-  const normalized = {
-    ...session,
-    expires_at: session.expires_at || Math.floor(Date.now() / 1000) + (session.expires_in || 3600)
-  };
-
-  STATE.supabaseSession = normalized;
-  STATE.isAuthenticated = true;
-  STATE.supabaseUserEmail = normalized.user?.email || "";
-  localStorage.setItem(SUPABASE_SESSION_KEY, JSON.stringify(normalized));
-}
-
-function clearSupabaseSession() {
-  STATE.supabaseSession = null;
-  STATE.isAuthenticated = false;
-  STATE.supabaseUserEmail = "";
-  localStorage.removeItem(SUPABASE_SESSION_KEY);
-}
-
-async function fetchSupabaseUser(accessToken) {
-  const response = await fetch(`${normalizeSupabaseUrl(SUPABASE_CONFIG.authUrl)}/user`, {
-    headers: {
-      apikey: SUPABASE_CONFIG.anonKey,
-      Authorization: `Bearer ${accessToken}`
-    }
-  });
-
-  const payload = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    throw new Error(payload.msg || payload.message || "Could not read Supabase user");
-  }
-
-  return payload;
-}
-
-async function consumeSupabaseRedirectSession() {
-  const hash = window.location.hash ? window.location.hash.slice(1) : "";
-  const params = new URLSearchParams(hash);
-  const accessToken = params.get("access_token");
-  const refreshToken = params.get("refresh_token");
-
-  if (!accessToken || !refreshToken) return false;
-
-  try {
-    const user = await fetchSupabaseUser(accessToken);
-    saveSupabaseSession({
-      access_token: accessToken,
-      refresh_token: refreshToken,
-      expires_in: Number(params.get("expires_in")) || 3600,
-      expires_at: Math.floor(Date.now() / 1000) + (Number(params.get("expires_in")) || 3600),
-      token_type: params.get("token_type") || "bearer",
-      user
+async function getNeonClient() {
+  if (neonClient) return neonClient;
+  if (!neonClientPromise) {
+    neonClientPromise = import(NEON_CONFIG.sdkUrl).then(({ createClient, SupabaseAuthAdapter }) => {
+      neonClient = createClient({
+        auth: {
+          url: NEON_CONFIG.authUrl,
+          adapter: SupabaseAuthAdapter()
+        },
+        dataApi: { url: NEON_CONFIG.dataApiUrl }
+      });
+      return neonClient;
     });
+  }
+  return neonClientPromise;
+}
 
-    window.history.replaceState(null, document.title, `${window.location.origin}${window.location.pathname}${window.location.search}`);
-    return true;
+function setNeonSession(session, user = session?.user) {
+  if (!session || !user) return false;
+  STATE.neonSession = { ...session, user };
+  STATE.isAuthenticated = true;
+  STATE.neonUserEmail = user.email || "";
+  return true;
+}
+
+function clearNeonSession() {
+  STATE.neonSession = null;
+  STATE.isAuthenticated = false;
+  STATE.neonUserEmail = "";
+}
+
+function getNeonErrorMessage(error, fallback) {
+  return error?.message || error?.error_description || fallback;
+}
+
+async function ensureNeonSession() {
+  try {
+    const client = await getNeonClient();
+    const { data, error } = await client.auth.getSession();
+    if (error || !data?.session) {
+      clearNeonSession();
+      return false;
+    }
+    return setNeonSession(data.session, data.user || data.session.user);
   } catch (error) {
-    console.warn("Could not consume Supabase redirect session", error);
+    clearNeonSession();
+    console.warn("Neon session unavailable", error);
     return false;
   }
 }
 
-async function supabaseAuthRequest(path, body) {
-  const response = await fetch(`${normalizeSupabaseUrl(SUPABASE_CONFIG.authUrl)}${path}`, {
+async function signInWithNeon(email, password) {
+  const client = await getNeonClient();
+  const { data, error } = await client.auth.signInWithPassword({ email, password });
+  if (error) throw new Error(getNeonErrorMessage(error, "Could not sign in."));
+  const sessionResult = data?.session ? { data: { session: data.session, user: data.user } } : await client.auth.getSession();
+  if (sessionResult.error || !sessionResult.data?.session) {
+    throw new Error(getNeonErrorMessage(sessionResult.error, "Could not start the session."));
+  }
+  setNeonSession(sessionResult.data.session, sessionResult.data.user || sessionResult.data.session.user);
+  return STATE.neonSession;
+}
+
+async function signUpWithNeon(email, password) {
+  const client = await getNeonClient();
+  const { data, error } = await client.auth.signUp({ email, password });
+  if (error) throw new Error(getNeonErrorMessage(error, "Could not create account."));
+  if (data?.session) setNeonSession(data.session, data.user || data.session.user);
+  return data || {};
+}
+
+async function signOutFromNeon() {
+  try {
+    const client = await getNeonClient();
+    await client.auth.signOut();
+  } finally {
+    clearNeonSession();
+  }
+}
+
+async function neonAuthEndpoint(path, body) {
+  const response = await fetch(`${NEON_CONFIG.authUrl}${path}`, {
     method: "POST",
-    headers: {
-      apikey: SUPABASE_CONFIG.anonKey,
-      Authorization: `Bearer ${SUPABASE_CONFIG.anonKey}`,
-      "Content-Type": "application/json"
-    },
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body)
   });
-
   const payload = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    throw new Error(payload.error_description || payload.msg || payload.message || "Supabase auth failed");
-  }
-
+  if (!response.ok) throw new Error(getNeonErrorMessage(payload, `Authentication request failed (${response.status})`));
   return payload;
 }
 
-async function signInWithSupabase(email, password) {
-  const session = await supabaseAuthRequest("/token?grant_type=password", { email, password });
-  saveSupabaseSession(session);
-  return session;
+async function requestNeonPasswordResetOtp(email) {
+  return neonAuthEndpoint("/email-otp/request-password-reset", { email });
 }
 
-async function signUpWithSupabase(email, password) {
-  const redirectTo = encodeURIComponent(SUPABASE_CONFIG.redirectUrl);
-  const session = await supabaseAuthRequest(`/signup?redirect_to=${redirectTo}`, { email, password });
-  if (session.access_token) saveSupabaseSession(session);
-  return session;
+async function resetNeonPasswordWithOtp(email, otp, password) {
+  return neonAuthEndpoint("/email-otp/reset-password", { email, otp, password });
 }
 
-async function refreshSupabaseSession() {
-  const session = STATE.supabaseSession || loadSupabaseSession();
-  if (!session?.refresh_token) return false;
-
-  try {
-    const refreshed = await supabaseAuthRequest("/token?grant_type=refresh_token", {
-      refresh_token: session.refresh_token
-    });
-    saveSupabaseSession(refreshed);
-    return true;
-  } catch (error) {
-    clearSupabaseSession();
-    return false;
-  }
+async function offerNeonPasswordRecovery(email) {
+  if (!window.confirm("Could not sign in. Send a password-reset code to this email?")) return false;
+  await requestNeonPasswordResetOtp(email);
+  const otp = window.prompt("Enter the password-reset code sent to your email:");
+  if (!otp) return false;
+  const password = window.prompt("Choose a new password (at least 8 characters):");
+  if (!password || password.length < 8) throw new Error("The new password must contain at least 8 characters.");
+  await resetNeonPasswordWithOtp(email, otp.trim(), password);
+  alert("Password updated. Sign in with your new password.");
+  return true;
 }
 
-async function ensureSupabaseSession() {
-  const session = STATE.supabaseSession || loadSupabaseSession();
-  if (!session) return false;
-
-  const expiresAt = Number(session.expires_at || 0);
-  const shouldRefresh = expiresAt > 0 && expiresAt < Math.floor(Date.now() / 1000) + 120;
-  if (!shouldRefresh) return true;
-
-  return refreshSupabaseSession();
-}
-
-async function supabaseRequest(path, options = {}, retry = true) {
-  const hasSession = await ensureSupabaseSession();
-  if (!hasSession) throw new Error("Sign in to sync your progress.");
-
-  const response = await fetch(`${normalizeSupabaseUrl(SUPABASE_CONFIG.restUrl)}${path}`, {
-    ...options,
-    headers: {
-      apikey: SUPABASE_CONFIG.anonKey,
-      Authorization: `Bearer ${STATE.supabaseSession.access_token}`,
-      ...(options.body ? { "Content-Type": "application/json" } : {}),
-      ...(options.headers || {})
-    }
-  });
-
-  if (response.status === 401 && retry && await refreshSupabaseSession()) {
-    return supabaseRequest(path, options, false);
-  }
-
-  const text = await response.text();
-  const payload = text ? JSON.parse(text) : null;
-
-  if (!response.ok) {
-    throw new Error(payload?.message || payload?.details || `Supabase request failed (${response.status})`);
-  }
-
-  return payload;
-}
-
-function historyItemToSupabaseRow(item) {
+function historyItemToNeonRow(item) {
   return {
     id: item.id,
-    user_id: STATE.supabaseSession.user.id,
+    user_id: STATE.neonSession.user.id,
     section: item.section,
     correct: Number(item.correct) || 0,
     total: Number(item.total) || 0,
@@ -597,7 +721,7 @@ function historyItemToSupabaseRow(item) {
   };
 }
 
-function supabaseRowToHistoryItem(row) {
+function neonRowToHistoryItem(row) {
   const answers = row.answers || {};
   const historyItem = {
     answers
@@ -618,15 +742,15 @@ function supabaseRowToHistoryItem(row) {
 }
 
 function getVocabularyStateRowId() {
-  const userId = STATE.supabaseSession?.user?.id;
-  return userId ? `${VOCABULARY_STATE_ID_PREFIX}${userId}` : "";
+  const userId = STATE.neonSession?.user?.id;
+  return STATE.remoteVocabularyStateId || (userId ? `${VOCABULARY_STATE_ID_PREFIX}${userId}` : "");
 }
 
-function vocabularyStateToSupabaseRow() {
+function vocabularyStateToNeonRow() {
   const updatedAt = getLearningStateUpdatedAt();
   return {
     id: getVocabularyStateRowId(),
-    user_id: STATE.supabaseSession.user.id,
+    user_id: STATE.neonSession.user.id,
     section: "writing",
     correct: 0,
     total: 1,
@@ -693,35 +817,41 @@ function applyRemoteErrorReviewState(row) {
   return true;
 }
 
-async function fetchSupabaseHistory() {
-  const rows = await supabaseRequest(
-    "/c2_attempts?select=id,section,correct,total,percentage,scale_score,answers,graded_states,attempted_at&order=attempted_at.asc"
-  );
-  return Array.isArray(rows) ? rows.filter(row => !isVocabularyStateRow(row)).map(supabaseRowToHistoryItem) : [];
+async function fetchNeonHistory() {
+  const client = await getNeonClient();
+  const { data, error } = await client
+    .from("c2_attempts")
+    .select("id,section,correct,total,percentage,scale_score,answers,graded_states,attempted_at")
+    .order("attempted_at", { ascending: true });
+  if (error) throw new Error(getNeonErrorMessage(error, "Could not read online history."));
+  return Array.isArray(data) ? data.filter(row => !isVocabularyStateRow(row)).map(neonRowToHistoryItem) : [];
 }
 
-async function fetchSupabaseVocabularyState() {
-  const rowId = getVocabularyStateRowId();
-  if (!rowId) return null;
-  const rows = await supabaseRequest(
-    `/c2_attempts?id=eq.${encodeURIComponent(rowId)}&select=id,answers,attempted_at&limit=1`
-  );
-  return Array.isArray(rows) ? rows[0] || null : null;
+async function fetchNeonVocabularyState() {
+  const client = await getNeonClient();
+  const { data, error } = await client
+    .from("c2_attempts")
+    .select("id,answers,attempted_at")
+    .order("attempted_at", { ascending: false });
+  if (error) throw new Error(getNeonErrorMessage(error, "Could not read online learning state."));
+  const row = Array.isArray(data) ? data.find(isVocabularyStateRow) || null : null;
+  if (row) STATE.remoteVocabularyStateId = row.id;
+  return row;
 }
 
 async function saveRemoteVocabularyState() {
   if (!STATE.isAuthenticated || !getVocabularyStateRowId()) return { online: false };
-  await supabaseRequest("/c2_attempts?on_conflict=id", {
-    method: "POST",
-    headers: { Prefer: "resolution=merge-duplicates,return=minimal" },
-    body: JSON.stringify([vocabularyStateToSupabaseRow()])
-  });
+  const client = await getNeonClient();
+  const { error } = await client
+    .from("c2_attempts")
+    .upsert(vocabularyStateToNeonRow(), { onConflict: "id" });
+  if (error) throw new Error(getNeonErrorMessage(error, "Could not save online learning state."));
   return { online: true };
 }
 
 async function hydrateRemoteHistory() {
   try {
-    const hasSession = await ensureSupabaseSession();
+    const hasSession = await ensureNeonSession();
 
     if (!hasSession) {
       STATE.syncStatus = "local";
@@ -732,10 +862,18 @@ async function hydrateRemoteHistory() {
     STATE.syncStatus = "syncing";
     STATE.syncMessage = "Syncing";
 
-    const [remoteHistory, remoteVocabularyState] = await Promise.all([
-      fetchSupabaseHistory(),
-      fetchSupabaseVocabularyState()
+    const client = await getNeonClient();
+    const [{ data: mappings, error: mappingError }, remoteHistory, remoteVocabularyState] = await Promise.all([
+      client
+        .from("c2_user_mappings")
+        .select("legacy_supabase_user_id")
+        .eq("neon_user_id", getAccountUserId()),
+      fetchNeonHistory(),
+      fetchNeonVocabularyState()
     ]);
+    if (mappingError) throw new Error(getNeonErrorMessage(mappingError, "Could not read the legacy account mapping."));
+    const legacyUserId = Array.isArray(mappings) ? mappings[0]?.legacy_supabase_user_id : "";
+    if (legacyUserId) await migrateLegacyAccountLocalStorage(String(legacyUserId));
     const migration = C2_STUDY_REVIEW.migrateHistoryStudyData(
       mergeHistoryCollections(remoteHistory, STATE.history),
       C2_EXAM_METADATA
@@ -771,32 +909,33 @@ async function hydrateRemoteHistory() {
   } catch (error) {
     STATE.syncStatus = "local";
     STATE.syncMessage = "Local backup";
-    console.warn("Supabase sync unavailable", error);
+    console.warn("Neon sync unavailable", error);
   }
 }
 
 async function saveRemoteHistory(mode = "merge") {
   if (mode === "replace") {
-    await supabaseRequest(`/c2_attempts?user_id=eq.${encodeURIComponent(STATE.supabaseSession.user.id)}`, {
-      method: "DELETE"
-    });
+    const client = await getNeonClient();
+    const { error } = await client
+      .from("c2_attempts")
+      .delete()
+      .eq("user_id", STATE.neonSession.user.id);
+    if (error) throw new Error(getNeonErrorMessage(error, "Could not replace online history."));
   }
 
   if (STATE.history.length > 0) {
-    await supabaseRequest("/c2_attempts?on_conflict=id", {
-      method: "POST",
-      headers: {
-        Prefer: "resolution=merge-duplicates,return=minimal"
-      },
-      body: JSON.stringify(STATE.history.map(historyItemToSupabaseRow))
-    });
+    const client = await getNeonClient();
+    const { error } = await client
+      .from("c2_attempts")
+      .upsert(STATE.history.map(historyItemToNeonRow), { onConflict: "id" });
+    if (error) throw new Error(getNeonErrorMessage(error, "Could not save online history."));
   }
 
   if (getLearningStateUpdatedAt() > 0) {
     await saveRemoteVocabularyState();
   }
 
-  const history = await fetchSupabaseHistory();
+  const history = await fetchNeonHistory();
   STATE.history = mergeHistoryCollections(history);
   saveLocalStorage();
   return { history };
@@ -4763,7 +4902,7 @@ function openProfileModalView() {
     ? "Supabase sync active"
     : "Public demo";
   const accountDetail = STATE.isAuthenticated
-    ? `Signed in as ${escapeHTML(STATE.supabaseUserEmail || "your account")}. This private workspace is saved online.`
+    ? `Signed in as ${escapeHTML(STATE.neonUserEmail || "your account")}. This private workspace is saved online.`
     : "Create an account or sign in to leave the public example and open your own private workspace.";
 
   modal.innerHTML = `
@@ -4771,7 +4910,7 @@ function openProfileModalView() {
       <div class="modal-header">
         <div>
           <span class="eyebrow">Your workspace</span>
-          <h3 class="modal-title">${STATE.isAuthenticated ? escapeHTML(STATE.supabaseUserEmail || "My account") : "Start from zero"}</h3>
+          <h3 class="modal-title">${STATE.isAuthenticated ? escapeHTML(STATE.neonUserEmail || "My account") : "Start from zero"}</h3>
         </div>
         <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
       </div>
@@ -4830,13 +4969,18 @@ async function loginOwnerFromModal() {
   }
 
   try {
-    await signInWithSupabase(email, password);
+    await signInWithNeon(email, password);
     activateAccountWorkspace();
     await hydrateRemoteHistory();
     closeModal();
     refreshCurrentView();
   } catch (error) {
-    alert(error.message || "Could not sign in.");
+    try {
+      const recoveryStarted = await offerNeonPasswordRecovery(email);
+      if (!recoveryStarted) alert(error.message || "Could not sign in.");
+    } catch (recoveryError) {
+      alert(recoveryError.message || error.message || "Could not sign in.");
+    }
     if (button) {
       button.disabled = false;
       button.textContent = "Sign in";
@@ -4858,8 +5002,8 @@ async function signUpOwnerFromModal() {
   }
 
   try {
-    const session = await signUpWithSupabase(email, password);
-    if (session.access_token) {
+    const session = await signUpWithNeon(email, password);
+    if (session.session || STATE.isAuthenticated) {
       activateAccountWorkspace();
       await hydrateRemoteHistory();
       closeModal();
@@ -4881,7 +5025,7 @@ async function signUpOwnerFromModal() {
 }
 
 async function logoutOwnerFromModal() {
-  clearSupabaseSession();
+  await signOutFromNeon();
   activateDemoWorkspace();
   closeModal();
   renderHome();
@@ -7090,7 +7234,16 @@ function clearRegisteredDataFromLocalStorage() {
     LOCAL_VOCABULARY_REVIEW_KEY,
     LOCAL_ERROR_REVIEW_KEY
   ];
-  if (getAccountUserId()) keys.push(...Object.values(getAccountStorageKeys()));
+  if (getAccountUserId()) {
+    const accountKeys = getAccountStorageKeys();
+    keys.push(
+      accountKeys.history,
+      accountKeys.vocabulary,
+      accountKeys.vocabularyReview,
+      accountKeys.errorReview,
+      accountKeys.complete
+    );
+  }
   keys.forEach(key => localStorage.removeItem(key));
 }
 
@@ -7106,15 +7259,18 @@ async function resetAllRegisteredData() {
   resetRegisteredDataState();
   closeAllModals();
 
-  const userId = STATE.supabaseSession?.user?.id;
+  const userId = STATE.neonSession?.user?.id;
   let resetWarning = "";
   if (STATE.isAuthenticated && userId) {
     try {
       STATE.syncStatus = "syncing";
       STATE.syncMessage = "Clearing registered data";
-      await supabaseRequest(`/c2_attempts?user_id=eq.${encodeURIComponent(userId)}`, {
-        method: "DELETE"
-      });
+      const client = await getNeonClient();
+      const { error } = await client
+        .from("c2_attempts")
+        .delete()
+        .eq("user_id", userId);
+      if (error) throw new Error(getNeonErrorMessage(error, "Could not clear online data."));
       STATE.syncStatus = "synced";
       STATE.syncMessage = "All registered data cleared";
     } catch (error) {

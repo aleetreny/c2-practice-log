@@ -1,0 +1,21 @@
+{
+  "attemptCount": 85,
+  "checksum": "844cdf9e79d9704e60d150838fa79d72c4daed313a58139e1b64db99ebfb79ef",
+  "files": {
+    "history.json": "541856832b7c763b3d852dc065c631dedd4828d461ef12d37a54dd61e4e9b1d2",
+    "latest.json": "3eaefe54c7ddddd121d974e20bb02eef54da1cdfff0da579cb667fb04ce6fd88",
+    "review-state.json": "18a8420b3c46c82e164701fe75246220987fb1489a02fb3e5a5b6e731f1fb2c8",
+    "vocabulary.json": "e09454958bcf3b2b0e77f8355eb73c7686fffcb9278155b53e3bb7661724009f"
+  },
+  "generatedAt": "2026-07-16T10:07:02.223Z",
+  "profile": "Aleetreny",
+  "sections": {
+    "listening": 17,
+    "reading": 12,
+    "useOfEnglish": 44,
+    "writing": 12
+  },
+  "source": "Neon",
+  "version": 1,
+  "vocabularyCount": 15
+}

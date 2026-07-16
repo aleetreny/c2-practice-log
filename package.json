@@ -4,7 +4,7 @@
   "description": "Cambridge C2 exam simulator and tracker with real Use of English, Reading, Listening and Writing banks.",
   "private": true,
   "scripts": {
-    "check": "node --check app.js && node --check exam-bank.js && node --check exam-bank-data.js && node --check demo-data.js && node --check vocabulary-data.js && node --check writing-data.js && node --check study-review-data.js && node --check attempt-data.js && node --check scripts/build-exam-bank-data.js && node --check scripts/build-vocabulary-data.js && node --check scripts/enrich-vocabulary.js && node --check scripts/fill-dictionary-examples.js && node --check scripts/apply-manual-examples.js && node --check scripts/audit-exam-bank.js && node --check scripts/audit-vocabulary.js && node --check scripts/audit-writing-data.js && node --check scripts/audit-study-review.js && node --check scripts/audit-partial-practice.js && node --check scripts/audit-error-log-ui.js && node --check scripts/audit-public-demo.js && node scripts/audit-exam-bank.js && node scripts/audit-vocabulary.js && node scripts/audit-writing-data.js && node scripts/audit-study-review.js && node scripts/audit-partial-practice.js && node scripts/audit-error-log-ui.js && node scripts/audit-public-demo.js",
+    "check": "node --check app.js && node --check exam-bank.js && node --check exam-bank-data.js && node --check demo-data.js && node --check vocabulary-data.js && node --check writing-data.js && node --check study-review-data.js && node --check attempt-data.js && node --check scripts/build-exam-bank-data.js && node --check scripts/build-vocabulary-data.js && node --check scripts/enrich-vocabulary.js && node --check scripts/fill-dictionary-examples.js && node --check scripts/apply-manual-examples.js && node --check scripts/export-public-profile.js && node --check scripts/migrate-supabase-export-to-neon.js && node --check scripts/neon-data-utils.js && node --check scripts/restore-public-profile.js && node --check scripts/verify-neon-rls.js && node --check scripts/audit-exam-bank.js && node --check scripts/audit-vocabulary.js && node --check scripts/audit-writing-data.js && node --check scripts/audit-study-review.js && node --check scripts/audit-partial-practice.js && node --check scripts/audit-error-log-ui.js && node --check scripts/audit-public-demo.js && node --check scripts/audit-neon-migration.js && node scripts/audit-exam-bank.js && node scripts/audit-vocabulary.js && node scripts/audit-writing-data.js && node scripts/audit-study-review.js && node scripts/audit-partial-practice.js && node scripts/audit-error-log-ui.js && node scripts/audit-public-demo.js && node scripts/audit-neon-migration.js && node scripts/restore-public-profile.js --validate",
     "build:exam-bank": "node scripts/build-exam-bank-data.js",
     "audit:exam-bank": "node scripts/audit-exam-bank.js",
     "audit:vocabulary": "node scripts/audit-vocabulary.js",
@@ -12,10 +12,18 @@
     "audit:study-review": "node scripts/audit-study-review.js",
     "audit:partial-practice": "node scripts/audit-partial-practice.js",
     "audit:error-log-ui": "node scripts/audit-error-log-ui.js",
-    "audit:public-demo": "node scripts/audit-public-demo.js"
+    "audit:public-demo": "node scripts/audit-public-demo.js",
+    "audit:neon": "node scripts/audit-neon-migration.js",
+    "backup:public-profile": "node scripts/export-public-profile.js",
+    "backup:validate": "node scripts/restore-public-profile.js --validate",
+    "restore:public-profile": "node scripts/restore-public-profile.js",
+    "test:neon-rls": "node scripts/verify-neon-rls.js"
   },
   "license": "MIT",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "1.1.0"
   }
 }
