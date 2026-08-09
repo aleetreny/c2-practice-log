@@ -1,0 +1,274 @@
+{
+  "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+  "notes": [
+    "Tests 24 and 25 are intentionally omitted because they are incomplete.",
+    "playlist_position is 1-based, as shown by YouTube.",
+    "api_index is 0-based and must be passed to cuePlaylist/loadPlaylist."
+  ],
+  "tests": [
+    {
+      "test": 1,
+      "title": "C2 Proficiency Listening Test 1",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 35,
+      "api_index": 34,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 2,
+      "title": "C2 Proficiency Listening Test 2",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 34,
+      "api_index": 33,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 3,
+      "title": "C2 Proficiency Listening Test 3",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 33,
+      "api_index": 32,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 4,
+      "title": "C2 Proficiency Listening Test 4",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 32,
+      "api_index": 31,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 5,
+      "title": "C2 Proficiency Listening Test 5",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 31,
+      "api_index": 30,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 6,
+      "title": "C2 Proficiency Listening Test 6",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 30,
+      "api_index": 29,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 7,
+      "title": "C2 Proficiency Listening Test 7",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 29,
+      "api_index": 28,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 8,
+      "title": "C2 Proficiency Listening Test 8",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 28,
+      "api_index": 27,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 9,
+      "title": "C2 Proficiency Listening Test 9",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 27,
+      "api_index": 26,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 10,
+      "title": "C2 Proficiency Listening Test 10",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 26,
+      "api_index": 25,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 11,
+      "title": "C2 Proficiency Listening Test 11",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 25,
+      "api_index": 24,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 12,
+      "title": "C2 Proficiency Listening Test 12",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 24,
+      "api_index": 23,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 13,
+      "title": "C2 Proficiency Listening Test 13",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 23,
+      "api_index": 22,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 14,
+      "title": "C2 Proficiency Listening Test 14",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 22,
+      "api_index": 21,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 15,
+      "title": "C2 Proficiency Listening Test 15",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 21,
+      "api_index": 20,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 16,
+      "title": "C2 Proficiency Listening Test 16",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 20,
+      "api_index": 19,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 17,
+      "title": "C2 Proficiency Listening Test 17",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 19,
+      "api_index": 18,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 18,
+      "title": "C2 Proficiency Listening Test 18",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 18,
+      "api_index": 17,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 19,
+      "title": "C2 Proficiency Listening Test 19",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 17,
+      "api_index": 16,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 20,
+      "title": "C2 Proficiency Listening Test 20",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 16,
+      "api_index": 15,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 21,
+      "title": "C2 Proficiency Listening Test 21",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 15,
+      "api_index": 14,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 22,
+      "title": "C2 Proficiency Listening Test 22",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 14,
+      "api_index": 13,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 23,
+      "title": "C2 Proficiency Listening Test 23",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 13,
+      "api_index": 12,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 26,
+      "title": "C2 Proficiency Listening Test 26",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 10,
+      "api_index": 9,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 27,
+      "title": "C2 Proficiency Listening Test 27",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 9,
+      "api_index": 8,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 28,
+      "title": "C2 Proficiency Listening Test 28",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 8,
+      "api_index": 7,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 29,
+      "title": "C2 Proficiency Listening Test 29",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 7,
+      "api_index": 6,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 30,
+      "title": "C2 Proficiency Listening Test 30",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 6,
+      "api_index": 5,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 31,
+      "title": "C2 Proficiency Listening Test 31",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 5,
+      "api_index": 4,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 32,
+      "title": "C2 Proficiency Listening Test 32",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 4,
+      "api_index": 3,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 33,
+      "title": "C2 Proficiency Listening Test 33",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 3,
+      "api_index": 2,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 34,
+      "title": "C2 Proficiency Listening Test 34",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 2,
+      "api_index": 1,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    },
+    {
+      "test": 35,
+      "title": "C2 Proficiency Listening Test 35",
+      "playlist_id": "PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL",
+      "playlist_position": 1,
+      "api_index": 0,
+      "playlist_url": "https://www.youtube.com/playlist?list=PL1VgFeDQB-hD8LMDsiJ5Oa7v-BEJAi7nL"
+    }
+  ]
+}
