@@ -122,16 +122,16 @@ The public demo works locally. Account authentication is intentionally limited t
 
 ## Rebuilding the exam bank
 
-The original Markdown imports are intentionally ignored by Git. The generated, browser-ready `exam-bank-data.js` is committed and deterministic.
+The original Markdown and JSON imports are kept under `source-material/`. The generated, browser-ready `exam-bank-data.js` is committed and deterministic.
 
-To regenerate it, place these files at the repository root:
+The source files are included in this repository, so a fresh clone can regenerate the bank directly:
 
 ```text
-cambridge_c2_reading_12_tests_polished.md
-c2_listening_youtube_embeds_corrected.md
-c2_listening_playlist_indexes.json
-C2_Proficiency_Writing_Practice_Bank.md
-C2_Writing_Part_1_Practice_4_Tests.md
+source-material/cambridge_c2_reading_12_tests_polished.md
+source-material/c2_listening_youtube_embeds_corrected.md
+source-material/c2_listening_playlist_indexes.json
+source-material/C2_Proficiency_Writing_Practice_Bank.md
+source-material/C2_Writing_Part_1_Practice_4_Tests.md
 ```
 
 Use of English and the first 11 Reading Part 1 sources are recovered from the sanitised `demo-data.js` snapshot, which remains committed because it also powers the public demo. The final corrected Part 1 source is stored separately in `data/reading-part1-test12.json`; candidate answers and account data are excluded.
@@ -207,6 +207,7 @@ study-review-data.js          Review selection and study-data migration
 vocabulary-data.js            Built-in vocabulary bank
 writing-data.js               Writing lab content
 styles.css                    Core responsive application styles
+source-material/              Versioned source imports for rebuilding the exam bank
 neon/schema.sql               Repeatable Neon schema, grants and forced RLS policies
 public-profile-backup/        Sanitised, checksummed owner-profile backup
 .github/workflows/public-profile-backup.yml  Weekly and on-demand backup automation

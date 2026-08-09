@@ -4,11 +4,12 @@ const crypto = require("node:crypto");
 const vm = require("node:vm");
 
 const ROOT = path.resolve(__dirname, "..");
-const READING_SOURCE = path.join(ROOT, "cambridge_c2_reading_12_tests_polished.md");
-const LISTENING_SOURCE = path.join(ROOT, "c2_listening_youtube_embeds_corrected.md");
-const LISTENING_INDEX_SOURCE = path.join(ROOT, "c2_listening_playlist_indexes.json");
-const WRITING_SOURCE = path.join(ROOT, "C2_Proficiency_Writing_Practice_Bank.md");
-const WRITING_EXTRA_SOURCE = path.join(ROOT, "C2_Writing_Part_1_Practice_4_Tests.md");
+const SOURCE_DIR = path.join(ROOT, "source-material");
+const READING_SOURCE = path.join(SOURCE_DIR, "cambridge_c2_reading_12_tests_polished.md");
+const LISTENING_SOURCE = path.join(SOURCE_DIR, "c2_listening_youtube_embeds_corrected.md");
+const LISTENING_INDEX_SOURCE = path.join(SOURCE_DIR, "c2_listening_playlist_indexes.json");
+const WRITING_SOURCE = path.join(SOURCE_DIR, "C2_Proficiency_Writing_Practice_Bank.md");
+const WRITING_EXTRA_SOURCE = path.join(SOURCE_DIR, "C2_Writing_Part_1_Practice_4_Tests.md");
 const DEMO_SOURCE = path.join(ROOT, "demo-data.js");
 const READING_PART1_EXTRA_SOURCE = path.join(ROOT, "data", "reading-part1-test12.json");
 const LISTENING_ANSWERS_SOURCE = path.join(ROOT, "data", "listening-answers.json");
