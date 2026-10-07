@@ -23,7 +23,7 @@ assert.match(app, /key: "lang", label: "Language"/);
 assert.match(examBank, /getActiveExamBankWritingTask/);
 assert.match(index, /writing-feedback-config\.js/);
 assert.match(index, /styles\.css\?v=claude-writing-feedback-1/);
-assert.match(config, /C2_WRITING_FEEDBACK_API_URL = ""/);
+assert.match(config, /^window\.C2_WRITING_FEEDBACK_API_URL = "https:\/\/[a-z0-9.-]+\.workers\.dev\/api\/writing-feedback";$/im);
 
 for (const frontend of [app, index, config]) {
   assert.doesNotMatch(frontend, /ANTHROPIC_API_KEY|x-api-key|api\.anthropic\.com/i, "Anthropic credentials and API calls stay server-side");
