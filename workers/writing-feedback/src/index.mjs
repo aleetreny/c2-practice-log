@@ -1,7 +1,7 @@
 const API_PATH = "/api/writing-feedback";
 const ANTHROPIC_MESSAGES_URL = "https://api.anthropic.com/v1/messages";
 const ANTHROPIC_VERSION = "2023-06-01";
-const DEFAULT_MODEL = "claude-sonnet-5";
+const DEFAULT_MODEL = "claude-sonnet-5-5";
 const MAX_REQUEST_BYTES = 32 * 1024;
 const MAX_ANSWER_CHARS = 6000;
 const MAX_TASK_PROMPT_CHARS = 10000;
