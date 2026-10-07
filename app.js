@@ -56,6 +56,10 @@ const STATE = {
   writingGenre: "report",
   writingToolkitTab: "situations",
   writingToolkitGroup: "compare",
+  writingAiFeedback: {},
+  writingAiLoading: {},
+  writingAiErrors: {},
+  writingAiRequestVersions: {},
   examBankCollection: "reading",
   examBankSession: null,
   examBankUseOfEnglishFilter: "full",
@@ -5053,6 +5057,35 @@ function getWritingCorrectionNotes(item = {}) {
   return getPlainObject(meta.writingCorrectionNotes);
 }
 
+function getWritingAiFeedback(item = {}) {
+  const answers = getPlainObject(item.answers);
+  const meta = getPlainObject(answers.meta);
+  return getPlainObject(meta.writingAiFeedback);
+}
+
+function renderWritingHistoryAiFeedbackHTML(entry) {
+  const assessment = getPlainObject(entry?.assessment);
+  if (Object.keys(getPlainObject(assessment.criteria)).length === 0) return "";
+  const task = getPlainObject(entry?.task);
+  const sources = Array.isArray(task.sourceTexts) ? task.sourceTexts : [];
+  const taskHTML = task.prompt || sources.length ? `
+    <details class="history-writing-ai-task">
+      <summary>Task context used for this estimate</summary>
+      ${task.prompt ? `<div>${renderWritingFeedbackMarkdown(task.prompt)}</div>` : ""}
+      ${sources.map(source => `
+        <section><strong>${escapeHTML(source.title || "Source text")}</strong>${renderWritingFeedbackMarkdown(source.text || "")}</section>
+      `).join("")}
+    </details>
+  ` : "";
+  return `
+    <details class="history-writing-ai-feedback">
+      <summary>View Claude feedback estimate · not an official Cambridge grade</summary>
+      ${taskHTML}
+      ${renderWritingAiAssessmentHTML(assessment)}
+    </details>
+  `;
+}
+
 function getWritingPartScore(criteria) {
   if (!criteria) return null;
   return WRITING_CRITERIA.reduce((sum, criterion) => sum + (Number(criteria[criterion.key]) || 0), 0);
@@ -5116,12 +5149,13 @@ function renderWritingHistoryPartHTML(item, partKey, editMode = false) {
   const correctionText = typeof correctionNotes[partKey] === "string"
     ? correctionNotes[partKey].trim()
     : "";
+  const aiFeedback = getWritingAiFeedback(item)[partKey];
   const examBankMeta = getExamBankAttemptMeta(item);
   const savedPrompt = typeof examBankMeta?.prompts?.[partKey] === "string"
     ? examBankMeta.prompts[partKey].trim()
     : "";
 
-  if (!criteria && !responseText && !correctionText) return "";
+  if (!criteria && !responseText && !correctionText && !aiFeedback) return "";
 
   const title = partKey === "part1"
     ? "Part 1 - Compulsory Essay"
@@ -5159,6 +5193,7 @@ function renderWritingHistoryPartHTML(item, partKey, editMode = false) {
       ${savedPrompt ? `<details class="history-writing-bank-prompt"><summary>View exam task</summary><div>${renderWritingFeedbackMarkdown(savedPrompt)}</div></details>` : ""}
       ${editorHTML}
       <div class="history-writing-response">${responseText ? escapeHTML(responseText) : "No text saved"}</div>
+      ${aiFeedback ? renderWritingHistoryAiFeedbackHTML(aiFeedback) : ""}
       ${!editMode && correctionText ? `
         <div class="history-writing-correction">
           <strong>Correction feedback</strong>
@@ -5639,6 +5674,10 @@ function openAnswerSheet(section, options = {}) {
   STATE.readingPartTexts = {};
   STATE.isCorrecting = false;
   STATE.isSavingAttempt = false;
+  STATE.writingAiFeedback = {};
+  STATE.writingAiLoading = {};
+  STATE.writingAiErrors = {};
+  STATE.writingAiRequestVersions = {};
   if (STATE.examBankSession?.section === "writing" && STATE.examBankSession.part2Task?.type) {
     STATE.answers.part2Type = STATE.examBankSession.part2Task.type;
   }
@@ -5666,8 +5705,10 @@ function renderAnswerSheetHTML() {
       <div style="background-color:#fafafa; border:1px solid var(--border-color); border-radius:8px; padding:1.25rem; margin-bottom:1.5rem;">
         <h3 style="font-size:1rem; font-weight:700; margin-bottom:0.75rem; color:var(--accent-color);">Writing Part 1: Compulsory Essay (240 - 280 words)</h3>
         ${bankContext && typeof renderActiveExamBankWritingPromptHTML === "function" ? renderActiveExamBankWritingPromptHTML("part1") : ""}
-        <textarea class="writing-sheet-textarea" id="writing-textarea-part1" placeholder="Write your essay here..." oninput="trackSectionWritingWordCount('part1', this.value); updateWritingAssessmentPrompt()" style="height:180px;"></textarea>
+        ${!bankContext ? renderWritingTaskContextInputHTML("part1") : ""}
+        <textarea class="writing-sheet-textarea" id="writing-textarea-part1" placeholder="Write your essay here..." oninput="handleWritingDraftChange('part1')" style="height:180px;"></textarea>
         <div class="writing-word-badge under" id="writing-count-part1" style="margin-top:0.5rem;">0 words</div>
+        ${renderWritingAiActionHTML("part1")}
       </div>
 
       <!-- PART 2 WRITING -->
@@ -5676,14 +5717,16 @@ function renderAnswerSheetHTML() {
           <h3 style="font-size:1rem; font-weight:700; color:var(--accent-color);">Writing Part 2: Optional Writing (280 - 320 words)</h3>
           ${bankContext ? `<span class="exam-bank-writing-type">${escapeHTML(bankContext.part2Task.label)}</span>` : `<label class="writing-type-control">
             <span>Text type</span>
-            <select id="writing-part2-type" onchange="storeWritingPart2Type(this.value); updateWritingAssessmentPrompt()">
+            <select id="writing-part2-type" onchange="handleWritingPart2TypeChange(this.value)">
               ${getWritingPart2TypeOptionsHTML()}
             </select>
           </label>`}
         </div>
         ${bankContext && typeof renderActiveExamBankWritingPromptHTML === "function" ? renderActiveExamBankWritingPromptHTML("part2") : ""}
-        <textarea class="writing-sheet-textarea" id="writing-textarea-part2" placeholder="Write your article/report/review/email here..." oninput="trackSectionWritingWordCount('part2', this.value); updateWritingAssessmentPrompt()" style="height:180px;"></textarea>
+        ${!bankContext ? renderWritingTaskContextInputHTML("part2") : ""}
+        <textarea class="writing-sheet-textarea" id="writing-textarea-part2" placeholder="Write your article/report/review/email here..." oninput="handleWritingDraftChange('part2')" style="height:180px;"></textarea>
         <div class="writing-word-badge under" id="writing-count-part2" style="margin-top:0.5rem;">0 words</div>
+        ${renderWritingAiActionHTML("part2")}
       </div>` : ""}
 
       ${renderWritingPromptPanelHTML()}
@@ -6537,6 +6580,276 @@ function storeWritingPart2Type(value) {
   STATE.answers.part2Type = value;
 }
 
+function renderWritingTaskContextInputHTML(partKey) {
+  const partName = partKey === "part1" ? "Part 1" : "Part 2";
+  return `
+    <details class="writing-task-context" id="writing-task-context-details-${partKey}">
+      <summary>Add the task prompt and source texts</summary>
+      <div>
+        <label for="writing-task-context-${partKey}">${partName} task context</label>
+        <textarea id="writing-task-context-${partKey}" maxlength="10000"
+          oninput="handleWritingTaskContextChange('${partKey}')"
+          placeholder="Paste the full task prompt here, including any source texts relevant to your answer."></textarea>
+        <small>AI feedback uses this context to assess Content and Communicative Achievement.</small>
+      </div>
+    </details>
+  `;
+}
+
+function renderWritingAiActionHTML(partKey) {
+  const partName = partKey === "part1" ? "Part 1" : "Part 2";
+  return `
+    <div class="writing-ai-actions">
+      <button type="button" class="btn btn-secondary" id="writing-ai-button-${partKey}"
+        aria-controls="writing-ai-feedback-${partKey}" onclick="requestWritingAiFeedback('${partKey}')" disabled>
+        Get AI feedback
+      </button>
+      <span>Estimate only · not an official Cambridge grade</span>
+    </div>
+    <div class="writing-ai-feedback-slot" id="writing-ai-feedback-${partKey}" aria-live="polite"
+      aria-label="${partName} AI feedback"></div>
+  `;
+}
+
+function getWritingTaskContext(partKey) {
+  if (typeof getActiveExamBankWritingTask === "function") {
+    const bankTask = getActiveExamBankWritingTask(partKey);
+    if (bankTask) return bankTask;
+  }
+
+  const taskTextarea = document.getElementById(`writing-task-context-${partKey}`);
+  const wordRange = C2_EXAM_METADATA.writing.parts[partKey];
+  return {
+    type: partKey === "part1" ? "essay" : getWritingPart2Type(),
+    prompt: taskTextarea?.value.trim() || "",
+    sourceTexts: [],
+    targetWordRange: { min: wordRange.minW, max: wordRange.maxW }
+  };
+}
+
+function getWritingAiRequestSignature(partKey, answer = getWritingTextValue(partKey), task = getWritingTaskContext(partKey)) {
+  return JSON.stringify({ part: partKey, answer, task });
+}
+
+function updateWritingAiButton(partKey) {
+  const button = document.getElementById(`writing-ai-button-${partKey}`);
+  if (!button) return;
+  const answerExists = getWritingTextValue(partKey).length > 0;
+  const isLoading = Boolean(STATE.writingAiLoading[partKey]);
+  button.disabled = !answerExists || isLoading;
+  if (isLoading) button.textContent = "Getting feedback…";
+  else if (STATE.writingAiErrors[partKey]) button.textContent = "Try again";
+  else if (STATE.writingAiFeedback[partKey]) button.textContent = "Refresh AI feedback";
+  else button.textContent = "Get AI feedback";
+}
+
+function setWritingAiStatus(partKey, message, status = "info") {
+  const slot = document.getElementById(`writing-ai-feedback-${partKey}`);
+  if (!slot) return;
+  slot.className = `writing-ai-feedback-slot ${status}`;
+  slot.replaceChildren();
+  if (!message) return;
+  const paragraph = document.createElement("p");
+  paragraph.setAttribute("role", status === "error" ? "alert" : "status");
+  paragraph.textContent = message;
+  slot.appendChild(paragraph);
+}
+
+function invalidateWritingAiFeedback(partKey) {
+  const hadAssessment = Boolean(STATE.writingAiFeedback[partKey]);
+  const wasLoading = Boolean(STATE.writingAiLoading[partKey]);
+  if (!hadAssessment && !wasLoading) return;
+
+  STATE.writingAiRequestVersions[partKey] = (STATE.writingAiRequestVersions[partKey] || 0) + 1;
+  STATE.writingAiLoading[partKey] = false;
+  STATE.writingAiErrors[partKey] = false;
+  delete STATE.writingAiFeedback[partKey];
+  setWritingAiStatus(partKey, "Your response or task changed. Request fresh AI feedback before using these scores.", "stale");
+  updateWritingAiButton(partKey);
+}
+
+function handleWritingDraftChange(partKey) {
+  invalidateWritingAiFeedback(partKey);
+  trackSectionWritingWordCount(partKey, document.getElementById(`writing-textarea-${partKey}`)?.value || "");
+  updateWritingAssessmentPrompt();
+  updateWritingAiButton(partKey);
+}
+
+function handleWritingTaskContextChange(partKey) {
+  invalidateWritingAiFeedback(partKey);
+  updateWritingAssessmentPrompt();
+  updateWritingAiButton(partKey);
+}
+
+function handleWritingPart2TypeChange(value) {
+  invalidateWritingAiFeedback("part2");
+  storeWritingPart2Type(value);
+  updateWritingAssessmentPrompt();
+}
+
+function normalizeWritingAiAssessment(value) {
+  if (!value || typeof value !== "object" || Array.isArray(value) || !value.criteria || typeof value.criteria !== "object") return null;
+  const criteria = {};
+  for (const criterion of WRITING_CRITERIA) {
+    const result = value.criteria[criterion.key];
+    if (!result || !Number.isInteger(result.score) || result.score < 0 || result.score > 5 || typeof result.feedback !== "string") return null;
+    criteria[criterion.key] = { score: result.score, feedback: result.feedback.slice(0, 900) };
+  }
+
+  const isStringList = items => Array.isArray(items) && items.length <= 3 && items.every(item => typeof item === "string");
+  if (typeof value.overallFeedback !== "string" || !isStringList(value.strengths) || !isStringList(value.improvements)) return null;
+  if (!Array.isArray(value.errors) || value.errors.length > 6 || !value.errors.every(error => error &&
+    typeof error.original === "string" && typeof error.suggestion === "string" && typeof error.explanation === "string")) return null;
+
+  return {
+    criteria,
+    overallFeedback: value.overallFeedback.slice(0, 1400),
+    strengths: value.strengths.map(item => item.slice(0, 500)),
+    improvements: value.improvements.map(item => item.slice(0, 500)),
+    errors: value.errors.map(error => ({
+      original: error.original.slice(0, 240),
+      suggestion: error.suggestion.slice(0, 240),
+      explanation: error.explanation.slice(0, 700)
+    }))
+  };
+}
+
+function renderWritingAiAssessmentHTML(assessment) {
+  const criteriaHTML = WRITING_CRITERIA.map(criterion => {
+    const result = assessment.criteria[criterion.key];
+    return `
+      <article class="writing-ai-criterion">
+        <div><h5>${escapeHTML(criterion.label)}</h5><strong>${result.score}<span> / 5</span></strong></div>
+        <p>${escapeHTML(result.feedback)}</p>
+      </article>
+    `;
+  }).join("");
+  const listHTML = (heading, items, className) => items.length ? `
+    <section class="writing-ai-list ${className}">
+      <h5>${heading}</h5>
+      <ul>${items.map(item => `<li>${escapeHTML(item)}</li>`).join("")}</ul>
+    </section>
+  ` : "";
+  const errorsHTML = assessment.errors.length ? `
+    <section class="writing-ai-errors">
+      <h5>Language corrections</h5>
+      <ul>${assessment.errors.map(error => `
+        <li>
+          <span>${escapeHTML(error.original)}</span>
+          <strong>${escapeHTML(error.suggestion)}</strong>
+          <small>${escapeHTML(error.explanation)}</small>
+        </li>
+      `).join("")}</ul>
+    </section>
+  ` : "";
+
+  return `
+    <section class="writing-ai-card">
+      <header class="writing-ai-card-head">
+        <div><span class="eyebrow">Claude feedback · estimate</span><h4>Cambridge C2 criteria</h4></div>
+        <span>Not an official Cambridge grade</span>
+      </header>
+      <div class="writing-ai-criteria">${criteriaHTML}</div>
+      <section class="writing-ai-overall"><h5>Overall feedback</h5><p>${escapeHTML(assessment.overallFeedback)}</p></section>
+      <div class="writing-ai-lists">
+        ${listHTML("What is working", assessment.strengths, "strengths")}
+        ${listHTML("Next improvements", assessment.improvements, "improvements")}
+      </div>
+      ${errorsHTML}
+    </section>
+  `;
+}
+
+function applyWritingAiScores(partKey, assessment) {
+  if (!assessment) return;
+  for (const criterion of WRITING_CRITERIA) {
+    const control = document.getElementById(`${getWritingPartPrefix(partKey)}-score-${criterion.key}`);
+    if (control) control.value = String(assessment.criteria[criterion.key].score);
+  }
+  updateWritingRawTotal();
+}
+
+async function requestWritingAiFeedback(partKey) {
+  const answer = getWritingTextValue(partKey);
+  const slot = document.getElementById(`writing-ai-feedback-${partKey}`);
+  if (!slot) return;
+
+  if (!answer) {
+    setWritingAiStatus(partKey, "Write your response before requesting AI feedback.", "error");
+    return;
+  }
+  if (answer.length > 6000) {
+    setWritingAiStatus(partKey, "This response is too long for AI feedback. Shorten it and try again; manual assessment is still available.", "error");
+    return;
+  }
+
+  const task = getWritingTaskContext(partKey);
+  if (!task.prompt.trim()) {
+    const contextDetails = document.getElementById(`writing-task-context-details-${partKey}`);
+    if (contextDetails) contextDetails.open = true;
+    setWritingAiStatus(partKey, "Add the task prompt first so Claude can assess Content and Communicative Achievement.", "error");
+    document.getElementById(`writing-task-context-${partKey}`)?.focus();
+    return;
+  }
+
+  const signature = getWritingAiRequestSignature(partKey, answer, task);
+  const requestVersion = (STATE.writingAiRequestVersions[partKey] || 0) + 1;
+  STATE.writingAiRequestVersions[partKey] = requestVersion;
+  STATE.writingAiLoading[partKey] = true;
+  STATE.writingAiErrors[partKey] = false;
+  updateWritingAiButton(partKey);
+  setWritingAiStatus(partKey, "Claude is reviewing your response against the four Cambridge C2 criteria…", "loading");
+
+  try {
+    const apiUrl = String(window.C2_WRITING_FEEDBACK_API_URL || "").trim();
+    if (!apiUrl) throw new Error("unavailable");
+    const endpoint = new URL(apiUrl);
+    if (endpoint.protocol !== "https:" && !(endpoint.protocol === "http:" && ["localhost", "127.0.0.1"].includes(endpoint.hostname))) {
+      throw new Error("unavailable");
+    }
+
+    const apiResponse = await fetch(endpoint.toString(), {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ part: partKey, task, answer })
+    });
+    if (!apiResponse.ok) throw new Error("unavailable");
+
+    const result = await apiResponse.json();
+    const assessment = normalizeWritingAiAssessment(result?.assessment);
+    if (!assessment || result?.estimated !== true) throw new Error("unavailable");
+    if (STATE.writingAiRequestVersions[partKey] !== requestVersion) return;
+
+    if (getWritingAiRequestSignature(partKey) !== signature) {
+      STATE.writingAiLoading[partKey] = false;
+      setWritingAiStatus(partKey, "Your response or task changed. Request fresh AI feedback before using these scores.", "stale");
+      updateWritingAiButton(partKey);
+      return;
+    }
+
+    const feedback = {
+      assessment,
+      task,
+      signature,
+      assessedAt: new Date().toISOString()
+    };
+    STATE.writingAiFeedback[partKey] = feedback;
+    STATE.writingAiErrors[partKey] = false;
+    slot.className = "writing-ai-feedback-slot";
+    slot.innerHTML = renderWritingAiAssessmentHTML(assessment);
+    applyWritingAiScores(partKey, assessment);
+  } catch {
+    if (STATE.writingAiRequestVersions[partKey] !== requestVersion) return;
+    STATE.writingAiErrors[partKey] = true;
+    setWritingAiStatus(partKey, "AI feedback is temporarily unavailable. You can continue with manual assessment.", "error");
+  } finally {
+    if (STATE.writingAiRequestVersions[partKey] === requestVersion) {
+      STATE.writingAiLoading[partKey] = false;
+      updateWritingAiButton(partKey);
+    }
+  }
+}
+
 function renderWritingPromptPanelHTML() {
   return `
     <details class="writing-prompt-panel">
@@ -6573,20 +6886,26 @@ function buildWritingAssessmentPrompt() {
   const examTaskContext = typeof getActiveExamBankWritingAssessmentContext === "function"
     ? getActiveExamBankWritingAssessmentContext()
     : "";
+  const manualTaskContext = examTaskContext ? "" : ["part1", "part2"]
+    .filter(partKey => partKey === "part1" ? part1Text : part2Text)
+    .map(partKey => `${partKey.toUpperCase()} TASK PROMPT\n${getWritingTaskContext(partKey).prompt}`)
+    .join("\n\n---\n\n");
   const tasks = [];
 
   if (part1Text) {
     tasks.push(`PART 1 - COMPULSORY ESSAY
 Task type: essay
-Text:
+Target length: 240–280 words
+Candidate response:
 """${part1Text}"""`);
   }
 
   if (part2Text) {
     tasks.push(`PART 2 - OPTIONAL WRITING
 Task type: ${part2TypeLabel}
+Target length: 280–320 words
 Genre-specific focus: ${getPart2GenreGuidance(part2Type)}
-Text:
+Candidate response:
 """${part2Text}"""`);
   }
 
@@ -6623,7 +6942,7 @@ If both tasks are included, also return:
 
 Candidate text:
 
-${examTaskContext ? `EXAM TASKS:\n${examTaskContext}\n\n` : ""}
+${examTaskContext ? `EXAM TASKS:\n${examTaskContext}\n\n` : manualTaskContext ? `TASK PROMPTS AND SOURCE TEXTS:\n${manualTaskContext}\n\n` : ""}
 
 ${taskBlock}`;
 }
@@ -6698,7 +7017,7 @@ function renderWritingCriterionControlHTML(partKey, criterion) {
     <div>
       <div class="criteria-title">${criterion.label}</div>
       <div class="criteria-slider-row">
-        <input type="range" class="criteria-slider" id="${prefix}-score-${criterion.key}" min="0" max="5" value="3" oninput="updateWritingRawTotal()">
+        <input type="range" class="criteria-slider" id="${prefix}-score-${criterion.key}" aria-label="${criterion.label}" min="0" max="5" value="3" oninput="updateWritingRawTotal()">
         <span class="criteria-value" id="${prefix}-val-${criterion.key}">3 / 5</span>
       </div>
     </div>
@@ -6787,6 +7106,10 @@ function setupWritingGradingArea() {
   const part2Textarea = document.getElementById("writing-textarea-part2");
   if (part1Textarea) part1Textarea.disabled = true;
   if (part2Textarea) part2Textarea.disabled = true;
+  ["part1", "part2"].forEach(partKey => {
+    const taskContext = document.getElementById(`writing-task-context-${partKey}`);
+    if (taskContext) taskContext.disabled = true;
+  });
   const part2TypeSelect = document.getElementById("writing-part2-type");
   if (part2TypeSelect) part2TypeSelect.disabled = true;
 
@@ -6812,6 +7135,11 @@ function setupWritingGradingArea() {
       </div>
     </div>
   `;
+
+  activePartKeys.forEach(partKey => {
+    const feedback = STATE.writingAiFeedback[partKey];
+    if (feedback) applyWritingAiScores(partKey, feedback.assessment);
+  });
 
   const mainBtn = document.getElementById("sheet-submit-btn");
   mainBtn.textContent = "Save writing";
@@ -6880,6 +7208,21 @@ async function saveWritingSheetResult() {
       .filter(([, correctionText]) => correctionText.length > 0)
   );
 
+  const savedWritingAiFeedback = Object.fromEntries(
+    snapshot.partKeys
+      .map(partKey => {
+        const feedback = STATE.writingAiFeedback[partKey];
+        if (!feedback || feedback.signature !== getWritingAiRequestSignature(partKey)) return [partKey, null];
+        return [partKey, {
+          ...(!(STATE.examBankSession?.section === "writing") ? { task: feedback.task } : {}),
+          assessment: feedback.assessment,
+          assessedAt: feedback.assessedAt,
+          estimated: true
+        }];
+      })
+      .filter(([, feedback]) => feedback)
+  );
+
   const durationSeconds = getCurrentPracticeDurationSeconds();
   const answers = {
     part1: text1,
@@ -6894,7 +7237,8 @@ async function saveWritingSheetResult() {
       ...(typeof getActiveExamBankAttemptMeta === "function" && getActiveExamBankAttemptMeta()
         ? { examBank: getActiveExamBankAttemptMeta() }
         : {}),
-      ...(Object.keys(writingCorrectionNotes).length > 0 ? { writingCorrectionNotes } : {})
+      ...(Object.keys(writingCorrectionNotes).length > 0 ? { writingCorrectionNotes } : {}),
+      ...(Object.keys(savedWritingAiFeedback).length > 0 ? { writingAiFeedback: savedWritingAiFeedback } : {})
     }
   };
 

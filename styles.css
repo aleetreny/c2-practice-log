@@ -8906,3 +8906,338 @@ kbd {
     overflow-wrap: anywhere;
   }
 }
+
+/* Claude writing feedback uses the existing C2 Practice Log palette and cards. */
+.writing-task-context {
+  margin: 0 0 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.writing-task-context summary {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  color: var(--accent-color);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.writing-task-context > div {
+  display: grid;
+  gap: 6px;
+  padding: 0 12px 12px;
+}
+
+.writing-task-context label {
+  color: var(--text-main);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.writing-task-context textarea {
+  width: 100%;
+  min-height: 105px;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  background: #fbfcfd;
+  color: var(--text-main);
+  font: inherit;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.writing-task-context small {
+  color: var(--text-muted);
+  font-size: 0.73rem;
+  line-height: 1.4;
+}
+
+.writing-task-context textarea:focus {
+  border-color: var(--accent-color);
+  outline: 3px solid rgba(15, 118, 110, 0.12);
+}
+
+.writing-ai-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-top: 10px;
+}
+
+.writing-ai-actions .btn {
+  min-height: 42px;
+}
+
+.writing-ai-actions > span {
+  color: var(--text-muted);
+  font-size: 0.73rem;
+  line-height: 1.4;
+}
+
+.writing-ai-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
+.writing-ai-feedback-slot {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.writing-ai-feedback-slot.loading > p,
+.writing-ai-feedback-slot.error > p,
+.writing-ai-feedback-slot.stale > p {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.writing-ai-feedback-slot.error > p {
+  border-color: #f1d1c9;
+  background: var(--color-error-bg);
+  color: var(--color-error);
+}
+
+.writing-ai-feedback-slot.stale > p {
+  border-color: #eadab0;
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+}
+
+.writing-ai-card {
+  min-width: 0;
+  margin-top: 12px;
+  padding: 14px;
+  border: 1px solid #a7d8ce;
+  border-radius: 9px;
+  background: #f7faf9;
+  color: var(--text-main);
+  overflow-wrap: anywhere;
+}
+
+.writing-ai-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-bottom: 12px;
+}
+
+.writing-ai-card-head .eyebrow {
+  color: var(--accent-hover);
+}
+
+.writing-ai-card-head h4 {
+  margin: 3px 0 0;
+  color: var(--text-main);
+  font-size: 0.96rem;
+}
+
+.writing-ai-card-head > span:last-child {
+  max-width: 100%;
+  padding: 5px 8px;
+  border-radius: 999px;
+  background: #e7f1ef;
+  color: var(--accent-hover);
+  font-size: 0.68rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.writing-ai-criteria,
+.writing-ai-lists {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.writing-ai-criterion {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  background: #ffffff;
+}
+
+.writing-ai-criterion > div {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.writing-ai-card h5 {
+  min-width: 0;
+  margin: 0;
+  color: var(--text-main);
+  font-size: 0.79rem;
+  font-weight: 850;
+  line-height: 1.4;
+}
+
+.writing-ai-criterion strong {
+  flex: 0 0 auto;
+  color: var(--accent-hover);
+  font-size: 0.84rem;
+}
+
+.writing-ai-criterion strong span {
+  color: var(--text-muted);
+  font-size: 0.68rem;
+}
+
+.writing-ai-criterion p,
+.writing-ai-overall p {
+  margin: 7px 0 0;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.writing-ai-overall {
+  margin: 10px 0;
+  padding: 10px;
+  border-left: 3px solid var(--accent-color);
+  border-radius: 0 7px 7px 0;
+  background: #ffffff;
+}
+
+.writing-ai-lists {
+  margin-top: 8px;
+}
+
+.writing-ai-list,
+.writing-ai-errors {
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  background: #ffffff;
+}
+
+.writing-ai-card ul {
+  margin: 7px 0 0;
+  padding-left: 18px;
+  color: var(--text-muted);
+  font-size: 0.79rem;
+  line-height: 1.5;
+}
+
+.writing-ai-card li + li {
+  margin-top: 5px;
+}
+
+.writing-ai-errors {
+  margin-top: 8px;
+}
+
+.writing-ai-errors li {
+  overflow-wrap: anywhere;
+}
+
+.writing-ai-errors li > span,
+.writing-ai-errors li > strong,
+.writing-ai-errors li > small {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+.writing-ai-errors li > span {
+  color: var(--color-error);
+  text-decoration: line-through;
+}
+
+.writing-ai-errors li > strong {
+  color: var(--accent-hover);
+}
+
+.writing-ai-errors li > small {
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: 0.74rem;
+}
+
+.history-writing-ai-feedback {
+  margin: 10px 0;
+  border: 1px solid #c9e2dc;
+  border-radius: 8px;
+  background: #f7faf9;
+}
+
+.history-writing-ai-feedback > summary,
+.history-writing-ai-task > summary {
+  min-height: 42px;
+  display: flex;
+  align-items: center;
+  padding: 9px 12px;
+  color: var(--accent-hover);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 850;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.history-writing-ai-feedback > .writing-ai-card {
+  margin: 0 10px 10px;
+}
+
+.history-writing-ai-task {
+  margin: 0 10px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  background: #ffffff;
+  overflow-wrap: anywhere;
+}
+
+.history-writing-ai-task > div,
+.history-writing-ai-task > section {
+  padding: 8px 10px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.history-writing-ai-task > section {
+  border-top: 1px solid var(--border-color);
+}
+
+.history-writing-ai-task > section strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--text-main);
+}
+
+.history-writing-ai-feedback .writing-ai-card-head > span:last-child {
+  white-space: normal;
+}
+
+@media (max-width: 600px) {
+  .writing-ai-card {
+    padding: 10px;
+  }
+
+  .writing-ai-criteria,
+  .writing-ai-lists {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .writing-ai-card-head > span:last-child {
+    border-radius: 7px;
+  }
+}

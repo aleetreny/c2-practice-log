@@ -460,6 +460,33 @@
     ].filter(Boolean).join("\n\n---\n\n");
   }
 
+  function getActiveExamBankWritingTask(partKey) {
+    const session = STATE.examBankSession;
+    if (session?.section !== "writing") return null;
+
+    if (partKey === "part1") {
+      const task = session.writingTest?.part1;
+      if (!task) return null;
+      return {
+        type: "essay",
+        prompt: task.instructions || "",
+        sourceTexts: (task.texts || []).map(source => ({ title: source.title || `Text ${source.number}`, text: source.body || "" })),
+        targetWordRange: { min: 240, max: 280 }
+      };
+    }
+
+    if (partKey === "part2" && session.part2Task) {
+      return {
+        type: session.part2Task.type || "article",
+        prompt: session.part2Task.prompt || "",
+        sourceTexts: [],
+        targetWordRange: { min: 280, max: 320 }
+      };
+    }
+
+    return null;
+  }
+
   function getActiveExamBankAttemptMeta() {
     const session = STATE.examBankSession;
     if (!session || !["listening", "writing"].includes(session.section)) return null;
@@ -1406,6 +1433,7 @@
   root.initializeActiveListeningPlayer = initializeActiveListeningPlayer;
   root.renderActiveExamBankWritingPromptHTML = renderActiveExamBankWritingPromptHTML;
   root.getActiveExamBankWritingAssessmentContext = getActiveExamBankWritingAssessmentContext;
+  root.getActiveExamBankWritingTask = getActiveExamBankWritingTask;
   root.getActiveExamBankAttemptMeta = getActiveExamBankAttemptMeta;
   root.startReadingBankTest = startReadingBankTest;
   root.exitReadingBankTest = exitReadingBankTest;
