@@ -39,7 +39,7 @@ assert.match(worker, /https:\/\/c2practicelog\.com/);
 assert.match(worker, /https:\/\/www\.c2practicelog\.com/);
 assert.doesNotMatch(worker, /Access-Control-Allow-Origin.{0,20}\*/i);
 assert.equal(workerConfig.workers_dev, true);
-assert.equal(workerConfig.vars.ANTHROPIC_MODEL, "claude-sonnet-5");
+assert.equal(workerConfig.vars.ANTHROPIC_MODEL, "claude-sonnet-5-5");
 assert.equal(workerConfig.ratelimits[0].simple.limit, 10);
 assert.match(gitignore, /^\.dev\.vars$/m);
 assert.match(gitignore, /^\.dev\.vars\.\*$/m);
