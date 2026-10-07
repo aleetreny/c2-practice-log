@@ -164,11 +164,13 @@ Account data remains usable when cloud sync is unavailable. The original namespa
 
 ## AI writing feedback
 
-Writing feedback runs through a small Cloudflare Worker at `POST /api/writing-feedback`. The browser sends one task at a time; the Worker applies a fixed C2 assessment prompt and calls Anthropic's Messages API with schema-constrained JSON output. The `ANTHROPIC_API_KEY` exists only as a Cloudflare secret. The default model is configured as `ANTHROPIC_MODEL=claude-sonnet-5` and can be changed in `workers/writing-feedback/wrangler.jsonc`.
+Writing feedback runs through a small Cloudflare Worker at `POST /api/writing-feedback`. The browser sends one task at a time; the Worker applies a fixed C2 assessment prompt and calls Anthropic's Messages API with schema-constrained JSON output. The `ANTHROPIC_API_KEY` exists only as a Cloudflare secret. The default model is configured as `ANTHROPIC_MODEL=claude-sonnet-5-5` and can be changed in `workers/writing-feedback/wrangler.jsonc`.
 
 The feature reuses the existing Content, Communicative Achievement, Organisation and Language controls and their 0–5 scale. AI scores are explicitly estimates. Feedback is saved, when present, in the attempt's existing `answers.meta.writingAiFeedback` JSON field; this is backward-compatible with old attempts and needs no Neon migration. Student essays and task context are sent to Anthropic only when the learner requests feedback. The Worker does not log request bodies.
 
 The Worker accepts the GitHub Pages origin `https://aleetreny.github.io`, `https://c2practicelog.com`, `https://www.c2practicelog.com`, and the local app origins `http://localhost:4173` and `http://127.0.0.1:4173`. Requests have strict size and shape limits and a Cloudflare rate limit. Missing credentials, exhausted credits, provider errors and network failures return a generic message that leaves manual assessment available.
+
+The current rate-limit key uses Cloudflare's connecting IP as a pragmatic launch safeguard. This is not a durable per-user identity: users behind shared NATs can share a limit, and direct clients can rotate IPs. Replacing it with a server-verified authenticated account identifier should be considered if usage grows; the browser-supplied Neon user id is intentionally not trusted for rate limiting because it would be spoofable without server-side session verification.
 
 ### Cloudflare deployment
 
