@@ -50,7 +50,7 @@ const ASSESSMENT_SCHEMA = {
         additionalProperties: false,
         required: ["score", "feedback"],
         properties: {
-          score: { type: "integer", minimum: 0, maximum: 5 },
+          score: { type: "integer", description: "Cambridge C2 subscale score from 0 to 5 inclusive." },
           feedback: { type: "string" }
         }
       }]))
