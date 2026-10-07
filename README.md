@@ -162,6 +162,55 @@ The production cutover from Supabase to Neon in Frankfurt was completed and veri
 
 Account data remains usable when cloud sync is unavailable. The original namespaced browser keys are retained, and every relevant change also refreshes a consolidated, versioned per-user backup with a SHA-256 checksum. The one-time local migration copies data from the legacy user namespace only after the authenticated Neon mapping is returned by RLS; it verifies the copy and retains the original keys.
 
+## AI writing feedback
+
+Writing feedback runs through a small Cloudflare Worker at `POST /api/writing-feedback`. The browser sends one task at a time; the Worker applies a fixed C2 assessment prompt and calls Anthropic's Messages API with schema-constrained JSON output. The `ANTHROPIC_API_KEY` exists only as a Cloudflare secret. The default model is configured as `ANTHROPIC_MODEL=claude-sonnet-5-5` and can be changed in `workers/writing-feedback/wrangler.jsonc`.
+
+The Worker uses medium effort with a 4,000-token output cap so Claude Sonnet 5.5 has room for adaptive thinking plus the structured JSON response. The feature reuses the existing Content, Communicative Achievement, Organisation and Language controls and their 0–5 scale. AI scores are explicitly estimates. Feedback is saved, when present, in the attempt's existing `answers.meta.writingAiFeedback` JSON field; this is backward-compatible with old attempts and needs no Neon migration. Student essays and task context are sent to Anthropic only when the learner requests feedback. The Worker does not log request bodies.
+
+The Worker accepts the GitHub Pages origin `https://aleetreny.github.io`, `https://c2practicelog.com`, `https://www.c2practicelog.com`, and the local app origins `http://localhost:4173` and `http://127.0.0.1:4173`. Requests have strict size and shape limits and a Cloudflare rate limit. Missing credentials, exhausted credits, provider errors and network failures return a generic message that leaves manual assessment available.
+
+The current rate-limit key uses Cloudflare's connecting IP as a pragmatic launch safeguard. This is not a durable per-user identity: users behind shared NATs can share a limit, and direct clients can rotate IPs. Replacing it with a server-verified authenticated account identifier should be considered if usage grows; the browser-supplied Neon user id is intentionally not trusted for rate limiting because it would be spoofable without server-side session verification.
+
+### Cloudflare deployment
+
+From the repository root, authenticate Wrangler and deploy the Worker:
+
+```bash
+npx wrangler@latest login
+npx wrangler@latest deploy --config workers/writing-feedback/wrangler.jsonc
+```
+
+Wrangler prints the Worker URL. Set it in `writing-feedback-config.js`, including the endpoint path:
+
+```js
+window.C2_WRITING_FEEDBACK_API_URL = "https://<worker>.<account>.workers.dev/api/writing-feedback";
+```
+
+The URL is public configuration, not a secret. Bump the `writing-feedback-config.js` query-string version in `index.html` after changing it, then publish the frontend through the normal GitHub Pages process. The existing GitHub Pages address can call the Worker while the custom domain is being prepared. The Worker configuration uses the `workers.dev` subdomain and does not change DNS. If Cloudflare reports that rate-limit namespace `70102007` is already used by another Worker in the account, replace it with another positive integer unique to that account before deploying.
+
+Add the API key only after the Anthropic account has API access and credits:
+
+```bash
+npx wrangler@latest secret put ANTHROPIC_API_KEY --config workers/writing-feedback/wrangler.jsonc
+```
+
+Wrangler prompts for the value and stores it as a Worker secret. The Worker can be deployed before the key exists; feedback requests show the manual-assessment fallback until the secret and usable API credits are available. To run the Worker locally, place a key in an ignored `workers/writing-feedback/.dev.vars` file and use `npx wrangler@latest dev --config workers/writing-feedback/wrangler.jsonc`.
+
+### Anthropic setup
+
+1. Create or sign in to an Anthropic Console account and enable Claude API billing or purchase API credits.
+2. Create an API key in the Console.
+3. Store it with the `wrangler secret put ANTHROPIC_API_KEY` command above; do not add it to JavaScript, GitHub Pages settings or source control.
+4. Keep `ANTHROPIC_MODEL` set to a currently supported Sonnet model in the Wrangler config. The current default uses Claude Sonnet 5 and the Messages API's JSON Schema output format.
+5. After setting the Worker secret, test a Writing response from both the GitHub Pages URL and the custom domain when it is live.
+
+The mocked Worker suite covers valid structured output, missing keys, provider no-credit/API errors, malformed responses, network failure, request validation, CORS and rate limiting:
+
+```bash
+npm run check
+```
+
 ## Intentional public owner backup
 
 `public-profile-backup/` is an intentionally public, human-readable copy of Aleetreny's study data. It includes attempts, answers, corrections, vocabulary and review state. It excludes email addresses, passwords, password hashes, sessions, cookies, access/refresh tokens, database URLs and every other user's data.

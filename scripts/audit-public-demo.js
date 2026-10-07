@@ -67,7 +67,7 @@ assert.doesNotMatch(tourRendererSource, /scrollIntoView\(/, "tour should not rep
 assert.doesNotMatch(stylesSource, /\.tour-highlight\s*\{/, "tour should not draw an empty highlight frame");
 assert.doesNotMatch(stylesSource, /\.about-tour-backdrop\s*\{/, "tour should leave the page visible");
 assert.match(stylesSource, /\.about-tour-layer[\s\S]*?right:\s*24px[\s\S]*?bottom:\s*24px/, "tour panel should stay in the corner");
-assert.match(indexSource, /styles\.css\?v=public-tour-3/, "tour styles should use a cache-busted public asset");
-assert.match(indexSource, /app\.js\?v=neon-migration-1/, "Neon frontend script should use a cache-busted public asset");
+assert.match(indexSource, /styles\.css\?v=[\w-]+/, "tour styles should use a cache-busted public asset");
+assert.match(indexSource, /app\.js\?v=[\w-]+/, "Neon frontend script should use a cache-busted public asset");
 
 console.log(`Public demo audit passed: ${demo.history.length} attempts, ${demo.vocabularyEntries.length} personal vocabulary entries, ${Object.keys(demo.vocabularyReviewStats).length} vocabulary ratings and ${Object.keys(demo.errorReviewStats).length} error ratings.`);
