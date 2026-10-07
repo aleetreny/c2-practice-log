@@ -28,7 +28,7 @@ const task = {
 const successfulLimit = { limit: async () => ({ success: true }) };
 const baseEnv = () => ({
   ANTHROPIC_API_KEY: "unit-test-placeholder",
-  ANTHROPIC_MODEL: "claude-sonnet-5",
+  ANTHROPIC_MODEL: "claude-sonnet-5-5",
   AI_FEEDBACK_LIMITER: successfulLimit
 });
 
@@ -146,7 +146,7 @@ async function run() {
 
     assert.equal(captured.url, "https://api.anthropic.com/v1/messages");
     assert.equal(captured.options.headers["anthropic-version"], "2023-06-01");
-    assert.equal(captured.body.model, "claude-sonnet-5");
+    assert.equal(captured.body.model, "claude-sonnet-5-5");
     assert.equal(captured.body.output_config.format.type, "json_schema");
     assert.equal(captured.body.max_tokens, 1400);
     assert.match(captured.body.system, /untrusted data/);
