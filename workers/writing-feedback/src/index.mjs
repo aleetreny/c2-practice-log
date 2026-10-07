@@ -249,9 +249,10 @@ async function assessWriting(request, env) {
         model: typeof env.ANTHROPIC_MODEL === "string" && env.ANTHROPIC_MODEL.trim()
           ? env.ANTHROPIC_MODEL.trim()
           : DEFAULT_MODEL,
-        max_tokens: 1400,
+        max_tokens: 4000,
         system: SYSTEM_PROMPT,
         output_config: {
+          effort: "medium",
           format: { type: "json_schema", schema: ASSESSMENT_SCHEMA }
         },
         messages: [{
@@ -264,7 +265,10 @@ async function assessWriting(request, env) {
     return unavailable(request);
   }
 
-  if (!upstream.ok) return unavailable(request);
+  if (!upstream.ok) {
+    console.warn("Anthropic request failed", { status: upstream.status });
+    return unavailable(request);
+  }
 
   let message;
   try {
@@ -273,7 +277,10 @@ async function assessWriting(request, env) {
     return unavailable(request, 502);
   }
 
-  if (message.stop_reason === "max_tokens") return unavailable(request, 502);
+  if (message.stop_reason === "max_tokens") {
+    console.warn("Anthropic response exhausted max_tokens");
+    return unavailable(request, 502);
+  }
   const text = Array.isArray(message.content)
     ? message.content.find(block => block && block.type === "text")?.text
     : null;
