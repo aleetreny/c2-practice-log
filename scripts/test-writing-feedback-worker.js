@@ -147,7 +147,7 @@ async function run() {
     assert.equal(captured.url, "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent");
     assert.equal(captured.options.headers["x-goog-api-key"], "unit-test-placeholder");
     assert.equal(captured.body.generationConfig.responseMimeType, "application/json");
-    assert.equal(captured.body.generationConfig.responseSchema.type, "object");
+    assert.equal(captured.body.generationConfig.responseJsonSchema.type, "object");
     assert.equal(captured.body.generationConfig.maxOutputTokens, 4000);
     assert.match(captured.body.systemInstruction.parts[0].text, /untrusted data/);
     assert.match(captured.body.systemInstruction.parts[0].text, /Cambridge C2 Writing subscales/);
