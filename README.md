@@ -2,7 +2,7 @@
 
 A Cambridge C2 Proficiency exam simulator and study workspace: real Use of English, Reading, Listening and Writing practice banks, answer sheets, guided correction, progress analytics and adaptive review in one static web app.
 
-**Live app:** [aleetreny.github.io/c2-practice-log](https://aleetreny.github.io/c2-practice-log/)
+**Live app:** [c2practicelog.com](https://c2practicelog.com/)
 
 ## The learning loop
 
@@ -162,54 +162,42 @@ The production cutover from Supabase to Neon in Frankfurt was completed and veri
 
 Account data remains usable when cloud sync is unavailable. The original namespaced browser keys are retained, and every relevant change also refreshes a consolidated, versioned per-user backup with a SHA-256 checksum. The one-time local migration copies data from the legacy user namespace only after the authenticated Neon mapping is returned by RLS; it verifies the copy and retains the original keys.
 
-## AI writing feedback
+## AI writing feedback (Google Gemini)
 
-Writing feedback runs through a small Cloudflare Worker at `POST /api/writing-feedback`. The browser sends one task at a time; the Worker applies a fixed C2 assessment prompt and calls Anthropic's Messages API with schema-constrained JSON output. The `ANTHROPIC_API_KEY` exists only as a Cloudflare secret. The default model is configured as `ANTHROPIC_MODEL=claude-sonnet-5-5` and can be changed in `workers/writing-feedback/wrangler.jsonc`.
+Writing feedback uses a Cloudflare Worker at `POST /api/writing-feedback` to keep the Google Gemini API key out of static GitHub Pages JavaScript. The Worker preserves the existing Cambridge C2 Content, Communicative Achievement, Organisation and Language criteria, estimated 0–5 ratings, specific strengths, improvement suggestions and evidence-based error corrections. Past feedback stays compatible because all feedback is saved in the existing `answers.meta.writingAiFeedback` field. No Neon schema changes are needed.
 
-The Worker uses medium effort with a 4,000-token output cap so Claude Sonnet 5.5 has room for adaptive thinking plus the structured JSON response. The feature reuses the existing Content, Communicative Achievement, Organisation and Language controls and their 0–5 scale. AI scores are explicitly estimates. Feedback is saved, when present, in the attempt's existing `answers.meta.writingAiFeedback` JSON field; this is backward-compatible with old attempts and needs no Neon migration. Student essays and task context are sent to Anthropic only when the learner requests feedback. The Worker does not log request bodies.
+The default model is **`gemini-3.1-flash-lite`**, set with the `GEMINI_MODEL` Wrangler variable. Google also lists `gemini-2.5-flash-lite` as a less expensive option, but access to 2.5 is restricted for new projects. You can switch models by changing `GEMINI_MODEL` if your Google AI Studio API project supports that model. Models differ in their C2 assessment quality, so compare results on real essays before selecting the cheapest option.
 
-The Worker accepts the GitHub Pages origin `https://aleetreny.github.io`, `https://c2practicelog.com`, `https://www.c2practicelog.com`, and the local app origins `http://localhost:4173` and `http://127.0.0.1:4173`. Requests have strict size and shape limits and a Cloudflare rate limit. Missing credentials, exhausted credits, provider errors and network failures return a generic message that leaves manual assessment available.
+The Gemini API key is stored **only** in the Cloudflare secret `GEMINI_API_KEY`. The public frontend still uses the same `window.C2_WRITING_FEEDBACK_API_URL` and the same `/api/writing-feedback` endpoint. Do not put a key in JavaScript, GitHub, the URL, or `.dev.vars` tracked by Git. `.dev.vars` is ignored.
 
-The current rate-limit key uses Cloudflare's connecting IP as a pragmatic launch safeguard. This is not a durable per-user identity: users behind shared NATs can share a limit, and direct clients can rotate IPs. Replacing it with a server-verified authenticated account identifier should be considered if usage grows; the browser-supplied Neon user id is intentionally not trusted for rate limiting because it would be spoofable without server-side session verification.
+### Deployment and switching providers
 
-### Cloudflare deployment
+1. Create or select a Google AI Studio API project and obtain a Gemini API key. Configure its billing, quota, and data-use settings as appropriate. Check Google's free-tier data-handling terms before sending private learner writing; free-tier content may be used to improve Google products, while paid-tier conditions differ.
+2. Keep the existing Cloudflare Worker name and endpoint. From the repository root, log in using `wrangler login` if needed.
+3. **Before deploying** the Gemini version, securely add the Google key to the existing Worker:
 
-From the repository root, authenticate Wrangler and deploy the Worker:
+   ```bash
+   npx wrangler@latest secret put GEMINI_API_KEY --config workers/writing-feedback/wrangler.jsonc
+   ```
 
-```bash
-npx wrangler@latest login
-npx wrangler@latest deploy --config workers/writing-feedback/wrangler.jsonc
-```
+   Enter the key interactively at the prompt; never paste it into chat or into the command line itself.
 
-Wrangler prints the Worker URL. Set it in `writing-feedback-config.js`, including the endpoint path:
+4. Deploy the Worker:
 
-```js
-window.C2_WRITING_FEEDBACK_API_URL = "https://<worker>.<account>.workers.dev/api/writing-feedback";
-```
+   ```bash
+   npx wrangler@latest deploy --config workers/writing-feedback/wrangler.jsonc
+   ```
 
-The URL is public configuration, not a secret. Bump the `writing-feedback-config.js` query-string version in `index.html` after changing it, then publish the frontend through the normal GitHub Pages process. The existing GitHub Pages address can call the Worker while the custom domain is being prepared. The Worker configuration uses the `workers.dev` subdomain and does not change DNS. If Cloudflare reports that rate-limit namespace `70102007` is already used by another Worker in the account, replace it with another positive integer unique to that account before deploying.
+5. Test one genuine correction using the public site. Confirm that the four criteria, error explanations, saving and revision all work. If there is an API error, `wrangler tail c2-writing-feedback --format pretty` shows status-only diagnostic logs.
+6. Only when Gemini works, remove the unused Anthropic secret:
 
-Add the API key only after the Anthropic account has API access and credits:
+   ```bash
+   npx wrangler@latest secret delete ANTHROPIC_API_KEY --config workers/writing-feedback/wrangler.jsonc
+   ```
 
-```bash
-npx wrangler@latest secret put ANTHROPIC_API_KEY --config workers/writing-feedback/wrangler.jsonc
-```
+The URL is `https://c2-writing-feedback.alejandrotreny100.workers.dev/api/writing-feedback`. The Worker uses a fixed rubric, input/output validation, strict allowed browser origins, size limits, and an IP-based Cloudflare rate limit of 10 requests/minute. CORS is not authentication, and IP-based rate limiting is not a durable abuse boundary; for broader public use, add server-side authenticated user verification and enforce budget limits. Learner essays and task context go to Gemini only when the user requests feedback. The Worker does not log essay bodies.
 
-Wrangler prompts for the value and stores it as a Worker secret. The Worker can be deployed before the key exists; feedback requests show the manual-assessment fallback until the secret and usable API credits are available. To run the Worker locally, place a key in an ignored `workers/writing-feedback/.dev.vars` file and use `npx wrangler@latest dev --config workers/writing-feedback/wrangler.jsonc`.
-
-### Anthropic setup
-
-1. Create or sign in to an Anthropic Console account and enable Claude API billing or purchase API credits.
-2. Create an API key in the Console.
-3. Store it with the `wrangler secret put ANTHROPIC_API_KEY` command above; do not add it to JavaScript, GitHub Pages settings or source control.
-4. Keep `ANTHROPIC_MODEL` set to a currently supported Sonnet model in the Wrangler config. The current default uses Claude Sonnet 5 and the Messages API's JSON Schema output format.
-5. After setting the Worker secret, test a Writing response from both the GitHub Pages URL and the custom domain when it is live.
-
-The mocked Worker suite covers valid structured output, missing keys, provider no-credit/API errors, malformed responses, network failure, request validation, CORS and rate limiting:
-
-```bash
-npm run check
-```
+The modeled output is an educational estimate, not an official Cambridge English assessment. Use `npm run check` to run the local tests. The architecture and mocked Worker tests verify that the frontend has no provider secrets, input validation and allowed origins work, and failures do not expose provider details.
 
 ## Intentional public owner backup
 
@@ -231,7 +219,7 @@ npm run restore:public-profile -- --validate
 
 ## Deployment
 
-Production is served by GitHub Pages from `gh-pages`. The deploy branch contains only browser assets and needs no build step. After changing JavaScript or CSS, update its query-string version in `index.html` so returning visitors receive the new files.
+Production is served by GitHub Pages from `main` at the repository root. There is no frontend build step. After changing JavaScript or CSS, update its query-string version in `index.html` so returning visitors receive the new files.
 
 For a fork, also update:
 
