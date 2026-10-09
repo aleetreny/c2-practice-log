@@ -1,0 +1,36 @@
+name: One-time branch cleanup
+
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/branch-cleanup-once.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  delete-stale-branches:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete all known non-main branches
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const { data: repository } = await github.rest.repos.get({ owner, repo });
+            if (repository.default_branch !== 'main' || context.ref !== 'refs/heads/main') {
+              throw new Error('Cleanup requires main to be the default and current branch.');
+            }
+            const targets = ["codex/add-exercise-error-review","codex/bump-exercise-review-assets","codex/fix-writing-review-tables","codex/partial-exercise-practice","codex/preserve-source-material","codex/public-demo-about-tour","codex/refine-exercise-review","feature/claude-writing-feedback","feature/gemini-flash-lite-writing","gh-pages","test/deployed-gemini-worker"];
+            const listed = await github.paginate(github.rest.repos.listBranches, { owner, repo, per_page: 100 });
+            const existing = new Set(listed.map(branch => branch.name));
+            for (const name of targets) {
+              if (name === 'main' || !existing.has(name)) continue;
+              await github.rest.git.deleteRef({ owner, repo, ref: 'heads/' + name });
+              core.info('Deleted ' + name);
+            }
+            const remaining = await github.paginate(github.rest.repos.listBranches, { owner, repo, per_page: 100 });
+            const extra = remaining.filter(branch => branch.name !== 'main').map(branch => branch.name);
+            if (extra.length) throw new Error('Branches remain: ' + extra.join(', '));
+            core.info('Verified: only main remains.');
