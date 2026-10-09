@@ -36,3 +36,5 @@ jobs:
         env:
           GOOGLE_API: ${{ secrets.GOOGLE_API }}
         run: node scripts/test-gemini-live.js
+      - name: Test publicly deployed Gemini Writing Worker
+        run: node scripts/test-deployed-gemini-worker.js
