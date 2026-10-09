@@ -28,7 +28,7 @@ const task = {
 const successfulLimit = { limit: async () => ({ success: true }) };
 const baseEnv = () => ({
   GEMINI_API_KEY: "unit-test-placeholder",
-  GEMINI_MODEL: "gemini-3.1-flash-lite",
+  GEMINI_MODEL: "gemini-3.5-flash-lite",
   AI_FEEDBACK_LIMITER: successfulLimit
 });
 
@@ -144,7 +144,7 @@ async function run() {
       assert.equal(result.headers.get("access-control-allow-origin"), ORIGIN);
     });
 
-    assert.equal(captured.url, "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent");
+    assert.equal(captured.url, "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash-lite:generateContent");
     assert.equal(captured.options.headers["x-goog-api-key"], "unit-test-placeholder");
     assert.equal(captured.body.generationConfig.responseMimeType, "application/json");
     assert.equal(captured.body.generationConfig.responseJsonSchema.type, "object");
