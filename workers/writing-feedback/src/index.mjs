@@ -258,7 +258,7 @@ async function assessWriting(request, env) {
         generationConfig: {
           maxOutputTokens: 4000,
           responseMimeType: "application/json",
-          responseSchema: ASSESSMENT_SCHEMA
+          responseJsonSchema: ASSESSMENT_SCHEMA
         }
       })
     });
