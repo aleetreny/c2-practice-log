@@ -21,3 +21,18 @@ jobs:
           cache: npm
       - run: npm ci --ignore-scripts
       - run: npm run check
+
+  live-gemini-smoke:
+    name: Live Gemini API smoke test
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test C2 writing against Gemini 3.5 Flash-Lite
+        env:
+          GOOGLE_API: ${{ secrets.GOOGLE_API }}
+        run: node scripts/test-gemini-live.js
