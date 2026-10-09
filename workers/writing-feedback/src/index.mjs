@@ -1,6 +1,6 @@
 const API_PATH = "/api/writing-feedback";
 const GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1beta/models/";
-const DEFAULT_MODEL = "gemini-3.1-flash-lite";
+const DEFAULT_MODEL = "gemini-3.5-flash-lite";
 const MAX_REQUEST_BYTES = 32 * 1024;
 const MAX_ANSWER_CHARS = 6000;
 const MAX_TASK_PROMPT_CHARS = 10000;
