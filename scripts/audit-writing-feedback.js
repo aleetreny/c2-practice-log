@@ -26,11 +26,11 @@ assert.match(index, /styles\.css\?v=claude-writing-feedback-1/);
 assert.match(config, /^window\.C2_WRITING_FEEDBACK_API_URL = "https:\/\/[a-z0-9.-]+\.workers\.dev\/api\/writing-feedback";$/im);
 
 for (const frontend of [app, index, config]) {
-  assert.doesNotMatch(frontend, /ANTHROPIC_API_KEY|x-api-key|api\.anthropic\.com/i, "Anthropic credentials and API calls stay server-side");
+  assert.doesNotMatch(frontend, /GEMINI_API_KEY|x-goog-api-key|generativelanguage\.googleapis\.com/i, "Gemini credentials and API calls stay server-side");
 }
 
-assert.match(worker, /ANTHROPIC_API_KEY/);
-assert.match(worker, /output_config:[\s\S]*type: "json_schema"/);
+assert.match(worker, /GEMINI_API_KEY/);
+assert.match(worker, /generationConfig:[\s\S]*responseMimeType: "application\/json"/);
 assert.match(worker, /untrusted data/);
 assert.match(worker, /MAX_REQUEST_BYTES/);
 assert.match(worker, /AI_FEEDBACK_LIMITER/);
@@ -39,7 +39,7 @@ assert.match(worker, /https:\/\/c2practicelog\.com/);
 assert.match(worker, /https:\/\/www\.c2practicelog\.com/);
 assert.doesNotMatch(worker, /Access-Control-Allow-Origin.{0,20}\*/i);
 assert.equal(workerConfig.workers_dev, true);
-assert.equal(workerConfig.vars.ANTHROPIC_MODEL, "claude-sonnet-5-5");
+assert.equal(workerConfig.vars.GEMINI_MODEL, "gemini-3.5-flash-lite");
 assert.equal(workerConfig.ratelimits[0].simple.limit, 10);
 assert.match(gitignore, /^\.dev\.vars$/m);
 assert.match(gitignore, /^\.dev\.vars\.\*$/m);

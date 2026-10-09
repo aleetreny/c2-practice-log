@@ -5079,7 +5079,7 @@ function renderWritingHistoryAiFeedbackHTML(entry) {
   ` : "";
   return `
     <details class="history-writing-ai-feedback">
-      <summary>View Claude feedback estimate · not an official Cambridge grade</summary>
+      <summary>View AI feedback estimate · not an official Cambridge grade</summary>
       ${taskHTML}
       ${renderWritingAiAssessmentHTML(assessment)}
     </details>
@@ -6746,7 +6746,7 @@ function renderWritingAiAssessmentHTML(assessment) {
   return `
     <section class="writing-ai-card">
       <header class="writing-ai-card-head">
-        <div><span class="eyebrow">Claude feedback · estimate</span><h4>Cambridge C2 criteria</h4></div>
+        <div><span class="eyebrow">Gemini feedback · estimate</span><h4>Cambridge C2 criteria</h4></div>
         <span>Not an official Cambridge grade</span>
       </header>
       <div class="writing-ai-criteria">${criteriaHTML}</div>
@@ -6787,7 +6787,7 @@ async function requestWritingAiFeedback(partKey) {
   if (!task.prompt.trim()) {
     const contextDetails = document.getElementById(`writing-task-context-details-${partKey}`);
     if (contextDetails) contextDetails.open = true;
-    setWritingAiStatus(partKey, "Add the task prompt first so Claude can assess Content and Communicative Achievement.", "error");
+    setWritingAiStatus(partKey, "Add the task prompt first so Gemini can assess Content and Communicative Achievement.", "error");
     document.getElementById(`writing-task-context-${partKey}`)?.focus();
     return;
   }
@@ -6798,7 +6798,7 @@ async function requestWritingAiFeedback(partKey) {
   STATE.writingAiLoading[partKey] = true;
   STATE.writingAiErrors[partKey] = false;
   updateWritingAiButton(partKey);
-  setWritingAiStatus(partKey, "Claude is reviewing your response against the four Cambridge C2 criteria…", "loading");
+  setWritingAiStatus(partKey, "Gemini is reviewing your response against the four Cambridge C2 criteria…", "loading");
 
   try {
     const apiUrl = String(window.C2_WRITING_FEEDBACK_API_URL || "").trim();
