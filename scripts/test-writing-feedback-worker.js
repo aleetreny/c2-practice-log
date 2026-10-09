@@ -27,8 +27,8 @@ const task = {
 
 const successfulLimit = { limit: async () => ({ success: true }) };
 const baseEnv = () => ({
-  ANTHROPIC_API_KEY: "unit-test-placeholder",
-  ANTHROPIC_MODEL: "claude-sonnet-5-5",
+  GEMINI_API_KEY: "unit-test-placeholder",
+  GEMINI_MODEL: "gemini-3.1-flash-lite",
   AI_FEEDBACK_LIMITER: successfulLimit
 });
 
@@ -86,7 +86,7 @@ async function run() {
     assert.equal(result.headers.get("allow"), "POST, OPTIONS");
   });
 
-  await check("malformed and unexpected request fields are rejected before Anthropic", async () => {
+  await check("malformed and unexpected request fields are rejected before Gemini", async () => {
     let calls = 0;
     await withMockFetch(async () => { calls += 1; }, async () => {
       const malformed = await worker.fetch(makeRequest({ body: "{" }), baseEnv());
@@ -115,14 +115,14 @@ async function run() {
     assert.equal(calls, 0);
   });
 
-  await check("missing Anthropic key returns a generic unavailable message", async () => {
+  await check("missing Gemini key returns a generic unavailable message", async () => {
     let calls = 0;
     await withMockFetch(async () => { calls += 1; }, async () => {
       const result = await worker.fetch(makeRequest(), { AI_FEEDBACK_LIMITER: successfulLimit });
       const body = await readJson(result);
       assert.equal(result.status, 503);
       assert.match(body.message, /temporarily unavailable/);
-      assert.doesNotMatch(JSON.stringify(body), /ANTHROPIC_API_KEY|unit-test-placeholder/);
+      assert.doesNotMatch(JSON.stringify(body), /GEMINI_API_KEY|unit-test-placeholder/);
     });
     assert.equal(calls, 0);
   });
@@ -131,7 +131,7 @@ async function run() {
     let captured;
     await withMockFetch(async (url, options) => {
       captured = { url, options, body: JSON.parse(options.body) };
-      return new Response(JSON.stringify({ content: [{ type: "text", text: JSON.stringify(assessment) }], stop_reason: "end_turn" }), {
+      return new Response(JSON.stringify({ candidates: [{ content: { parts: [{ text: JSON.stringify(assessment) }] }, finishReason: "STOP" }] }), {
         status: 200,
         headers: { "content-type": "application/json" }
       });
@@ -144,19 +144,18 @@ async function run() {
       assert.equal(result.headers.get("access-control-allow-origin"), ORIGIN);
     });
 
-    assert.equal(captured.url, "https://api.anthropic.com/v1/messages");
-    assert.equal(captured.options.headers["anthropic-version"], "2023-06-01");
-    assert.equal(captured.body.model, "claude-sonnet-5-5");
-    assert.equal(captured.body.output_config.format.type, "json_schema");
-    assert.equal(captured.body.max_tokens, 4000);
-    assert.equal(captured.body.output_config.effort, "medium");
-    assert.match(captured.body.system, /untrusted data/);
-    assert.match(captured.body.system, /Cambridge C2 Writing subscales/);
-    assert.match(captured.body.messages[0].content, /candidateAnswer/);
-    assert.doesNotMatch(captured.body.system, /Proposal A|consulted/);
+    assert.equal(captured.url, "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent");
+    assert.equal(captured.options.headers["x-goog-api-key"], "unit-test-placeholder");
+    assert.equal(captured.body.generationConfig.responseMimeType, "application/json");
+    assert.equal(captured.body.generationConfig.responseSchema.type, "object");
+    assert.equal(captured.body.generationConfig.maxOutputTokens, 4000);
+    assert.match(captured.body.systemInstruction.parts[0].text, /untrusted data/);
+    assert.match(captured.body.systemInstruction.parts[0].text, /Cambridge C2 Writing subscales/);
+    assert.match(captured.body.contents[0].parts[0].text, /candidateAnswer/);
+    assert.doesNotMatch(captured.body.systemInstruction.parts[0].text, /Proposal A|consulted/);
   });
 
-  await check("Anthropic no-credit and API errors do not expose upstream details", async () => {
+  await check("Gemini no-credit and API errors do not expose upstream details", async () => {
     for (const status of [402, 429, 500]) {
       await withMockFetch(async () => new Response(JSON.stringify({ error: { message: "private billing or provider detail" } }), { status }), async () => {
         const result = await worker.fetch(makeRequest(), baseEnv());
@@ -168,12 +167,15 @@ async function run() {
     }
   });
 
-  await check("malformed Anthropic responses fail safely", async () => {
+  await check("malformed Gemini responses fail safely", async () => {
+    const asCandidate = (text, finishReason = "STOP") => ({
+      candidates: [{ content: { parts: [{ text }] }, finishReason }]
+    });
     const payloads = [
-      { content: [{ type: "text", text: "not json" }], stop_reason: "end_turn" },
-      { content: [{ type: "text", text: JSON.stringify({ ...assessment, criteria: { ...assessment.criteria, lang: { score: 9, feedback: "bad" } } }) }], stop_reason: "end_turn" },
-      { content: [{ type: "text", text: JSON.stringify({ ...assessment, errors: [{ original: "not in answer", suggestion: "x", explanation: "y" }] }) }], stop_reason: "end_turn" },
-      { content: [{ type: "text", text: JSON.stringify(assessment) }], stop_reason: "max_tokens" }
+      asCandidate("not json"),
+      asCandidate(JSON.stringify({ ...assessment, criteria: { ...assessment.criteria, lang: { score: 9, feedback: "bad" } } })),
+      asCandidate(JSON.stringify({ ...assessment, errors: [{ original: "not in answer", suggestion: "x", explanation: "y" }] })),
+      asCandidate(JSON.stringify(assessment), "MAX_TOKENS")
     ];
     for (const payload of payloads) {
       await withMockFetch(async () => new Response(JSON.stringify(payload), { status: 200 }), async () => {
