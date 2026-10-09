@@ -26,7 +26,7 @@ assert.match(index, /styles\.css\?v=claude-writing-feedback-1/);
 assert.match(config, /^window\.C2_WRITING_FEEDBACK_API_URL = "https:\/\/[a-z0-9.-]+\.workers\.dev\/api\/writing-feedback";$/im);
 
 for (const frontend of [app, index, config]) {
-  assert.doesNotMatch(frontend, /GEMINI_API_KEY|x-api-key|api\.anthropic\.com/i, "Gemini credentials and API calls stay server-side");
+  assert.doesNotMatch(frontend, /GEMINI_API_KEY|x-goog-api-key|generativelanguage\.googleapis\.com/i, "Gemini credentials and API calls stay server-side");
 }
 
 assert.match(worker, /GEMINI_API_KEY/);
