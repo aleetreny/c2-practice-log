@@ -1,5 +1,5 @@
 {
-  "checksum": "da66e9c8e48eb5058790ef88f1c32c0067aaaee28ad88e896439b9704540bfaf",
+  "checksum": "a591f24d7d6c29679857a5f35940734c8ea22fc81cafeaf6e47ef9fcc5bf98fe",
   "errorReviewSettings": {
     "againWeight": 2.25,
     "knownWeight": 0.25,
@@ -1641,7 +1641,7 @@
     }
   },
   "errorReviewUpdatedAt": 1783752687340,
-  "generatedAt": "2026-10-05T11:25:10.738Z",
+  "generatedAt": "2026-10-12T11:54:52.778Z",
   "profile": "Aleetreny",
   "version": 1,
   "vocabularyReviewSettings": {

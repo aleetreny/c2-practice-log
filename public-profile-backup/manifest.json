@@ -1,13 +1,13 @@
 {
   "attemptCount": 85,
-  "checksum": "f300e52e5c344a1837ab810ad306d6d12310fe73cd97f4ff2a593a94c9f52dc0",
+  "checksum": "bb3a1664196b8760b041c32c8699876a6efaf5168beb05874a3ec9b722e973f6",
   "files": {
-    "history.json": "ed3a44bbd3d4e793b7d1a1a9cfe033d9a2f808861832a2d4693ed7e76bc7abaa",
-    "latest.json": "95543eeb672b61fdca47a7defe48e5e7cc5305d65cb2dcf4bb46a51170158ddd",
-    "review-state.json": "1fafb5919c3da1d8ceeb5fd7834fb17d973b4baaec5d7c4926815fa33b4e1da5",
-    "vocabulary.json": "c394afe0f388f3dc8ba3e71ba72e0b3d3bf6fb36c1640488c80a0923fbcb56c5"
+    "history.json": "be0387e416f882942907abeb95f32012d414ba8f435b17853bb3a2573d8d4c1d",
+    "latest.json": "d40fafad4771c6857a1746b702e69d99c86a9a7ddccb6a64ac53339e0eaa3d17",
+    "review-state.json": "d40a437461760c10254ace13b039f378bb749c14398dfee332d9c64bc551ba91",
+    "vocabulary.json": "43d2ce0be3bf9a7ed35f755ce774dbcf02d1ec8c4c156c465398a42d283800d5"
   },
-  "generatedAt": "2026-10-05T11:25:10.738Z",
+  "generatedAt": "2026-10-12T11:54:52.778Z",
   "profile": "Aleetreny",
   "sections": {
     "listening": 17,
